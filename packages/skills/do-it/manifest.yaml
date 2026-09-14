@@ -3,7 +3,7 @@
   "kind": "Skill",
   "id": "skill.do-it",
   "name": "do-it",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Implement an authorized task or bounded change, verify observable behavior, and report remaining work without expanding scope.",
   "license": "UNLICENSED",
   "entry": "SKILL.md",
@@ -19,7 +19,8 @@
     "policy.scope": ">=1,<2",
     "policy.coding": ">=1,<2",
     "policy.verification": ">=1,<2",
-    "policy.git": ">=1,<2"
+    "policy.git": ">=1,<2",
+    "policy.communication": ">=1,<2"
   },
   "capabilities": [
     "filesystem.read"

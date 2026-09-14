@@ -3,7 +3,7 @@
   "kind": "Agent",
   "id": "agent.security-reviewer",
   "name": "security-reviewer",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Trace reachable security failures across trust boundaries, permissions, private data, dependencies, and executable content.",
   "license": "UNLICENSED",
   "entry": "AGENT.md",
@@ -19,5 +19,8 @@
     "findings",
     "evidence",
     "verification-limits"
-  ]
+  ],
+  "requires": {
+    "policy.communication": ">=1,<2"
+  }
 }

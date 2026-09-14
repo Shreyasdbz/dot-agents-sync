@@ -3,7 +3,7 @@
   "kind": "Context",
   "id": "context.travel-preferences",
   "name": "travel-preferences",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Travel preferences: Load for itinerary research or revision.",
   "license": "UNLICENSED",
   "entry": "CONTEXT.md",

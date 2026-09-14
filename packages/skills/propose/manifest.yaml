@@ -3,7 +3,7 @@
   "kind": "Skill",
   "id": "skill.propose",
   "name": "propose",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Design a change: clarify consequential requirements, compare viable approaches, and write a proposal. Not implementation planning.",
   "license": "UNLICENSED",
   "entry": "SKILL.md",
@@ -18,7 +18,8 @@
   "requires": {
     "template.design-proposal": ">=1,<2",
     "policy.scope": ">=1,<2",
-    "policy.research": ">=1,<2"
+    "policy.research": ">=1,<2",
+    "policy.communication": ">=1,<2"
   },
   "capabilities": [
     "filesystem.read"

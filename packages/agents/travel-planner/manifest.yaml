@@ -1,0 +1,36 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Agent",
+  "id": "agent.travel-planner",
+  "name": "travel-planner",
+  "version": "1.0.0",
+  "description": "Plan feasible points-aware travel or review itinerary content for Trip Publish using authorized traveler context.",
+  "license": "UNLICENSED",
+  "entry": "AGENT.md",
+  "files": [
+    "AGENT.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "requires": {
+    "template.trip-plan": ">=1,<2",
+    "policy.research": ">=1,<2",
+    "policy.communication": ">=1,<2"
+  },
+  "suggests": [
+    "context.travel-preferences",
+    "agent.travel-researcher"
+  ],
+  "prefers": [
+    "web.search"
+  ],
+  "fallback": "Return a provisional itinerary or publishing review from supplied facts; live availability remains unverified.",
+  "outputs": [
+    "itinerary",
+    "findings",
+    "verification-limits"
+  ],
+  "token_budget": 1000
+}

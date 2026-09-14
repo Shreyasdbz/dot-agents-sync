@@ -4,6 +4,8 @@ Each `packages/<kind>/<name>/manifest.yaml` declares one package with an ID, ver
 
 Kinds are Skill, Agent, Context, Policy, Template and Hook. Dependencies are ID-to-version-constraint mappings under `requires`; suggestions never activate implicitly. Profiles contain explicit root IDs and never bypass dependency, scope or trust checks. Every package is optional unless explicitly selected or required by another selected package.
 
+Write each Markdown prose paragraph on one logical source line; never hard-wrap to a fixed width or split a sentence arbitrarily. Keep meaningful paragraph, list, table, quotation and code boundaries. All output-producing skills and agents require policy.communication so this writing rule follows their selection.
+
 Use `SKILL.md` with name and description frontmatter for skills. Keep descriptions precise enough for discovery. Put long procedures, templates and evidence protocols in declared supporting files. The renderer adds references for selected direct dependencies. Do not add a dependency merely to make an optional output or reviewer install automatically.
 
 Contexts describe facts and preferences. Policies contain operative rules. The initial private context packs define binding contracts; they do not fabricate personal or project facts. Bind existing crafted context in user configuration and grant explicit project/provider access. To create a public context, set `sensitivity: public` and choose `access: inherit`, `explicit` or `never` intentionally.

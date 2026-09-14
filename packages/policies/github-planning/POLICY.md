@@ -1,0 +1,13 @@
+# GitHub planning authority
+
+Opt-in policy for projects whose single planning authority is GitHub Projects plus its linked repository issues and milestones. One designated Project covers the full monorepo; app-specific boards are filtered views, not separate writable plans. Obtain the exact owner/repository and Project URL or ID from authorized project context or the user; never infer the board from its display name.
+
+For planning, scoping or work-status changes, load the selected github-planning reference and Plan Out's sizing guidance. Refresh existing issues, milestones, native issue types, Project fields and workflows before proposing writes. Use native Feature, Task and Bug types where available, not labels pretending to be native types. Milestones are repository objects, not issues or Project rows. If capabilities or authority are missing, surface the gap and prepare an explicitly unrefreshed draft; do not silently substitute another tracker or taxonomy.
+
+Elaborate only the next milestone. Each future milestone has exactly one Task to plan it later, with no prematurely created implementation phases or feature/task tree. Preserve existing completed/in-progress work; do not delete or flatten an existing tree to force this shape. Apply the reference's issue-body and metadata conventions without empty headings, invented estimates or duplicate status labels.
+
+Every Task implementing a Feature must have that native Feature issue as its direct parent through a sub-issue relationship. A title, label, body link or common milestone is not sufficient. Keep PR-phase grouping in the plan/body without placing another Task between the Feature and its tasks. Verify the parent's actual issue type and read back the relationship after authorized publication. Missing or conflicting parents require reconciliation, not silent reparenting. Standalone maintenance and future-milestone planning Tasks do not need artificial Features.
+
+Use stable issue/Project-item identities; read and reconcile before creating. Preview proposed creates, updates, relationships and metadata changes. Planning authority does not grant permission to publish, change organization settings or configure automations. After authorized writes, read back state and report actual IDs and partial failures; resolve uncertain writes before retrying. Local Plan Context and Markdown are dated projections of GitHub, not competing sources of truth.
+
+Write each Markdown prose paragraph on one logical source line. Do not hard-wrap to a fixed width or insert arbitrary mid-sentence breaks. Preserve meaningful lists, tables, code and deliberate line breaks.

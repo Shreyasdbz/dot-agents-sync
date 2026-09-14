@@ -3,7 +3,7 @@
   "kind": "Skill",
   "id": "skill.pr-review",
   "name": "pr-review",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Review a PR or supplied diff for actionable regressions and requirement gaps, inline by default; optionally post or create reports.",
   "license": "UNLICENSED",
   "entry": "SKILL.md",
@@ -18,7 +18,8 @@
   "requires": {
     "template.pr-review": ">=1,<2",
     "policy.scope": ">=1,<2",
-    "policy.verification": ">=1,<2"
+    "policy.verification": ">=1,<2",
+    "policy.communication": ">=1,<2"
   },
   "capabilities": [
     "filesystem.read"

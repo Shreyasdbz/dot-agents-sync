@@ -79,8 +79,8 @@ Every command accepts `--json`. Mutations require `--scope`; project operations 
 | Group | Items |
 | --- | --- |
 | Development skills | Propose, Plan Out, Do It, Investigate, PR Review, Pitch Deck |
-| Personal skills | Trip Plan, Trip Publish, Curate AM Playlist |
-| Agents | Security/privacy, architecture, AI systems, UX/accessibility, travel research, slop audit |
+| Personal skills | Trip Publish, Curate AM Playlist; Trip Plan compatibility entrypoint |
+| Agents | Security/privacy, architecture, AI systems, UX/accessibility, travel planning, travel research, slop audit |
 | Policies | Scope, coding, verification, Git hygiene, security, communication, research, accessibility |
 | Context bindings | Planning authority, coding preferences, architecture, conventions, Python, TypeScript, cloud, AI systems, design, audience, security, travel, music |
 | Public context presets | Editorial design and maintainable coding; opt-in starting points, not invented user preferences |
@@ -88,6 +88,10 @@ Every command accepts `--json`. Mutations require `--scope`; project operations 
 | Hooks | Credential-path guard; separately approved, never included by a profile |
 
 Profiles: `dev-core`, `dev-review`, `technical-storytelling`, `travel`, `personal-music`. Profile membership is inspectable and editable. Templates follow required dependencies; suggested agents and context never activate implicitly.
+
+The optional [engineering-cloudflare profile](docs/engineering-profile.md) adds Cloudflare-first/GCP-next platform choices, pnpm/Turborepo application boundaries, TanStack/shadcn UI conventions and a loadable public stack reference. It contains no skills, hooks or private bindings and does not change the other profiles' stack preferences. Coding quality includes public-contract documentation and a bounded anti-slop completion audit.
+
+The optional [planning-github profile and travel context](docs/planning-and-travel-context.md) add native GitHub planning conventions and a Travel Planner agent consulted by Trip Publish. Trip Plan is now a compatibility entrypoint; the travel profile selects the agent directly. Personal travel context remains private and separately authorized. All catalog skills and agents carry the natural-paragraph Markdown rule through policy.communication.
 
 Propose asks material clarifying questions and then makes supported design decisions. Plan Out loads the project's planning authority, fully elaborates only the next milestone, and leaves one planning task per future milestone. Investigate and PR Review return inline results by default with optional reports or posting. Pitch Deck uses an adaptive HTML shell with outcome-focused editorial guidance and accessibility checks.
 

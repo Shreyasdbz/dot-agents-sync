@@ -1,16 +1,10 @@
 ---
 name: trip-plan
-description: "Create or revise a feasible, source-backed travel itinerary using traveler constraints. Planning does not book or purchase."
+description: "Compatibility entrypoint for Travel Planner. Use the travel-planner agent for itinerary planning; this alias preserves existing selections."
 ---
 
-# Trip Plan
+# Trip Plan compatibility entrypoint
 
-Read the existing itinerary and selected traveler context. Preserve confirmed bookings and accepted decisions. Resolve only missing constraints that affect feasibility: participants, dates, origin/destinations, budget/currency, mobility/dietary needs, pace and priorities. Use stated assumptions for reversible preferences.
+The planning workflow now belongs to the selected Travel Planner agent. Consult its selected role reference for the requested itinerary work, passing only necessary authorized context. Use native delegation when available and permitted; otherwise apply the role inline and say that no separate agent ran.
 
-Build around fixed commitments and geographic clusters. Check travel time, transfers, opening days, local time zones and recovery buffers; avoid an itinerary that is only feasible on paper. Compare a few suitable options, including a practical fallback where weather or availability matters.
-
-Verify changing prices, schedules, entry rules and availability from current authoritative sources. Record date checked, currency, per-person versus total cost, and whether an option is merely a candidate or actually booked. Refer travelers to official entry requirements; do not infer eligibility from nationality alone or store passport/payment details in the plan.
-
-If browsing is unavailable, produce a provisional structure from supplied facts and mark live checks outstanding. Do not present remembered prices or availability as current. Use an available travel researcher only for a bounded question.
-
-Load [itinerary.md](references/template.trip-plan/itinerary.md). Deliver a scan-friendly itinerary with logistics, costs/assumptions, sources, alternatives and unresolved decisions. No bookings, cancellations, payments or outreach without explicit authority.
+Use the selected itinerary template when a written plan is requested. Do not run a second independent planning workflow here. Planning never authorizes bookings, cancellations, payments, points transfers or sharing. New configurations should select agent.travel-planner; this small alias keeps existing skill.trip-plan selections resolvable.

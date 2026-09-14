@@ -1,0 +1,26 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Policy",
+  "id": "policy.github-planning",
+  "name": "github-planning",
+  "version": "1.1.0",
+  "description": "Use one GitHub Project as the monorepo planning authority, with native issue types and strict metadata.",
+  "license": "UNLICENSED",
+  "entry": "POLICY.md",
+  "files": [
+    "POLICY.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "requires": {
+    "context.github-planning": ">=1,<2",
+    "policy.communication": ">=1,<2"
+  },
+  "policy": {
+    "globs": [],
+    "priority": 0
+  },
+  "token_budget": 850
+}

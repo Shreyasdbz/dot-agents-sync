@@ -3,7 +3,7 @@
   "kind": "Context",
   "id": "context.planning-authority",
   "name": "planning-authority",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Planning authority: Load before planning or updating work items.",
   "license": "UNLICENSED",
   "entry": "CONTEXT.md",

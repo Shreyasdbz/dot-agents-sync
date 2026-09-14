@@ -3,7 +3,7 @@
   "kind": "Agent",
   "id": "agent.architecture-reviewer",
   "name": "architecture-reviewer",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Review designs and changes for broken invariants, failure recovery, compatibility, and unnecessary architectural complexity.",
   "license": "UNLICENSED",
   "entry": "AGENT.md",
@@ -19,5 +19,8 @@
     "findings",
     "evidence",
     "verification-limits"
-  ]
+  ],
+  "requires": {
+    "policy.communication": ">=1,<2"
+  }
 }

@@ -1,0 +1,11 @@
+{
+  "id": "engineering-cloudflare",
+  "description": "Optional Cloudflare-first engineering, monorepo and TanStack/shadcn defaults; no skills, hooks or private bindings are installed.",
+  "packages": [
+    "policy.coding",
+    "policy.verification",
+    "policy.engineering-platform",
+    "policy.monorepo",
+    "policy.ui-shadcn"
+  ]
+}

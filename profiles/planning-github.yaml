@@ -1,0 +1,8 @@
+{
+  "id": "planning-github",
+  "description": "Opt-in GitHub planning authority with Plan Out; actual board identity and write approval are required separately.",
+  "packages": [
+    "policy.github-planning",
+    "skill.plan-out"
+  ]
+}

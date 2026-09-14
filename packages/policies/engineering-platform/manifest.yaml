@@ -1,0 +1,25 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Policy",
+  "id": "policy.engineering-platform",
+  "name": "engineering-platform",
+  "version": "1.0.0",
+  "description": "Optional Cloudflare-first platform and runtime selection",
+  "license": "UNLICENSED",
+  "entry": "POLICY.md",
+  "files": [
+    "POLICY.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 900,
+  "policy": {
+    "globs": [],
+    "priority": 0
+  },
+  "requires": {
+    "context.engineering-stack": ">=1,<2"
+  }
+}

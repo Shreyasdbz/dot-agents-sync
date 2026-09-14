@@ -1,8 +1,8 @@
 {
   "id": "travel",
-  "description": "Optional travel starting selection; inspect dependencies before applying.",
+  "description": "Optional Travel Planner agent and Trip Publish skill; private traveler context requires separate selection and grants.",
   "packages": [
-    "skill.trip-plan",
+    "agent.travel-planner",
     "skill.trip-publish"
   ]
 }

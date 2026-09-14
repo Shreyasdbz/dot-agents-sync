@@ -2,6 +2,7 @@
 
 import json
 import os
+import posixpath
 import shlex
 import shutil
 import sys
@@ -11,7 +12,7 @@ from dataclasses import dataclass
 from .errors import DasyncError
 from .io import parse
 
-ADAPTER_VERSION = "2"
+ADAPTER_VERSION = "4"
 ROOTS = {"codex": ".agents/skills", "claude": ".claude/skills", "cursor": ".cursor/skills"}
 BASE_CAPABILITIES = {"filesystem.read", "filesystem.write", "git.read"}
 
@@ -181,9 +182,23 @@ def render(selected, graph, bindings, config, scope):
                 )
                 for name, content in dependency_files.items():
                     artifacts.append(Artifact(root + "/" + dep_root + "/" + name, content, provider, pid))
-                references.append(
-                    f"- {dependency}: [{dep.manifest['entry']}]({dep_root}/{dep.manifest['entry']})"
-                )
+                reference_path = dep_root + "/" + dep.manifest["entry"]
+                if kind in {"Policy", "Agent"}:
+                    # Native policy/agent bodies live outside their supporting-reference directory.
+                    if kind == "Agent":
+                        policy_directory = (
+                            f".{provider}/agents"
+                            if provider in {"codex", "claude"}
+                            else f".{provider}/dasync-references/{pid}"
+                        )
+                    elif provider == "codex":
+                        policy_directory = ".codex" if scope.kind == "user" else "."
+                    elif provider == "claude" or scope.kind == "project":
+                        policy_directory = f".{provider}/rules"
+                    else:
+                        policy_directory = f".{provider}/dasync-references/{pid}"
+                    reference_path = posixpath.relpath(root + "/" + reference_path, policy_directory)
+                references.append(f"- {dependency}: [{dep.manifest['entry']}]({reference_path})")
             if references:
                 body += (
                     "\n\n## Selected dependencies\n\nLoad each reference when its role is needed by the workflow.\n\n"

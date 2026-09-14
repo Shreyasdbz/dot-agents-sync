@@ -7,6 +7,8 @@ description: "Break an approved design into reviewable work and a loadable Plan 
 
 Translate an approved design into executable work without reopening settled product decisions. Read relevant repository state, completed work, and selected planning-authority context first. Use existing domain terms and work-item IDs.
 
+When policy.github-planning is selected, load its github-planning reference and the relevant issue-body recipe before mapping or publishing work. Obtain the actual Project identity; do not infer native capabilities, labels or status fields. Other providers retain their own selected authority and mapping.
+
 ## Decompose
 
 Use Plan → Milestone → Phase → Task. A milestone delivers a major outcome; a phase is an independently mergeable PR; a task is an independently verifiable commit-sized change. Prefer phases that exercise a thin usable path through the affected system, with tests alongside behavior. For migrations or wide refactors, sequence compatible expansion, migration and removal; document any intermediate state that cannot stand alone.

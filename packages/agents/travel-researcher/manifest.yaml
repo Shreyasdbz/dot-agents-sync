@@ -3,7 +3,7 @@
   "kind": "Agent",
   "id": "agent.travel-researcher",
   "name": "travel-researcher",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Verify bounded travel questions against current primary sources, including feasibility, availability, total prices, and uncertainty.",
   "license": "UNLICENSED",
   "entry": "AGENT.md",
@@ -19,5 +19,8 @@
     "findings",
     "evidence",
     "verification-limits"
-  ]
+  ],
+  "requires": {
+    "policy.communication": ">=1,<2"
+  }
 }

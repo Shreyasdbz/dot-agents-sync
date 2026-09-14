@@ -1,0 +1,23 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Context",
+  "id": "context.engineering-stack",
+  "name": "engineering-stack",
+  "version": "1.0.0",
+  "description": "Load for Cloudflare/GCP workload fit, runtime choices and monorepo design; public guidance, not project facts.",
+  "license": "UNLICENSED",
+  "entry": "CONTEXT.md",
+  "files": [
+    "CONTEXT.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 1500,
+  "context": {
+    "access": "inherit",
+    "sensitivity": "public",
+    "consumers": []
+  }
+}

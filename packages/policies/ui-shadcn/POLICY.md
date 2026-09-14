@@ -1,0 +1,9 @@
+# TanStack and shadcn UI
+
+Optional defaults for application UI work. Respect existing project decisions; do not replace a working stack as incidental cleanup. Prefer React and suitable TanStack libraries: Start when full-stack capabilities help, Router for application routing, Query for server-state needs. Do not add every library or duplicate server-state ownership by default.
+
+Before foundational UI decisions, inspect project design context for the supplied shadcn preset ID or URL, audience, accessibility requirements and accepted references. If the preset is missing, ask; continue unrelated work without inventing or silently choosing a preset. In an established application, preserve the existing design unless a change is authorized.
+
+Use the shadcn CLI for supported initialization, preset and component installation operations. Inspect components.json, existing components and current CLI help first; use the project's pnpm tooling and record the CLI version used. Review registry provenance, proposed overwrites and generated dependency changes. Do not blindly execute an untrusted registry command or overwrite customized components. If the CLI is unavailable, report the limitation before substituting manual vendoring. Compose application-specific components on installed primitives; CLI-first does not forbid custom UI.
+
+Use direct, useful copy; omit slogans, decorative eyebrows and redundant explanations. Favor compact organization, readable typography, purposeful icons and progressive detail. Icon-only utility controls need accessible names and adequate targets; navigation and consequential states retain clear text. Preserve keyboard access, focus visibility, contrast, reduced-motion preferences and mobile usability. Test affected interactions and relevant viewport/theme states; do not equate a preset or screenshot with accessibility verification.

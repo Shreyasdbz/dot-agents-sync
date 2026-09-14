@@ -3,7 +3,7 @@
   "kind": "Agent",
   "id": "agent.slop-auditor",
   "name": "slop-auditor",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Find unsupported completion claims, unfinished production paths, and filler without misclassifying test doubles or reusable templates.",
   "license": "UNLICENSED",
   "entry": "AGENT.md",
@@ -19,5 +19,8 @@
     "findings",
     "evidence",
     "verification-limits"
-  ]
+  ],
+  "requires": {
+    "policy.communication": ">=1,<2"
+  }
 }

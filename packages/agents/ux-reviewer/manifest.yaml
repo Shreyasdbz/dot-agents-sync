@@ -3,7 +3,7 @@
   "kind": "Agent",
   "id": "agent.ux-reviewer",
   "name": "ux-reviewer",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Review user journeys, accessibility, interaction states, and visual hierarchy; distinguish source findings from rendered evidence.",
   "license": "UNLICENSED",
   "entry": "AGENT.md",
@@ -19,5 +19,8 @@
     "findings",
     "evidence",
     "verification-limits"
-  ]
+  ],
+  "requires": {
+    "policy.communication": ">=1,<2"
+  }
 }

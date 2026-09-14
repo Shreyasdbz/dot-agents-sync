@@ -3,7 +3,7 @@
   "kind": "Skill",
   "id": "skill.trip-publish",
   "name": "trip-publish",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Turn an approved itinerary into a mobile-friendly HTML travel guide. Creating the file is distinct from hosting or sharing it.",
   "license": "UNLICENSED",
   "entry": "SKILL.md",
@@ -17,15 +17,18 @@
   "token_budget": 1500,
   "requires": {
     "template.trip-publish": ">=1,<2",
-    "policy.accessibility": ">=1,<2"
+    "policy.accessibility": ">=1,<2",
+    "policy.communication": ">=1,<2",
+    "agent.travel-planner": ">=1,<2"
   },
   "capabilities": [
     "filesystem.read"
   ],
   "prefers": [
-    "browser.render"
+    "browser.render",
+    "agents.parallel"
   ],
-  "fallback": "Create and structurally inspect HTML; distinguish file delivery from hosting and visual verification.",
+  "fallback": "Apply the Travel Planner role inline if delegation is unavailable; structurally inspect HTML and disclose unperformed visual checks.",
   "outputs": [
     "html"
   ],
