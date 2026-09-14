@@ -3,11 +3,12 @@
   "kind": "Template",
   "id": "template.trip-publish",
   "name": "trip-publish",
-  "version": "1.5.0",
+  "version": "1.10.0",
   "description": "Traveler-friendly trip page with day summaries, reservations, transport timelines, to-dos and optional currency estimates.",
   "license": "UNLICENSED",
   "entry": "trip.html",
   "files": [
+    "components/expenses.html",
     "components/copy-details.html",
     "components/activity.html",
     "components/cost-summary.html",
@@ -29,5 +30,5 @@
     "user",
     "project"
   ],
-  "token_budget": 20000
+  "token_budget": 25000
 }

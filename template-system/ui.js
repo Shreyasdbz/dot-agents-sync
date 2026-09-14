@@ -5,14 +5,27 @@
   const theme = document.querySelector('[data-theme-toggle]');
   if (theme) {
     theme.hidden = false;
+    const systemTheme = matchMedia('(prefers-color-scheme: dark)');
+    const refreshTheme = () => {
+      const dark = document.documentElement.dataset.theme
+        ? document.documentElement.dataset.theme === 'dark' : systemTheme.matches;
+      theme.setAttribute('aria-pressed', String(dark));
+      theme.querySelectorAll('[data-theme-icon]').forEach(icon => {
+        icon.hidden = icon.dataset.themeIcon !== (dark ? 'dark' : 'light');
+        icon.toggleAttribute('hidden', icon.hidden);
+      });
+      theme.title = dark ? 'Dark theme · switch to light' : 'Light theme · switch to dark';
+    };
     theme.addEventListener('click', () => {
       const dark = document.documentElement.dataset.theme
         ? document.documentElement.dataset.theme === 'dark'
         : matchMedia('(prefers-color-scheme: dark)').matches;
       document.documentElement.dataset.theme = dark ? 'light' : 'dark';
       theme.setAttribute('aria-pressed', String(!dark));
+      refreshTheme();
     });
-    theme.setAttribute('aria-pressed', String(matchMedia('(prefers-color-scheme: dark)').matches));
+    refreshTheme();
+    systemTheme.addEventListener('change', refreshTheme);
   }
   all('[data-print]').forEach(button => {button.hidden = false; button.onclick = () => window.print();});
   const disclosures = all('details.disclosure');

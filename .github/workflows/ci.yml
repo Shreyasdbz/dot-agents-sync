@@ -18,8 +18,23 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - run: uv sync --locked
-      - run: uv run ruff check cli tests packages/hooks evals
-      - run: uv run ruff format --check cli tests packages/hooks evals
+      - run: uv run ruff check cli tests packages/hooks evals scripts/build_templates.py
+      - run: uv run ruff format --check cli tests packages/hooks evals scripts/build_templates.py
       - run: uv run pytest -q
       - run: uv build
       - run: uvx --from dist/*.whl dasync --version
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - run: npm ci --ignore-scripts --prefix scripts/browser
+      - run: scripts/browser/node_modules/.bin/playwright install --with-deps chromium
+      - name: Artifact interactions and accessibility
+        env:
+          NODE_PATH: ${{ github.workspace }}/scripts/browser/node_modules
+          AXE_PATH: ${{ github.workspace }}/scripts/browser/node_modules/axe-core/axe.min.js
+        run: |
+          node scripts/test_templates.cjs "$RUNNER_TEMP/template-browser"
+          node scripts/test_template_navigation.cjs
+          node scripts/test_travel_currency.cjs

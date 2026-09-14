@@ -7,7 +7,7 @@ const { pathToFileURL } = require('node:url');
 
 (async () => {
   const root = path.resolve(__dirname, '..');
-  const out = path.resolve(process.argv[2] || '/private/tmp/dasync-template-browser');
+  const out = path.resolve(process.argv[2] || path.join(require('node:os').tmpdir(), 'dasync-template-browser'));
   fs.mkdirSync(out, {recursive:true});
   const browser = await chromium.launch({headless:true});
   const results = [];
@@ -38,6 +38,15 @@ const { pathToFileURL } = require('node:url');
       await page.locator('[data-theme-toggle]').click();
       assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
       assert.equal(await page.locator('[data-theme-toggle]').getAttribute('aria-pressed'), 'true');
+      if(name!=='trip') {
+        assert(await page.locator('[data-theme-icon="dark"]').isVisible());
+        assert.equal(await page.locator('[data-theme-icon="light"]').isVisible(),false);
+        for(const selector of ['[data-theme-toggle]','[data-print]']) {
+          assert(await page.locator(selector).getAttribute('aria-label'));
+          assert(await page.locator(selector).evaluate(n=>n.getBoundingClientRect().width>=44 && n.getBoundingClientRect().height>=44));
+        }
+        assert.equal(await page.locator('.sidebar').count(),0);
+      }
       const accessibility = [await audit(page,name,'dark-collapsed')];
       await page.screenshot({path:path.join(out, name+'-dark.png'),fullPage:true});
       await page.locator('[data-theme-toggle]').click();
@@ -57,6 +66,7 @@ const { pathToFileURL } = require('node:url');
         assert.equal(await page.locator('details:not([open])').count(),0);
         accessibility.push(await audit(page,name,'light-expanded'));
         await page.emulateMedia({media:'print'});
+        assert.equal(await page.locator('.tools').isVisible(),false);
         await page.pdf({path:path.join(out,name+'.pdf'),format:'A4',printBackground:true});
         await page.emulateMedia({media:'screen'});
         await page.evaluate(() => window.dispatchEvent(new Event('afterprint')));
@@ -77,40 +87,51 @@ const { pathToFileURL } = require('node:url');
         await page.locator('[data-currency]').selectOption('JPY');
         assert.equal(await page.locator('[data-money-usd]').first().innerText(),'JPY 1,800,000');
         await page.locator('[data-currency]').selectOption('USD');
-        const amounts=await page.locator('[data-money-usd]').evaluateAll(nodes=>nodes.map(n=>Number(n.dataset.moneyUsd)));
-        assert.equal(amounts[0],amounts.slice(1).reduce((a,b)=>a+b,0),'budget reconciles');
+        const amounts=await page.locator('[data-expense-line]').evaluateAll(nodes=>nodes.map(n=>Number(n.dataset.moneyUsd)));
+        assert.equal(Number(await page.locator('[data-money-usd]').first().getAttribute('data-money-usd')),amounts.reduce((a,b)=>a+b,0),'budget reconciles');
         await page.goto(url+'#itinerary-09');
         assert(await page.locator('#itinerary-09').evaluate(n=>n.open));
         await page.goto(url);
       }
       if (name==='review') {
-        await page.getByLabel('Find in findings').fill('no-such-finding');
+        await page.getByLabel('Search findings').fill('no-such-finding');
         assert(await page.locator('[data-empty]').isVisible());
         assert.equal(await page.locator('[data-finding]:visible').count(),0);
         await page.evaluate(() => window.dispatchEvent(new Event('beforeprint')));
         assert.equal(await page.locator('[data-finding][hidden]').count(),0);
         await page.evaluate(() => window.dispatchEvent(new Event('afterprint')));
         assert.equal(await page.locator('[data-finding][hidden]').count(),1);
-        await page.getByLabel('Find in findings').fill('zero');
+        await page.getByLabel('Search findings').fill('zero');
         assert.equal(await page.locator('[data-finding]:visible').count(),1);
-        await page.getByLabel('Find in findings').fill('');
+        await page.getByLabel('Search findings').fill('');
       }
       if (name==='deck') {
         await page.locator('[data-deck-view]').click();
-        assert(await page.getByRole('button',{name:'Previous',exact:true}).isDisabled());
+        assert(await page.getByRole('button',{name:'Previous slide',exact:true}).isDisabled());
         await page.locator('main').focus(); await page.keyboard.press('End');
         await page.waitForFunction(() => document.querySelector('[data-next]').disabled);
         assert.equal(Number(await page.locator('progress').getAttribute('value')),await page.locator('.slide').count());
         await page.locator('main').focus(); await page.keyboard.press('Home');
         await page.waitForFunction(() => document.querySelector('[data-prev]').disabled);
+        await page.emulateMedia({media:'print'});
+        assert.equal(await page.locator('.tools').isVisible(),false);
         await page.pdf({path:path.join(out,name+'.pdf'),format:'A4',printBackground:true});
+        await page.emulateMedia({media:'screen'});
         await page.locator('[data-deck-view]').click();
       }
       for (const width of [1440,390,320]) {
         await page.setViewportSize({width,height:1000});
         await page.evaluate(() => scrollTo(0,0));
         assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),name+' page overflow at '+width);
+        if(name==='review' && width<=390) assert(await page.locator('[data-filter]').evaluate(n=>n.getBoundingClientRect().width>=250),'usable mobile search');
         await page.screenshot({path:path.join(out,name+'-'+width+'.png'),fullPage:true});
+        if(name==='proposal' || name==='review'){
+          await page.locator('.page-nav a').last().click();
+          const top = await page.locator('.topbar').evaluate(n=>n.getBoundingClientRect().top);
+          assert(Math.abs(top)<1,'sticky document header');
+          const target = page.locator(name==='proposal'?'#validation':'#verification');
+          assert(await target.evaluate(n=>n.getBoundingClientRect().top>=document.querySelector('.topbar').getBoundingClientRect().bottom),'section clears header');
+        }
       }
       accessibility.push(await audit(page,name,'light-320'));
       if(name==='deck' || name==='proposal') {

@@ -1,3 +1,11 @@
+  const tripBar = document.querySelector('.trip-topbar');
+  if (tripBar) {
+    const resizeBar = () => document.documentElement.style.setProperty('--trip-bar-height', tripBar.offsetHeight + 'px');
+    const scrollBar = () => tripBar.classList.toggle('is-scrolled', window.scrollY > 4);
+    new ResizeObserver(resizeBar).observe(tripBar);
+    window.addEventListener('scroll', scrollBar, {passive:true});
+    resizeBar(); scrollBar();
+  }
   // Copy only on an explicit click; failure never announces success.
   all('[data-copy-target]').forEach(button => {
     const target = document.getElementById(button.dataset.copyTarget);
@@ -32,6 +40,7 @@
     const updateCurrency = () => {
       const option = select.selectedOptions[0];
       if (!option || !valid(option)) return;
+      currencyControl.title = 'Currency: ' + option.value;
       const formatter = new Intl.NumberFormat('en-US', {style:'currency',currency:option.value,currencyDisplay:'code',maximumFractionDigits:0});
       amounts.forEach(node => {
         const value = Number(node.dataset.moneyUsd);

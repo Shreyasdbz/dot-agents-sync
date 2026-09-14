@@ -29,7 +29,12 @@
     select.onchange = () => go(Number(select.value));
     if (view) {
       view.hidden = false; view.setAttribute('aria-pressed','false');
-      view.onclick = () => {readAll = !readAll; view.setAttribute('aria-pressed',String(readAll)); state();};
+      view.onclick = () => {
+        readAll = !readAll;
+        view.setAttribute('aria-pressed',String(readAll));
+        view.title = readAll ? 'All slides shown · switch to presentation' : 'Read all slides';
+        state();
+      };
     }
     document.addEventListener('keydown', event => {
       // Native value-editing controls and nested sequence players own their arrow keys.

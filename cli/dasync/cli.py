@@ -344,6 +344,8 @@ def run(args):
         if args.before:
             request["before_receipt"] = True
     if operation == "setup":
+        request["config_only"] = args.config_only
+        request["config"]["approved_executables"] = sorted(set(args.approve_executable))
         request["config"]["capabilities"] = args.capability
         request["config"]["contexts"] = args.allow_context
     plan, _ = engine.build(request)

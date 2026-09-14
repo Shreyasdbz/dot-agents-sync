@@ -1,0 +1,9 @@
+{
+  "name": "dasync-browser-acceptance",
+  "private": true,
+  "description": "Test-only browser dependencies; never shipped in catalog artifacts.",
+  "devDependencies": {
+    "axe-core": "4.13.0",
+    "playwright": "1.62.1"
+  }
+}

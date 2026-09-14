@@ -3,7 +3,7 @@
   "kind": "Template",
   "id": "template.design-proposal",
   "name": "design-proposal",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Adaptive bug-fix, feature, migration and decision recipes with a self-contained proposal UI.",
   "license": "UNLICENSED",
   "entry": "proposal.md",

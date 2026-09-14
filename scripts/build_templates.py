@@ -1,6 +1,7 @@
 """Deterministically inline canonical UI assets. Emit an apply_patch patch; never edit sources."""
 
 import argparse
+import json
 import re
 from pathlib import Path
 
@@ -12,6 +13,7 @@ PAGES = {
     "deck": "pitch-deck/deck.html",
 }
 FRAGMENTS = {
+    "travel-expenses": "trip-publish/components/expenses.html",
     "travel-copy-details": "trip-publish/components/copy-details.html",
     "route-map": "trip-publish/components/route-map.html",
     "timeline": "trip-publish/components/timeline.html",
@@ -36,12 +38,22 @@ def render_all():
     base = ROOT / "template-system"
     css = (base / "ui.css").read_text()
     js = (base / "ui.js").read_text()
+    icons = json.loads((base / "icons.json").read_text())
 
     def compose(source):
         content = re.sub(
             r"\{\{component:([a-z-]+)\}\}",
             lambda match: (base / "components" / (match[1] + ".html")).read_text(),
             source,
+        )
+        content = re.sub(
+            r"\{\{icon:([a-z-]+)\}\}",
+            lambda match: (
+                '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+                + icons[match[1]]
+                + "</svg>"
+            ),
+            content,
         )
         behavior = js.rsplit("})();", 1)[0]
         for marker, name in (
@@ -55,6 +67,8 @@ def render_all():
         page_css = css
         if 'class="travel"' in content:
             page_css += (base / "travel.css").read_text()
+        else:
+            page_css += (base / "editorial.css").read_text()
         return content.replace("{{styles}}", page_css).replace("{{interactions}}", behavior)
 
     outputs = {

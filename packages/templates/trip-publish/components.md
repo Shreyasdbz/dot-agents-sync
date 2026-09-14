@@ -1,12 +1,12 @@
 # Travel page composition
 
-Build for travelers, not operators. Use this order: headline, At a glance, Reservations (Flights, Stays, Other tickets), Itinerary, To do, Metadata. The worked page is illustrative; replace every sample name, date, budget and booking fact. No slogan or poetic subtitle is needed. A warm neutral palette, readable type and clear day cards supply character without adding copy.
+Build for travelers, not operators. Use this order: headline, At a glance, Reservations (Flights, Stays, Other tickets), Itinerary, To do, Expenses, Metadata. The worked page is illustrative; replace every sample name, date, budget and booking fact. No slogan or poetic subtitle is needed. A warm neutral palette, readable type and clear day cards supply character without adding copy.
 
 ## Headline and controls
 
-Show the trip title, dates, people by name, destination highlights and total estimated cost with its party/per-person basis. If costs are incomplete, say "Known subtotal" or "Not yet priced" rather than inventing a total. Separate optional, paid and remaining costs only when evidence supports them.
+Show the trip title, dates, people by name and destination highlights in the headline. Put the estimate and party size in a small, unbolded line at the end of the trip-summary paragraph, with a Cost breakdown link. Do not turn the estimate into a heading, badge or prominent metric. Leave the detailed ledger in Expenses and exchange-rate provenance in Metadata. If costs are incomplete, say "Known subtotal" or "Not yet priced" rather than inventing a total. Separate optional, paid and remaining costs only when evidence supports them.
 
-Keep section links, native day/reservation disclosures, Print and an optional theme switch. No group or date filters. Use people's names on split plans and reservation allocations. The To do list is informational, not a persistent task tracker; do not present checkboxes that silently lose edits on reload.
+Keep section links and icon-only Print/theme buttons together in the sticky trip-topbar. The navigation row scrolls on small screens, without widening the page. Applied theme is shown by sun (light) or moon (dark); the Dark mode toggle exposes aria-pressed and a tooltip describing the next action. Track system changes until explicit selection. Preserve accessible names, 44px targets, opaque fallback when backdrop blur is unavailable and anchor offsets measured from the bar's actual height. Hide the bar in print. No group or date filters. Use people's names on split plans and reservation allocations. The To do list is informational, not a persistent task tracker; do not present checkboxes that silently lose edits on reload.
 
 ## At a glance and itinerary
 
@@ -30,6 +30,8 @@ Confirmation references may be included in an explicitly authorized private trav
 
 ## Currency and budget
 
+The top bar's currency entry is icon-only visually, with an accessible native select layered over a 44px icon target. Keep its Display currency label, focus outline and selected-currency tooltip. It uses the browser/OS dropdown rather than implementing a custom menu; keyboard and mobile picker behavior remain native. Hide the whole entry when conversion is unavailable or JavaScript is off.
+
 Currency selection is optional progressive enhancement. Omit the control when there is only one currency or no reliable conversion basis. Two currencies use a select; additional currencies add options. data-money-usd holds the immutable USD-equivalent estimate, and each option's data-rate is display-currency units per USD. Format display values using Intl.NumberFormat; round only for display, not the source ledger. Zero is valid, unknown is not zero, invalid or nonpositive rates are disabled. Switching repeatedly must not compound rounding.
 
 Before delivery replace the illustrative rate with a verified source, retrieval date and time, base/quote currencies and fees/rounding caveat in Metadata. This is an offline estimate converter, not live FX or a payment system. Do not add data-money-usd to original booking amounts: those stay visible in their original currency. For native-currency items derive the USD basis once from the same dated rate table, count shared bookings once, and reconcile line items with the headline total. Preserve the original amount separately. The [cost summary](components/cost-summary.html) is a ledger recipe, not an authoritative quote.
@@ -37,6 +39,8 @@ Before delivery replace the illustrative rate with a verified source, retrieval 
 Without JavaScript the USD estimates and rate caveat remain visible and the selector stays hidden. Print retains the chosen currency and its explanation. No network requests or storage occur.
 
 ## To do and metadata
+
+Place [Expenses](components/expenses.html) after To do and before metadata, in one closed disclosure card. Its header summarizes item count, estimated total, categories, party size and payment status. Inside, use a real table with caption, column headers, row headers and a total footer: category, line item, calculation/basis and estimate. Keep payment/sharing context below the table, not in a repeated column. Put reservation links in their relevant item cells. The table scrolls inside a labelled, keyboard-focusable region on narrow screens and fits the print page. Only leaf rows get data-expense-line; reconcile their sum with the total, excluding repeated summaries from addition. Record actual payment status, payer, shares, due dates, original currency and exclusions when known. Never convert an unknown payment to zero or confuse the displayed per-person average with a reimbursement calculation. The sample ledger is an allowance breakdown, not actual bookings or accounting software.
 
 Sort outstanding tasks by urgency then known due date, with owner, concrete action and relevant booking link. Do not invent deadlines. Show missing owners. Metadata includes last edited, plan status, last verification where known, rate source/date and budget scope. Do not label a generated date as a booking verification.
 

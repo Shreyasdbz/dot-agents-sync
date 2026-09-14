@@ -16,7 +16,7 @@ def test_generated_templates_match_canonical_source():
     for path, expected in module.render_all().items():
         assert path.read_text() == expected
         assert "{{" not in expected
-        limit = 60000 if path.name == "trip.html" else 40000
+        limit = 75000 if path.name == "trip.html" else 40000
         assert len(expected.encode()) < limit
 
 

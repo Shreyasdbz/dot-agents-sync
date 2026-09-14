@@ -5,6 +5,8 @@ A small authoring system, not an application framework. Markdown recipes select 
 ## Source and delivery boundaries
 
 - `ui.css`: design tokens, layout and component styles, including reflow, theme, focus, motion and print behavior.
+- `editorial.css`: proposal, review and presentation shell; compact sticky navigation, neutral themes and document-specific typography. Excluded from travel output.
+- `icons.json`: canonical decorative SVG paths, expanded from `{{icon:name}}` at build time. Pair section icons with text; name every icon-only control. `components/page-tools.html` shares theme and print controls across the editorial pages.
 - `ui.js`: theme, disclosure controls, hash reveal, print restoration and finding search. No network calls or storage.
 - `behaviors/*.js`: separate deck navigation, sequence playback and optional travel currency modules. The builder includes only modules used by the composition. Travel-only styles live in `travel.css`.
 - `components/*.html`: reusable charts, data flow, entity models, sequences, dense context, travel events, stays, costs and finding fragments.

@@ -10,6 +10,12 @@ Use .flow with an ordered list for a real sequence, not decorative boxes. Use a 
 
 ## Foundation contract
 
+Use the compact header from the worked page. Document navigation keeps icon + text labels; familiar utility actions use 44px icon buttons with accessible names and hover titles. Icons are inline SVG with a consistent 24px viewBox and 1.6px stroke, hidden from assistive technology when the adjacent text or button name already conveys their meaning. Theme icons show the applied theme, including system-theme changes. Keep status and severity in words; never rely on an icon or color alone.
+
+Write headings as subjects, decisions or actions. Put the conclusion and material uncertainty first, then supporting evidence. Remove slogans, duplicate summaries and authoring instructions from the delivered page. Keep a short, visible sample label while demonstrating invented content. Native disclosures hold secondary detail, not the verdict, recommendation or critical caveat. Use tables for comparable values, diagrams for actual relationships, and plain paragraphs for everything else.
+
+The header stays visible with a solid-color fallback and progressive background blur. Narrow document navigation scrolls within the header; the page itself must not overflow. Print removes navigation and controls. Preserve comfortable text size and reading measure as the content area widens; dense reference material can use the available width without turning ordinary paragraphs into full-width text.
+
 The HTML entrypoint includes CSS and JavaScript and works offline without third-party assets. Reuse semantic markup and the existing class/data attributes; do not import a framework. CSS custom properties control colors, radius and type. Change tokens first, then layout only where the content needs it. Test both themes after customization.
 
 Shared components: .panel (content group), .grid (two columns collapsing on narrow screens), .metrics with dt/dd (summary values), .badge plus explicit text (status), .callout (consequential note), .table-wrap with a named region and tabindex=0 (wide table), .empty (honest empty state), .source-list (evidence).
