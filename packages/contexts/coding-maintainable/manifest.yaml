@@ -1,0 +1,23 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Context",
+  "id": "context.coding-maintainable",
+  "name": "coding-maintainable",
+  "version": "1.0.0",
+  "description": "Optional coding conventions preset for small maintainable changes",
+  "license": "UNLICENSED",
+  "entry": "CONTEXT.md",
+  "files": [
+    "CONTEXT.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 2000,
+  "context": {
+    "access": "inherit",
+    "sensitivity": "public",
+    "consumers": []
+  }
+}

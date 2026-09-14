@@ -1,0 +1,10 @@
+{
+  "id": "dev-core",
+  "description": "Optional dev-core starting selection; inspect dependencies before applying.",
+  "packages": [
+    "skill.propose",
+    "skill.plan-out",
+    "skill.do-it",
+    "skill.investigate"
+  ]
+}

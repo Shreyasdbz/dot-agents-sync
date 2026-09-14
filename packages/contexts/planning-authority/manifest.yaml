@@ -1,0 +1,24 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Context",
+  "id": "context.planning-authority",
+  "name": "planning-authority",
+  "version": "1.0.0",
+  "description": "Project planning authority and native hierarchy mapping",
+  "license": "UNLICENSED",
+  "entry": "CONTEXT.md",
+  "files": [
+    "CONTEXT.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 2000,
+  "context": {
+    "access": "explicit",
+    "sensitivity": "private",
+    "binding": "context.planning-authority",
+    "consumers": []
+  }
+}

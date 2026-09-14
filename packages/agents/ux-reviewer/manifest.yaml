@@ -1,0 +1,23 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Agent",
+  "id": "agent.ux-reviewer",
+  "name": "ux-reviewer",
+  "version": "1.0.0",
+  "description": "UX & Accessibility Reviewer",
+  "license": "UNLICENSED",
+  "entry": "AGENT.md",
+  "files": [
+    "AGENT.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 8000,
+  "outputs": [
+    "findings",
+    "evidence",
+    "verification-limits"
+  ]
+}

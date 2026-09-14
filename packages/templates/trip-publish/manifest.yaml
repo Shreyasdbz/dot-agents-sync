@@ -1,0 +1,11 @@
+apiVersion: dasync.dev/v1
+kind: Template
+id: template.trip-publish
+name: trip-publish
+version: 1.0.0
+description: Responsive self-contained itinerary shell with accessible navigation and light/dark appearance.
+license: UNLICENSED
+entry: trip.html
+files: [trip.html]
+scopes: [user, project]
+token_budget: 3000

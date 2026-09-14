@@ -1,0 +1,32 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Skill",
+  "id": "skill.trip-plan",
+  "name": "trip-plan",
+  "version": "1.0.0",
+  "description": "Research and revise a trip itinerary using traveler constraints and current sources.",
+  "license": "UNLICENSED",
+  "entry": "SKILL.md",
+  "files": [
+    "SKILL.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 8000,
+  "requires": {
+    "template.trip-plan": ">=1,<2",
+    "policy.research": ">=1,<2"
+  },
+  "capabilities": [
+    "filesystem.read"
+  ],
+  "prefers": [],
+  "fallback": "Perform sequential evidence passes; disclose that independent parallel review was unavailable.",
+  "outputs": [
+    "inline",
+    "referenced-artifact"
+  ],
+  "suggests": []
+}

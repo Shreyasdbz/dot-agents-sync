@@ -1,0 +1,15 @@
+apiVersion: dasync.dev/v1
+kind: Hook
+id: hook.credential-path-guard
+name: credential-path-guard
+version: 1.0.0
+description: Block explicit credential-path access before supported tool calls. This is a conservative guard, not complete shell enforcement.
+license: UNLICENSED
+entry: guard.py
+files: [guard.py]
+scopes: [user, project]
+token_budget: 1500
+executable:
+  events: [pre_tool]
+  permissions: [stdin.read]
+  timeout: 5

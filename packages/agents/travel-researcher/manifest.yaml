@@ -1,0 +1,23 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Agent",
+  "id": "agent.travel-researcher",
+  "name": "travel-researcher",
+  "version": "1.0.0",
+  "description": "Travel Researcher",
+  "license": "UNLICENSED",
+  "entry": "AGENT.md",
+  "files": [
+    "AGENT.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 8000,
+  "outputs": [
+    "findings",
+    "evidence",
+    "verification-limits"
+  ]
+}

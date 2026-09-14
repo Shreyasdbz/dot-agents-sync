@@ -1,0 +1,24 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Context",
+  "id": "context.security-posture",
+  "name": "security-posture",
+  "version": "1.0.0",
+  "description": "Security posture",
+  "license": "UNLICENSED",
+  "entry": "CONTEXT.md",
+  "files": [
+    "CONTEXT.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 8000,
+  "context": {
+    "access": "explicit",
+    "sensitivity": "private",
+    "binding": "context.security-posture",
+    "consumers": []
+  }
+}

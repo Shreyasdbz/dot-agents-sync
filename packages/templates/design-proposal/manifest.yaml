@@ -1,0 +1,19 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Template",
+  "id": "template.design-proposal",
+  "name": "design-proposal",
+  "version": "1.0.0",
+  "description": "Reusable design-proposal output structure",
+  "license": "UNLICENSED",
+  "entry": "proposal.md",
+  "files": [
+    "proposal.md",
+    "proposal.html"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 8000
+}

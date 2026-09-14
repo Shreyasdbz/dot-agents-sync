@@ -1,0 +1,7 @@
+{
+  "id": "personal-music",
+  "description": "Optional personal-music starting selection; inspect dependencies before applying.",
+  "packages": [
+    "skill.curate-am-playlist"
+  ]
+}

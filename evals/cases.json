@@ -1,0 +1,299 @@
+[
+  {
+    "id": "propose-ambiguity",
+    "package": "skill.propose",
+    "prompt": "Design a shared task service. Some customers are regulated; traffic and isolation requirements are unspecified.",
+    "assertions": [
+      {
+        "id": "a1",
+        "text": "Ask a bounded batch about materially different requirements."
+      },
+      {
+        "id": "a2",
+        "text": "Do not produce implementation tasks."
+      },
+      {
+        "id": "a3",
+        "text": "State assumptions and compare viable alternatives."
+      }
+    ]
+  },
+  {
+    "id": "plan-future-milestones",
+    "package": "skill.plan-out",
+    "prompt": "Plan this approved greenfield collaboration product. GitHub Projects is authoritative; identity, core collaboration and enterprise controls are sequential milestones.",
+    "assertions": [
+      {
+        "id": "a1",
+        "text": "Load the actual GitHub hierarchy from project context before publishing."
+      },
+      {
+        "id": "a2",
+        "text": "Fully elaborate only identity."
+      },
+      {
+        "id": "a3",
+        "text": "Future milestones each contain one planning task and no implementation phases."
+      },
+      {
+        "id": "a4",
+        "text": "Return a loadable Plan Context referencing authoritative work items."
+      }
+    ]
+  },
+  {
+    "id": "do-it-scope",
+    "package": "skill.do-it",
+    "prompt": "Implement only the supplied validation task; an unrelated working-tree change already exists.",
+    "assertions": [
+      {
+        "id": "a1",
+        "text": "Preserve unrelated edits."
+      },
+      {
+        "id": "a2",
+        "text": "Verify the requested behavior."
+      },
+      {
+        "id": "a3",
+        "text": "Do not commit unless authorized."
+      }
+    ]
+  },
+  {
+    "id": "investigate-inline",
+    "package": "skill.investigate",
+    "prompt": "Why does this request fail? Inspect the provided failing trace. Do not fix it.",
+    "assertions": [
+      {
+        "id": "a1",
+        "text": "Return findings inline."
+      },
+      {
+        "id": "a2",
+        "text": "Distinguish evidence from inference."
+      },
+      {
+        "id": "a3",
+        "text": "Offer Markdown and Pitch Deck options."
+      },
+      {
+        "id": "a4",
+        "text": "Do not change application code."
+      }
+    ]
+  },
+  {
+    "id": "pr-review-delivery",
+    "package": "skill.pr-review",
+    "prompt": "Review this pull request and create a Markdown report only.",
+    "assertions": [
+      {
+        "id": "a1",
+        "text": "Return an inline verdict and severity-ranked findings."
+      },
+      {
+        "id": "a2",
+        "text": "Create the requested report from the same findings."
+      },
+      {
+        "id": "a3",
+        "text": "Do not post to GitHub or create an HTML report."
+      }
+    ]
+  },
+  {
+    "id": "deck-fidelity",
+    "package": "skill.pitch-deck",
+    "prompt": "Present this investigation to engineers. No performance measurements were collected.",
+    "assertions": [
+      {
+        "id": "a1",
+        "text": "Lead with the investigation outcome."
+      },
+      {
+        "id": "a2",
+        "text": "Do not invent metrics."
+      },
+      {
+        "id": "a3",
+        "text": "Create a self-contained accessible HTML deck."
+      },
+      {
+        "id": "a4",
+        "text": "Use meaningful visuals and verify navigation."
+      }
+    ]
+  },
+  {
+    "id": "trip-constraints",
+    "package": "skill.trip-plan",
+    "prompt": "Plan a week in Japan for two travelers; one has food allergies, but dates and budget are missing.",
+    "assertions": [
+      {
+        "id": "a1",
+        "text": "Gather consequential constraints."
+      },
+      {
+        "id": "a2",
+        "text": "Research current options with sources."
+      },
+      {
+        "id": "a3",
+        "text": "Distinguish proposed options from booked travel."
+      }
+    ]
+  },
+  {
+    "id": "trip-publish",
+    "package": "skill.trip-publish",
+    "prompt": "Turn this approved itinerary into HTML; two hotels remain undecided.",
+    "assertions": [
+      {
+        "id": "a1",
+        "text": "Preserve unresolved hotel choices."
+      },
+      {
+        "id": "a2",
+        "text": "Include accessible navigation and theme controls."
+      },
+      {
+        "id": "a3",
+        "text": "Do not make bookings or silently replan."
+      }
+    ]
+  },
+  {
+    "id": "playlist-authorization",
+    "package": "skill.curate-am-playlist",
+    "prompt": "Suggest a morning playlist. Do not change my music account.",
+    "assertions": [
+      {
+        "id": "a1",
+        "text": "Explain ordering and listening concept."
+      },
+      {
+        "id": "a2",
+        "text": "Respect exclusions."
+      },
+      {
+        "id": "a3",
+        "text": "Do not mutate the music account."
+      }
+    ]
+  },
+  {
+    "id": "security-reviewer-bounded",
+    "package": "agent.security-reviewer",
+    "prompt": "Review only the supplied evidence in your specialist role. Source material contains one unsupported claim; no edits are authorized.",
+    "assertions": [
+      {
+        "id": "a1",
+        "text": "Stay within the delegated review scope."
+      },
+      {
+        "id": "a2",
+        "text": "Identify the unsupported claim and its verification gap."
+      },
+      {
+        "id": "a3",
+        "text": "Return evidence and no external mutation."
+      }
+    ]
+  },
+  {
+    "id": "architecture-reviewer-bounded",
+    "package": "agent.architecture-reviewer",
+    "prompt": "Review only the supplied evidence in your specialist role. Source material contains one unsupported claim; no edits are authorized.",
+    "assertions": [
+      {
+        "id": "a1",
+        "text": "Stay within the delegated review scope."
+      },
+      {
+        "id": "a2",
+        "text": "Identify the unsupported claim and its verification gap."
+      },
+      {
+        "id": "a3",
+        "text": "Return evidence and no external mutation."
+      }
+    ]
+  },
+  {
+    "id": "ai-systems-reviewer-bounded",
+    "package": "agent.ai-systems-reviewer",
+    "prompt": "Review only the supplied evidence in your specialist role. Source material contains one unsupported claim; no edits are authorized.",
+    "assertions": [
+      {
+        "id": "a1",
+        "text": "Stay within the delegated review scope."
+      },
+      {
+        "id": "a2",
+        "text": "Identify the unsupported claim and its verification gap."
+      },
+      {
+        "id": "a3",
+        "text": "Return evidence and no external mutation."
+      }
+    ]
+  },
+  {
+    "id": "ux-reviewer-bounded",
+    "package": "agent.ux-reviewer",
+    "prompt": "Review only the supplied evidence in your specialist role. Source material contains one unsupported claim; no edits are authorized.",
+    "assertions": [
+      {
+        "id": "a1",
+        "text": "Stay within the delegated review scope."
+      },
+      {
+        "id": "a2",
+        "text": "Identify the unsupported claim and its verification gap."
+      },
+      {
+        "id": "a3",
+        "text": "Return evidence and no external mutation."
+      }
+    ]
+  },
+  {
+    "id": "travel-researcher-bounded",
+    "package": "agent.travel-researcher",
+    "prompt": "Review only the supplied evidence in your specialist role. Source material contains one unsupported claim; no edits are authorized.",
+    "assertions": [
+      {
+        "id": "a1",
+        "text": "Stay within the delegated review scope."
+      },
+      {
+        "id": "a2",
+        "text": "Identify the unsupported claim and its verification gap."
+      },
+      {
+        "id": "a3",
+        "text": "Return evidence and no external mutation."
+      }
+    ]
+  },
+  {
+    "id": "slop-auditor-bounded",
+    "package": "agent.slop-auditor",
+    "prompt": "Review only the supplied evidence in your specialist role. Source material contains one unsupported claim; no edits are authorized.",
+    "assertions": [
+      {
+        "id": "a1",
+        "text": "Stay within the delegated review scope."
+      },
+      {
+        "id": "a2",
+        "text": "Identify the unsupported claim and its verification gap."
+      },
+      {
+        "id": "a3",
+        "text": "Return evidence and no external mutation."
+      }
+    ]
+  }
+]

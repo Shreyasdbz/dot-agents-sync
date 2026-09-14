@@ -1,0 +1,36 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Skill",
+  "id": "skill.propose",
+  "name": "propose",
+  "version": "1.0.0",
+  "description": "Create a design proposal; clarify material requirements and evaluate viable approaches.",
+  "license": "UNLICENSED",
+  "entry": "SKILL.md",
+  "files": [
+    "SKILL.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 8000,
+  "requires": {
+    "template.design-proposal": ">=1,<2",
+    "policy.scope": ">=1,<2",
+    "policy.research": ">=1,<2"
+  },
+  "capabilities": [
+    "filesystem.read"
+  ],
+  "prefers": [
+    "agents.parallel",
+    "web.search"
+  ],
+  "fallback": "Perform sequential evidence passes; disclose that independent parallel review was unavailable.",
+  "outputs": [
+    "inline",
+    "referenced-artifact"
+  ],
+  "suggests": []
+}

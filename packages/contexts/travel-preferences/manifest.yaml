@@ -1,0 +1,24 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Context",
+  "id": "context.travel-preferences",
+  "name": "travel-preferences",
+  "version": "1.0.0",
+  "description": "Travel preferences",
+  "license": "UNLICENSED",
+  "entry": "CONTEXT.md",
+  "files": [
+    "CONTEXT.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 8000,
+  "context": {
+    "access": "explicit",
+    "sensitivity": "private",
+    "binding": "context.travel-preferences",
+    "consumers": []
+  }
+}

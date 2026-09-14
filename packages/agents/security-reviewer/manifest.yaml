@@ -1,0 +1,23 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Agent",
+  "id": "agent.security-reviewer",
+  "name": "security-reviewer",
+  "version": "1.0.0",
+  "description": "Security & Privacy Reviewer",
+  "license": "UNLICENSED",
+  "entry": "AGENT.md",
+  "files": [
+    "AGENT.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 8000,
+  "outputs": [
+    "findings",
+    "evidence",
+    "verification-limits"
+  ]
+}

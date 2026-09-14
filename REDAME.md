@@ -1,3 +1,0 @@
-<!-- @format -->
-
-# dot-agents-sync

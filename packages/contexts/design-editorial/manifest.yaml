@@ -1,0 +1,23 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Context",
+  "id": "context.design-editorial",
+  "name": "design-editorial",
+  "version": "1.0.0",
+  "description": "Optional editorial design preset for outcome-focused documents",
+  "license": "UNLICENSED",
+  "entry": "CONTEXT.md",
+  "files": [
+    "CONTEXT.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 2000,
+  "context": {
+    "access": "inherit",
+    "sensitivity": "public",
+    "consumers": []
+  }
+}

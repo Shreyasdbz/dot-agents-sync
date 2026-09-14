@@ -1,0 +1,7 @@
+{
+  "id": "technical-storytelling",
+  "description": "Optional technical-storytelling starting selection; inspect dependencies before applying.",
+  "packages": [
+    "skill.pitch-deck"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Template",
+  "id": "template.trip-plan",
+  "name": "trip-plan",
+  "version": "1.0.0",
+  "description": "Reusable trip-plan output structure",
+  "license": "UNLICENSED",
+  "entry": "itinerary.md",
+  "files": [
+    "itinerary.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 8000
+}

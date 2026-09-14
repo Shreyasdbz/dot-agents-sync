@@ -1,0 +1,18 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Template",
+  "id": "template.investigation",
+  "name": "investigation",
+  "version": "1.0.0",
+  "description": "Reusable investigation output structure",
+  "license": "UNLICENSED",
+  "entry": "report.md",
+  "files": [
+    "report.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 8000
+}

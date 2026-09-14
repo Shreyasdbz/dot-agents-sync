@@ -1,0 +1,19 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Template",
+  "id": "template.pr-review",
+  "name": "pr-review",
+  "version": "1.0.0",
+  "description": "Reusable pr-review output structure",
+  "license": "UNLICENSED",
+  "entry": "report.md",
+  "files": [
+    "report.md",
+    "report.html"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 8000
+}

@@ -1,0 +1,24 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Context",
+  "id": "context.repository-conventions",
+  "name": "repository-conventions",
+  "version": "1.0.0",
+  "description": "Repository conventions",
+  "license": "UNLICENSED",
+  "entry": "CONTEXT.md",
+  "files": [
+    "CONTEXT.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 8000,
+  "context": {
+    "access": "explicit",
+    "sensitivity": "private",
+    "binding": "context.repository-conventions",
+    "consumers": []
+  }
+}

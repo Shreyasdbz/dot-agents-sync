@@ -1,0 +1,22 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Policy",
+  "id": "policy.coding",
+  "name": "coding",
+  "version": "1.0.0",
+  "description": "Coding quality",
+  "license": "UNLICENSED",
+  "entry": "POLICY.md",
+  "files": [
+    "POLICY.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 8000,
+  "policy": {
+    "globs": [],
+    "priority": 0
+  }
+}

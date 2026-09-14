@@ -1,0 +1,34 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Skill",
+  "id": "skill.do-it",
+  "name": "do-it",
+  "version": "1.0.0",
+  "description": "Implement one authorized task from a plan and verify its outcome.",
+  "license": "UNLICENSED",
+  "entry": "SKILL.md",
+  "files": [
+    "SKILL.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 8000,
+  "requires": {
+    "policy.scope": ">=1,<2",
+    "policy.coding": ">=1,<2",
+    "policy.verification": ">=1,<2",
+    "policy.git": ">=1,<2"
+  },
+  "capabilities": [
+    "filesystem.read"
+  ],
+  "prefers": [],
+  "fallback": "Perform sequential evidence passes; disclose that independent parallel review was unavailable.",
+  "outputs": [
+    "inline",
+    "referenced-artifact"
+  ],
+  "suggests": []
+}
