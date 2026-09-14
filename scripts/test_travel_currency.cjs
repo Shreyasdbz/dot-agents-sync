@@ -66,7 +66,14 @@ const assert=require('node:assert/strict');
     assert.equal(await page.locator('[data-theme-toggle]').getAttribute('aria-pressed'),'false');
     await page.emulateMedia({colorScheme:'light'});
     await page.locator('.travel-nav a[href="#expenses"]').click();
-    await page.waitForFunction(()=>document.querySelector('.trip-topbar').classList.contains('is-scrolled'));
+    // Wait for the destination, not a possibly stale class from an earlier scroll.
+    // Replacing content and resizing can leave pending browser scroll events.
+    await page.waitForFunction(()=>{
+      const bar=document.querySelector('.trip-topbar');
+      const target=document.querySelector('#expenses').getBoundingClientRect();
+      return scrollY>4 && bar.classList.contains('is-scrolled') &&
+        target.top>=bar.getBoundingClientRect().bottom && target.top<innerHeight;
+    });
     assert(await page.evaluate(()=>document.querySelector('#expenses').getBoundingClientRect().top>=document.querySelector('.trip-topbar').getBoundingClientRect().bottom),'anchor heading is not covered');
     assert.equal(Math.round(await page.locator('.trip-topbar').evaluate(n=>n.getBoundingClientRect().top)),0);
     assert(await page.locator('.trip-topbar').evaluate(n=>n.classList.contains('is-scrolled')));
