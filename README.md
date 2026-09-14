@@ -40,12 +40,14 @@ After setup has cached the source:
 
 ```sh
 dasync plan configure --scope project --path /absolute/my-project \
-  --enable skill.pr-review --apply --json > /tmp/dasync-plan.json
+  --enable skill.pr-review --apply --json > /absolute/my-project/dasync-plan.json
 dasync apply --scope project --path /absolute/my-project \
-  --plan /tmp/dasync-plan.json --yes --no-input --json
+  --plan /absolute/my-project/dasync-plan.json --yes --no-input --json
 ```
 
 Plans bind to exact input and output hashes. Changing the config, catalog, receipt or target file invalidates a saved plan. `apply` re-renders and rechecks the plan; it never silently replaces it.
+
+Use real, non-symlink paths for scopes, sources, state, and plan files. On macOS, `/tmp` and `/var` are aliases; their canonical paths begin with `/private`. The same protection rejects provider discovery directories that are symlinks. Review existing topology before adopting dasync in a customized environment.
 
 ## Commands
 
@@ -111,6 +113,6 @@ uv run ruff format --check cli tests packages/hooks
 uv build
 ```
 
-Tests cover CLI journeys, schema validation, deterministic resolution, dependency failures, pinned Git objects, provider formats, ownership, private context, concurrent writers, injected failures, process-death recovery and reversible rollback. See [implementation decisions and limits](docs/architecture/implementation.md), [AI operator instructions](docs/AI-OPERATOR.md), [package authoring](docs/package-authoring.md), [provider contract](docs/adapter-contract.md), and [behavioral evaluation protocol](evals/README.md).
+Tests cover CLI journeys, schema validation, deterministic resolution, dependency failures, pinned Git objects, provider formats, ownership, private context, concurrent writers, injected failures, process-death recovery and reversible rollback. See [executed verification](docs/verification.md), [implementation decisions and limits](docs/architecture/implementation.md), [AI operator instructions](docs/AI-OPERATOR.md), [package authoring](docs/package-authoring.md), [provider contract](docs/adapter-contract.md), and [behavioral evaluation protocol](evals/README.md).
 
 The repository currently declares no open-source license. Dependency licenses remain their respective owners' licenses. Choose a project license before distributing it as open source.
