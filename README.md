@@ -78,7 +78,7 @@ Every command accepts `--json`. Mutations require `--scope`; project operations 
 
 | Group | Items |
 | --- | --- |
-| Development skills | Propose, Plan Out, Do It, Investigate, PR Review, Pitch Deck |
+| Development skills | Propose, Plan Out, Do It, Investigate, PR Review, Pitch Deck, UI Design |
 | Personal skills | Trip Publish, Curate AM Playlist; Trip Plan compatibility entrypoint |
 | Agents | Security/privacy, architecture, AI systems, UX/accessibility, travel planning, travel research, slop audit |
 | Policies | Scope, coding, verification, Git hygiene, security, communication, research, accessibility |
@@ -87,7 +87,9 @@ Every command accepts `--json`. Mutations require `--scope`; project operations 
 | Templates | Design proposal, Plan Context, investigation, PR review, deck, itinerary, trip page, playlist |
 | Hooks | Credential-path guard; separately approved, never included by a profile |
 
-Profiles: `dev-core`, `dev-review`, `technical-storytelling`, `travel`, `personal-music`. Profile membership is inspectable and editable. Templates follow required dependencies; suggested agents and context never activate implicitly.
+Profiles: `dev-core`, `dev-review`, `technical-storytelling`, `ui-design`, `travel`, `personal-music`. Profile membership is inspectable and editable. Templates follow required dependencies; suggested agents and context never activate implicitly.
+
+The `ui-design` profile installs one routing skill. On a relevant task, the skill uses the read-only [UI Skills MCP server](https://www.ui-skills.com/mcp/docs) when available and asks the active agent to register its canonical endpoint once, at the selected scope, when absent. SwiftUI guidance stays in one conditional reference distilled from the MIT-licensed [fwc-swiftui-skills](https://github.com/FloWritesCode/fwc-swiftui-skills); it is not loaded for other stacks. Add the profile to an existing user environment with `dasync configure --scope user --profile ui-design --apply --yes`.
 
 The optional [engineering-cloudflare profile](docs/engineering-profile.md) adds Cloudflare-first/GCP-next platform choices, pnpm/Turborepo application boundaries, TanStack/shadcn UI conventions and a loadable public stack reference. It contains no skills, hooks or private bindings and does not change the other profiles' stack preferences. Coding quality includes public-contract documentation and a bounded anti-slop completion audit.
 

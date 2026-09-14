@@ -6,7 +6,7 @@ import re
 from pathlib import Path
 
 import pytest
-from dasync.adapters import private_reference, render
+from dasync.adapters import capabilities, private_reference, render
 from dasync.catalog import Catalog
 from dasync.config import Scope
 from dasync.contracts import validate
@@ -59,6 +59,18 @@ def test_skill_metadata_and_declared_references(workspace):
         assert metadata["description"] == package.manifest["description"]
         assert len(body) <= 4200
     assert "sizing.md" in catalog.packages["skill.plan-out"].files
+
+
+def test_ui_design_profile_keeps_live_and_swiftui_guidance_bounded(workspace):
+    catalog = Catalog(workspace[1]["source"])
+    package = catalog.packages["skill.ui-design"]
+    assert catalog.profiles["ui-design"]["packages"] == ["skill.ui-design"]
+    assert package.manifest["prefers"] == ["mcp.ui-skills"]
+    assert len(package.files["SKILL.md"]) < 3600
+    assert len(package.files["swiftui.md"]) < 3000
+    assert b"https://www.ui-skills.com/mcp" in package.files["SKILL.md"]
+    assert b"c2454e6948175e25e61c107c6dc7ebf03e291dfe" in package.files["swiftui.md"]
+    assert all("mcp.ui-skills" in value["conditional"] for value in capabilities().values())
 
 
 def test_native_policy_dependencies_are_not_duplicated(workspace):
@@ -121,7 +133,7 @@ def test_metrics_are_byte_counts_not_claimed_tokens():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     result = module.measure()
-    assert result["groups"]["Skill"]["packages"] == 9
+    assert result["groups"]["Skill"]["packages"] == 10
     assert result["groups"]["Skill"]["entry_bytes"] == sum(
         p["entry_bytes"] for key, p in result["packages"].items() if key.startswith("skill.")
     )

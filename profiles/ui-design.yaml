@@ -1,0 +1,7 @@
+{
+  "id": "ui-design",
+  "description": "Compact UI design routing with optional live UI Skills guidance and a conditional SwiftUI branch.",
+  "packages": [
+    "skill.ui-design"
+  ]
+}

@@ -57,6 +57,7 @@ def capabilities():
                 "github.review",
                 "music.search",
                 "music.playlist",
+                "mcp.ui-skills",
                 "planning.tracker",
                 "browser.render",
                 "tests.execute",

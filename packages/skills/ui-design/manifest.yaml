@@ -1,0 +1,36 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Skill",
+  "id": "skill.ui-design",
+  "name": "ui-design",
+  "version": "1.0.0",
+  "description": "Design, implement, or review a user interface using narrowly retrieved UI guidance; load SwiftUI-specific rules only for Apple UI work.",
+  "license": "UNLICENSED",
+  "entry": "SKILL.md",
+  "files": [
+    "SKILL.md",
+    "swiftui.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 1800,
+  "requires": {
+    "policy.communication": ">=1,<2"
+  },
+  "capabilities": [
+    "filesystem.read"
+  ],
+  "prefers": [
+    "mcp.ui-skills"
+  ],
+  "fallback": "Use the compact local workflow and SwiftUI reference when relevant; disclose that live UI Skills guidance was unavailable.",
+  "outputs": [
+    "inline"
+  ],
+  "suggests": [
+    "agent.ux-reviewer",
+    "context.design-preferences"
+  ]
+}

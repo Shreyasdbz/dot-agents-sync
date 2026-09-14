@@ -50,6 +50,17 @@
     ]
   },
   {
+    "id": "ui-design-swiftui-adaptation",
+    "package": "skill.ui-design",
+    "prompt": "Improve a SwiftUI reader that branches on UIDevice and UIScreen width, duplicates selection state between compact and wide layouts, stretches articles edge to edge, and hand-builds glass with blur and shadows. The app still supports iOS 18, no iOS 26 simulator is available, and the UI Skills MCP server is not registered.",
+    "assertions": [
+      {"id": "a1", "text": "Adapt to usable container space with native layout containers, preserve shared state across widths, and cap readable article width instead of creating a device-specific version."},
+      {"id": "a2", "text": "Do not ship unverified iOS 26-only Liquid Glass or imitate it; retain an availability-safe native fallback for the supported deployment target."},
+      {"id": "a3", "text": "Register only the canonical read-only UI Skills endpoint at the selected scope when the provider supports it, without replacing conflicting configuration or blocking the current task on a restart."},
+      {"id": "a4", "text": "Distinguish general code improvements from specialized simulator behavior that could not be verified."}
+    ]
+  },
+  {
     "id": "coding-duplication-and-real-risk",
     "package": "policy.coding",
     "prompt": "Review a hobby app change with two similar local formatting helpers, duplicated API response types and retry/auth logic in two callers. Someone proposes multi-region failover for hypothetical growth. Invalid input can currently erase saved data. Recommend a bounded revision.",
