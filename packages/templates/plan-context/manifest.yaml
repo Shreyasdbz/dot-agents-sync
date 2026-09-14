@@ -3,16 +3,17 @@
   "kind": "Template",
   "id": "template.plan-context",
   "name": "plan-context",
-  "version": "1.0.0",
-  "description": "Reusable plan-context output structure",
+  "version": "1.2.0",
+  "description": "Schema-bound planning context with bug-fix, feature, migration and offline adaptation guidance.",
   "license": "UNLICENSED",
   "entry": "plan-context.md",
   "files": [
+    "adaptation.md",
     "plan-context.md"
   ],
   "scopes": [
     "user",
     "project"
   ],
-  "token_budget": 8000
+  "token_budget": 4000
 }

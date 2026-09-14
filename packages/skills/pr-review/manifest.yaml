@@ -3,8 +3,8 @@
   "kind": "Skill",
   "id": "skill.pr-review",
   "name": "pr-review",
-  "version": "1.0.0",
-  "description": "Review a GitHub pull request with a severity-ranked inline verdict and optional reports.",
+  "version": "1.1.0",
+  "description": "Review a PR or supplied diff for actionable regressions and requirement gaps, inline by default; optionally post or create reports.",
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 1500,
   "requires": {
     "template.pr-review": ">=1,<2",
     "policy.scope": ">=1,<2",
@@ -24,13 +24,14 @@
     "filesystem.read"
   ],
   "prefers": [
-    "agents.parallel",
-    "web.search"
+    "github.review"
   ],
-  "fallback": "Perform sequential evidence passes; disclose that independent parallel review was unavailable.",
+  "fallback": "Review the supplied diff snapshot inline; no claim of current PR state or posting.",
   "outputs": [
     "inline",
-    "referenced-artifact"
+    "markdown",
+    "html",
+    "pr-review"
   ],
   "suggests": []
 }

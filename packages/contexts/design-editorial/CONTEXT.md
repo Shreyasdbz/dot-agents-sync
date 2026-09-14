@@ -1,5 +1,9 @@
 # Editorial design preset
 
-This is an optional preset, not a claim about the user's established preferences.
+Optional visual preference profile, not an invented brand or an enforced rule.
 
-The visual language is restrained, readable, and information-first: a neutral canvas, one accent color, a clear type scale, generous grouping space, and strong text contrast. Use denser layouts for comparable facts and quieter layouts for a consequential decision. Prefer specific claims in headings. Charts should answer an audience question; decoration does not replace evidence. A document's design follows its content and audience rather than a repeated card layout. References, known brand guidance, and accessibility needs may supersede these defaults. Operative accessibility checks live in policy.accessibility.
+The default language is editorial: neutral canvas, one accent, a clear type scale, and spacing that groups related information. Comparable facts can be dense; a consequential decision deserves a quieter layout. Titles favor specific claims; visuals answer an audience question. This profile values source fidelity and readable hierarchy over ornament or repeated card layouts.
+
+Prefer a restrained product interface over a landing-page treatment: moderate title sizes, normal letter spacing, compact rows, clear labels and detail on demand. Avoid repetitive oversized heroes, slogan-like headings and pill-shaped decoration. Travel views prioritize date, local time, route, traveler group and booking state; presentation density follows the material.
+
+Actual audience, brand references and accessibility needs supersede the preset. Operative checks belong in policy.accessibility.

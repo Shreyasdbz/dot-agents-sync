@@ -3,16 +3,17 @@
   "kind": "Template",
   "id": "template.investigation",
   "name": "investigation",
-  "version": "1.0.0",
-  "description": "Reusable investigation output structure",
+  "version": "1.2.0",
+  "description": "Evidence-first investigation structures for incidents, correctness, performance and research.",
   "license": "UNLICENSED",
   "entry": "report.md",
   "files": [
-    "report.md"
+    "report.md",
+    "variants.md"
   ],
   "scopes": [
     "user",
     "project"
   ],
-  "token_budget": 8000
+  "token_budget": 4000
 }

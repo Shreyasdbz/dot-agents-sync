@@ -1,24 +1,18 @@
 ---
 name: pr-review
-description: "Review a GitHub pull request with a severity-ranked inline verdict and optional reports."
+description: "Review a PR or supplied diff for actionable regressions and requirement gaps, inline by default; optionally post or create reports."
 ---
 
 # PR Review
 
-Given a GitHub pull request URL, inspect the actual diff and relevant surrounding code through multiple review lenses. Validate and consolidate findings before returning a concise inline review; artifact generation and GitHub posting are optional delivery actions.
+Resolve the requested PR/diff and capture its base/head revision. Read its purpose, changed code and the surrounding callers/tests needed to understand behavior. A supplied snapshot can be reviewed offline; label it as such. Missing evidence narrows the verdict, not permission to invent context.
 
-- Default inline output: Provide a one- or two-sentence outcome summary, an Approve, Suggest, or Block decision with concise reasoning, findings ordered from SEV_0 through SEV_3, exact locations and actionable remediation where possible, and a statement of what was inspected and any meaningful verification limits.
+Check two distinct questions: does the change satisfy its stated requirements, and does it introduce a concrete correctness, security or compatibility regression? Apply documented repository standards; treat stylistic preferences as optional. Use specialized reviewers only when available and useful, with bounded scopes and the same pinned diff.
 
-- Validation: Re-check every finding against the current diff and surrounding code. Consolidate duplicate symptoms that share one underlying cause, remove speculative or non-actionable observations, and preserve only attention-worthy findings.
+Validate each candidate finding with a reachable input/state, impact and exact location. Seek counterevidence in callers, guards, data constraints and tests. Distinguish a changed regression from unrelated pre-existing behavior. Consolidate one root cause into one finding; do not manufacture issues to fill severity categories.
 
-- Severity: SEV_0 and SEV_1 block. SEV_2 is non-blocking but worth addressing now or in a follow-up. SEV_3 is a nit or optional improvement.
+Return inline: a short outcome summary; Approve, Suggest or Block; severity-ranked findings; and verification limits. Each finding needs location, trigger, consequence, evidence and a feasible correction. SEV_0 is critical/systemic harm; SEV_1 is serious required-behavior failure; both block. SEV_2 is non-blocking work worth addressing. SEV_3 is an optional nit, included sparingly. “Approve” is a review recommendation, not proof that unrun checks passed.
 
-- Completion options: After the inline review, offer Post to PR, Create Markdown Report, Create HTML Report, or All Three. The user may choose any subset. If the original invocation already requests one or more options, perform them without asking again.
+Offer any subset of Post to PR, Markdown Report, HTML Report, or all three. Use the same findings for every selected output. Load [report.md](references/template.pr-review/report.md) or [report.html](references/template.pr-review/report.html) only when requested.
 
-- Post to PR: Put the summary and verdict in the overall review body and use inline comments for location-specific findings where possible. Map Approve to approval, Suggest to a non-blocking comment review, and Block to requested changes. Posting changes an external system and requires explicit authorization.
-
-- Posted finding format: Begin each finding with “[🫆AI Review] <🔴SEV_0 or 🟠SEV_1 or 🟡SEV_2 or ⚪️SEV_3> <comment title>”.
-
-- Artifact consistency: Generate the inline response, Markdown report, HTML report, and posted review from the same canonical review model so verdicts, severities, locations, and remediation cannot drift between outputs.
-
-- Typical dependencies: PR-review Markdown and HTML templates, repository context, review and security policies, GitHub capability, and optional security, architecture, UX, AI-systems, or slop-auditor agents.
+Posting requires explicit authority and a working connector. Recheck the head revision and comment anchors first; if changed, refresh affected findings before posting. Inspect existing review state after an uncertain submission before retrying. Map the verdict to approval, comment, or requested changes. Posted finding prefix: “[🫆AI Review] <🔴SEV_0 or 🟠SEV_1 or 🟡SEV_2 or ⚪️SEV_3> <title>”. Report actual posted IDs or the unposted draft; never substitute one for the other.

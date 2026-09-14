@@ -3,8 +3,8 @@
   "kind": "Skill",
   "id": "skill.trip-publish",
   "name": "trip-publish",
-  "version": "1.0.0",
-  "description": "Publish an approved itinerary as a self-contained responsive HTML experience.",
+  "version": "1.1.0",
+  "description": "Turn an approved itinerary into a mobile-friendly HTML travel guide. Creating the file is distinct from hosting or sharing it.",
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 1500,
   "requires": {
     "template.trip-publish": ">=1,<2",
     "policy.accessibility": ">=1,<2"
@@ -22,11 +22,12 @@
   "capabilities": [
     "filesystem.read"
   ],
-  "prefers": [],
-  "fallback": "Perform sequential evidence passes; disclose that independent parallel review was unavailable.",
+  "prefers": [
+    "browser.render"
+  ],
+  "fallback": "Create and structurally inspect HTML; distinguish file delivery from hosting and visual verification.",
   "outputs": [
-    "inline",
-    "referenced-artifact"
+    "html"
   ],
   "suggests": []
 }

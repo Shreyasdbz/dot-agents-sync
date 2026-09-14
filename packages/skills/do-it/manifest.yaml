@@ -3,8 +3,8 @@
   "kind": "Skill",
   "id": "skill.do-it",
   "name": "do-it",
-  "version": "1.0.0",
-  "description": "Implement one authorized task from a plan and verify its outcome.",
+  "version": "1.1.0",
+  "description": "Implement an authorized task or bounded change, verify observable behavior, and report remaining work without expanding scope.",
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 1500,
   "requires": {
     "policy.scope": ">=1,<2",
     "policy.coding": ">=1,<2",
@@ -24,11 +24,12 @@
   "capabilities": [
     "filesystem.read"
   ],
-  "prefers": [],
-  "fallback": "Perform sequential evidence passes; disclose that independent parallel review was unavailable.",
+  "prefers": [
+    "tests.execute"
+  ],
+  "fallback": "Implement only within available authority; label checks that could not execute instead of claiming verification.",
   "outputs": [
-    "inline",
-    "referenced-artifact"
+    "inline"
   ],
   "suggests": []
 }

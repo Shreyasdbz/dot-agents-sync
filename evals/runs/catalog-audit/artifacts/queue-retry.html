@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Queue retries: decide on a sandbox pilot</title>
+<style>
+:root{color-scheme:light dark;--bg:#f7f6f2;--ink:#202724;--accent:#22634d;--line:#bac4bd;font:18px/1.5 system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}main{max-width:1200px;margin:auto;padding:clamp(1rem,4vw,4rem)}
+section{min-height:75vh;padding:2rem 0;scroll-margin-top:2rem}h1,h2{font-size:clamp(1.8rem,4vw,3.5rem);line-height:1.12;max-width:24ch;letter-spacing:-.025em}p{max-width:65ch}table{width:100%;border-collapse:collapse}th,td{padding:.6rem;text-align:left;border-bottom:1px solid var(--line);overflow-wrap:anywhere}caption{text-align:left;font-weight:600}
+nav{position:sticky;bottom:0;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;padding:1rem;background:var(--bg);border-top:1px solid var(--line)}button,a,select{font:inherit;color:inherit}select{max-width:100%}button{padding:.5rem .9rem;background:transparent;border:1px solid var(--line);border-radius:.3rem;cursor:pointer}button:disabled{opacity:.45;cursor:default}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}progress{accent-color:var(--accent);max-width:8rem}.skip{position:absolute;top:-10rem}.skip:focus{top:1rem}
+@media(prefers-color-scheme:dark){:root{--bg:#18211d;--ink:#ecf0ec;--accent:#a0dbc0;--line:#60746a}}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+@media print{nav,.skip{display:none}section{break-after:page;min-height:0}body{background:white;color:black}main{padding:0}a{color:inherit}}
+</style>
+<a class="skip" href="#slides">Skip navigation</a>
+<main id="slides" tabindex="-1">
+<section id="decision"><h1>Approve three engineering days for a sandbox retry pilot</h1><p>Engineering leads can authorize one engineer to build a sandbox pilot in three days. The decision is whether to test the proposed queue retry design. Its effect on failed jobs and duplicate charges has not been measured.</p><p>Recommended scope: build the pilot, instrument outcomes, and return with evidence before deciding on a production trial.</p></section>
+<section id="evidence"><h2>The baseline is 200 failed jobs per 10,000</h2><table><caption>Supplied evidence and proposed threshold</caption><thead><tr><th scope="col">Measure</th><th scope="col">Value</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Baseline failures</th><td>200 / 10,000 (2%)</td><td>Observed over seven days</td></tr><tr><th scope="row">Proposed failures</th><td>Under 50 / 10,000 (under 0.5%)</td><td>Success criterion only</td></tr><tr><th scope="row">Duplicate charges</th><td>None</td><td>Required pilot outcome</td></tr></tbody></table><p>No measured results exist for the proposed design. The threshold is a target, with no demonstrated savings or production benefit.</p></section>
+<section id="gap"><h2>Twelve mocked tests justify investigation, with real behavior still unknown</h2><p>The proposed retry design has passed 12 mocked tests. No load test or production trial has run. Those tests support further investigation, but do not establish behavior under realistic volume or prove that retrying a job cannot charge twice.</p><p>Before interpreting the pilot, agree on workload comparability, failure counting, and how duplicate charges will be detected.</p></section>
+<section id="pilot-review"><h2>Use the pilot to make the next decision measurable</h2><p>Proposed pilot acceptance: fewer than 50 failed jobs per 10,000, without duplicate charges. Record the job denominator and charging outcomes alongside every result. Treat any duplicate charge as a failure of this criterion.</p><p>One engineer can build the sandbox pilot in three days; measurement duration is not supplied. Engineering leads should decide the observation window and review the measured results before authorizing broader use.</p><p>Source throughout: supplied scenario notes; baseline dates and test details were not provided.</p></section>
+</main>
+<nav aria-label="Presentation controls">
+<button id="prev" type="button">Previous</button><button id="next" type="button">Next</button>
+<label for="sections">Section</label><select id="sections"></select>
+<span id="status" role="status" aria-live="polite"></span><progress id="progress" aria-label="Presentation progress"></progress>
+</nav>
+<script>
+(()=>{'use strict';const slides=[...document.querySelectorAll('main>section')],prev=document.querySelector('#prev'),next=document.querySelector('#next'),select=document.querySelector('#sections'),status=document.querySelector('#status'),progress=document.querySelector('#progress');let index=0;
+slides.forEach((slide,i)=>{slide.id||=`slide-${i+1}`;const option=document.createElement('option');option.value=String(i);option.textContent=slide.querySelector('h1,h2')?.textContent||`Section ${i+1}`;select.append(option)});
+function state(){prev.disabled=index===0;next.disabled=index>=slides.length-1;select.value=String(index);status.textContent=slides.length?`${index+1} of ${slides.length}`:'No slides';progress.max=Math.max(1,slides.length);progress.value=slides.length?index+1:0}
+function go(i){index=Math.max(0,Math.min(slides.length-1,i));slides[index]?.scrollIntoView({block:'start'});state()}
+prev.onclick=()=>go(index-1);next.onclick=()=>go(index+1);select.onchange=()=>go(Number(select.value));document.addEventListener('keydown',e=>{if(e.target.closest('input,textarea,select,button,a,[contenteditable]'))return;if(['ArrowRight','ArrowDown','PageDown'].includes(e.key)){e.preventDefault();go(index+1)}if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(index-1)}if(e.key==='Home')go(0);if(e.key==='End')go(slides.length-1)});
+const observer=new IntersectionObserver(entries=>{const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];if(visible){index=slides.indexOf(visible.target);state()}},{threshold:[.25,.5,.75]});slides.forEach(s=>observer.observe(s));state();})();
+</script>
+</html>

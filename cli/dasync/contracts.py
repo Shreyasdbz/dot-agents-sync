@@ -110,6 +110,7 @@ PLAN_CONTEXT = obj(
         "version": {"const": 1},
         "authority": {"enum": ["local", "github", "ado", "linear", "jira", "notion"]},
         "reference": STR,
+        "authority_state": {"enum": ["current", "snapshot", "unavailable"]},
         "active_milestone": ID,
         "design_references": STRS,
         "milestones": {
@@ -136,15 +137,35 @@ PLAN_CONTEXT = obj(
                                             "reference": STR,
                                             "acceptance": STRS,
                                             "verification": STRS,
+                                            "dependencies": IDS,
+                                            "status": {
+                                                "enum": [
+                                                    "planned",
+                                                    "in-progress",
+                                                    "blocked",
+                                                    "complete",
+                                                    "unknown",
+                                                ]
+                                            },
+                                            "scope": STR,
+                                            "human_input": STR,
+                                            "sizing_exception": STR,
                                         },
                                         ("id", "outcome", "acceptance", "verification"),
                                     ),
                                 },
+                                "reference": STR,
+                                "dependencies": IDS,
+                                "acceptance": STRS,
+                                "rollback": STR,
                             },
                             ("id", "outcome", "tasks"),
                         ),
                     },
                     "planning_task": obj({"id": ID, "outcome": STR, "reference": STR}, ("id", "outcome")),
+                    "scope": STR,
+                    "risks": STRS,
+                    "reference": STR,
                 },
                 ("id", "outcome", "status", "exit_criteria", "dependencies"),
             ),
@@ -281,3 +302,17 @@ def validate(name: str, value: dict):
             remaining = {
                 key: dependencies - ready for key, dependencies in remaining.items() if key not in ready
             }
+        children = [phase for m in milestones for phase in m.get("phases", [])]
+        children += [task for phase in children[:] for task in phase.get("tasks", [])]
+        child_ids = {child["id"] for child in children}
+        graph = {child["id"]: set(child.get("dependencies", [])) for child in children}
+        if any(deps - child_ids for deps in graph.values()):
+            raise DasyncError("SCHEMA_INVALID", "Phase/task dependencies must name elaborated items")
+        # A phase completes after its own tasks, even if that relationship is implicit in the document.
+        for child in children:
+            graph[child["id"]].update(task["id"] for task in child.get("tasks", []))
+        while graph:
+            ready = {key for key, dependencies in graph.items() if not dependencies}
+            if not ready:
+                raise DasyncError("SCHEMA_INVALID", "Phase/task dependencies contain a cycle")
+            graph = {key: deps - ready for key, deps in graph.items() if key not in ready}

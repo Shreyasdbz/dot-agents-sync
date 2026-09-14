@@ -3,8 +3,8 @@
   "kind": "Skill",
   "id": "skill.curate-am-playlist",
   "name": "curate-am-playlist",
-  "version": "1.0.0",
-  "description": "Curate an Apple Music playlist using listening goals, exclusions and sequencing preferences.",
+  "version": "1.1.0",
+  "description": "Curate an intentionally sequenced Apple Music playlist from listening goals; account changes require explicit authorization.",
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 1500,
   "requires": {
     "template.playlist": ">=1,<2",
     "policy.scope": ">=1,<2"
@@ -22,11 +22,14 @@
   "capabilities": [
     "filesystem.read"
   ],
-  "prefers": [],
-  "fallback": "Perform sequential evidence passes; disclose that independent parallel review was unavailable.",
+  "prefers": [
+    "music.search",
+    "music.playlist"
+  ],
+  "fallback": "Return an ordered proposal without invented catalog IDs, verified availability or account mutations.",
   "outputs": [
     "inline",
-    "referenced-artifact"
+    "playlist"
   ],
   "suggests": []
 }

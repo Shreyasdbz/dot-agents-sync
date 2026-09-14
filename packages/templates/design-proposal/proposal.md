@@ -1,21 +1,24 @@
-# Design proposal
+# Design proposal composition guide
 
-## Outcome
+Produce a decision record, not a filled questionnaire. Select a recipe below and load only its linked file. Rename headings to convey the actual decision; omit inapplicable sections instead of writing “N/A.” Respect a requested output format.
 
-## Requirements and non-goals
+| Context | Load | Deciding question |
+| --- | --- | --- |
+| Bug fix / behavioral regression | [Bug fix](sections/bug-fix.md) | What failed, why, and what restores the intended contract? |
+| New feature / capability | [Feature](sections/feature.md) | What user outcome and system boundaries justify this design? |
+| Migration / refactor / deprecation | [Migration](sections/migration.md) | How does every intermediate version remain safe? |
+| Architecture choice / dependency selection | [Decision](sections/decision.md) | Which criteria distinguish credible alternatives? |
 
-## Assumptions and open decisions
+## Minimal spine
 
-## Chosen design
+Start with a specific title, document type, decision status (proposed/accepted/superseded), owner if known, and source revision/date when relevant. State the decision and intended outcome in the first paragraph. Include the recipe's consequential sections, then unresolved decisions and evidence. Never fabricate ownership, approvals, measurements or source freshness.
 
-## Interfaces, state and data flow
+## Add only the cross-cutting modules you need
 
-## Trade-offs and meaningful alternatives
+Load [cross-cutting sections](sections/cross-cutting.md) for security/privacy, performance/cost, data/API contracts, observability, accessibility, rollout and reversibility. A one-function correction rarely needs all of these. A feature spanning authorization, storage and an external API usually needs several. Mix recipes when the change genuinely combines concerns, but retain one decision and remove repeated sections.
 
-## Compatibility and migration
+## Evidence and finish
 
-## Risks and validation needs
+Attach facts to code locations, observed behavior or dated primary sources. Separate observed, inferred and proposed claims. Explain what would invalidate the recommendation. Leave material questions visible rather than burying them in an appendix. Do not introduce implementation milestones, phases or tasks; Plan Out owns decomposition.
 
-## Evidence
-
-Authoring rule: fill sections relevant to the proposal; remove empty sections. Do not add implementation milestones, phases or tasks.
+For an HTML view, use [proposal.html](proposal.html) and [components.md](components.md). Keep the same claims, alternatives and uncertainties across formats. The HTML is a worked illustrative composition, not content to preserve in a real proposal.

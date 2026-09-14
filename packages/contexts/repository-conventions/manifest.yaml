@@ -3,8 +3,8 @@
   "kind": "Context",
   "id": "context.repository-conventions",
   "name": "repository-conventions",
-  "version": "1.0.0",
-  "description": "Repository conventions",
+  "version": "1.1.0",
+  "description": "Repository conventions: Load before implementation or review in an unfamiliar repository.",
   "license": "UNLICENSED",
   "entry": "CONTEXT.md",
   "files": [
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 600,
   "context": {
     "access": "explicit",
     "sensitivity": "private",

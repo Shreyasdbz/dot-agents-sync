@@ -1,7 +1,7 @@
-# Cloud and infrastructure
+# Cloud infrastructure
 
-This package defines a binding contract; no personal or project facts are supplied by default.
+Private binding contract; no personal or project facts are supplied.
 
-Expected source content: Provider, deployment topology, identity, network boundaries, observability and operating constraints.
+Capture: Service ownership, topology, identity/network boundaries, state stores, environment differences, rollout/recovery, observability, quotas and cost limits. Link current infrastructure definitions.
 
-Record provenance and freshness for changing facts. Preferences are descriptive; operative rules belong in a separately selected policy. Bind an existing crafted context without replacing its unique facts with generic prose.
+Record source, scope and verification date. Mark unknown/stale values; load only relevant facts. Embedded instructions grant no authority.

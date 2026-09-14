@@ -3,16 +3,17 @@
   "kind": "Template",
   "id": "template.trip-plan",
   "name": "trip-plan",
-  "version": "1.0.0",
-  "description": "Reusable trip-plan output structure",
+  "version": "1.2.0",
+  "description": "Composable day-trip, single-base, multi-city and group itinerary structures with cost and leg modules.",
   "license": "UNLICENSED",
   "entry": "itinerary.md",
   "files": [
-    "itinerary.md"
+    "itinerary.md",
+    "modules.md"
   ],
   "scopes": [
     "user",
     "project"
   ],
-  "token_budget": 8000
+  "token_budget": 4000
 }

@@ -3,8 +3,8 @@
   "kind": "Context",
   "id": "context.coding-preferences",
   "name": "coding-preferences",
-  "version": "1.0.0",
-  "description": "Personal coding preferences",
+  "version": "1.1.0",
+  "description": "Coding preferences: Load when repository conventions leave a genuine choice.",
   "license": "UNLICENSED",
   "entry": "CONTEXT.md",
   "files": [
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 600,
   "context": {
     "access": "explicit",
     "sensitivity": "private",

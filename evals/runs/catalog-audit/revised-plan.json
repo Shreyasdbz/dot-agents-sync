@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "authority": "github",
+  "authority_state": "unavailable",
+  "reference": "unresolved:project",
+  "active_milestone": "mvp",
+  "milestones": [
+    {
+      "id": "mvp",
+      "reference": "draft:inventory-mvp",
+      "outcome": "Users import inventory and edit the persisted inventory.",
+      "status": "active",
+      "scope": "CSV import and editable inventory only; reconciliation and analytics are subsequent milestones. Inventory fields and import error semantics require confirmation from approved design before implementation.",
+      "risks": ["Board is unavailable; all tracker references and relationships except supplied INV-7 identity are unresolved.", "INV-7 status is user supplied, not refreshed.", "Repository and approved design details were not supplied; implementation size estimates remain provisional."],
+      "dependencies": [],
+      "exit_criteria": ["A supported CSV can be imported and its inventory viewed after reload.", "Inventory can be edited and its saved values survive reload.", "Invalid import or edits produce understandable errors without unintended persisted changes."],
+      "phases": [
+        {
+          "id": "import-flow",
+          "reference": "draft:import-flow",
+          "outcome": "A usable CSV import creates persisted inventory that the user can view.",
+          "acceptance": ["Import and reload a representative inventory file through the product interface.", "Rejected input has an observable explanation and follows the agreed persistence contract."],
+          "tasks": [
+            {
+              "id": "parse-csv",
+              "reference": "INV-7",
+              "status": "in-progress",
+              "outcome": "Reuse and complete existing CSV parsing work; status is supplied by the user and unrefreshed.",
+              "acceptance": ["Parser produces inventory records for the supported CSV format and identifies invalid rows according to the approved contract."],
+              "verification": ["Run parser fixtures covering valid input, malformed rows, quoted delimiters and required-field failures."],
+              "human_input": "Confirm existing INV-7 scope and CSV contract when board access returns; acceptance here is proposed, not a replacement of the existing item."
+            },
+            {
+              "id": "persist-import",
+              "reference": "draft:persist-import",
+              "status": "planned",
+              "dependencies": ["parse-csv"],
+              "outcome": "Persist parsed inventory through an import operation and expose the resulting inventory for reading.",
+              "acceptance": ["A valid import can be read back with the agreed fields intact.", "Invalid input and storage failure obey the agreed import failure contract."],
+              "verification": ["Exercise an import and read-back against test storage; exercise rejected input and an injected storage failure."],
+              "human_input": "Approved inventory fields, duplicate handling and partial-versus-atomic import behavior are not supplied; resolve these before implementing the persistence contract."
+            },
+            {
+              "id": "import-interface",
+              "reference": "draft:import-interface",
+              "status": "planned",
+              "dependencies": ["persist-import"],
+              "outcome": "Connect CSV selection, import feedback and a persisted inventory view in one usable flow.",
+              "acceptance": ["User imports a supported file, sees its inventory, and sees the same inventory after reload.", "Import errors are visible without a false success state."],
+              "verification": ["Run the product journey with a valid file and an invalid file, then reload the resulting inventory view."]
+            }
+          ]
+        },
+        {
+          "id": "edit-flow",
+          "reference": "draft:edit-flow",
+          "dependencies": ["import-flow"],
+          "outcome": "Users edit imported inventory and see the saved result.",
+          "acceptance": ["Import, edit, save and reload an inventory record in one product journey.", "Rejected edits preserve the prior persisted values."],
+          "tasks": [
+            {
+              "id": "persist-edits",
+              "reference": "draft:persist-edits",
+              "status": "planned",
+              "outcome": "Validate and persist updates to editable inventory fields.",
+              "acceptance": ["Valid edits survive read-back; invalid edits leave previous values intact."],
+              "verification": ["Exercise valid and invalid updates against test storage and read back their outcomes."],
+              "human_input": "Confirm editable fields and concurrent-edit behavior from approved design before implementing updates."
+            },
+            {
+              "id": "edit-interface",
+              "reference": "draft:edit-interface",
+              "status": "planned",
+              "dependencies": ["persist-edits"],
+              "outcome": "Connect editing and save/error feedback to the inventory view.",
+              "acceptance": ["A user changes inventory, saves it and sees the saved value after reload.", "A failed save is visible and does not appear successful."],
+              "verification": ["Exercise import-to-edit-to-reload and a rejected edit through the product interface."]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reconciliation",
+      "reference": "draft:reconciliation",
+      "outcome": "Users reconcile inventory against the agreed comparison source.",
+      "status": "future",
+      "scope": "Reconciliation only; specific comparison inputs and discrepancy resolution rules are deferred to its planning task.",
+      "dependencies": ["mvp"],
+      "risks": ["Comparison sources and resolution rules are not supplied."],
+      "exit_criteria": ["Users can identify and resolve discrepancies according to agreed reconciliation rules, with persisted results."],
+      "planning_task": {"id": "plan-reconciliation", "outcome": "Plan Out reconciliation", "reference": "draft:plan-reconciliation"}
+    },
+    {
+      "id": "analytics",
+      "reference": "draft:analytics",
+      "outcome": "Users inspect the agreed inventory analytics.",
+      "status": "future",
+      "scope": "Analytics only; metrics and presentation are deferred to its planning task.",
+      "dependencies": ["reconciliation"],
+      "risks": ["Metrics and freshness requirements are not supplied.", "Dependency reflects the approved delivery order, not a proven technical dependency."],
+      "exit_criteria": ["Agreed metrics reconcile to underlying inventory data and satisfy the agreed freshness target."],
+      "planning_task": {"id": "plan-analytics", "outcome": "Plan Out analytics", "reference": "draft:plan-analytics"}
+    }
+  ]
+}

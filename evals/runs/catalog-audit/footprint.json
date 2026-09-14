@@ -1,0 +1,666 @@
+{
+  "baseline": {
+    "groups": {
+      "Agent": {
+        "content_bytes": 2314,
+        "discovery_bytes": 226,
+        "entry_bytes": 2314,
+        "files": 6,
+        "packages": 6
+      },
+      "Context": {
+        "content_bytes": 7644,
+        "discovery_bytes": 687,
+        "entry_bytes": 7644,
+        "files": 15,
+        "packages": 15
+      },
+      "Hook": {
+        "content_bytes": 997,
+        "discovery_bytes": 150,
+        "entry_bytes": 997,
+        "files": 1,
+        "packages": 1
+      },
+      "Policy": {
+        "content_bytes": 2554,
+        "discovery_bytes": 249,
+        "entry_bytes": 2554,
+        "files": 8,
+        "packages": 8
+      },
+      "Skill": {
+        "content_bytes": 19173,
+        "discovery_bytes": 823,
+        "entry_bytes": 19173,
+        "files": 9,
+        "packages": 9
+      },
+      "Template": {
+        "content_bytes": 12788,
+        "discovery_bytes": 508,
+        "entry_bytes": 8704,
+        "files": 10,
+        "packages": 8
+      }
+    },
+    "notes": "UTF-8 bytes. Excludes manifest bytes, generated adapter text, and dependency copies. Not exact tokens, attention, latency or behavioral lift.",
+    "packages": {
+      "agent.ai-systems-reviewer": {
+        "content_bytes": 393,
+        "discovery_bytes": 39,
+        "entry_bytes": 393,
+        "files": 1
+      },
+      "agent.architecture-reviewer": {
+        "content_bytes": 386,
+        "discovery_bytes": 43,
+        "entry_bytes": 386,
+        "files": 1
+      },
+      "agent.security-reviewer": {
+        "content_bytes": 367,
+        "discovery_bytes": 45,
+        "entry_bytes": 367,
+        "files": 1
+      },
+      "agent.slop-auditor": {
+        "content_bytes": 393,
+        "discovery_bytes": 25,
+        "entry_bytes": 393,
+        "files": 1
+      },
+      "agent.travel-researcher": {
+        "content_bytes": 384,
+        "discovery_bytes": 35,
+        "entry_bytes": 384,
+        "files": 1
+      },
+      "agent.ux-reviewer": {
+        "content_bytes": 391,
+        "discovery_bytes": 39,
+        "entry_bytes": 391,
+        "files": 1
+      },
+      "context.ai-systems": {
+        "content_bytes": 462,
+        "discovery_bytes": 21,
+        "entry_bytes": 462,
+        "files": 1
+      },
+      "context.cloud-infrastructure": {
+        "content_bytes": 477,
+        "discovery_bytes": 45,
+        "entry_bytes": 477,
+        "files": 1
+      },
+      "context.coding-maintainable": {
+        "content_bytes": 773,
+        "discovery_bytes": 85,
+        "entry_bytes": 773,
+        "files": 1
+      },
+      "context.coding-preferences": {
+        "content_bytes": 449,
+        "discovery_bytes": 46,
+        "entry_bytes": 449,
+        "files": 1
+      },
+      "context.design-editorial": {
+        "content_bytes": 730,
+        "discovery_bytes": 79,
+        "entry_bytes": 730,
+        "files": 1
+      },
+      "context.design-preferences": {
+        "content_bytes": 471,
+        "discovery_bytes": 37,
+        "entry_bytes": 471,
+        "files": 1
+      },
+      "context.music-preferences": {
+        "content_bytes": 447,
+        "discovery_bytes": 35,
+        "entry_bytes": 447,
+        "files": 1
+      },
+      "context.planning-authority": {
+        "content_bytes": 623,
+        "discovery_bytes": 74,
+        "entry_bytes": 623,
+        "files": 1
+      },
+      "context.product-audience": {
+        "content_bytes": 443,
+        "discovery_bytes": 37,
+        "entry_bytes": 443,
+        "files": 1
+      },
+      "context.python-stack": {
+        "content_bytes": 475,
+        "discovery_bytes": 25,
+        "entry_bytes": 475,
+        "files": 1
+      },
+      "context.repository-architecture": {
+        "content_bytes": 476,
+        "discovery_bytes": 47,
+        "entry_bytes": 476,
+        "files": 1
+      },
+      "context.repository-conventions": {
+        "content_bytes": 441,
+        "discovery_bytes": 45,
+        "entry_bytes": 441,
+        "files": 1
+      },
+      "context.security-posture": {
+        "content_bytes": 459,
+        "discovery_bytes": 33,
+        "entry_bytes": 459,
+        "files": 1
+      },
+      "context.travel-preferences": {
+        "content_bytes": 449,
+        "discovery_bytes": 37,
+        "entry_bytes": 449,
+        "files": 1
+      },
+      "context.typescript-stack": {
+        "content_bytes": 469,
+        "discovery_bytes": 41,
+        "entry_bytes": 469,
+        "files": 1
+      },
+      "hook.credential-path-guard": {
+        "content_bytes": 997,
+        "discovery_bytes": 150,
+        "entry_bytes": 997,
+        "files": 1
+      },
+      "policy.accessibility": {
+        "content_bytes": 331,
+        "discovery_bytes": 41,
+        "entry_bytes": 331,
+        "files": 1
+      },
+      "policy.coding": {
+        "content_bytes": 314,
+        "discovery_bytes": 21,
+        "entry_bytes": 314,
+        "files": 1
+      },
+      "policy.communication": {
+        "content_bytes": 298,
+        "discovery_bytes": 41,
+        "entry_bytes": 298,
+        "files": 1
+      },
+      "policy.git": {
+        "content_bytes": 267,
+        "discovery_bytes": 15,
+        "entry_bytes": 267,
+        "files": 1
+      },
+      "policy.research": {
+        "content_bytes": 297,
+        "discovery_bytes": 36,
+        "entry_bytes": 297,
+        "files": 1
+      },
+      "policy.scope": {
+        "content_bytes": 346,
+        "discovery_bytes": 29,
+        "entry_bytes": 346,
+        "files": 1
+      },
+      "policy.security": {
+        "content_bytes": 350,
+        "discovery_bytes": 29,
+        "entry_bytes": 350,
+        "files": 1
+      },
+      "policy.verification": {
+        "content_bytes": 351,
+        "discovery_bytes": 37,
+        "entry_bytes": 351,
+        "files": 1
+      },
+      "skill.curate-am-playlist": {
+        "content_bytes": 830,
+        "discovery_bytes": 111,
+        "entry_bytes": 830,
+        "files": 1
+      },
+      "skill.do-it": {
+        "content_bytes": 787,
+        "discovery_bytes": 71,
+        "entry_bytes": 787,
+        "files": 1
+      },
+      "skill.investigate": {
+        "content_bytes": 2106,
+        "discovery_bytes": 83,
+        "entry_bytes": 2106,
+        "files": 1
+      },
+      "skill.pitch-deck": {
+        "content_bytes": 4272,
+        "discovery_bytes": 85,
+        "entry_bytes": 4272,
+        "files": 1
+      },
+      "skill.plan-out": {
+        "content_bytes": 4948,
+        "discovery_bytes": 96,
+        "entry_bytes": 4948,
+        "files": 1
+      },
+      "skill.pr-review": {
+        "content_bytes": 2253,
+        "discovery_bytes": 98,
+        "entry_bytes": 2253,
+        "files": 1
+      },
+      "skill.propose": {
+        "content_bytes": 2381,
+        "discovery_bytes": 95,
+        "entry_bytes": 2381,
+        "files": 1
+      },
+      "skill.trip-plan": {
+        "content_bytes": 931,
+        "discovery_bytes": 94,
+        "entry_bytes": 931,
+        "files": 1
+      },
+      "skill.trip-publish": {
+        "content_bytes": 665,
+        "discovery_bytes": 90,
+        "entry_bytes": 665,
+        "files": 1
+      },
+      "template.design-proposal": {
+        "content_bytes": 2533,
+        "discovery_bytes": 57,
+        "entry_bytes": 404,
+        "files": 2
+      },
+      "template.investigation": {
+        "content_bytes": 273,
+        "discovery_bytes": 53,
+        "entry_bytes": 273,
+        "files": 1
+      },
+      "template.pitch-deck": {
+        "content_bytes": 3718,
+        "discovery_bytes": 106,
+        "entry_bytes": 3718,
+        "files": 1
+      },
+      "template.plan-context": {
+        "content_bytes": 1261,
+        "discovery_bytes": 51,
+        "entry_bytes": 1261,
+        "files": 1
+      },
+      "template.playlist": {
+        "content_bytes": 296,
+        "discovery_bytes": 43,
+        "entry_bytes": 296,
+        "files": 1
+      },
+      "template.pr-review": {
+        "content_bytes": 2446,
+        "discovery_bytes": 45,
+        "entry_bytes": 491,
+        "files": 2
+      },
+      "template.trip-plan": {
+        "content_bytes": 401,
+        "discovery_bytes": 45,
+        "entry_bytes": 401,
+        "files": 1
+      },
+      "template.trip-publish": {
+        "content_bytes": 1860,
+        "discovery_bytes": 108,
+        "entry_bytes": 1860,
+        "files": 1
+      }
+    },
+    "revision": "69ec3882a70921d7b0ad8639462a3370d1074197"
+  },
+  "current": {
+    "groups": {
+      "Agent": {
+        "content_bytes": 5659,
+        "discovery_bytes": 878,
+        "entry_bytes": 5659,
+        "files": 6,
+        "packages": 6
+      },
+      "Context": {
+        "content_bytes": 6938,
+        "discovery_bytes": 1299,
+        "entry_bytes": 6938,
+        "files": 15,
+        "packages": 15
+      },
+      "Hook": {
+        "content_bytes": 997,
+        "discovery_bytes": 150,
+        "entry_bytes": 997,
+        "files": 1,
+        "packages": 1
+      },
+      "Policy": {
+        "content_bytes": 2554,
+        "discovery_bytes": 249,
+        "entry_bytes": 2554,
+        "files": 8,
+        "packages": 8
+      },
+      "Skill": {
+        "content_bytes": 19333,
+        "discovery_bytes": 1247,
+        "entry_bytes": 18016,
+        "files": 10,
+        "packages": 9
+      },
+      "Template": {
+        "content_bytes": 13710,
+        "discovery_bytes": 508,
+        "entry_bytes": 9626,
+        "files": 10,
+        "packages": 8
+      }
+    },
+    "notes": "UTF-8 bytes. Excludes manifest bytes, generated adapter text, and dependency copies. Not exact tokens, attention, latency or behavioral lift.",
+    "packages": {
+      "agent.ai-systems-reviewer": {
+        "content_bytes": 986,
+        "discovery_bytes": 152,
+        "entry_bytes": 986,
+        "files": 1
+      },
+      "agent.architecture-reviewer": {
+        "content_bytes": 944,
+        "discovery_bytes": 146,
+        "entry_bytes": 944,
+        "files": 1
+      },
+      "agent.security-reviewer": {
+        "content_bytes": 1006,
+        "discovery_bytes": 141,
+        "entry_bytes": 1006,
+        "files": 1
+      },
+      "agent.slop-auditor": {
+        "content_bytes": 918,
+        "discovery_bytes": 147,
+        "entry_bytes": 918,
+        "files": 1
+      },
+      "agent.travel-researcher": {
+        "content_bytes": 878,
+        "discovery_bytes": 150,
+        "entry_bytes": 878,
+        "files": 1
+      },
+      "agent.ux-reviewer": {
+        "content_bytes": 927,
+        "discovery_bytes": 142,
+        "entry_bytes": 927,
+        "files": 1
+      },
+      "context.ai-systems": {
+        "content_bytes": 453,
+        "discovery_bytes": 68,
+        "entry_bytes": 453,
+        "files": 1
+      },
+      "context.cloud-infrastructure": {
+        "content_bytes": 438,
+        "discovery_bytes": 102,
+        "entry_bytes": 438,
+        "files": 1
+      },
+      "context.coding-maintainable": {
+        "content_bytes": 635,
+        "discovery_bytes": 85,
+        "entry_bytes": 635,
+        "files": 1
+      },
+      "context.coding-preferences": {
+        "content_bytes": 400,
+        "discovery_bytes": 95,
+        "entry_bytes": 400,
+        "files": 1
+      },
+      "context.design-editorial": {
+        "content_bytes": 614,
+        "discovery_bytes": 79,
+        "entry_bytes": 614,
+        "files": 1
+      },
+      "context.design-preferences": {
+        "content_bytes": 426,
+        "discovery_bytes": 77,
+        "entry_bytes": 426,
+        "files": 1
+      },
+      "context.music-preferences": {
+        "content_bytes": 434,
+        "discovery_bytes": 61,
+        "entry_bytes": 434,
+        "files": 1
+      },
+      "context.planning-authority": {
+        "content_bytes": 464,
+        "discovery_bytes": 83,
+        "entry_bytes": 464,
+        "files": 1
+      },
+      "context.product-audience": {
+        "content_bytes": 427,
+        "discovery_bytes": 94,
+        "entry_bytes": 427,
+        "files": 1
+      },
+      "context.python-stack": {
+        "content_bytes": 429,
+        "discovery_bytes": 68,
+        "entry_bytes": 429,
+        "files": 1
+      },
+      "context.repository-architecture": {
+        "content_bytes": 436,
+        "discovery_bytes": 104,
+        "entry_bytes": 436,
+        "files": 1
+      },
+      "context.repository-conventions": {
+        "content_bytes": 441,
+        "discovery_bytes": 112,
+        "entry_bytes": 441,
+        "files": 1
+      },
+      "context.security-posture": {
+        "content_bytes": 455,
+        "discovery_bytes": 100,
+        "entry_bytes": 455,
+        "files": 1
+      },
+      "context.travel-preferences": {
+        "content_bytes": 442,
+        "discovery_bytes": 79,
+        "entry_bytes": 442,
+        "files": 1
+      },
+      "context.typescript-stack": {
+        "content_bytes": 444,
+        "discovery_bytes": 92,
+        "entry_bytes": 444,
+        "files": 1
+      },
+      "hook.credential-path-guard": {
+        "content_bytes": 997,
+        "discovery_bytes": 150,
+        "entry_bytes": 997,
+        "files": 1
+      },
+      "policy.accessibility": {
+        "content_bytes": 331,
+        "discovery_bytes": 41,
+        "entry_bytes": 331,
+        "files": 1
+      },
+      "policy.coding": {
+        "content_bytes": 314,
+        "discovery_bytes": 21,
+        "entry_bytes": 314,
+        "files": 1
+      },
+      "policy.communication": {
+        "content_bytes": 298,
+        "discovery_bytes": 41,
+        "entry_bytes": 298,
+        "files": 1
+      },
+      "policy.git": {
+        "content_bytes": 267,
+        "discovery_bytes": 15,
+        "entry_bytes": 267,
+        "files": 1
+      },
+      "policy.research": {
+        "content_bytes": 297,
+        "discovery_bytes": 36,
+        "entry_bytes": 297,
+        "files": 1
+      },
+      "policy.scope": {
+        "content_bytes": 346,
+        "discovery_bytes": 29,
+        "entry_bytes": 346,
+        "files": 1
+      },
+      "policy.security": {
+        "content_bytes": 350,
+        "discovery_bytes": 29,
+        "entry_bytes": 350,
+        "files": 1
+      },
+      "policy.verification": {
+        "content_bytes": 351,
+        "discovery_bytes": 37,
+        "entry_bytes": 351,
+        "files": 1
+      },
+      "skill.curate-am-playlist": {
+        "content_bytes": 1543,
+        "discovery_bytes": 143,
+        "entry_bytes": 1543,
+        "files": 1
+      },
+      "skill.do-it": {
+        "content_bytes": 1819,
+        "discovery_bytes": 132,
+        "entry_bytes": 1819,
+        "files": 1
+      },
+      "skill.investigate": {
+        "content_bytes": 1896,
+        "discovery_bytes": 139,
+        "entry_bytes": 1896,
+        "files": 1
+      },
+      "skill.pitch-deck": {
+        "content_bytes": 2123,
+        "discovery_bytes": 142,
+        "entry_bytes": 2123,
+        "files": 1
+      },
+      "skill.plan-out": {
+        "content_bytes": 3933,
+        "discovery_bytes": 140,
+        "entry_bytes": 2616,
+        "files": 2
+      },
+      "skill.pr-review": {
+        "content_bytes": 2386,
+        "discovery_bytes": 141,
+        "entry_bytes": 2386,
+        "files": 1
+      },
+      "skill.propose": {
+        "content_bytes": 2515,
+        "discovery_bytes": 138,
+        "entry_bytes": 2515,
+        "files": 1
+      },
+      "skill.trip-plan": {
+        "content_bytes": 1663,
+        "discovery_bytes": 133,
+        "entry_bytes": 1663,
+        "files": 1
+      },
+      "skill.trip-publish": {
+        "content_bytes": 1455,
+        "discovery_bytes": 139,
+        "entry_bytes": 1455,
+        "files": 1
+      },
+      "template.design-proposal": {
+        "content_bytes": 2533,
+        "discovery_bytes": 57,
+        "entry_bytes": 404,
+        "files": 2
+      },
+      "template.investigation": {
+        "content_bytes": 273,
+        "discovery_bytes": 53,
+        "entry_bytes": 273,
+        "files": 1
+      },
+      "template.pitch-deck": {
+        "content_bytes": 3718,
+        "discovery_bytes": 106,
+        "entry_bytes": 3718,
+        "files": 1
+      },
+      "template.plan-context": {
+        "content_bytes": 2183,
+        "discovery_bytes": 51,
+        "entry_bytes": 2183,
+        "files": 1
+      },
+      "template.playlist": {
+        "content_bytes": 296,
+        "discovery_bytes": 43,
+        "entry_bytes": 296,
+        "files": 1
+      },
+      "template.pr-review": {
+        "content_bytes": 2446,
+        "discovery_bytes": 45,
+        "entry_bytes": 491,
+        "files": 2
+      },
+      "template.trip-plan": {
+        "content_bytes": 401,
+        "discovery_bytes": 45,
+        "entry_bytes": 401,
+        "files": 1
+      },
+      "template.trip-publish": {
+        "content_bytes": 1860,
+        "discovery_bytes": 108,
+        "entry_bytes": 1860,
+        "files": 1
+      }
+    },
+    "revision": "working-tree"
+  }
+}

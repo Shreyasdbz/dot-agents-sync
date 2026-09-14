@@ -1,24 +1,24 @@
 ---
 name: propose
-description: "Create a design proposal; clarify material requirements and evaluate viable approaches."
+description: "Design a change: clarify consequential requirements, compare viable approaches, and write a proposal. Not implementation planning."
 ---
 
 # Propose
 
-Given an inline change request or referenced file, produce a durable design proposal. Operate like a strong candidate answering an open-ended system-design question: collaborate when material requirements are unclear, then make deliberate decisions and move forward independently once enough is known.
+Turn the request into a defensible design decision. Inspect relevant code, existing interfaces, domain terms and decisions before asking for facts the repository can answer.
 
-- Discovery: Inspect the actual repository, relevant code, architecture, configuration, constraints, and available context before settling on a design. Use current external research and parallel reviewers when those capabilities materially improve the decision.
+## Resolve the decision
 
-- Clarification gate: Ask questions only when different answers could materially change the system boundary, intended outcome, scale or service levels, consistency requirements, security or compliance posture, backward compatibility, migration strategy, difficult-to-reverse choices, or explicit scope. Ask a small prioritized batch rather than drip-feeding questions.
+Identify the outcome, constraints and the few unknowns that could change the architecture. Ask a short prioritized batch when answers affect correctness, security, scale, compatibility or an expensive-to-reverse choice. Explain the trade-off and recommend an answer where useful. Ask dependent questions only after their prerequisites are settled. For low-impact gaps, state an assumption and proceed; sufficient requirements do not need an interview.
 
-- Autonomy: When missing information is low-impact, state a reasonable assumption and continue. When the user delegates judgment, stop seeking routine confirmation. If the requirements are already sufficient, do not force an interview.
+Compare credible approaches, including extending what exists. Choose against the actual requirements—not a fixed number of alternatives or a preferred technology. For the chosen design, make ownership, state transitions, invariants, failure recovery and external contracts explicit where relevant. Trace one normal path and the most consequential failure path. Test a counterexample to the recommendation and revise it if necessary.
 
-- Decision rigor: Evaluate the realistic approaches against the requirements, make a selection, and subject it to multiple critical review passes. Present the chosen design, material trade-offs, useful rejected alternatives, explicit assumptions, unresolved decisions, risks, validation needs, and migration or compatibility implications where relevant.
+Use current primary sources for uncertain external guarantees. Delegate a bounded question only when reviewers are available, authorized and likely to add distinct evidence; otherwise perform a focused self-check without claiming independence. Stop exploring when additional information is unlikely to change the decision, or name the specific unresolved blocker.
 
-- Artifact quality: Produce a decision record, not a transcript of private reasoning. The result must be clear, concise, organized, comprehensive where changes need coverage, and intentionally shallow where extra depth would not improve implementation or review.
+## Deliver
 
-- Boundary: Design the change, but do not create implementation milestones, phases, tasks, schedules, commits, or production code.
+Load [proposal.md](references/template.design-proposal/proposal.md) when composing the default durable Markdown proposal. Use [proposal.html](references/template.design-proposal/proposal.html) only for a requested HTML companion. Preserve explicit output preferences.
 
-- Output: A durable, template-based Markdown design proposal. Produce a template-based HTML companion when requested.
+Include the decision, requirements, material alternatives, assumptions, risks, compatibility implications and checks that would validate the design. Cite inspected code or sources; mark unverified guarantees. Keep only sections that change an implementation or review decision. A conditional proposal is acceptable when a material answer is unavailable.
 
-- Typical dependencies: repository architecture and product context, research-quality and security policies, design-proposal template, and optional architecture, security, UX, or AI-systems reviewers.
+Design only: no production edits, implementation milestones/tasks or external publication unless separately requested. Finish when the selected design accounts for the important requirements and failure cases, with unresolved decisions visible.

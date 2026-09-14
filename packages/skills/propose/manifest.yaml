@@ -3,8 +3,8 @@
   "kind": "Skill",
   "id": "skill.propose",
   "name": "propose",
-  "version": "1.0.0",
-  "description": "Create a design proposal; clarify material requirements and evaluate viable approaches.",
+  "version": "1.1.0",
+  "description": "Design a change: clarify consequential requirements, compare viable approaches, and write a proposal. Not implementation planning.",
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 1500,
   "requires": {
     "template.design-proposal": ">=1,<2",
     "policy.scope": ">=1,<2",
@@ -27,10 +27,10 @@
     "agents.parallel",
     "web.search"
   ],
-  "fallback": "Perform sequential evidence passes; disclose that independent parallel review was unavailable.",
+  "fallback": "Use available evidence and a self-check; identify unverified external guarantees and unavailable independent review.",
   "outputs": [
-    "inline",
-    "referenced-artifact"
+    "markdown",
+    "html"
   ],
   "suggests": []
 }

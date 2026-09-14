@@ -3,8 +3,8 @@
   "kind": "Context",
   "id": "context.travel-preferences",
   "name": "travel-preferences",
-  "version": "1.0.0",
-  "description": "Travel preferences",
+  "version": "1.1.0",
+  "description": "Travel preferences: Load for itinerary research or revision.",
   "license": "UNLICENSED",
   "entry": "CONTEXT.md",
   "files": [
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 600,
   "context": {
     "access": "explicit",
     "sensitivity": "private",

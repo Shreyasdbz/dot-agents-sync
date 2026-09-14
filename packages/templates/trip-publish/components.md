@@ -1,0 +1,47 @@
+# Travel page composition
+
+Build for travelers, not operators. Use this order: headline, At a glance, Reservations (Flights, Stays, Other tickets), Itinerary, To do, Metadata. The worked page is illustrative; replace every sample name, date, budget and booking fact. No slogan or poetic subtitle is needed. A warm neutral palette, readable type and clear day cards supply character without adding copy.
+
+## Headline and controls
+
+Show the trip title, dates, people by name, destination highlights and total estimated cost with its party/per-person basis. If costs are incomplete, say "Known subtotal" or "Not yet priced" rather than inventing a total. Separate optional, paid and remaining costs only when evidence supports them.
+
+Keep section links, native day/reservation disclosures, Print and an optional theme switch. No group or date filters. Use people's names on split plans and reservation allocations. The To do list is informational, not a persistent task tracker; do not present checkboxes that silently lose edits on reload.
+
+## At a glance and itinerary
+
+At a glance has one short paragraph for the entire trip plus a horizontally scrolling route preview. Group consecutive dates into meaningful destination/transit stops; each links to its first detailed day. The focusable region supports native keyboard scrolling, touch and a scrollbar without moving the page sideways. In print it wraps into rows with no clipped stops. Keep the paragraph factual but inviting; do not introduce a second set of daily cards.
+
+Every date gets a closed detailed itinerary card, including transit and unplanned days. Its date tile has month, date and a lowercase weekday (mon, tue, wed, thr, fri, sat, sun). Itinerary has an ordered vertical timeline with detailed bullet points. Maintain identical facts across both views; generate them from one trip model when adapting programmatically. Unknown times remain explicitly flexible.
+
+Use the [timeline](components/timeline.html) structure: journey, journey-stop, stop-icon, and journey-leg. Put data-transport on the departing activity to describe the segment to the next activity, not the incoming journey. Supported segments are walk (dashed green), rail (blue), car (ochre; taxi, bus or road transfer), and flight (purple). Always name the mode and known duration in text; color and decorative icons are supplementary. The last stop has no outgoing line. Use the worked page's consistent inline SVG icons for flight, lodging, rail, visit, food, walking and vehicle; accompany each with an explicit activity title. No external icon or map service is required.
+
+Each day and reservation needs a unique stable id. Reservation links open the relevant disclosure. Connecting flights retain each leg's local dates, times and zones; sort by actual chronology across zones, not wall-clock strings. Do not manufacture precise durations or confirmed routes.
+
+## Reservations
+
+Store each booking once, including unbooked candidates. Use booking-list with compact booking-flight, booking-stay or booking-ticket disclosures: flights emphasize origin/destination, stays emphasize property and nights, tickets emphasize service and date. Two columns on desktop become short rows on mobile. Summaries show route/property/event, dates, relevant travelers and plain status ("To book", "Awaiting confirmation", "Booked", "Cancelled"). In details retain carrier/service, flight number, airports/terminals, dates/zones, seats/baggage, property address, check-in/out, room/unit/bed allocations, cancellation deadline with zone, provider/contact/link and confirmation reference where known and appropriate. Use "Not booked" or "Not provided" for unknowns, never plausible-looking invented references. Rail, car hire, tours, timed admission and transfers belong under Other tickets when reserved or reservable.
+
+Use [copy details](components/copy-details.html) for confirmation references and destination addresses in reservations or activity details. Copy the visible text, not a duplicated data attribute; preserve full postal/local-language address text. Give each value a unique id, set data-copy-target on its button, give the button a field-specific accessible label, and keep the enclosing booking-copy feedback region. The shipped example is deliberately a placeholder, not a real booking/address: replace it or omit unavailable fields and their copy controls before delivery. Buttons appear only with JavaScript, write only after an explicit click and announce success only after the clipboard promise resolves. Denied or unavailable clipboard access selects the text for manual copying and explains the failure. No automatic reads or clipboard writes occur, and copy controls disappear in print.
+
+Reusable detail fragments: [flight](components/flight.html), [rail](components/rail.html), [transfer](components/transfer.html), [vehicle](components/vehicle.html), [activity](components/activity.html), [hotel](components/stay.html), [rental home](components/rental-stay.html), [family stay](components/family-stay.html), [travelers](components/travelers.html), [disruption](components/disruption.html). These are optional detail recipes, not a requirement to restore the old schedule controls. Legacy data-day/data-groups attributes are inert; omit them in new compositions. Replace legacy group labels with actual names. Account for every traveler's nights, units, bedrooms and beds, not just a group headcount.
+
+Confirmation references may be included in an explicitly authorized private traveler copy. Remove them from public exports along with private contacts, home addresses and assigned room numbers. Never include passport/payment data or entry/access codes. Collapsed HTML, scripts and comments are not private. This template has no authentication or export sanitizer.
+
+## Currency and budget
+
+Currency selection is optional progressive enhancement. Omit the control when there is only one currency or no reliable conversion basis. Two currencies use a select; additional currencies add options. data-money-usd holds the immutable USD-equivalent estimate, and each option's data-rate is display-currency units per USD. Format display values using Intl.NumberFormat; round only for display, not the source ledger. Zero is valid, unknown is not zero, invalid or nonpositive rates are disabled. Switching repeatedly must not compound rounding.
+
+Before delivery replace the illustrative rate with a verified source, retrieval date and time, base/quote currencies and fees/rounding caveat in Metadata. This is an offline estimate converter, not live FX or a payment system. Do not add data-money-usd to original booking amounts: those stay visible in their original currency. For native-currency items derive the USD basis once from the same dated rate table, count shared bookings once, and reconcile line items with the headline total. Preserve the original amount separately. The [cost summary](components/cost-summary.html) is a ledger recipe, not an authoritative quote.
+
+Without JavaScript the USD estimates and rate caveat remain visible and the selector stays hidden. Print retains the chosen currency and its explanation. No network requests or storage occur.
+
+## To do and metadata
+
+Sort outstanding tasks by urgency then known due date, with owner, concrete action and relevant booking link. Do not invent deadlines. Show missing owners. Metadata includes last edited, plan status, last verification where known, rate source/date and budget scope. Do not label a generated date as a booking verification.
+
+The optional [route schematic](components/route-map.html) is not navigation or live tracking; keep it secondary. It needs equivalent text.
+
+## Verification
+
+Fragments inherit the self-contained trip.html styles and interactions. Check 320px and 390px widths, long names, keyboard disclosures, links revealing nested content, closed defaults, print/restoration, no-JavaScript reading, dark mode, currency round trips, invalid rates and budget reconciliation. Review timelines for correct outgoing segments and useful labels. Print opens all details. Automated accessibility checks do not replace screen-reader or traveler usability testing.

@@ -3,8 +3,8 @@
   "kind": "Agent",
   "id": "agent.ux-reviewer",
   "name": "ux-reviewer",
-  "version": "1.0.0",
-  "description": "UX & Accessibility Reviewer",
+  "version": "1.1.0",
+  "description": "Review user journeys, accessibility, interaction states, and visual hierarchy; distinguish source findings from rendered evidence.",
   "license": "UNLICENSED",
   "entry": "AGENT.md",
   "files": [
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 650,
   "outputs": [
     "findings",
     "evidence",

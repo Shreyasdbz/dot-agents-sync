@@ -3,17 +3,19 @@
   "kind": "Template",
   "id": "template.pr-review",
   "name": "pr-review",
-  "version": "1.0.0",
-  "description": "Reusable pr-review output structure",
+  "version": "1.3.0",
+  "description": "Canonical review structures and an accessible HTML findings interface with local search.",
   "license": "UNLICENSED",
   "entry": "report.md",
   "files": [
-    "report.md",
-    "report.html"
+    "components/finding.html",
+    "components.md",
+    "report.html",
+    "report.md"
   ],
   "scopes": [
     "user",
     "project"
   ],
-  "token_budget": 8000
+  "token_budget": 20000
 }

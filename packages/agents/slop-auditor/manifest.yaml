@@ -3,8 +3,8 @@
   "kind": "Agent",
   "id": "agent.slop-auditor",
   "name": "slop-auditor",
-  "version": "1.0.0",
-  "description": "Slop Auditor",
+  "version": "1.1.0",
+  "description": "Find unsupported completion claims, unfinished production paths, and filler without misclassifying test doubles or reusable templates.",
   "license": "UNLICENSED",
   "entry": "AGENT.md",
   "files": [
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 650,
   "outputs": [
     "findings",
     "evidence",

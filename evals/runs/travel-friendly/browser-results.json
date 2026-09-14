@@ -1,0 +1,195 @@
+{
+  "browser": "151.0.7922.34",
+  "results": [
+    {
+      "page": "trip",
+      "status": "passed",
+      "accessibility": [
+        {
+          "state": "dark-collapsed",
+          "status": "no-violations",
+          "axe": "4.13.0",
+          "incompleteRules": []
+        },
+        {
+          "state": "light-expanded",
+          "status": "no-violations",
+          "axe": "4.13.0",
+          "incompleteRules": []
+        },
+        {
+          "state": "light-320",
+          "status": "no-violations",
+          "axe": "4.13.0",
+          "incompleteRules": []
+        }
+      ],
+      "checks": [
+        "light/dark",
+        "320/390/1440 reflow",
+        "long title",
+        "unique IDs",
+        "fragment links",
+        "no page errors",
+        "no-JavaScript fallback",
+        "applicable interactions and print"
+      ]
+    },
+    {
+      "page": "proposal",
+      "status": "passed",
+      "accessibility": [
+        {
+          "state": "dark-collapsed",
+          "status": "no-violations",
+          "axe": "4.13.0",
+          "incompleteRules": []
+        },
+        {
+          "state": "light-expanded",
+          "status": "no-violations",
+          "axe": "4.13.0",
+          "incompleteRules": []
+        },
+        {
+          "state": "light-320",
+          "status": "no-violations",
+          "axe": "4.13.0",
+          "incompleteRules": []
+        }
+      ],
+      "checks": [
+        "light/dark",
+        "320/390/1440 reflow",
+        "long title",
+        "unique IDs",
+        "fragment links",
+        "no page errors",
+        "no-JavaScript fallback",
+        "applicable interactions and print"
+      ]
+    },
+    {
+      "page": "review",
+      "status": "passed",
+      "accessibility": [
+        {
+          "state": "dark-collapsed",
+          "status": "no-violations",
+          "axe": "4.13.0",
+          "incompleteRules": []
+        },
+        {
+          "state": "light-expanded",
+          "status": "no-violations",
+          "axe": "4.13.0",
+          "incompleteRules": []
+        },
+        {
+          "state": "light-320",
+          "status": "no-violations",
+          "axe": "4.13.0",
+          "incompleteRules": []
+        }
+      ],
+      "checks": [
+        "light/dark",
+        "320/390/1440 reflow",
+        "long title",
+        "unique IDs",
+        "fragment links",
+        "no page errors",
+        "no-JavaScript fallback",
+        "applicable interactions and print"
+      ]
+    },
+    {
+      "page": "deck",
+      "status": "passed",
+      "accessibility": [
+        {
+          "state": "dark-collapsed",
+          "status": "no-violations",
+          "axe": "4.13.0",
+          "incompleteRules": []
+        },
+        {
+          "state": "light-expanded",
+          "status": "no-violations",
+          "axe": "4.13.0",
+          "incompleteRules": [
+            {
+              "id": "color-contrast",
+              "targets": [
+                [
+                  "text[x=\"22\"]"
+                ],
+                [
+                  "text[y=\"114\"]"
+                ],
+                [
+                  "text[y=\"34\"]"
+                ],
+                [
+                  "text[x=\"57\"]"
+                ],
+                [
+                  "text[x=\"237\"]"
+                ],
+                [
+                  "text[x=\"417\"]"
+                ],
+                [
+                  "text[x=\"597\"]"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "state": "light-320",
+          "status": "no-violations",
+          "axe": "4.13.0",
+          "incompleteRules": [
+            {
+              "id": "color-contrast",
+              "targets": [
+                [
+                  "text[x=\"22\"]"
+                ],
+                [
+                  "text[y=\"114\"]"
+                ],
+                [
+                  "text[y=\"34\"]"
+                ],
+                [
+                  "text[x=\"57\"]"
+                ],
+                [
+                  "text[x=\"237\"]"
+                ],
+                [
+                  "text[x=\"417\"]"
+                ],
+                [
+                  "text[x=\"597\"]"
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "checks": [
+        "light/dark",
+        "320/390/1440 reflow",
+        "long title",
+        "unique IDs",
+        "fragment links",
+        "no page errors",
+        "no-JavaScript fallback",
+        "applicable interactions and print"
+      ]
+    }
+  ]
+}

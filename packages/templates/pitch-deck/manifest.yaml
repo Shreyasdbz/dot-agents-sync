@@ -1,11 +1,25 @@
-apiVersion: dasync.dev/v1
-kind: Template
-id: template.pitch-deck
-name: pitch-deck
-version: 1.0.0
-description: Accessible adaptive HTML presentation shell with semantic sections and progressive enhancement.
-license: UNLICENSED
-entry: deck.html
-files: [deck.html]
-scopes: [user, project]
-token_budget: 5000
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Template",
+  "id": "template.pitch-deck",
+  "name": "pitch-deck",
+  "version": "1.3.0",
+  "description": "Self-contained accessible briefing components with responsive layouts and progressive navigation.",
+  "license": "UNLICENSED",
+  "entry": "deck.html",
+  "files": [
+    "components/chart.html",
+    "components/data-flow.html",
+    "components/dense-context.html",
+    "components/entity-relationship.html",
+    "components/line-chart.html",
+    "components/sequence.html",
+    "components.md",
+    "deck.html"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 20000
+}

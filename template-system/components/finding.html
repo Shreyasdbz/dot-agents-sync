@@ -1,0 +1,6 @@
+<details class="disclosure" data-finding>
+<summary><span class="badge danger">SEV_1</span><span><span class="summary-title">A zero-value cache hit can charge twice</span><span class="summary-meta">cache.py:8 · Required behavior fails · Example finding</span></span></summary>
+<div class="detail-body"><h3>Trigger and consequence</h3><p>An existing value of zero fails a truthiness check. The request reaches the charge operation again rather than returning the cached result.</p><pre><code># Proposed correction
+if key in cache:
+    return cache[key]</code></pre><h3>Evidence and counterevidence</h3><p>The supplied snapshot changes membership to truthiness. No downstream guard was supplied; confirm the real call path before posting.</p><h3>Verification</h3><p>Add a zero-value regression that asserts the charge operation is not called. This example has not reviewed a real PR.</p></div>
+</details>

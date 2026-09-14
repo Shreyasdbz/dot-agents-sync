@@ -3,8 +3,8 @@
   "kind": "Agent",
   "id": "agent.security-reviewer",
   "name": "security-reviewer",
-  "version": "1.0.0",
-  "description": "Security & Privacy Reviewer",
+  "version": "1.1.0",
+  "description": "Trace reachable security failures across trust boundaries, permissions, private data, dependencies, and executable content.",
   "license": "UNLICENSED",
   "entry": "AGENT.md",
   "files": [
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 650,
   "outputs": [
     "findings",
     "evidence",

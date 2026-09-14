@@ -3,8 +3,8 @@
   "kind": "Context",
   "id": "context.design-preferences",
   "name": "design-preferences",
-  "version": "1.0.0",
-  "description": "Design preferences",
+  "version": "1.1.0",
+  "description": "Design preferences: Load for visual or interaction design.",
   "license": "UNLICENSED",
   "entry": "CONTEXT.md",
   "files": [
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 600,
   "context": {
     "access": "explicit",
     "sensitivity": "private",

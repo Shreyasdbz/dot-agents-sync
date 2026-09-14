@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kyoto highlights</title>
+<style>
+:root{color-scheme:light dark;font:17px/1.6 system-ui,sans-serif;--bg:#f7f7f2;--fg:#1f3029;--line:#9aa9a1;--accent:#176343}body{max-width:74rem;margin:auto;padding:clamp(1rem,4vw,3rem);background:var(--bg);color:var(--fg)}a{color:inherit}h1,h2{line-height:1.2}nav{display:flex;gap:1rem;flex-wrap:wrap;border-block:1px solid var(--line);padding:1rem 0}article{padding:1.5rem 0;border-bottom:1px solid var(--line)}details{padding:.7rem 0}summary,button{cursor:pointer}button{font:inherit;padding:.4rem .8rem;color:inherit;background:transparent;border:1px solid var(--line)}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}body[data-theme=dark]{--bg:#17231d;--fg:#edf5ef;--line:#667e70;--accent:#98d9b5}body[data-theme=light]{--bg:#f7f7f2;--fg:#1f3029;--line:#9aa9a1;--accent:#176343}@media(prefers-color-scheme:dark){body:not([data-theme=light]){--bg:#17231d;--fg:#edf5ef;--line:#667e70;--accent:#98d9b5}}@media print{button{display:none}article{break-inside:avoid}body{background:white;color:black}}
+</style>
+<header><h1>Kyoto highlights</h1><button type="button" id="theme" aria-label="Toggle light and dark appearance">Change appearance</button></header>
+<nav aria-label="Itinerary sections"><a href="#highlights">Highlights</a><a href="#logistics">Plan details</a></nav>
+<main>
+<article id="highlights"><h2>Kyoto temples and lunch</h2><p>Public trip highlights: Kyoto temples and lunch.</p></article>
+<article id="logistics"><h2>Plan details</h2><p>Dates, named stops, routes and booking status are not included in the supplied public highlights. This guide does not establish a timed itinerary or confirmed admission.</p><p>Map links can be added once the public destinations are specified.</p></article>
+</main>
+<script>document.querySelector('#theme').onclick=()=>{const dark=document.body.dataset.theme?document.body.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;document.body.dataset.theme=dark?'light':'dark'};</script>
+</html>

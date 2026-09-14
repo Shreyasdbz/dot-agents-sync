@@ -115,4 +115,8 @@ uv build
 
 Tests cover CLI journeys, schema validation, deterministic resolution, dependency failures, pinned Git objects, provider formats, ownership, private context, concurrent writers, injected failures, process-death recovery and reversible rollback. See [executed verification](docs/verification.md), [implementation decisions and limits](docs/architecture/implementation.md), [AI operator instructions](docs/AI-OPERATOR.md), [package authoring](docs/package-authoring.md), [provider contract](docs/adapter-contract.md), and [behavioral evaluation protocol](evals/README.md).
 
+The [catalog research and audit](docs/research/catalog-audit.md) explains the revised skill/agent/context contracts, Matt Pocock-inspired patterns, measured footprint trade-offs, and recorded development trials. Those trials are not native-provider or independent-human certification.
+
+The [template system](template-system/README.md) adds context-specific Markdown recipes and modular, self-contained HTML components. Preview the [itinerary](packages/templates/trip-publish/trip.html), [proposal](packages/templates/design-proposal/proposal.html), [review](packages/templates/pr-review/report.html), and [briefing](packages/templates/pitch-deck/deck.html) examples in a browser. [Template verification](evals/runs/template-system/README.md) records browser and accessibility evidence and its limits.
+
 The repository currently declares no open-source license. Dependency licenses remain their respective owners' licenses. Choose a project license before distributing it as open source.

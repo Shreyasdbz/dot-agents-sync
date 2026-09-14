@@ -3,8 +3,8 @@
   "kind": "Skill",
   "id": "skill.investigate",
   "name": "investigate",
-  "version": "1.0.0",
-  "description": "Investigate a question or failure and return evidence and cause inline.",
+  "version": "1.1.0",
+  "description": "Explain a failure or answer a research question with traceable evidence, inline by default. Diagnosis does not authorize a fix.",
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 1500,
   "requires": {
     "template.investigation": ">=1,<2",
     "policy.research": ">=1,<2"
@@ -22,11 +22,13 @@
   "capabilities": [
     "filesystem.read"
   ],
-  "prefers": [],
-  "fallback": "Perform sequential evidence passes; disclose that independent parallel review was unavailable.",
+  "prefers": [
+    "web.search"
+  ],
+  "fallback": "Analyze supplied evidence; disclose which current external facts could not be verified.",
   "outputs": [
     "inline",
-    "referenced-artifact"
+    "markdown"
   ],
   "suggests": [
     "skill.pitch-deck"

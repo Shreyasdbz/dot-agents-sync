@@ -3,8 +3,8 @@
   "kind": "Agent",
   "id": "agent.architecture-reviewer",
   "name": "architecture-reviewer",
-  "version": "1.0.0",
-  "description": "Architecture Reviewer",
+  "version": "1.1.0",
+  "description": "Review designs and changes for broken invariants, failure recovery, compatibility, and unnecessary architectural complexity.",
   "license": "UNLICENSED",
   "entry": "AGENT.md",
   "files": [
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 650,
   "outputs": [
     "findings",
     "evidence",

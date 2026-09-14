@@ -3,8 +3,8 @@
   "kind": "Skill",
   "id": "skill.trip-plan",
   "name": "trip-plan",
-  "version": "1.0.0",
-  "description": "Research and revise a trip itinerary using traveler constraints and current sources.",
+  "version": "1.1.0",
+  "description": "Create or revise a feasible, source-backed travel itinerary using traveler constraints. Planning does not book or purchase.",
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 1500,
   "requires": {
     "template.trip-plan": ">=1,<2",
     "policy.research": ">=1,<2"
@@ -22,11 +22,12 @@
   "capabilities": [
     "filesystem.read"
   ],
-  "prefers": [],
-  "fallback": "Perform sequential evidence passes; disclose that independent parallel review was unavailable.",
+  "prefers": [
+    "web.search"
+  ],
+  "fallback": "Return a provisional itinerary from supplied facts; prices, schedules and availability remain unverified.",
   "outputs": [
-    "inline",
-    "referenced-artifact"
+    "markdown"
   ],
   "suggests": []
 }

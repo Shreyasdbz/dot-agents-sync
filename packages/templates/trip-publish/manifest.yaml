@@ -1,11 +1,33 @@
-apiVersion: dasync.dev/v1
-kind: Template
-id: template.trip-publish
-name: trip-publish
-version: 1.0.0
-description: Responsive self-contained itinerary shell with accessible navigation and light/dark appearance.
-license: UNLICENSED
-entry: trip.html
-files: [trip.html]
-scopes: [user, project]
-token_budget: 3000
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Template",
+  "id": "template.trip-publish",
+  "name": "trip-publish",
+  "version": "1.5.0",
+  "description": "Traveler-friendly trip page with day summaries, reservations, transport timelines, to-dos and optional currency estimates.",
+  "license": "UNLICENSED",
+  "entry": "trip.html",
+  "files": [
+    "components/copy-details.html",
+    "components/activity.html",
+    "components/cost-summary.html",
+    "components/disruption.html",
+    "components/family-stay.html",
+    "components/flight.html",
+    "components/rail.html",
+    "components/rental-stay.html",
+    "components/route-map.html",
+    "components/stay.html",
+    "components/timeline.html",
+    "components/transfer.html",
+    "components/travelers.html",
+    "components/vehicle.html",
+    "components.md",
+    "trip.html"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 20000
+}

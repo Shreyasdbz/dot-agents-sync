@@ -3,18 +3,19 @@
   "kind": "Skill",
   "id": "skill.plan-out",
   "name": "plan-out",
-  "version": "1.0.0",
-  "description": "Plan an approved design using the project's planning authority and immediate milestone.",
+  "version": "1.1.0",
+  "description": "Break an approved design into reviewable work and a loadable Plan Context in the project's planning authority. Do not implement it.",
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [
-    "SKILL.md"
+    "SKILL.md",
+    "sizing.md"
   ],
   "scopes": [
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 1800,
   "requires": {
     "template.plan-context": ">=1,<2",
     "policy.scope": ">=1,<2",
@@ -24,13 +25,12 @@
     "filesystem.read"
   ],
   "prefers": [
-    "agents.parallel",
-    "web.search"
+    "planning.tracker"
   ],
-  "fallback": "Perform sequential evidence passes; disclose that independent parallel review was unavailable.",
+  "fallback": "Produce a schema-valid offline draft; mark tracker state unrefreshed and leave publication pending.",
   "outputs": [
-    "inline",
-    "referenced-artifact"
+    "plan-context",
+    "inline"
   ],
   "suggests": []
 }

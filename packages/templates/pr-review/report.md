@@ -1,17 +1,29 @@
-# Pull request review
+# PR review composition guide
 
-## Summary
+Create one canonical review and project it into requested formats. Preserve the skill's severity definitions and inline default.
 
-One or two sentences stating outcome and verification scope.
+## Review header
 
-## Decision
+Identify PR or supplied diff, base/head revisions, review status (draft/posted), scope and actual checks. Unavailable identities remain unknown; a snapshot is not a refreshed PR.
 
-Approve, Suggest or Block, with reasoning.
+## Verdict
+
+Approve, Suggest or Block with the consequential reason. “No supported findings in the examined scope” is valid; it is not exhaustive correctness or evidence that unrun checks passed.
 
 ## Findings
 
-For each finding: severity, title, exact file and line, trigger, impact, supporting evidence and recommended correction. Order SEV_0 through SEV_3; consolidate shared causes.
+For each finding, use **severity + concrete title**, then location, reachable trigger, consequence, evidence, counterevidence considered and feasible correction. Keep the finding readable without opening every link. Consolidate one root cause; distinguish regressions from pre-existing behavior and preferences.
 
-## Verification limits
+A useful structure is: **Location → Trigger → Impact → Evidence → Correction → Verification**. Remove redundant labels in short findings. Do not invent a finding to fill a category.
 
-Record untested behavior and evidence gaps. Generate all requested formats and posted findings from this same review model.
+## Adaptation
+
+- Bug fix: check that the proposed correction closes the original failure without changing adjacent contracts.
+- Feature: check the stated user journey, authorization, empty/error states and integration boundaries.
+- Migration: inspect mixed-version behavior, retained data, partial progress and rollback limits.
+- Documentation/configuration: check executable examples, discoverability, compatibility and unsafe instructions; do not demand irrelevant runtime tests.
+- Large diff: state sampling and unreviewed areas. More surface area does not justify stronger certainty.
+
+## Verification and publication
+
+Distinguish inspected source, executed tests, mocks, live integrations and unavailable checks. Preserve head revision and finding identities across Markdown, [report.html](report.html) and posting. Refresh anchors before posting; record returned IDs only after confirmed submission. Load [components.md](components.md) for HTML composition and empty/filter states. Remove sample findings from a real review.

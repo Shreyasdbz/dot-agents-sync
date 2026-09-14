@@ -3,8 +3,8 @@
   "kind": "Skill",
   "id": "skill.pitch-deck",
   "name": "pitch-deck",
-  "version": "1.0.0",
-  "description": "Turn source material into an outcome-focused accessible HTML presentation.",
+  "version": "1.2.0",
+  "description": "Create an outcome-focused, self-contained HTML presentation from source material; preserve evidence and visually verify the result.",
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 8000,
+  "token_budget": 1500,
   "requires": {
     "template.pitch-deck": ">=1,<2",
     "policy.accessibility": ">=1,<2",
@@ -23,11 +23,12 @@
   "capabilities": [
     "filesystem.read"
   ],
-  "prefers": [],
-  "fallback": "Perform sequential evidence passes; disclose that independent parallel review was unavailable.",
+  "prefers": [
+    "browser.render"
+  ],
+  "fallback": "Create and structurally inspect HTML; report visual and interaction checks as outstanding.",
   "outputs": [
-    "inline",
-    "referenced-artifact"
+    "html"
   ],
   "suggests": []
 }
