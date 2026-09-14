@@ -3,7 +3,7 @@
   "kind": "Policy",
   "id": "policy.engineering-platform",
   "name": "engineering-platform",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Optional Cloudflare-first platform and runtime selection",
   "license": "UNLICENSED",
   "entry": "POLICY.md",

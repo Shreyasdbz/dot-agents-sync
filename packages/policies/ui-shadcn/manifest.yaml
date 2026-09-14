@@ -3,7 +3,7 @@
   "kind": "Policy",
   "id": "policy.ui-shadcn",
   "name": "ui-shadcn",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Optional TanStack and CLI-first shadcn UI standards",
   "license": "UNLICENSED",
   "entry": "POLICY.md",
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 900,
+  "token_budget": 1100,
   "policy": {
     "globs": [],
     "priority": 0

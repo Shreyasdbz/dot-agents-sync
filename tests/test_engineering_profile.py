@@ -32,6 +32,9 @@ def test_profile_is_optional_public_and_bounded(workspace):
     assert not bindings
     assert sum(len(selected[pid].files["POLICY.md"]) for pid in POLICIES) < 7000
     assert len(selected["context.engineering-stack"].files["CONTEXT.md"]) < 6000
+    operations = selected["context.engineering-stack"].files["operations.md"]
+    assert 0 < len(operations) < 5000
+    assert b"operations.md" in selected["context.engineering-stack"].files["CONTEXT.md"]
     assert all(p.manifest["kind"] in {"Policy", "Context"} for p in selected.values())
 
 
@@ -68,6 +71,9 @@ def test_profile_applies_and_sync_is_idempotent(workspace):
     first = engine.apply(plan)
     assert first["changed"]
     assert "Cloudflare-first" in (engine.scope.root / "AGENTS.md").read_text()
+    operations = list(engine.scope.root.rglob("references/context.engineering-stack/operations.md"))
+    assert operations
+    assert all(b"LOCAL" in path.read_bytes() for path in operations)
     plan, _ = engine.build({"operation": "sync"})
     assert all(op["action"] == "keep" for op in plan["operations"])
     second = engine.apply(plan)

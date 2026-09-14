@@ -3,7 +3,7 @@
   "kind": "Context",
   "id": "context.typescript-stack",
   "name": "typescript-stack",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "TypeScript and web stack: Load for TypeScript/web implementation or review.",
   "license": "UNLICENSED",
   "entry": "CONTEXT.md",

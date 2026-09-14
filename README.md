@@ -91,6 +91,8 @@ Profiles: `dev-core`, `dev-review`, `technical-storytelling`, `travel`, `persona
 
 The optional [engineering-cloudflare profile](docs/engineering-profile.md) adds Cloudflare-first/GCP-next platform choices, pnpm/Turborepo application boundaries, TanStack/shadcn UI conventions and a loadable public stack reference. It contains no skills, hooks or private bindings and does not change the other profiles' stack preferences. Coding quality includes public-contract documentation and a bounded anti-slop completion audit.
 
+Its on-demand operations reference covers workload-selected databases, LOCAL + PROD environments and post-POC observability/analytics before public release. The separate [low-cost observability comparison](docs/observability-options.md) records dated vendor research and trial criteria; no telemetry vendor is selected or installed.
+
 The optional [planning-github profile and travel context](docs/planning-and-travel-context.md) add native GitHub planning conventions and a Travel Planner agent consulted by Trip Publish. Trip Plan is now a compatibility entrypoint; the travel profile selects the agent directly. Personal travel context remains private and separately authorized. All catalog skills and agents carry the natural-paragraph Markdown rule through policy.communication.
 
 Propose asks material clarifying questions and then makes supported design decisions. Plan Out loads the project's planning authority, fully elaborates only the next milestone, and leaves one planning task per future milestone. Investigate and PR Review return inline results by default with optional reports or posting. Pitch Deck uses an adaptive HTML shell with outcome-focused editorial guidance and accessibility checks.

@@ -3,7 +3,7 @@
   "kind": "Context",
   "id": "context.repository-conventions",
   "name": "repository-conventions",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Repository conventions: Load before implementation or review in an unfamiliar repository.",
   "license": "UNLICENSED",
   "entry": "CONTEXT.md",

@@ -1,5 +1,8 @@
 import copy
 import importlib.util
+import json
+import posixpath
+import re
 from pathlib import Path
 
 import pytest
@@ -122,3 +125,32 @@ def test_metrics_are_byte_counts_not_claimed_tokens():
     assert result["groups"]["Skill"]["entry_bytes"] == sum(
         p["entry_bytes"] for key, p in result["packages"].items() if key.startswith("skill.")
     )
+
+
+def test_context_references_are_packaged_and_private_contracts_stay_bounded(workspace):
+    catalog = Catalog(workspace[1]["source"])
+    for package in catalog.packages.values():
+        if package.manifest["kind"] != "Context":
+            continue
+        if package.manifest["context"]["sensitivity"] == "private":
+            assert len(package.files[package.manifest["entry"]]) < 2400
+        for name, body in package.files.items():
+            if not name.endswith(".md"):
+                continue
+            for link in re.findall(r"\]\(([^)]+)\)", body.decode()):
+                if "://" in link or link.startswith("#"):
+                    continue
+                target = posixpath.normpath(posixpath.join(posixpath.dirname(name), link.split("#")[0]))
+                assert target in package.files, (package.id, name, link)
+
+
+def test_all_behavioral_scenarios_reference_real_packages(workspace):
+    catalog = Catalog(workspace[1]["source"])
+    cases = json.loads((Path(__file__).resolve().parents[1] / "evals/cases.json").read_text())
+    assert len({case["id"] for case in cases}) == len(cases)
+    for case in cases:
+        assert case["package"] in catalog.packages
+        assert case["prompt"].strip()
+        assertions = case["assertions"]
+        assert assertions and len({item["id"] for item in assertions}) == len(assertions)
+        assert all(item["text"].strip() for item in assertions)

@@ -32,6 +32,12 @@ Applications terminate the dependency graph. Share a contract rather than import
 
 ## Project context checklist
 
+For inference routing, cost-conscious model selection and public-build prompt versioning, load [ai-development.md](ai-development.md). It applies to application AI, not the coding assistant's own runtime.
+
+For authentication, production approval gates or production-shaped local testing, load [security-and-local-data.md](security-and-local-data.md). Its snapshot procedure is a proposal with data-handling decisions still open, not authorization to export production data.
+
+For database selection, environment boundaries and post-POC release readiness, load [operations.md](operations.md). It defines workload-driven data choices, LOCAL + PROD defaults and vendor-neutral telemetry requirements; it does not select a hosted platform.
+
 Reuse existing context bindings, not a new mandatory configuration file. Capture only fields relevant to the task:
 
 - cloud-infrastructure: actual services, environments, owners, identities, state stores, recovery, cost assumptions and approved exceptions.

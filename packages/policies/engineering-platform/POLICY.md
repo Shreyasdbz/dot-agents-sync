@@ -9,3 +9,5 @@ Resend, Clerk and Stripe are permitted candidates, not required dependencies or 
 Prefer TypeScript and Hono for suitable HTTP services. Workers is not the Bun runtime: avoid Bun-only APIs in Workers code and verify behavior in the deployment runtime. Keep pnpm as the JavaScript workspace package manager; prefer Bun for compatible non-Workers TypeScript services, not as a second dependency manager. Prefer Python, FastAPI and uv when the ecosystem materially improves the solution; LangChain/LangGraph are need-driven, not automatic AI dependencies.
 
 Before selecting or changing the stack, load the selected engineering-stack reference. Keep versions, quotas, pricing and actual deployment choices in dated project context, not permanent rules. These preferences never authorize deployment or unrelated stack replacement.
+
+Use LOCAL + PROD; staging is project-specific. After POC, require OTel-based centralized observability and analytics before public release.

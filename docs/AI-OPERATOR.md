@@ -13,3 +13,5 @@ Never edit generated output as the source of truth. Change canonical packages or
 `PLAN_INVALIDATED` means create and review a new plan. `DRIFT` and `UNMANAGED_COLLISION` mean inspect the existing content before choosing a conflict action. `RECOVERY_REQUIRED` means run doctor, then preview `repair --recover --dry-run`; recovery does not fetch or upgrade. `RECOVERY_CONFLICT` means another actor changed a journal target; preserve that edit and reconcile it before retrying.
 
 Run `doctor --json` after mutation. Report the receipt, actual changes, drift, missing capabilities and verification limits. Do not represent structural validation as a completed model workflow or an external tracker update.
+
+When authoring or refreshing project context, follow [context-authoring.md](context-authoring.md). Inspect the relevant catalog binding contract, separate current implementation from intended design, and update only affected authorized sources. The CLI does not infer project facts or auto-refresh private context.
