@@ -5,6 +5,11 @@
   "name": "trip-publish",
   "version": "1.2.0",
   "description": "Turn an approved itinerary into a mobile-friendly HTML travel guide. Creating the file is distinct from hosting or sharing it.",
+  "presentation": {
+    "display_name": "Trip Publish",
+    "short_description": "Publish approved itineraries as mobile HTML guides",
+    "default_prompt": "Use $dasync-skill-trip-publish to turn this approved itinerary into a mobile-friendly HTML travel guide."
+  },
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [

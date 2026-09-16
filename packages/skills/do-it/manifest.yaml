@@ -5,6 +5,11 @@
   "name": "do-it",
   "version": "1.2.0",
   "description": "Implement an authorized task or bounded change, verify observable behavior, and report remaining work without expanding scope.",
+  "presentation": {
+    "display_name": "Do It",
+    "short_description": "Implement and verify an authorized bounded change",
+    "default_prompt": "Use $dasync-skill-do-it to implement and verify this authorized bounded change."
+  },
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [

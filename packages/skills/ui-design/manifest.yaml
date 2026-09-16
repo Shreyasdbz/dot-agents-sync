@@ -5,6 +5,11 @@
   "name": "ui-design",
   "version": "1.0.0",
   "description": "Design, implement, or review a user interface using narrowly retrieved UI guidance; load SwiftUI-specific rules only for Apple UI work.",
+  "presentation": {
+    "display_name": "UI Design",
+    "short_description": "Design and review interfaces with focused guidance",
+    "default_prompt": "Use $dasync-skill-ui-design to design or review this interface with focused UI guidance."
+  },
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [

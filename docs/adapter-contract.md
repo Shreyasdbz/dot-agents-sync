@@ -6,7 +6,7 @@ Core validation confines paths to the provider-owned roots. Every file has one o
 
 Sources checked for the v1 format mapping:
 
-- [Codex skills](https://developers.openai.com/codex/skills): `.agents/skills` in user and project scopes, with name and description in SKILL.md.
+- [Codex skills](https://developers.openai.com/codex/skills): `.agents/skills` in user and project scopes, with name and description in SKILL.md plus generated `agents/openai.yaml` display metadata.
 - [Codex subagents](https://developers.openai.com/codex/subagents): native TOML agent definitions. dasync omits model pins so the parent environment controls the model.
 - [Codex hooks](https://developers.openai.com/codex/hooks): scoped hooks.json and command hook event declarations.
 - [Claude skills](https://code.claude.com/docs/en/skills), [subagents](https://code.claude.com/docs/en/sub-agents), and [hooks](https://code.claude.com/docs/en/hooks): native skill and agent directories plus settings-based event wiring.

@@ -5,6 +5,11 @@
   "name": "pr-review",
   "version": "1.2.0",
   "description": "Review a PR or supplied diff for actionable regressions and requirement gaps, inline by default; optionally post or create reports.",
+  "presentation": {
+    "display_name": "PR Review",
+    "short_description": "Review diffs for actionable regressions and gaps",
+    "default_prompt": "Use $dasync-skill-pr-review to review this diff for actionable regressions and requirement gaps."
+  },
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [

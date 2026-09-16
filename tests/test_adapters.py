@@ -30,10 +30,23 @@ def test_provider_conformance(workspace, provider, prefix):
     assert prefix + "/dasync-skill-propose/references/template.design-proposal/proposal.md" in outputs
     assert all(a.mode == 0o644 for a in artifacts)
     if provider == "codex":
+        presentation = parse(outputs[prefix + "/dasync-skill-propose/agents/openai.yaml"])
+        assert presentation == {
+            "interface": {
+                "display_name": "Propose",
+                "short_description": "Compare approaches and write a supported proposal",
+                "default_prompt": (
+                    "Use $dasync-skill-propose to compare viable approaches and write a supported "
+                    "proposal for this change."
+                ),
+            }
+        }
         agent = tomllib.loads(outputs[".codex/agents/dasync-agent-architecture-reviewer.toml"].decode())
         assert agent["sandbox_mode"] == "read-only"
         assert "model" not in agent
         assert "AGENTS.md" in outputs
+    else:
+        assert prefix + "/dasync-skill-propose/agents/openai.yaml" not in outputs
     if provider == "claude":
         assert ".claude/agents/dasync-agent-architecture-reviewer.md" in outputs
         assert ".claude/rules/dasync-policy-scope.md" in outputs

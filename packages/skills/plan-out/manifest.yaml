@@ -5,6 +5,11 @@
   "name": "plan-out",
   "version": "1.2.0",
   "description": "Break an approved design into reviewable work and a loadable Plan Context in the project's planning authority. Do not implement it.",
+  "presentation": {
+    "display_name": "Plan Out",
+    "short_description": "Turn approved designs into reviewable work plans",
+    "default_prompt": "Use $dasync-skill-plan-out to turn this approved design into a reviewable implementation plan."
+  },
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [

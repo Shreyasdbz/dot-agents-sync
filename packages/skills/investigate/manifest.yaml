@@ -5,6 +5,11 @@
   "name": "investigate",
   "version": "1.2.0",
   "description": "Explain a failure or answer a research question with traceable evidence, inline by default. Diagnosis does not authorize a fix.",
+  "presentation": {
+    "display_name": "Investigate",
+    "short_description": "Investigate failures with traceable evidence",
+    "default_prompt": "Use $dasync-skill-investigate to investigate this failure and return a traceable diagnosis."
+  },
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [

@@ -5,6 +5,11 @@
   "name": "curate-am-playlist",
   "version": "1.2.0",
   "description": "Curate an intentionally sequenced Apple Music playlist from listening goals; account changes require explicit authorization.",
+  "presentation": {
+    "display_name": "Curate AM Playlist",
+    "short_description": "Build intentionally sequenced Apple Music playlists",
+    "default_prompt": "Use $dasync-skill-curate-am-playlist to build an intentionally sequenced Apple Music playlist for this listening goal."
+  },
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [

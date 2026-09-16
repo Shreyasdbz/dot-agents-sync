@@ -70,6 +70,14 @@ MANIFEST = obj(
         "providers": PROVIDERS,
         "outputs": STRS,
         "token_budget": {"type": "integer", "minimum": 1},
+        "presentation": obj(
+            {
+                "display_name": {"type": "string", "minLength": 1, "maxLength": 80},
+                "short_description": {"type": "string", "minLength": 25, "maxLength": 64},
+                "default_prompt": STR,
+            },
+            ("display_name", "short_description", "default_prompt"),
+        ),
         "context": obj(
             {
                 "access": {"enum": ["inherit", "explicit", "never"]},
@@ -108,7 +116,12 @@ MANIFEST = obj(
 PROFILE = obj({"id": ID, "description": STR, "packages": IDS}, ("id", "description", "packages"))
 MANIFEST["allOf"] = [
     {"if": {"properties": {"kind": {"const": kind}}}, "then": {"required": [field]}}
-    for kind, field in [("Context", "context"), ("Policy", "policy"), ("Hook", "executable")]
+    for kind, field in [
+        ("Skill", "presentation"),
+        ("Context", "context"),
+        ("Policy", "policy"),
+        ("Hook", "executable"),
+    ]
 ]
 PLAN_CONTEXT = obj(
     {

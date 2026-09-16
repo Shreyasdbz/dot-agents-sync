@@ -5,6 +5,11 @@
   "name": "pitch-deck",
   "version": "1.3.0",
   "description": "Create an outcome-focused, self-contained HTML presentation from source material; preserve evidence and visually verify the result.",
+  "presentation": {
+    "display_name": "Pitch Deck",
+    "short_description": "Create outcome-focused HTML presentations",
+    "default_prompt": "Use $dasync-skill-pitch-deck to turn this source material into an outcome-focused HTML presentation."
+  },
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [

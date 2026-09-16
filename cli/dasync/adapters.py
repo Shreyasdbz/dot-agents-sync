@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from .errors import DasyncError
 from .io import parse
 
-ADAPTER_VERSION = "6"
+ADAPTER_VERSION = "7"
 PROVIDERS = ("codex", "claude", "copilot", "cursor")
 BASE_CAPABILITIES = {"filesystem.read", "filesystem.write", "git.read"}
 
@@ -43,6 +43,20 @@ def strip_frontmatter(data: bytes) -> str:
             raise DasyncError("ADAPTER_INVALID", "Skills require name and description frontmatter")
         return parts[1].lstrip("\n")
     return text
+
+
+def codex_skill_metadata(manifest, slug):
+    presentation = manifest["presentation"]
+    if f"${slug}" not in presentation["default_prompt"]:
+        raise DasyncError("ADAPTER_INVALID", "Codex default prompt must explicitly name the rendered skill")
+    value = (
+        "interface:\n"
+        f"  display_name: {json.dumps(presentation['display_name'])}\n"
+        f"  short_description: {json.dumps(presentation['short_description'])}\n"
+        f"  default_prompt: {json.dumps(presentation['default_prompt'])}\n"
+    ).encode()
+    parse(value)
+    return value
 
 
 def capabilities():
@@ -328,6 +342,15 @@ def render(selected, graph, bindings, config, scope):
                 artifacts.append(
                     Artifact(root + "/SKILL.md", frontmatter(slug, m["description"], body), provider, pid)
                 )
+                if provider == "codex":
+                    artifacts.append(
+                        Artifact(
+                            root + "/agents/openai.yaml",
+                            codex_skill_metadata(m, slug),
+                            provider,
+                            pid,
+                        )
+                    )
                 for name, content in package.files.items():
                     if name != m["entry"]:
                         artifacts.append(Artifact(root + "/" + name, content, provider, pid))

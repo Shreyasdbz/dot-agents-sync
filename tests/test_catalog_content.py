@@ -57,6 +57,9 @@ def test_skill_metadata_and_declared_references(workspace):
         body = package.files["SKILL.md"]
         metadata = parse(body.split(b"\n---\n", 1)[0][4:])
         assert metadata["description"] == package.manifest["description"]
+        presentation = package.manifest["presentation"]
+        assert 25 <= len(presentation["short_description"]) <= 64
+        assert f"$dasync-{package.id.replace('.', '-')}" in presentation["default_prompt"]
         assert len(body) <= 4200
     assert "sizing.md" in catalog.packages["skill.plan-out"].files
 

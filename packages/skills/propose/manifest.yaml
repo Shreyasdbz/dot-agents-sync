@@ -5,6 +5,11 @@
   "name": "propose",
   "version": "1.2.0",
   "description": "Design a change: clarify consequential requirements, compare viable approaches, and write a proposal. Not implementation planning.",
+  "presentation": {
+    "display_name": "Propose",
+    "short_description": "Compare approaches and write a supported proposal",
+    "default_prompt": "Use $dasync-skill-propose to compare viable approaches and write a supported proposal for this change."
+  },
   "license": "UNLICENSED",
   "entry": "SKILL.md",
   "files": [
