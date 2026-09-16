@@ -1,0 +1,54 @@
+name: Bug report
+description: Report a reproducible problem with dasync.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Search existing issues first. For suspected vulnerabilities, follow [SECURITY.md](https://github.com/Shreyasdbz/dot-agents-sync/blob/main/SECURITY.md) instead of sharing details here. Use a disposable home, project, and catalog; never attach credentials, private context, transcripts, or unredacted configuration.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What operation failed, and how does it affect your work?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Include minimal commands and synthetic input, scope, and relevant options. Use an isolated DASYNC_HOME and disposable project or catalog, not real provider configuration.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include the error code or visible result.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Provide the installed package version or checkout commit and installation method. Include the catalog revision if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system and version, Python version, provider and version, and user or project scope. Omit identifying paths and account details.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized logs or diagnostic output
+      description: Optional minimal excerpt. Review every line for tokens, private paths, context bodies, and personal data before submitting; do not attach state databases or full configuration.
+      render: text

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/Shreyasdbz/dot-agents-sync/blob/main/docs/README.md
+    about: Check setup, CLI, catalog, and troubleshooting guidance.
+  - name: Report a vulnerability privately
+    url: https://github.com/Shreyasdbz/dot-agents-sync/security/advisories/new
+    about: Use GitHub private vulnerability reporting, not a public issue.
