@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 from dasync.catalog import Catalog
 from dasync.errors import DasyncError
-from dasync.io import parse, safe_path
+from dasync.io import parse, parse_jsonc, safe_path
 from dasync.resolver import resolve
 from hypothesis import given
 from hypothesis import strategies as st
@@ -14,6 +14,12 @@ from hypothesis import strategies as st
 def test_reject_unsafe_yaml(value):
     with pytest.raises(DasyncError):
         parse(value)
+
+
+@pytest.mark.parametrize("value", [b'{"timeout":1/*old*/2}', b'{"value":tr/*x*/ue}'])
+def test_jsonc_comments_cannot_fuse_tokens(value):
+    with pytest.raises(DasyncError):
+        parse_jsonc(value)
 
 
 @given(st.text(alphabet="abcdefghijklmnopqrstuvwxyz", min_size=1))

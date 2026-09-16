@@ -12,8 +12,8 @@ from dataclasses import dataclass
 from .errors import DasyncError
 from .io import parse
 
-ADAPTER_VERSION = "4"
-ROOTS = {"codex": ".agents/skills", "claude": ".claude/skills", "cursor": ".cursor/skills"}
+ADAPTER_VERSION = "6"
+PROVIDERS = ("codex", "claude", "copilot", "cursor")
 BASE_CAPABILITIES = {"filesystem.read", "filesystem.write", "git.read"}
 
 
@@ -63,10 +63,114 @@ def capabilities():
                 "tests.execute",
             ],
             "unsupported": [],
-            "skills_root": r,
+            "skills_root": skill_root(p, "user"),
         }
-        for p, r in ROOTS.items()
+        for p in PROVIDERS
     }
+
+
+def skill_root(provider, scope_kind):
+    if provider == "copilot":
+        return ".copilot/skills" if scope_kind == "user" else ".github/skills"
+    return {
+        "codex": ".agents/skills",
+        "claude": ".claude/skills",
+        "cursor": ".cursor/skills",
+    }[provider]
+
+
+def provider_roots(provider, scope_kind):
+    """Return documented discovery roots and singleton files eligible for explicit replacement."""
+    if provider == "codex":
+        return {
+            "directories": [
+                skill_root(provider, scope_kind),
+                ".codex/agents",
+                ".codex/dasync-references",
+                ".codex/hooks",
+            ],
+            "files": [".codex/AGENTS.md", ".codex/hooks.json"],
+        }
+    if provider == "claude":
+        return {
+            "directories": [
+                skill_root(provider, scope_kind),
+                ".claude/agents",
+                ".claude/rules",
+                ".claude/dasync-references",
+                ".claude/hooks",
+            ],
+            "files": [".claude/CLAUDE.md", ".claude/settings.json", ".claude/settings.local.json"],
+        }
+    if provider == "copilot":
+        prefix = ".copilot" if scope_kind == "user" else ".github"
+        return {
+            "directories": [
+                skill_root(provider, scope_kind),
+                f"{prefix}/agents",
+                f"{prefix}/instructions",
+                f"{prefix}/dasync-references",
+                f"{prefix}/hooks",
+            ],
+            "files": (
+                [
+                    f"{prefix}/copilot-instructions.md",
+                    ".github/copilot/settings.json",
+                    ".github/copilot/settings.local.json",
+                    ".claude/settings.json",
+                    ".claude/settings.local.json",
+                    "AGENTS.md",
+                    "CLAUDE.md",
+                ]
+                if scope_kind == "project"
+                else [
+                    f"{prefix}/copilot-instructions.md",
+                    f"{prefix}/settings.json",
+                    "AGENTS.md",
+                    "CLAUDE.md",
+                ]
+            ),
+        }
+    return {
+        "directories": [
+            skill_root(provider, scope_kind),
+            ".cursor/rules",
+            ".cursor/dasync-references",
+            ".cursor/hooks",
+        ],
+        "files": [".cursor/hooks.json"],
+    }
+
+
+def provider_directory(provider, scope_kind, kind):
+    prefix = ".copilot" if scope_kind == "user" else ".github"
+    directories = {
+        "agent": {
+            "codex": ".codex/agents",
+            "claude": ".claude/agents",
+            "copilot": f"{prefix}/agents",
+            "cursor": ".cursor/dasync-references",
+        },
+        "policy": {
+            "codex": ".codex" if scope_kind == "user" else ".",
+            "claude": ".claude/rules",
+            "copilot": f"{prefix}/instructions",
+            "cursor": ".cursor/rules" if scope_kind == "project" else ".cursor/dasync-references",
+        },
+        "reference": {
+            "codex": ".codex/dasync-references",
+            "claude": ".claude/dasync-references",
+            "copilot": f"{prefix}/dasync-references",
+            "cursor": ".cursor/dasync-references",
+        },
+        "hook": {
+            "codex": ".codex/hooks",
+            "claude": ".claude/hooks",
+            "copilot": f"{prefix}/hooks",
+            "cursor": ".cursor/hooks",
+        },
+    }
+    return directories[kind][provider]
 
 
 def private_reference(package, scope, consumer=None):
@@ -93,7 +197,7 @@ def render(selected, graph, bindings, config, scope):
         hook_entries = {}
         for pid, package in selected.items():
             m, kind = package.manifest, package.manifest["kind"]
-            if provider not in m.get("providers", list(ROOTS)):
+            if provider not in m.get("providers", list(PROVIDERS)):
                 raise DasyncError("CAPABILITY_BLOCKED", f"{pid} does not support {provider}")
             missing = sorted(set(m.get("capabilities", [])) - available)
             preferred = sorted(set(m.get("prefers", [])) - available)
@@ -110,17 +214,32 @@ def render(selected, graph, bindings, config, scope):
                     raise DasyncError(
                         "EXECUTABLE_TRUST_REQUIRED", f"Approve the exact hook package digest: {pid}"
                     )
-                script_root = f".{provider}/hooks/dasync-{pid.replace('.', '-')}"
+                script_root = (
+                    f"{provider_directory(provider, scope.kind, 'hook')}/dasync-{pid.replace('.', '-')}"
+                )
                 for name, content in package.files.items():
                     artifacts.append(Artifact(script_root + "/" + name, content, provider, pid))
                 script = scope.root / script_root / m["entry"]
                 command = shlex.join([sys.executable, "-I", str(script)])
                 events = {"pre_tool": "PreToolUse", "session_start": "SessionStart", "stop": "Stop"}
                 cursor_events = {"pre_tool": "preToolUse", "session_start": "sessionStart", "stop": "stop"}
+                copilot_events = {
+                    "pre_tool": "preToolUse",
+                    "session_start": "sessionStart",
+                    "stop": "agentStop",
+                }
                 for event in m["executable"]["events"]:
                     if event not in events:
                         raise DasyncError("CAPABILITY_BLOCKED", f"Unsupported hook event: {event}")
-                    if provider == "cursor":
+                    if provider == "copilot":
+                        entry = {
+                            "type": "command",
+                            "exec": sys.executable,
+                            "args": ["-I", str(script)],
+                            "timeoutSec": m["executable"]["timeout"],
+                        }
+                        native_event = copilot_events[event]
+                    elif provider == "cursor":
                         entry = {"command": command, "timeout": m["executable"]["timeout"]}
                         native_event = cursor_events[event]
                     else:
@@ -162,7 +281,7 @@ def render(selected, graph, bindings, config, scope):
                 }
             )
             slug = "dasync-" + pid.replace(".", "-")
-            root = ROOTS[provider] + "/" + slug
+            root = skill_root(provider, scope.kind) + "/" + slug
             body = strip_frontmatter(package.files[m["entry"]])
             references = []
             for dependency in sorted(m.get("requires", {})):
@@ -187,17 +306,13 @@ def render(selected, graph, bindings, config, scope):
                 if kind in {"Policy", "Agent"}:
                     # Native policy/agent bodies live outside their supporting-reference directory.
                     if kind == "Agent":
-                        policy_directory = (
-                            f".{provider}/agents"
-                            if provider in {"codex", "claude"}
-                            else f".{provider}/dasync-references/{pid}"
-                        )
-                    elif provider == "codex":
-                        policy_directory = ".codex" if scope.kind == "user" else "."
-                    elif provider == "claude" or scope.kind == "project":
-                        policy_directory = f".{provider}/rules"
+                        policy_directory = provider_directory(provider, scope.kind, "agent")
+                        if provider == "cursor":
+                            policy_directory += f"/{pid}"
                     else:
-                        policy_directory = f".{provider}/dasync-references/{pid}"
+                        policy_directory = provider_directory(provider, scope.kind, "policy")
+                        if provider == "cursor" and scope.kind == "user":
+                            policy_directory += f"/{pid}"
                     reference_path = posixpath.relpath(root + "/" + reference_path, policy_directory)
                 references.append(f"- {dependency}: [{dep.manifest['entry']}]({reference_path})")
             if references:
@@ -226,6 +341,15 @@ def render(selected, graph, bindings, config, scope):
                         f".claude/agents/{slug}.md", frontmatter(slug, m["description"], body), provider, pid
                     )
                 )
+            elif kind == "Agent" and provider == "copilot":
+                artifacts.append(
+                    Artifact(
+                        f"{provider_directory(provider, scope.kind, 'agent')}/{slug}.agent.md",
+                        frontmatter(slug, m["description"], body),
+                        provider,
+                        pid,
+                    )
+                )
             elif kind == "Policy" and provider == "codex":
                 selectors = m.get("policy", {}).get("globs", [])
                 policy_blocks.append(
@@ -233,6 +357,17 @@ def render(selected, graph, bindings, config, scope):
                         m.get("policy", {}).get("priority", 0),
                         pid,
                         ("Applies to: " + ", ".join(selectors) + "\n\n" if selectors else "") + body,
+                    )
+                )
+            elif kind == "Policy" and provider == "copilot":
+                globs = m.get("policy", {}).get("globs", [])
+                value = ("---\napplyTo: " + json.dumps(",".join(globs)) + "\n---\n\n" if globs else "") + body
+                artifacts.append(
+                    Artifact(
+                        f"{provider_directory(provider, scope.kind, 'policy')}/{slug}.instructions.md",
+                        value.encode(),
+                        provider,
+                        pid,
                     )
                 )
             elif kind == "Policy" and (provider == "claude" or scope.kind == "project"):
@@ -255,7 +390,7 @@ def render(selected, graph, bindings, config, scope):
                 artifacts.append(Artifact(relative, value.encode(), provider, pid))
             else:
                 # Dependency-only material remains outside skills discovery (no SKILL.md).
-                refroot = f".{provider if provider != 'codex' else 'codex'}/dasync-references/{pid}"
+                refroot = f"{provider_directory(provider, scope.kind, 'reference')}/{pid}"
                 artifacts.append(
                     Artifact(
                         refroot + "/" + ("CONTEXT.md" if pid in bindings else m["entry"]),
@@ -275,9 +410,12 @@ def render(selected, graph, bindings, config, scope):
             artifacts.append(Artifact(path, text.encode(), provider, "@policies"))
         if hook_entries:
             value = {"hooks": hook_entries}
-            if provider == "cursor":
+            if provider in {"copilot", "cursor"}:
                 value["version"] = 1
-            filename = ".claude/settings.json" if provider == "claude" else f".{provider}/hooks.json"
+            filename = {
+                "claude": ".claude/settings.json",
+                "copilot": f"{provider_directory(provider, scope.kind, 'hook')}/dasync-hooks.json",
+            }.get(provider, f".{provider}/hooks.json")
             artifacts.append(
                 Artifact(
                     filename,

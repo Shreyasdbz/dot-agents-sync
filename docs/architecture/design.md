@@ -8,7 +8,7 @@ Status: Proposed design
 
 ### 1. Executive summary
 
-dasync is a scope-aware package and configuration manager for portable AI workflows. It keeps provider-neutral definitions in a canonical catalog, composes only the packages and local context allowed for a user or project, resolves that intent against a pinned catalog revision, and materializes disposable provider-native files for Codex, Claude Code, and Cursor.
+dasync is a scope-aware package and configuration manager for portable AI workflows. It keeps provider-neutral definitions in a canonical catalog, composes only the packages and local context allowed for a user or project, resolves that intent against a pinned catalog revision, and materializes disposable provider-native files for Codex, Claude Code, GitHub Copilot CLI, and Cursor.
 
 The central pipeline is:
 
@@ -58,7 +58,7 @@ The first implementation should build the package schema, resolver, state model,
 
 - Compose the smallest correct effective environment for a machine, project, provider, and capability set.
 
-- Preserve provider-neutral wording while producing valid provider-native layouts for Codex, Claude Code, and Cursor.
+- Preserve provider-neutral wording while producing valid provider-native layouts for Codex, Claude Code, GitHub Copilot CLI, and Cursor.
 
 - Make first-time setup, configuration, synchronization, updates, diagnosis, and recovery safe and predictable.
 
@@ -158,7 +158,7 @@ inherit_user: true
 
 packages: [skill.propose, context.pixpo-architecture]
 
-providers: [codex, claude, cursor]
+providers: [codex, claude, copilot, cursor]
 
 Private paths and machine-specific choices belong in the user config, keyed by the stable project ID. The user config may associate that ID with one or more local checkout paths. Private content remains wherever the user already stores it; dasync retains only a path or secret-manager reference.
 
@@ -1030,7 +1030,7 @@ Exit: clean setup on user and project scopes; offline repeated sync is a no-op; 
 
 Implement adapters through the same conformance suite. Add capability negotiation, degraded-mode reporting, adapter versioning, and cross-provider golden fixtures.
 
-Exit: one project pinned to a catalog revision materializes valid environments for all three providers with explicit, explainable differences.
+Exit: one project pinned to a catalog revision materializes valid environments for every supported provider with explicit, explainable differences.
 
 #### Phase 3: robust update and operator UX
 
@@ -1064,7 +1064,7 @@ Exit: catalog growth does not change core semantics, weaken security boundaries,
 
 - A failed write can be repaired or rolled back from a verified receipt.
 
-- Codex, Claude Code, and Cursor adapters pass one shared conformance suite.
+- Codex, Claude Code, GitHub Copilot CLI, and Cursor adapters pass one shared conformance suite.
 
 - Every mutation can be planned and applied non-interactively with versioned JSON.
 

@@ -6,7 +6,7 @@ from dasync.errors import DasyncError
 from dasync.resolver import resolve
 
 
-@pytest.mark.parametrize("provider", ["codex", "claude", "cursor"])
+@pytest.mark.parametrize("provider", ["codex", "claude", "copilot", "cursor"])
 def test_entire_catalog_compiles(workspace, provider, tmp_path):
     engine, config = workspace
     catalog = Catalog(config["source"])
@@ -44,14 +44,14 @@ def test_backup_preparation_rejects_concurrent_edit(installed, monkeypatch):
     engine, config, _ = installed
     config["packages"].append("skill.pr-review")
     plan, _ = engine.build({"operation": "configure", "config": config, "config_only": False})
-    original = state_module.snapshot
+    original = state_module.snapshot_entry
 
     def changed_snapshot(path):
         if path == engine.scope.config:
-            return b"externally changed", 0o644
+            return b"externally changed", 0o644, "file"
         return original(path)
 
-    monkeypatch.setattr(state_module, "snapshot", changed_snapshot)
+    monkeypatch.setattr(state_module, "snapshot_entry", changed_snapshot)
     with pytest.raises(DasyncError, match="preparing its backup"):
         engine.apply(plan)
     assert not engine.state.pending()

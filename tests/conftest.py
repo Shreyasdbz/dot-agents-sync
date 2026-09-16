@@ -15,7 +15,12 @@ def workspace(tmp_path):
     project.mkdir()
     env = Environment(home, home / "config/config.yaml", home / "state", home / "cache")
     scope = Scope.get(env, "project", str(project))
-    config = initial("example", pin(str(ROOT), "local"), ["codex", "claude", "cursor"], ["skill.propose"])
+    config = initial(
+        "example",
+        pin(str(ROOT), "local"),
+        ["codex", "claude", "copilot", "cursor"],
+        ["skill.propose"],
+    )
     return Engine(env, scope), config
 
 

@@ -1,6 +1,6 @@
 # dasync
 
-Portable AI workflows for Codex, Claude Code, and Cursor. Select optional skills, agents, policies, context and templates once; dasync resolves their dependencies and writes provider-native files with ownership tracking, drift protection and rollback.
+Portable AI workflows for Codex, Claude Code, GitHub Copilot CLI, and Cursor. Select optional skills, agents, policies, context and templates once; dasync resolves their dependencies and writes provider-native files with ownership tracking, drift protection and rollback.
 
 ## Install
 
@@ -23,7 +23,7 @@ Create the target directory first. Replace `/absolute/my-project` below with its
 ```sh
 dasync setup --scope project --path /absolute/my-project \
   --source https://github.com/Shreyasdbz/dot-agents-sync.git \
-  --profile dev-core --provider codex --provider claude --provider cursor \
+  --profile dev-core --provider codex --provider claude --provider copilot --provider cursor \
   --trust-source --yes
 dasync doctor --scope project --path /absolute/my-project --json
 ```
@@ -33,6 +33,8 @@ Use `--scope user` to configure your user environment independently. Omit packag
 The project contains one `.dasync.yaml` plus selected provider-native output. There is no project-local dasync state directory or lockfile. User config, cached Git sources, receipts and backups live in platform-native directories. Set `DASYNC_HOME=/absolute/sandbox` to isolate all user state and provider output for experimentation.
 
 Existing provider files are protected, including AGENTS.md and settings.json. Inspect collisions before choosing `--conflict overwrite`; replacements retain recoverable originals. Test in an empty project to see the full generated layout first.
+
+For an explicitly authorized full replacement of existing provider customization, preview `plan setup` with `--replace-provider-config --conflict overwrite`. This inventories only documented instruction, skill, agent, reference and hook discovery paths; it does not remove authentication, sessions, caches, plugins, MCP configuration or unrelated provider settings. Inline hook blocks are replaced while other JSONC settings are preserved. Applying the reviewed plan backs up every displaced regular file and leaf symlink, and `rollback --before --receipt ID` restores them. User-scope Copilot management currently requires its default `$HOME/.copilot` root and rejects a different `COPILOT_HOME`.
 
 ## Preview and apply
 

@@ -26,6 +26,19 @@ def main():
         if not isinstance(payload, dict):
             return 2
         if decision(payload):
+            if "toolName" in payload or "toolArgs" in payload:
+                print(
+                    json.dumps(
+                        {
+                            "permissionDecision": "deny",
+                            "permissionDecisionReason": (
+                                "Credential-path access requires a separately reviewed action."
+                            ),
+                        },
+                        separators=(",", ":"),
+                    )
+                )
+                return 0
             print("Credential-path access requires a separately reviewed action.", file=sys.stderr)
             return 2
         return 0

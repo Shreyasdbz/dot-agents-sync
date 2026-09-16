@@ -38,7 +38,7 @@ def test_profile_is_optional_public_and_bounded(workspace):
     assert all(p.manifest["kind"] in {"Policy", "Context"} for p in selected.values())
 
 
-@pytest.mark.parametrize("provider", ["codex", "claude", "cursor"])
+@pytest.mark.parametrize("provider", ["codex", "claude", "copilot", "cursor"])
 @pytest.mark.parametrize("scope_kind", ["user", "project"])
 def test_policy_reference_links_resolve(workspace, provider, scope_kind):
     engine, config = workspace

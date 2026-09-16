@@ -9,7 +9,12 @@ from dasync.resolver import resolve
 
 @pytest.mark.parametrize(
     "provider,prefix",
-    [("codex", ".agents/skills"), ("claude", ".claude/skills"), ("cursor", ".cursor/skills")],
+    [
+        ("codex", ".agents/skills"),
+        ("claude", ".claude/skills"),
+        ("copilot", ".github/skills"),
+        ("cursor", ".cursor/skills"),
+    ],
 )
 def test_provider_conformance(workspace, provider, prefix):
     engine, config = workspace
@@ -32,6 +37,9 @@ def test_provider_conformance(workspace, provider, prefix):
     if provider == "claude":
         assert ".claude/agents/dasync-agent-architecture-reviewer.md" in outputs
         assert ".claude/rules/dasync-policy-scope.md" in outputs
+    if provider == "copilot":
+        assert ".github/agents/dasync-agent-architecture-reviewer.agent.md" in outputs
+        assert ".github/instructions/dasync-policy-scope.instructions.md" in outputs
     if provider == "cursor":
         policy = outputs[".cursor/rules/dasync-policy-scope.mdc"]
         assert parse(policy.split(b"\n---\n")[0][4:])["alwaysApply"] is True

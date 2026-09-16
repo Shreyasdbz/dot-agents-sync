@@ -120,7 +120,7 @@ def journey(installed_binary, tmp_path):
     return Journey(installed_binary, tmp_path)
 
 
-@pytest.mark.parametrize("provider", ["codex", "claude", "cursor"])
+@pytest.mark.parametrize("provider", ["codex", "claude", "copilot", "cursor"])
 def test_installed_lifecycle(journey, provider):
     j = journey
     assert j.run("capabilities")
@@ -394,7 +394,7 @@ def test_installed_symlink_output_preserves_target(journey):
     outside.write_text("Do not change this file")
     target.unlink()
     target.symlink_to(outside)
-    j.run("sync", "--yes", error="UNSAFE_PATH")
+    j.run("sync", "--yes", error="DRIFT")
     assert outside.read_text() == "Do not change this file"
 
 

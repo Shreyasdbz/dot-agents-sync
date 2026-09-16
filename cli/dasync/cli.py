@@ -70,7 +70,7 @@ def parser():
     p.add_argument("--revision", help="Full immutable commit ID (Git sources)")
     p.add_argument("--trust-source", action="store_true")
     p.add_argument("--project", help="Stable portable project ID")
-    p.add_argument("--provider", action="append", choices=["codex", "claude", "cursor"])
+    p.add_argument("--provider", action="append", choices=["codex", "claude", "copilot", "cursor"])
     p.add_argument("--enable", action="append", default=[])
     p.add_argument("--disable", action="append", default=[])
     p.add_argument("--profile", action="append", default=[])
@@ -79,6 +79,11 @@ def parser():
     p.add_argument("--allow-context", action="append", default=[])
     p.add_argument("--capability", action="append", default=[])
     p.add_argument("--conflict", choices=["protect", "overwrite"], default="protect")
+    p.add_argument(
+        "--replace-provider-config",
+        action="store_true",
+        help="Replace existing files in documented provider discovery paths during setup",
+    )
     p.add_argument("--config-only", action="store_true")
     p.add_argument("--apply", action="store_true")
     p.add_argument("--plan", dest="plan_file")
@@ -94,7 +99,12 @@ def parser():
     p.add_argument("--allow-private-path", action="store_true")
     p.add_argument("--bind-context", action="append", default=[], metavar="ID=PATH")
     p.add_argument("--grant-project", action="append", default=[])
-    p.add_argument("--binding-provider", action="append", choices=["codex", "claude", "cursor"], default=[])
+    p.add_argument(
+        "--binding-provider",
+        action="append",
+        choices=["codex", "claude", "copilot", "cursor"],
+        default=[],
+    )
     p.add_argument("--approve-executable", action="append", default=[], metavar="SHA256")
     return p
 
@@ -151,6 +161,15 @@ def run(args):
         raise DasyncError("USAGE", "Receipt selection is only valid with rollback")
     if args.config_only and operation not in ("setup", "configure", "update"):
         raise DasyncError("USAGE", "--config-only requires setup, configure, or update")
+    if args.replace_provider_config and operation != "setup":
+        raise DasyncError("USAGE", "--replace-provider-config is only valid with setup")
+    if args.replace_provider_config and args.conflict != "overwrite":
+        raise DasyncError(
+            "USAGE",
+            "--replace-provider-config requires --conflict overwrite after reviewing the replacement plan",
+        )
+    if args.replace_provider_config and args.config_only:
+        raise DasyncError("USAGE", "--replace-provider-config cannot be combined with --config-only")
     if args.command == "capabilities":
         return capabilities()
     if args.command == "schema":
@@ -345,6 +364,8 @@ def run(args):
             request["before_receipt"] = True
     if operation == "setup":
         request["config_only"] = args.config_only
+        if args.replace_provider_config:
+            request["replace_provider_config"] = True
         request["config"]["approved_executables"] = sorted(set(args.approve_executable))
         request["config"]["capabilities"] = args.capability
         request["config"]["contexts"] = args.allow_context

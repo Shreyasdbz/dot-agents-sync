@@ -9,7 +9,17 @@ from contextlib import contextmanager
 from pathlib import Path
 
 from .errors import DasyncError
-from .io import assert_safe, atomic_write, canonical, digest, observe, safe_unlink, snapshot
+from .io import (
+    assert_safe,
+    atomic_write,
+    canonical,
+    digest,
+    observe,
+    remove_empty_tree,
+    safe_symlink,
+    safe_unlink,
+    snapshot_entry,
+)
 
 
 class State:
@@ -53,7 +63,7 @@ class State:
                 "SELECT payload FROM receipts JOIN heads ON receipts.id=heads.receipt WHERE heads.scope=?",
                 (scope,),
             ).fetchone()
-            return json.loads(row[0]) if row else None
+            return self._normalize_payload(json.loads(row[0])) if row else None
 
     def receipt(self, receipt_id: str, scope: str):
         with self.connect() as db:
@@ -66,11 +76,35 @@ class State:
             )
         if not row:
             raise DasyncError("RECEIPT_UNKNOWN", "No successful receipt with that ID in this scope")
-        return json.loads(row[0])
+        return self._normalize_payload(json.loads(row[0]))
 
     def pending(self):
         with self.connect() as db:
-            return [json.loads(row[0]) for row in db.execute("SELECT payload FROM journal")] if db else []
+            return (
+                [
+                    self._normalize_payload(json.loads(row[0]))
+                    for row in db.execute("SELECT payload FROM journal")
+                ]
+                if db
+                else []
+            )
+
+    @staticmethod
+    def _normalize_observed(value):
+        return {
+            **value,
+            "type": value.get("type", "file" if value.get("hash") is not None else "missing"),
+        }
+
+    @classmethod
+    def _normalize_payload(cls, value):
+        for owner in value.get("owned", {}).values():
+            owner.setdefault("type", "file")
+        for item in value.get("backups", value.get("files", [])):
+            if isinstance(item, dict) and "before" in item:
+                item["before"] = cls._normalize_observed(item["before"])
+                item["after"] = cls._normalize_observed(item["after"])
+        return value
 
     def other_owners(self, scope):
         with self.connect() as db:
@@ -121,8 +155,15 @@ class State:
             pending = [j for j in self.pending() if j["scope"] == scope]
             for journal in pending:
                 for item in journal["files"]:
-                    validate_target(Path(item["path"]))
-                    current = observe(Path(item["path"]))
+                    validate_target(
+                        Path(item["path"]),
+                        {
+                            ancestor
+                            for ancestor in (item.get("shadowed_by"), item.get("hidden_by"))
+                            if ancestor
+                        },
+                    )
+                    current = self._journal_observe(item, journal)
                     if current not in (item["before"], item["after"]):
                         raise DasyncError(
                             "RECOVERY_CONFLICT",
@@ -135,11 +176,30 @@ class State:
             return {"recovered": [j["id"] for j in pending]}
 
     @staticmethod
+    def _journal_observe(item, journal):
+        shadowed_children = [entry for entry in journal["files"] if entry.get("shadowed_by") == item["path"]]
+        path = Path(item["path"])
+        if shadowed_children and path.is_dir() and not path.is_symlink():
+            return item["after"]
+        shadowed_by = item.get("shadowed_by")
+        if shadowed_by:
+            ancestor = next(entry for entry in journal["files"] if entry["path"] == shadowed_by)
+            ancestor_path = Path(shadowed_by)
+            if ancestor_path.is_symlink() and observe(ancestor_path) == ancestor["before"]:
+                return item["before"]
+        hidden_by = item.get("hidden_by")
+        if hidden_by:
+            ancestor = next(entry for entry in journal["files"] if entry["path"] == hidden_by)
+            ancestor_path = Path(hidden_by)
+            if ancestor_path.is_symlink() and observe(ancestor_path) == ancestor["after"]:
+                return item["after"]
+        return observe(path)
+
+    @staticmethod
     def _restore(journal):
         for item in reversed(journal["files"]):
             path = Path(item["path"])
-            assert_safe(path)
-            current = observe(path)
+            current = State._journal_observe(item, journal)
             if current == item["before"]:
                 continue
             if current != item["after"]:
@@ -147,10 +207,20 @@ class State:
                     "RECOVERY_CONFLICT",
                     "A target changed independently; journal retained for manual recovery",
                 )
-            if item["data"] is None:
-                if path.exists():
+            if item["before"]["type"] == "missing":
+                safe_unlink(path)
+            elif item["before"]["type"] == "symlink":
+                if path.is_dir() and not path.is_symlink():
+                    remove_empty_tree(path)
+                else:
                     safe_unlink(path)
+                safe_symlink(path, base64.b64decode(item["data"]).decode())
+            elif item["before"]["type"] == "directory":
+                safe_unlink(path)
+                path.mkdir(parents=True, exist_ok=True, mode=item["before"]["mode"])
             else:
+                if path.is_dir() and not path.is_symlink():
+                    remove_empty_tree(path)
                 atomic_write(path, base64.b64decode(item["data"]), item["before"]["mode"])
 
     def commit(self, plan, outputs, rebuild, fault=None):
@@ -166,25 +236,45 @@ class State:
                 return {"changed": False, "receipt": plan["previous_receipt"], "operations": 0}
             txid = str(uuid.uuid4())
             journal = {"id": txid, "scope": plan["scope_key"], "files": []}
-            for op in changes:
+            ordered_changes = sorted(
+                changes,
+                key=lambda op: (
+                    op["before"]["type"] == "directory" and op["target_type"] in {"file", "symlink"},
+                    op["path"],
+                ),
+            )
+            for op in ordered_changes:
                 path = Path(op["path"])
-                data, mode = snapshot(path)
-                before = {"hash": digest(data) if data is not None else None, "mode": mode}
+                if op.get("shadowed_by"):
+                    data, mode, entry_type = None, None, "missing"
+                else:
+                    data, mode, entry_type = snapshot_entry(path)
+                before = {
+                    "hash": digest(data) if data is not None else None,
+                    "mode": mode,
+                    "type": entry_type,
+                }
                 if before != op["before"]:
                     raise DasyncError("PLAN_INVALIDATED", "A target changed while preparing its backup")
                 journal["files"].append(
                     {
                         "path": str(path),
                         "before": before,
-                        "after": {"hash": op["hash"], "mode": op["mode"]},
+                        "after": {
+                            "hash": op["hash"],
+                            "mode": op["mode"],
+                            "type": op["target_type"],
+                        },
                         "data": base64.b64encode(data).decode() if data is not None else None,
+                        **({"shadowed_by": op["shadowed_by"]} if op.get("shadowed_by") else {}),
+                        **({"hidden_by": op["hidden_by"]} if op.get("hidden_by") else {}),
                     }
                 )
             with self.connect(write=True) as db:
                 db.execute("INSERT INTO journal VALUES (?,?)", (txid, canonical(journal).decode()))
                 db.commit()
             try:
-                for index, op in enumerate(changes):
+                for index, op in enumerate(ordered_changes):
                     if fault:
                         fault("before_write", index)
                     path = Path(op["path"])
@@ -192,18 +282,41 @@ class State:
                         raise DasyncError("PLAN_INVALIDATED", "A target changed during commit")
                     if op["action"] == "delete":
                         safe_unlink(path)
+                    elif op["target_type"] == "symlink":
+                        if path.is_dir() and not path.is_symlink():
+                            remove_empty_tree(path)
+                        else:
+                            safe_unlink(path)
+                        safe_symlink(path, outputs[op["path"]].decode())
                     else:
+                        if op["before"]["type"] == "symlink":
+                            safe_unlink(path)
+                        elif op["before"]["type"] == "directory":
+                            remove_empty_tree(path)
                         atomic_write(path, outputs[op["path"]], op["mode"])
                     if fault:
                         fault("after_write", index)
                 for op in plan["operations"]:
-                    if observe(Path(op["path"])) != {"hash": op["hash"], "mode": op["mode"]}:
+                    path = Path(op["path"])
+                    has_shadowed_children = any(
+                        child.get("shadowed_by") == op["path"] for child in plan["operations"]
+                    )
+                    if has_shadowed_children and path.is_dir() and not path.is_symlink():
+                        continue
+                    if op.get("hidden_by") and Path(op["hidden_by"]).is_symlink():
+                        continue
+                    if observe(path) != {
+                        "hash": op["hash"],
+                        "mode": op["mode"],
+                        "type": op["target_type"],
+                    }:
                         raise DasyncError("VERIFY_FAILED", "Written file differs from planned content")
                 previous = self.head(plan["scope_key"])
                 owned = {
                     op["path"]: {
                         "hash": op["hash"],
                         "mode": op["mode"],
+                        "type": op["target_type"],
                         "package": op["package"],
                         "provider": op["provider"],
                     }
@@ -235,8 +348,10 @@ class State:
                     "plan_digest": digest(canonical(plan)),
                     "backups": journal["files"],
                 }
-                restored = {op["path"] for op in plan["operations"] if op["package"] == "@restored"}
-                for path in restored:
+                transient = {
+                    op["path"] for op in plan["operations"] if op["package"] in {"@restored", "@preserved"}
+                }
+                for path in transient:
                     receipt["owned"].pop(path, None)
                     receipt["files"].pop(path, None)
                 if fault:

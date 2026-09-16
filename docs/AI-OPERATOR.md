@@ -6,6 +6,8 @@ Read `status`, `list` and `explain` before changing selection. Preview mutations
 
 `--yes` confirms ordinary changes. It does not imply source trust, executable-digest approval, private-context authorization or overwriting existing content. Use `--trust-source`, `--approve-executable DIGEST`, context grants and `--conflict overwrite` only within the user's explicit authorization for those decisions.
 
+`setup --replace-provider-config` is an explicit migration operation and requires `--conflict overwrite`. Review every removal in its plan. It is confined to documented provider discovery paths, including root instruction files and inline hook settings; non-hook JSONC settings are preserved. Runtime state, authentication, caches, sessions, plugins, MCP configuration and source repositories remain untouched. Replaced regular files and leaf symlinks are receipt backups recoverable with `rollback --before`. User-scope Copilot management rejects a custom `COPILOT_HOME` rather than writing to an inactive root.
+
 Never edit generated output as the source of truth. Change canonical packages or desired selection. Never include private context bodies in reports, logs, plans, or source control. The private-path lookup itself requires `context locate ID --consumer ID --allow-private-path`; do not call it for an unrelated consumer.
 
 `configure` changes desired state only. `configure --apply` changes configuration and provider output in one transaction. `sync` never fetches or advances a source pin. `update` advances the pin; `plan update` and `update --dry-run` require an already-available explicit Git revision. Read-only plans do not fetch uncached remote sources.

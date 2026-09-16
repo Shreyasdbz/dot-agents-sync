@@ -10,7 +10,7 @@ The build/install step needs uv and package-registry access or a populated cache
 
 Coverage:
 
-- Codex, Claude and Cursor: plan setup, explicit confirmation, dry-run, saved envelope apply, hashes of actual outputs, doctor, discovery, idempotent sync, configure-only, materialization of byte-identical travel HTML, rollback and clean final state.
+- Codex, Claude, GitHub Copilot CLI and Cursor: plan setup, explicit confirmation, dry-run, saved envelope apply, hashes of actual outputs, doctor, discovery, idempotent sync, configure-only, materialization of byte-identical travel HTML, rollback and clean final state.
 - Stale plans: configuration changes invalidate a reviewed plan without writing provider files.
 - Drift: reject edits, report unhealthy state, explicitly repair, recover the overwritten user content through rollback, and repair a missing managed file.
 - Sources: local catalog edits are rejected by sync; a reviewed update accepts the new pin and materializes changed content.

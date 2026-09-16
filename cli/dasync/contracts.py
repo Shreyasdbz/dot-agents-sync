@@ -8,7 +8,11 @@ ID = {"type": "string", "pattern": "^[a-z][a-z0-9-]*(\\.[a-z0-9-]+)*$", "maxLeng
 STR = {"type": "string", "minLength": 1, "maxLength": 2048}
 IDS = {"type": "array", "items": ID, "uniqueItems": True}
 STRS = {"type": "array", "items": STR, "uniqueItems": True}
-PROVIDERS = {"type": "array", "items": {"enum": ["codex", "claude", "cursor"]}, "uniqueItems": True}
+PROVIDERS = {
+    "type": "array",
+    "items": {"enum": ["codex", "claude", "copilot", "cursor"]},
+    "uniqueItems": True,
+}
 
 
 def obj(properties, required=()):
@@ -176,7 +180,14 @@ PLAN_CONTEXT = obj(
 SCHEMAS = {"config": CONFIG, "manifest": MANIFEST, "profile": PROFILE, "plan-context": PLAN_CONTEXT}
 
 HASH = {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"}
-OBSERVED = obj({"hash": HASH, "mode": {"type": ["integer", "null"]}}, ("hash", "mode"))
+OBSERVED = obj(
+    {
+        "hash": HASH,
+        "mode": {"type": ["integer", "null"]},
+        "type": {"enum": ["missing", "file", "symlink", "directory"]},
+    },
+    ("hash", "mode", "type"),
+)
 OPERATION = obj(
     {
         "path": STR,
@@ -184,10 +195,13 @@ OPERATION = obj(
         "before": OBSERVED,
         "hash": HASH,
         "mode": {"type": ["integer", "null"]},
+        "target_type": {"enum": ["missing", "file", "symlink"]},
+        "shadowed_by": STR,
+        "hidden_by": STR,
         "provider": STR,
         "package": STR,
     },
-    ("path", "action", "before", "hash", "mode", "provider", "package"),
+    ("path", "action", "before", "hash", "mode", "target_type", "provider", "package"),
 )
 SCHEMAS["plan"] = obj(
     {
@@ -205,6 +219,7 @@ SCHEMAS["plan"] = obj(
                 "config_only": {"type": "boolean"},
                 "trust_source": {"type": "boolean"},
                 "conflict": {"enum": ["protect", "overwrite"]},
+                "replace_provider_config": {"type": "boolean"},
                 "receipt": STR,
                 "before_receipt": {"type": "boolean"},
             },

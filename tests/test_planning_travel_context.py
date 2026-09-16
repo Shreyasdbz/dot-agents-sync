@@ -63,7 +63,7 @@ def test_github_projection_preserves_native_references():
     assert json.loads(json.dumps(value)) == value
 
 
-@pytest.mark.parametrize("provider", ["codex", "claude", "cursor"])
+@pytest.mark.parametrize("provider", ["codex", "claude", "copilot", "cursor"])
 def test_travel_profile_and_agent_reference_links(workspace, provider):
     engine, config = workspace
     config["packages"] = []
@@ -80,6 +80,7 @@ def test_travel_profile_and_agent_reference_links(workspace, provider):
     native = {
         "codex": ".codex/agents/dasync-agent-travel-planner.toml",
         "claude": ".claude/agents/dasync-agent-travel-planner.md",
+        "copilot": ".github/agents/dasync-agent-travel-planner.agent.md",
         "cursor": ".cursor/dasync-references/agent.travel-planner/AGENT.md",
     }[provider]
     body = by_path[native].decode()
