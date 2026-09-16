@@ -5,7 +5,7 @@
   "name": "security",
   "version": "1.0.0",
   "description": "Security and privacy",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "POLICY.md",
   "files": [
     "POLICY.md"

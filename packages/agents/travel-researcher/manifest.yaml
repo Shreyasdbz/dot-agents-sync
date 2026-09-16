@@ -5,7 +5,7 @@
   "name": "travel-researcher",
   "version": "1.2.0",
   "description": "Verify bounded travel questions against current primary sources, including feasibility, availability, total prices, and uncertainty.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "AGENT.md",
   "files": [
     "AGENT.md"

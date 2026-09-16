@@ -5,7 +5,7 @@
   "name": "typescript-stack",
   "version": "1.2.0",
   "description": "TypeScript and web stack: Load for TypeScript/web implementation or review.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "CONTEXT.md",
   "files": [
     "CONTEXT.md"

@@ -5,7 +5,7 @@
   "name": "playlist",
   "version": "1.2.0",
   "description": "Adaptable discovery, ordered-preview and playlist-update structures with recording identity.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "playlist.md",
   "files": [
     "playlist.md"

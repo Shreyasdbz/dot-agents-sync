@@ -5,7 +5,7 @@
   "name": "pitch-deck",
   "version": "1.4.0",
   "description": "Self-contained accessible briefing components with responsive layouts and progressive navigation.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "deck.html",
   "files": [
     "components/chart.html",

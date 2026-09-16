@@ -5,7 +5,7 @@
   "name": "git",
   "version": "1.0.0",
   "description": "Git hygiene",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "POLICY.md",
   "files": [
     "POLICY.md"

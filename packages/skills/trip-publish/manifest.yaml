@@ -10,7 +10,7 @@
     "short_description": "Publish approved itineraries as mobile HTML guides",
     "default_prompt": "Use $dasync-skill-trip-publish to turn this approved itinerary into a mobile-friendly HTML travel guide."
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "SKILL.md",
   "files": [
     "SKILL.md"

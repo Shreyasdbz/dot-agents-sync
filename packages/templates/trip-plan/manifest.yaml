@@ -5,7 +5,7 @@
   "name": "trip-plan",
   "version": "1.2.0",
   "description": "Composable day-trip, single-base, multi-city and group itinerary structures with cost and leg modules.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "itinerary.md",
   "files": [
     "itinerary.md",

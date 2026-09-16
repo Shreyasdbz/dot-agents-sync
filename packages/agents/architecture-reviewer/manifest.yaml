@@ -5,7 +5,7 @@
   "name": "architecture-reviewer",
   "version": "1.2.0",
   "description": "Review designs and changes for broken invariants, failure recovery, compatibility, and unnecessary architectural complexity.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "AGENT.md",
   "files": [
     "AGENT.md"

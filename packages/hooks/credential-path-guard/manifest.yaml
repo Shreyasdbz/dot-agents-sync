@@ -4,7 +4,7 @@ id: hook.credential-path-guard
 name: credential-path-guard
 version: 1.0.0
 description: Block explicit credential-path access before supported tool calls. This is a conservative guard, not complete shell enforcement.
-license: UNLICENSED
+license: MIT
 entry: guard.py
 files: [guard.py]
 scopes: [user, project]

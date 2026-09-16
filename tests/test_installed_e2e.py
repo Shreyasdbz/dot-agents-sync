@@ -43,6 +43,39 @@ def installed_binary(tmp_path_factory):
     return binary
 
 
+def test_installed_wheel_license_and_metadata(installed_binary, tmp_path):
+    python = installed_binary.parent / ("python.exe" if os.name == "nt" else "python")
+    result = execute(
+        [
+            str(python),
+            "-I",
+            "-c",
+            """
+import importlib.metadata
+import json
+
+distribution = importlib.metadata.distribution("dot-agents-sync")
+print(json.dumps({
+    "license": distribution.metadata["License-Expression"],
+    "license_text": distribution.read_text("licenses/LICENSE"),
+    "urls": distribution.metadata.get_all("Project-URL"),
+    "entrypoints": [
+        entry.value for entry in distribution.entry_points
+        if entry.group == "console_scripts" and entry.name == "dasync"
+    ],
+}))
+""",
+        ],
+        cwd=tmp_path,
+    )
+    metadata = json.loads(result.stdout)
+    assert metadata["license"] == "MIT"
+    assert metadata["license_text"].startswith("MIT License\n")
+    assert 'THE SOFTWARE IS PROVIDED "AS IS"' in metadata["license_text"]
+    assert "Repository, https://github.com/Shreyasdbz/dot-agents-sync" in metadata["urls"]
+    assert metadata["entrypoints"] == ["dasync.cli:main"]
+
+
 class Journey:
     def __init__(self, binary, root):
         self.binary, self.root = binary, root

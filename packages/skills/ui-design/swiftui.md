@@ -20,4 +20,4 @@ Inspect the deployment target and installed SDK before choosing an API. On iOS 2
 
 Verify resizing across narrow, intermediate, and wide containers. For device- or SDK-specific behavior, run the matching simulator when available; otherwise limit the change to general adaptability and mark the specialized behavior unverified.
 
-These principles are distilled and paraphrased from [FloWritesCode/fwc-swiftui-skills](https://github.com/FloWritesCode/fwc-swiftui-skills) at commit `c2454e6948175e25e61c107c6dc7ebf03e291dfe` (MIT, copyright FloWritesCode), especially its Liquid Glass and adaptive-layout guidance.
+Adapted from [fwc-swiftui-skills](https://github.com/FloWritesCode/fwc-swiftui-skills) at `c2454e6948175e25e61c107c6dc7ebf03e291dfe`; copyright (c) 2026 FloWritesCode. The [MIT license](LICENSE.fwc-swiftui-skills.txt) accompanies this reference.

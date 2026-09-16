@@ -5,7 +5,7 @@
   "name": "trip-publish",
   "version": "1.10.0",
   "description": "Traveler-friendly trip page with day summaries, reservations, transport timelines, to-dos and optional currency estimates.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "trip.html",
   "files": [
     "components/expenses.html",

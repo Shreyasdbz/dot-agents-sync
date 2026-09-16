@@ -10,7 +10,7 @@
     "short_description": "Implement and verify an authorized bounded change",
     "default_prompt": "Use $dasync-skill-do-it to implement and verify this authorized bounded change."
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "SKILL.md",
   "files": [
     "SKILL.md"

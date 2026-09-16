@@ -5,7 +5,7 @@
   "name": "ai-systems",
   "version": "1.2.0",
   "description": "AI systems: Load for model, retrieval or agent decisions.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "CONTEXT.md",
   "files": [
     "CONTEXT.md"

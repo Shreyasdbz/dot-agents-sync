@@ -5,7 +5,7 @@
   "name": "music-preferences",
   "version": "1.1.0",
   "description": "Music preferences: Load for music curation.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "CONTEXT.md",
   "files": [
     "CONTEXT.md"

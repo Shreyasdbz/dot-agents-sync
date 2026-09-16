@@ -5,7 +5,7 @@
   "name": "security-reviewer",
   "version": "1.2.0",
   "description": "Trace reachable security failures across trust boundaries, permissions, private data, dependencies, and executable content.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "AGENT.md",
   "files": [
     "AGENT.md"
