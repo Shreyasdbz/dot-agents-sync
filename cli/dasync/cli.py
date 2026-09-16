@@ -75,6 +75,12 @@ def parser():
     p.add_argument("--disable", action="append", default=[])
     p.add_argument("--profile", action="append", default=[])
     p.add_argument("--remove-profile", action="append", default=[])
+    p.add_argument(
+        "--all-public",
+        action=argparse.BooleanOptionalAction,
+        default=None,
+        help="Select every current and future non-private package unless explicitly disabled",
+    )
     p.add_argument("--inherit-user", action=argparse.BooleanOptionalAction, default=None)
     p.add_argument("--allow-context", action="append", default=[])
     p.add_argument("--capability", action="append", default=[])
@@ -142,6 +148,7 @@ def run(args):
             args.disable,
             args.profile,
             args.remove_profile,
+            args.all_public is not None,
             args.allow_context,
             args.capability,
             args.bind_context,
@@ -291,6 +298,7 @@ def run(args):
         )
         request["trust_source"] = args.trust_source
         request["config"]["inherit_user"] = bool(args.inherit_user)
+        request["config"]["all_public"] = bool(args.all_public)
     elif operation in ("configure", "update"):
         config = copy.deepcopy(load_config(scope.config))
         if operation == "update":
@@ -313,6 +321,7 @@ def run(args):
                     args.disable,
                     args.profile,
                     args.remove_profile,
+                    args.all_public is not None,
                     args.provider,
                     args.allow_context,
                     args.capability,
@@ -353,6 +362,8 @@ def run(args):
             config["providers"] = args.provider
         if args.inherit_user is not None:
             config["inherit_user"] = args.inherit_user
+        if args.all_public is not None:
+            config["all_public"] = args.all_public
         config["contexts"] = sorted(set(config.get("contexts", [])) | set(args.allow_context))
         config["capabilities"] = sorted(set(config.get("capabilities", [])) | set(args.capability))
         request["config"] = config

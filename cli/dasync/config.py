@@ -92,6 +92,7 @@ def initial(project, source, providers, packages=(), profiles=()):
         "packages": list(packages),
         "profiles": list(profiles),
         "disabled": [],
+        "all_public": False,
         "inherit_user": False,
         "contexts": [],
         "capabilities": [],

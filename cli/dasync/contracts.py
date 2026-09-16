@@ -36,6 +36,7 @@ CONFIG = obj(
         "packages": IDS,
         "profiles": IDS,
         "disabled": IDS,
+        "all_public": {"type": "boolean"},
         "providers": PROVIDERS,
         "inherit_user": {"type": "boolean"},
         "contexts": IDS,

@@ -30,6 +30,8 @@ dasync doctor --scope project --path /absolute/my-project --json
 
 Use `--scope user` to configure your user environment independently. Omit packages/profiles for an empty initial environment. Nothing installs merely because it ships in the catalog. Any directory works; it need not be a Git repository.
 
+Use `--all-public` when a scope should automatically select every current and future non-private package in its pinned catalog. Explicit `--disable ID` tombstones still win. Private contexts remain separately bound and authorized, and newly selected executable packages still require exact digest approval.
+
 The project contains one `.dasync.yaml` plus selected provider-native output. There is no project-local dasync state directory or lockfile. User config, cached Git sources, receipts and backups live in platform-native directories. Set `DASYNC_HOME=/absolute/sandbox` to isolate all user state and provider output for experimentation.
 
 Existing provider files are protected, including AGENTS.md and settings.json. Inspect collisions before choosing `--conflict overwrite`; replacements retain recoverable originals. Test in an empty project to see the full generated layout first.

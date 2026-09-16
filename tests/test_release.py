@@ -38,6 +38,31 @@ def test_entire_catalog_compiles(workspace, provider, tmp_path):
     assert not any(str(private).encode() in a.content for a in artifacts)
 
 
+def test_all_public_selects_complete_safe_catalog(workspace):
+    engine, config = workspace
+    catalog = Catalog(config["source"])
+    config["packages"] = []
+    config["profiles"] = []
+    config["all_public"] = True
+    config["approved_executables"] = [
+        package.digest for package in catalog.packages.values() if package.manifest.get("executable")
+    ]
+    selected, graph, bindings = resolve(catalog, config, engine.scope, None)
+    expected = {
+        package.id
+        for package in catalog.packages.values()
+        if engine.scope.kind in package.manifest["scopes"]
+        and set(config["providers"]) <= set(package.manifest.get("providers", config["providers"]))
+        and not (
+            package.manifest["kind"] == "Context"
+            and package.manifest.get("context", {}).get("sensitivity") == "private"
+        )
+    }
+    assert set(selected) == expected
+    assert not bindings
+    assert all("all-public" in package["provenance"] for package in graph["packages"])
+
+
 def test_backup_preparation_rejects_concurrent_edit(installed, monkeypatch):
     import dasync.state as state_module
 

@@ -18,6 +18,8 @@ HTTPS Git sources use a global mirror cache and full immutable commit IDs. Local
 
 Version 1 resolves one catalog pin per effective environment. Inherited user and project environments must use the same source and pin; mismatches fail explicitly. Projects can have independent pins when inheritance is disabled. Multiple independently versioned source graphs remain a future feature requiring a lockfile design.
 
+Scopes may opt into `all_public`, which adds every current and future non-private package compatible with the scope and all configured providers before dependency resolution. Explicit disabled tombstones still apply. Private contexts remain explicit because their source path, project grant and provider grant cannot be inferred, and executable packages still require exact digest approval.
+
 ## Plan and transaction semantics
 
 Plans contain operation hashes, input hashes, source digests, provenance, capabilities, versions, exact scope and the last receipt. File contents are re-rendered during apply and compared against the reviewed plan; generated bodies are not transported in plan JSON. A plan remains valid only while all bound inputs match. There is no wall-clock expiry. Plans are local-machine execution artifacts because paths and platform identity are bound.

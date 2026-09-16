@@ -12,6 +12,8 @@ Never edit generated output as the source of truth. Change canonical packages or
 
 `configure` changes desired state only. `configure --apply` changes configuration and provider output in one transaction. `sync` never fetches or advances a source pin. `update` advances the pin; `plan update` and `update --dry-run` require an already-available explicit Git revision. Read-only plans do not fetch uncached remote sources.
 
+`--all-public` persists an opt-in selection mode for every current and future non-private package compatible with the scope and all configured providers. Explicit disables remain effective. Private contexts, source trust and executable approvals retain their separate gates.
+
 `PLAN_INVALIDATED` means create and review a new plan. `DRIFT` and `UNMANAGED_COLLISION` mean inspect the existing content before choosing a conflict action. `RECOVERY_REQUIRED` means run doctor, then preview `repair --recover --dry-run`; recovery does not fetch or upgrade. `RECOVERY_CONFLICT` means another actor changed a journal target; preserve that edit and reconcile it before retrying.
 
 Run `doctor --json` after mutation. Report the receipt, actual changes, drift, missing capabilities and verification limits. Do not represent structural validation as a completed model workflow or an external tracker update.

@@ -12,6 +12,17 @@ from .errors import DasyncError
 
 def resolve(catalog: Catalog, config: dict, scope: Scope, user: dict | None):
     roots = catalog.roots(config)
+    if config.get("all_public"):
+        for package in catalog.packages.values():
+            manifest = package.manifest
+            is_private = (
+                manifest["kind"] == "Context" and manifest.get("context", {}).get("sensitivity") == "private"
+            )
+            supports_providers = set(config["providers"]) <= set(
+                manifest.get("providers", config["providers"])
+            )
+            if not is_private and scope.kind in manifest["scopes"] and supports_providers:
+                roots.setdefault(package.id, "all-public")
     inherited = set()
     if scope.kind == "project" and ("bindings" in config or "projects" in config):
         raise DasyncError("PRIVATE_CONTEXT", "Private bindings belong in the user configuration")
