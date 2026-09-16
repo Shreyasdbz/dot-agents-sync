@@ -16,9 +16,14 @@ from .sources import is_remote, repository
 
 
 def git(root: Path, *args: str) -> bytes:
+    repository_args = (
+        ["--git-dir", str(root)]
+        if (root / "HEAD").is_file() and (root / "objects").is_dir()
+        else ["-C", str(root)]
+    )
     try:
         p = subprocess.run(
-            ["git", "-C", str(root), *args],
+            ["git", *repository_args, *args],
             capture_output=True,
             timeout=90,
             env={**os.environ, "GIT_TERMINAL_PROMPT": "0", "GIT_CONFIG_NOSYSTEM": "1"},

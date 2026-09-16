@@ -45,6 +45,18 @@ def test_git_reads_pinned_objects_not_worktree(tmp_path):
     assert Catalog(pin(str(root), "git")).digest != expected
 
 
+def test_bare_cache_works_with_explicit_only_global_policy(tmp_path, monkeypatch):
+    root, _ = repository(tmp_path)
+    mirror = tmp_path / "mirror.git"
+    subprocess.run(["git", "clone", "--mirror", str(root), str(mirror)], check=True, capture_output=True)
+    policy = tmp_path / "gitconfig"
+    policy.write_text("[safe]\n\tbareRepository = explicit\n")
+    monkeypatch.setenv("GIT_CONFIG_GLOBAL", str(policy))
+    source = pin(str(mirror), "git")
+    assert source["revision"]
+    assert Catalog(source).packages
+
+
 def test_local_pin_detects_mutation(tmp_path):
     root, _ = repository(tmp_path)
     source = pin(str(root), "local")
