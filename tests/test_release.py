@@ -6,6 +6,11 @@ from dasync.errors import DasyncError
 from dasync.resolver import resolve
 
 
+def test_catalog_declares_release_license(workspace):
+    catalog = Catalog(workspace[1]["source"])
+    assert {package.manifest["license"] for package in catalog.packages.values()} == {"MIT"}
+
+
 @pytest.mark.parametrize("provider", ["codex", "claude", "copilot", "cursor"])
 def test_entire_catalog_compiles(workspace, provider, tmp_path):
     engine, config = workspace
@@ -36,6 +41,12 @@ def test_entire_catalog_compiles(workspace, provider, tmp_path):
     assert len({a.relative.casefold() for a in artifacts}) == len(artifacts)
     assert not any(b"PRIVATE SENTINEL" in a.content for a in artifacts)
     assert not any(str(private).encode() in a.content for a in artifacts)
+    notice = catalog.packages["skill.ui-design"].files["LICENSE.fwc-swiftui-skills.txt"]
+    assert b"Copyright (c) 2026 FloWritesCode" in notice
+    assert any(
+        artifact.relative.endswith("/LICENSE.fwc-swiftui-skills.txt") and artifact.content == notice
+        for artifact in artifacts
+    )
 
 
 def test_all_public_selects_complete_safe_catalog(workspace):

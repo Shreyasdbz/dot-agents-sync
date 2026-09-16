@@ -10,7 +10,7 @@
     "short_description": "Build intentionally sequenced Apple Music playlists",
     "default_prompt": "Use $dasync-skill-curate-am-playlist to build an intentionally sequenced Apple Music playlist for this listening goal."
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "SKILL.md",
   "files": [
     "SKILL.md"

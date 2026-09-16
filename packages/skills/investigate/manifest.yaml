@@ -10,7 +10,7 @@
     "short_description": "Investigate failures with traceable evidence",
     "default_prompt": "Use $dasync-skill-investigate to investigate this failure and return a traceable diagnosis."
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "SKILL.md",
   "files": [
     "SKILL.md"

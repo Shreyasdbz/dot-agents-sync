@@ -10,7 +10,7 @@
     "short_description": "Review diffs for actionable regressions and gaps",
     "default_prompt": "Use $dasync-skill-pr-review to review this diff for actionable regressions and requirement gaps."
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "SKILL.md",
   "files": [
     "SKILL.md"

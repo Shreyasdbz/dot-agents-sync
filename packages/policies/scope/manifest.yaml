@@ -5,7 +5,7 @@
   "name": "scope",
   "version": "1.0.0",
   "description": "Scope and authorization",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "POLICY.md",
   "files": [
     "POLICY.md"

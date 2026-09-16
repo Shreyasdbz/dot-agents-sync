@@ -5,7 +5,7 @@
   "name": "ux-reviewer",
   "version": "1.2.0",
   "description": "Review user journeys, accessibility, interaction states, and visual hierarchy; distinguish source findings from rendered evidence.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "AGENT.md",
   "files": [
     "AGENT.md"

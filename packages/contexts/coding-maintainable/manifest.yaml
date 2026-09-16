@@ -5,7 +5,7 @@
   "name": "coding-maintainable",
   "version": "1.2.0",
   "description": "Optional coding conventions preset for small maintainable changes",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "CONTEXT.md",
   "files": [
     "CONTEXT.md"

@@ -5,7 +5,7 @@
   "name": "design-editorial",
   "version": "1.3.0",
   "description": "Optional editorial design preset for outcome-focused documents",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "CONTEXT.md",
   "files": [
     "CONTEXT.md"

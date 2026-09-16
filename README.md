@@ -1,10 +1,23 @@
 # dasync
 
-Portable AI workflows for Codex, Claude Code, GitHub Copilot CLI, and Cursor. Select optional skills, agents, policies, context and templates once; dasync resolves their dependencies and writes provider-native files with ownership tracking, drift protection and rollback.
+dasync is a CLI and optional workflow catalog for Codex, Claude Code, GitHub Copilot CLI, and Cursor. Select skills, agents, policies, context, and templates once; dasync resolves their dependencies and writes each provider's configuration with drift protection and recoverable backups.
+
+[Documentation](docs/README.md) | [Catalog](docs/catalog.md) | [Project](https://github.com/users/Shreyasdbz/projects/8) | [Releases](https://github.com/Shreyasdbz/dot-agents-sync/releases) | [Contributing](CONTRIBUTING.md)
+
+> **Early release:** macOS and Linux are covered by CI; Windows is not a supported release platform. Original code and catalog content are [MIT-licensed](LICENSE); [third-party notices](THIRD_PARTY_NOTICES.md) remain in effect.
+
+## What it does
+
+- **Share workflows across providers.** Use one source catalog instead of maintaining separate copies of the same instructions.
+- **Choose what gets installed.** Start with a profile, select individual packages, or opt into all compatible public packages.
+- **Review changes before applying.** Plans bind to exact inputs; existing files are protected unless you explicitly approve replacement.
+- **Recover from mistakes.** Track ownership and drift, retain overwritten originals, and roll back by receipt.
+
+dasync manages configuration, not model sessions. It does not supply model access, synchronize issue trackers, or make provider capabilities identical. Private context stays at its source, and executable hooks require separate digest approval.
 
 ## Install
 
-Requires Python 3.11+ and Git. The tested platforms are macOS and Linux.
+Requires **Python 3.11+**, **Git**, and [uv](https://docs.astral.sh/uv/getting-started/installation/) or [pipx](https://pipx.pypa.io/stable/installation/).
 
 ```sh
 git clone https://github.com/Shreyasdbz/dot-agents-sync.git
@@ -14,121 +27,56 @@ uv tool install .
 dasync --version
 ```
 
-The CLI and catalog are separate: the installed CLI runs transactions, while a pinned catalog revision determines workflow content. No model API key is needed to install or synchronize packages.
+Installation is from source; there is no published PyPI release. The CLI and catalog are separate: installing the CLI does not install workflows, and a pinned catalog revision determines their content. No model API key is needed to install or synchronize packages.
 
-## Set up a project
+## Set up your first project
 
-Create the target directory first. Replace `/absolute/my-project` below with its real path.
+Use an existing, empty directory and replace `/absolute/my-project` with its real, non-symlink path. This example installs the development profile for Codex; choose `claude`, `copilot`, or `cursor` instead, or repeat `--provider` for multiple tools.
 
 ```sh
 dasync setup --scope project --path /absolute/my-project \
   --source https://github.com/Shreyasdbz/dot-agents-sync.git \
-  --profile dev-core --provider codex --provider claude --provider copilot --provider cursor \
+  --profile dev-core --provider codex \
   --trust-source --yes
 dasync doctor --scope project --path /absolute/my-project --json
 ```
 
-Use `--scope user` to configure your user environment independently. Omit packages/profiles for an empty initial environment. Nothing installs merely because it ships in the catalog. Any directory works; it need not be a Git repository.
+`--trust-source` explicitly trusts this catalog. `--yes` confirms ordinary writes; it never grants source trust, executable approval, or private-context access. Existing provider files are protected: do not add overwrite flags just to dismiss a collision.
 
-Use `--all-public` when a scope should automatically select every current and future non-private package in its pinned catalog. Explicit `--disable ID` tombstones still win. Private contexts remain separately bound and authorized, and newly selected executable packages still require exact digest approval.
+The project gets `.dasync.yaml` and the selected provider-native files. Receipts, backups, and cached sources stay in platform-native user directories. Use `--scope user` without `--path` for a user-wide setup. See [getting started](docs/getting-started.md) for an isolated trial, previews, and existing-project migration.
 
-The project contains one `.dasync.yaml` plus selected provider-native output. There is no project-local dasync state directory or lockfile. User config, cached Git sources, receipts and backups live in platform-native directories. Set `DASYNC_HOME=/absolute/sandbox` to isolate all user state and provider output for experimentation.
-
-Existing provider files are protected, including AGENTS.md and settings.json. Inspect collisions before choosing `--conflict overwrite`; replacements retain recoverable originals. Test in an empty project to see the full generated layout first.
-
-For an explicitly authorized full replacement of existing provider customization, preview `plan setup` with `--replace-provider-config --conflict overwrite`. This inventories only documented instruction, skill, agent, reference and hook discovery paths; it does not remove authentication, sessions, caches, plugins, MCP configuration or unrelated provider settings. Inline hook blocks are replaced while other JSONC settings are preserved. Applying the reviewed plan backs up every displaced regular file and leaf symlink, and `rollback --before --receipt ID` restores them. User-scope Copilot management currently requires its default `$HOME/.copilot` root and rejects a different `COPILOT_HOME`.
-
-## Preview and apply
-
-After setup has cached the source:
+## Everyday use
 
 ```sh
-dasync plan configure --scope project --path /absolute/my-project \
-  --enable skill.pr-review --apply --json > /absolute/my-project/dasync-plan.json
-dasync apply --scope project --path /absolute/my-project \
-  --plan /absolute/my-project/dasync-plan.json --yes --no-input --json
-```
+# Inspect the current environment.
+dasync status --scope project --path /absolute/my-project
 
-Plans bind to exact input and output hashes. Changing the config, catalog, receipt or target file invalidates a saved plan. `apply` re-renders and rechecks the plan; it never silently replaces it.
-
-Use real, non-symlink paths for scopes, sources, state, and plan files. On macOS, `/tmp` and `/var` are aliases; their canonical paths begin with `/private`. The same protection rejects provider discovery directories that are symlinks. Review existing topology before adopting dasync in a customized environment.
-
-## Commands
-
-| Command | Behavior |
-| --- | --- |
-| `setup` | Create scope config and first materialization in one transaction; explicit source trust required |
-| `configure` | Edit desired selection; interactive terminals open a keyboard selector; `--apply` includes output changes |
-| `sync` | Reconcile from the current pin without fetching; unchanged sync is a no-op |
-| `update` | Fetch and advance a Git source pin with output changes; `--config-only` defers materialization |
-| `status` | Read configuration, provenance, output drift, pending changes and the last receipt |
-| `doctor` | Read diagnostics; nonzero exit status if the environment needs attention |
-| `repair` | Rebuild missing managed output; `--recover` restores an interrupted transaction |
-| `rollback --receipt ID` | Restore the state captured by a successful receipt |
-| `rollback --before --receipt ID` | Restore the state before a receipt, including overwritten unmanaged originals |
-| `plan ACTION` / `diff` | Return a reviewable plan without persistent writes |
-| `apply --plan FILE` | Apply the exact reviewed plan after fresh validation |
-| `list` / `search TEXT` | Inspect packages, digests, dependencies and profiles |
-| `explain ID` | Explain selection provenance and capability decisions |
-| `capabilities` / `schema NAME` | Inspect provider support and machine contracts |
-| `context locate ID` | Resolve an authorized private binding for an explicit consumer |
-| `ai instructions` / `ai environment` | Operator instructions and a sanitized environment summary |
-
-Every command accepts `--json`. Mutations require `--scope`; project operations require an absolute `--path`. `--dry-run` never applies changes. `--no-input` never prompts. `--yes` does not bypass source trust, private-context access or executable approval. JSON stdout uses `{version, ok, result}` or `{version, ok, error}`. Exit status 0 means success, 1 means an unhealthy doctor result, and 2 means a usage or operation error.
-
-`plan update` and `update --dry-run` require an explicit Git `--revision` already available locally. Previewing uncached remote setup fails without fetching; use a reviewed local Git checkout for a zero-write first-setup preview. Local authoring uses `--source /absolute/catalog --source-kind local`; changes require `update` to accept a new content pin.
-
-## Optional catalog
-
-| Group | Items |
-| --- | --- |
-| Development skills | Propose, Plan Out, Do It, Investigate, PR Review, Pitch Deck, UI Design |
-| Personal skills | Trip Publish, Curate AM Playlist; Trip Plan compatibility entrypoint |
-| Agents | Security/privacy, architecture, AI systems, UX/accessibility, travel planning, travel research, slop audit |
-| Policies | Scope, coding, verification, Git hygiene, security, communication, research, accessibility |
-| Context bindings | Planning authority, coding preferences, architecture, conventions, Python, TypeScript, cloud, AI systems, design, audience, security, travel, music |
-| Public context presets | Editorial design and maintainable coding; opt-in starting points, not invented user preferences |
-| Templates | Design proposal, Plan Context, investigation, PR review, deck, itinerary, trip page, playlist |
-| Hooks | Credential-path guard; separately approved, never included by a profile |
-
-Profiles: `dev-core`, `dev-review`, `technical-storytelling`, `ui-design`, `travel`, `personal-music`. Profile membership is inspectable and editable. Templates follow required dependencies; suggested agents and context never activate implicitly.
-
-The `ui-design` profile installs one routing skill. On a relevant task, the skill uses the read-only [UI Skills MCP server](https://www.ui-skills.com/mcp/docs) when available and asks the active agent to register its canonical endpoint once, at the selected scope, when absent. SwiftUI guidance stays in one conditional reference distilled from the MIT-licensed [fwc-swiftui-skills](https://github.com/FloWritesCode/fwc-swiftui-skills); it is not loaded for other stacks. Add the profile to an existing user environment with `dasync configure --scope user --profile ui-design --apply --yes`.
-
-The optional [engineering-cloudflare profile](docs/engineering-profile.md) adds Cloudflare-first/GCP-next platform choices, pnpm/Turborepo application boundaries, TanStack/shadcn UI conventions and a loadable public stack reference. It contains no skills, hooks or private bindings and does not change the other profiles' stack preferences. Coding quality includes public-contract documentation and a bounded anti-slop completion audit.
-
-Its on-demand operations reference covers workload-selected databases, LOCAL + PROD environments and post-POC observability/analytics before public release. The separate [low-cost observability comparison](docs/observability-options.md) records dated vendor research and trial criteria; no telemetry vendor is selected or installed.
-
-The optional [planning-github profile and travel context](docs/planning-and-travel-context.md) add native GitHub planning conventions and a Travel Planner agent consulted by Trip Publish. Trip Plan is now a compatibility entrypoint; the travel profile selects the agent directly. Personal travel context remains private and separately authorized. All catalog skills and agents carry the natural-paragraph Markdown rule through policy.communication.
-
-Propose asks material clarifying questions and then makes supported design decisions. Plan Out loads the project's planning authority, fully elaborates only the next milestone, and leaves one planning task per future milestone. Investigate and PR Review return inline results by default with optional reports or posting. Pitch Deck uses an adaptive HTML shell with outcome-focused editorial guidance and accessibility checks.
-
-Private context packs provide binding contracts, not invented personal facts. Bind your existing context in user scope:
-
-```sh
-dasync configure --scope user \
-  --bind-context context.design-preferences=/absolute/private/design.md \
-  --grant-project my-project --binding-provider codex --yes
+# Preview adding a workflow, including its generated files.
 dasync configure --scope project --path /absolute/my-project \
-  --enable context.design-preferences --allow-context context.design-preferences --apply --yes
+  --enable skill.pr-review --apply --dry-run --json
+
+# Reconcile from the current catalog pin without fetching updates.
+dasync sync --scope project --path /absolute/my-project --yes
 ```
 
-The project ID must match its `.dasync.yaml`, and provider grants must cover the configured providers. Private bytes stay at their source. Inheritance requires the user and project to share the same catalog pin in v1.
+`configure` changes selection; `sync` reconciles output; `update` advances the catalog pin. A dry run does not save a selection. Use a [saved plan](docs/cli.md#saved-plans) to apply the exact changes you reviewed.
 
-## Development and evidence
+## Choose a workflow
 
-```sh
-uv sync --locked
-uv run pytest
-uv run ruff check cli tests packages/hooks
-uv run ruff format --check cli tests packages/hooks
-uv build
-```
+| Profile | Use it for |
+| --- | --- |
+| `dev-core` | Proposing, planning, implementing, and investigating changes |
+| `dev-review` | PR review |
+| `technical-storytelling` | HTML presentations and technical communication |
+| `ui-design` | UI work with on-demand guidance |
+| `engineering-cloudflare` | Opt-in platform and application conventions |
+| `planning-github` | GitHub planning conventions for the consuming agent |
+| `travel` / `personal-music` | Travel planning and publishing / Apple Music playlist curation |
 
-Tests cover CLI journeys, schema validation, deterministic resolution, dependency failures, pinned Git objects, provider formats, ownership, private context, concurrent writers, injected failures, process-death recovery and reversible rollback. See [executed verification](docs/verification.md), [implementation decisions and limits](docs/architecture/implementation.md), [AI operator instructions](docs/AI-OPERATOR.md), [package authoring](docs/package-authoring.md), [provider contract](docs/adapter-contract.md), and [behavioral evaluation protocol](evals/README.md).
+Profiles are optional selections, not permissions for external actions. See the [catalog guide](docs/catalog.md) for inspection commands, dependencies, private context, and executable approval.
 
-The [catalog research and audit](docs/research/catalog-audit.md) explains the revised skill/agent/context contracts, Matt Pocock-inspired patterns, measured footprint trade-offs, and recorded development trials. Those trials are not native-provider or independent-human certification.
+## Documentation and contributions
 
-The [template system](template-system/README.md) adds context-specific Markdown recipes and modular, self-contained HTML components. Preview the [itinerary](packages/templates/trip-publish/trip.html), [proposal](packages/templates/design-proposal/proposal.html), [review](packages/templates/pr-review/report.html), and [briefing](packages/templates/pitch-deck/deck.html) examples in a browser. [Template verification](evals/runs/template-system/README.md) records browser and accessibility evidence and its limits.
+Start with the [documentation index](docs/README.md), [CLI reference](docs/cli.md), or [package-authoring guide](docs/package-authoring.md). For implementation boundaries and evidence, see [implementation decisions](docs/architecture/implementation.md) and [testing](docs/testing.md); structural checks are not live-model certification.
 
-The repository currently declares no open-source license. Dependency licenses remain their respective owners' licenses. Choose a project license before distributing it as open source.
+Bug reports, documentation improvements, and focused contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) for setup and expectations, and [SECURITY.md](SECURITY.md) before reporting a vulnerability. Work is tracked in the [GitHub Project](https://github.com/users/Shreyasdbz/projects/8); [the release guide](docs/releasing.md) describes distribution gates and support limits.

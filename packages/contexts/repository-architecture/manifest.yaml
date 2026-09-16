@@ -5,7 +5,7 @@
   "name": "repository-architecture",
   "version": "1.2.0",
   "description": "Repository architecture: Load for changes spanning contracts or state ownership.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "CONTEXT.md",
   "files": [
     "CONTEXT.md"

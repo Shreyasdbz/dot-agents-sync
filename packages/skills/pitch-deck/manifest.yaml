@@ -10,7 +10,7 @@
     "short_description": "Create outcome-focused HTML presentations",
     "default_prompt": "Use $dasync-skill-pitch-deck to turn this source material into an outcome-focused HTML presentation."
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "SKILL.md",
   "files": [
     "SKILL.md"

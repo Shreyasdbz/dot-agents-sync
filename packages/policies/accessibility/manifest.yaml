@@ -5,7 +5,7 @@
   "name": "accessibility",
   "version": "1.0.0",
   "description": "Accessible artifact quality",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "POLICY.md",
   "files": [
     "POLICY.md"

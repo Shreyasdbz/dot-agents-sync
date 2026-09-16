@@ -5,7 +5,7 @@
   "name": "travel-planner",
   "version": "1.0.0",
   "description": "Plan feasible points-aware travel or review itinerary content for Trip Publish using authorized traveler context.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "AGENT.md",
   "files": [
     "AGENT.md"

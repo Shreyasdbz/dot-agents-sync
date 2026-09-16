@@ -1,0 +1,33 @@
+name: Feature request
+description: Explain a user problem and a bounded proposal.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Search existing issues before proposing a feature. Keep examples synthetic and omit private context, credentials, and identifying configuration. A request is a proposal, not a commitment to implement or release it.
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem
+      description: Who is affected, what are they trying to do, and what blocks them today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the smallest useful outcome, an example workflow, and how you would verify it works.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Describe existing commands, workarounds, or other approaches and why they do not meet the need.
+    validations:
+      required: true
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: Compatibility and safety considerations
+      description: If known, identify affected providers, scopes, existing configuration, trust approvals, or migration risks.

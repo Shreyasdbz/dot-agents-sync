@@ -5,7 +5,7 @@
   "name": "design-proposal",
   "version": "1.4.0",
   "description": "Adaptive bug-fix, feature, migration and decision recipes with a self-contained proposal UI.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "proposal.md",
   "files": [
     "components/chart.html",

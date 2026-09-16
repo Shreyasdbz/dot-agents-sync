@@ -5,7 +5,7 @@
   "name": "ai-systems-reviewer",
   "version": "1.2.0",
   "description": "Review agent systems for instruction boundaries, context handling, evaluation leakage, and unsupported quality or efficiency claims.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "AGENT.md",
   "files": [
     "AGENT.md"

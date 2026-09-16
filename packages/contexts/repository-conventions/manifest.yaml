@@ -5,7 +5,7 @@
   "name": "repository-conventions",
   "version": "1.2.0",
   "description": "Repository conventions: Load before implementation or review in an unfamiliar repository.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "CONTEXT.md",
   "files": [
     "CONTEXT.md"

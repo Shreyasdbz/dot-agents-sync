@@ -5,7 +5,7 @@
   "name": "coding-preferences",
   "version": "1.2.0",
   "description": "Coding preferences: Load when repository conventions leave a genuine choice.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "CONTEXT.md",
   "files": [
     "CONTEXT.md"

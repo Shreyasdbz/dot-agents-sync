@@ -5,7 +5,7 @@
   "name": "investigation",
   "version": "1.2.0",
   "description": "Evidence-first investigation structures for incidents, correctness, performance and research.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "report.md",
   "files": [
     "report.md",

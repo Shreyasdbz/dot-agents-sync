@@ -10,7 +10,7 @@
     "short_description": "Route itinerary planning to the Travel Planner",
     "default_prompt": "Use $dasync-skill-trip-plan to plan this itinerary through the Travel Planner workflow."
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "SKILL.md",
   "files": [
     "SKILL.md"

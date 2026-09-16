@@ -5,7 +5,7 @@
   "name": "design-preferences",
   "version": "1.3.0",
   "description": "Design preferences: Load for visual or interaction design.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "CONTEXT.md",
   "files": [
     "CONTEXT.md"

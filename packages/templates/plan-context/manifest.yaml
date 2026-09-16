@@ -5,7 +5,7 @@
   "name": "plan-context",
   "version": "1.2.0",
   "description": "Schema-bound planning context with bug-fix, feature, migration and offline adaptation guidance.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "plan-context.md",
   "files": [
     "adaptation.md",

@@ -10,7 +10,7 @@
     "short_description": "Turn approved designs into reviewable work plans",
     "default_prompt": "Use $dasync-skill-plan-out to turn this approved design into a reviewable implementation plan."
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "SKILL.md",
   "files": [
     "SKILL.md",

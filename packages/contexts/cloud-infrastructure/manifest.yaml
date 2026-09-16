@@ -5,7 +5,7 @@
   "name": "cloud-infrastructure",
   "version": "1.2.0",
   "description": "Cloud infrastructure: Load for deployment, reliability or infrastructure changes.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "CONTEXT.md",
   "files": [
     "CONTEXT.md"

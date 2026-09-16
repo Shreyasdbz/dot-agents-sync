@@ -5,7 +5,7 @@
   "name": "security-posture",
   "version": "1.2.0",
   "description": "Security posture: Load when a task crosses an identity, data or execution boundary.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "CONTEXT.md",
   "files": [
     "CONTEXT.md"

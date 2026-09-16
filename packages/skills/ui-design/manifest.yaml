@@ -10,11 +10,12 @@
     "short_description": "Design and review interfaces with focused guidance",
     "default_prompt": "Use $dasync-skill-ui-design to design or review this interface with focused UI guidance."
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "SKILL.md",
   "files": [
     "SKILL.md",
-    "swiftui.md"
+    "swiftui.md",
+    "LICENSE.fwc-swiftui-skills.txt"
   ],
   "scopes": [
     "user",

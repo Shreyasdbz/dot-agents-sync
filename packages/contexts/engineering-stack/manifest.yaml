@@ -5,7 +5,7 @@
   "name": "engineering-stack",
   "version": "1.6.0",
   "description": "Load for Cloudflare/GCP workload fit, runtime choices and monorepo design; public guidance, not project facts.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "CONTEXT.md",
   "files": [
     "CONTEXT.md",

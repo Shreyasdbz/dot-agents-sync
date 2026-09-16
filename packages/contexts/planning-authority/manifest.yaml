@@ -5,7 +5,7 @@
   "name": "planning-authority",
   "version": "1.2.0",
   "description": "Planning authority: Load before planning or updating work items.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "CONTEXT.md",
   "files": [
     "CONTEXT.md"

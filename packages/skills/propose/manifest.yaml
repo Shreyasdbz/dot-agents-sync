@@ -10,7 +10,7 @@
     "short_description": "Compare approaches and write a supported proposal",
     "default_prompt": "Use $dasync-skill-propose to compare viable approaches and write a supported proposal for this change."
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "SKILL.md",
   "files": [
     "SKILL.md"

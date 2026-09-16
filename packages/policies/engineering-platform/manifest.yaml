@@ -5,7 +5,7 @@
   "name": "engineering-platform",
   "version": "1.1.0",
   "description": "Optional Cloudflare-first platform and runtime selection",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "entry": "POLICY.md",
   "files": [
     "POLICY.md"
