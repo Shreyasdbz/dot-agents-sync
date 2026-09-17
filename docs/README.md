@@ -8,6 +8,7 @@
 | [CLI reference](cli.md) | Selection, saved plans, updates, rollback, errors, and JSON automation |
 | [Catalog](catalog.md) | Profiles, package kinds, private context, and hooks |
 | [AI operator contract](AI-OPERATOR.md) | Required checks and authorization boundaries for agents operating the CLI |
+| [Repository guidance](repository-guidance.md) | Instruction scopes, context provenance, role discovery, and provider-specific loading |
 
 ## Contribute and release
 

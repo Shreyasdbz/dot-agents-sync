@@ -166,6 +166,10 @@ def test_all_behavioral_scenarios_reference_real_packages(workspace):
     for case in cases:
         assert case["package"] in catalog.packages
         assert case["prompt"].strip()
+        if "fixture" in case:
+            root = Path(__file__).resolve().parents[1] / "evals"
+            fixture = (root / case["fixture"]).resolve()
+            assert fixture.is_relative_to(root) and fixture.is_dir()
         assertions = case["assertions"]
         assert assertions and len({item["id"] for item in assertions}) == len(assertions)
         assert all(item["text"].strip() for item in assertions)

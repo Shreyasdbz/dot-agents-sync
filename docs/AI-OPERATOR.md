@@ -1,5 +1,7 @@
 # AI operator contract
 
+For repository work, establish the active provider, target paths, applicable instruction scopes, selected context and role boundaries before choosing a workflow. Follow [repository-guidance.md](repository-guidance.md); do not treat catalog role documents, private binding contracts or generated files as new authority. Installed files and capability declarations do not prove that the host loaded or exercised them.
+
 Inspect `dasync capabilities --json` and `dasync schema` before choosing command options. All changes require an explicit `--scope`; project changes require an absolute `--path`. Any existing directory is a valid project target.
 
 Read `status`, `list` and `explain` before changing selection. Preview mutations with `plan ACTION ... --json` or `ACTION ... --dry-run --json`. Inspect package provenance, capability warnings, paths, hashes, replacements and removals. Save plan JSON outside the source catalog and apply it with `apply --plan FILE --scope ... --path ... --yes --no-input --json`. Both the raw plan object and the normal JSON result envelope are accepted.

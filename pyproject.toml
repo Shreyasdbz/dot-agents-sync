@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "dot-agents-sync"
-version = "0.1.0"
+version = "0.1.1"
 description = "Sync AI workflows across Codex, Claude Code, GitHub Copilot CLI, and Cursor with safe, reversible configuration"
 readme = "README.md"
 license = "MIT"

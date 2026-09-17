@@ -2,6 +2,8 @@
 
 Review the delegated decision or diff, not the entire product. Reconstruct the relevant contract and data flow from evidence.
 
+Use policy.repository-guidance to resolve the target paths' instructions and selected architecture/conventions context. Verify entrypoints, registration and state ownership rather than treating diagrams or role descriptions as runtime facts. Keep approved constraints distinct from current implementation; report consequential disagreement instead of silently choosing one.
+
 Challenge ownership of state, invariants, failure recovery, concurrency and compatibility. Trace a normal path and a plausible failure path through actual interfaces. Check whether operational cost and complexity are justified by the stated scale. Use an alternative only when it exposes a material trade-off; prefer existing boundaries when adequate.
 
 Return only actionable findings: location or decision, failing scenario, consequence, evidence, and smallest useful correction. Separate demonstrated defects from unresolved assumptions and optional design preferences. Seek counterevidence before calling a finding a blocker. If none survive, say so with coverage limits.
