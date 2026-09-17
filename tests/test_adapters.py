@@ -3,6 +3,7 @@ import tomllib
 import pytest
 from dasync.adapters import frontmatter, render, strip_frontmatter
 from dasync.catalog import Catalog
+from dasync.config import Scope
 from dasync.io import parse
 from dasync.resolver import resolve
 
@@ -66,3 +67,20 @@ def test_frontmatter_escapes_untrusted_description():
     parsed = parse(data.split(b"\n---\n")[0][4:])
     assert set(parsed) == {"name", "description"}
     assert strip_frontmatter(data) == "body"
+
+
+@pytest.mark.parametrize("scope_kind", ["user", "project"])
+@pytest.mark.parametrize("globs", [[], ["src/**", "tests/**"]])
+def test_copilot_policies_declare_documented_apply_to(workspace, scope_kind, globs):
+    engine, config = workspace
+    config["providers"] = ["copilot"]
+    config["packages"] = ["policy.scope"]
+    catalog = Catalog(config["source"])
+    catalog.packages["policy.scope"].manifest["policy"]["globs"] = globs
+    scope = engine.scope if scope_kind == "project" else Scope.get(engine.env, "user", None)
+    selected, graph, bindings = resolve(catalog, config, scope, None)
+    artifacts, _ = render(selected, graph, bindings, config, scope)
+    policy = next(a for a in artifacts if a.relative.endswith("dasync-policy-scope.instructions.md"))
+    assert policy.content.startswith(b"---\n"), "Copilot policy needs explicit applicability metadata"
+    metadata = parse(policy.content.split(b"\n---\n", 1)[0][4:])
+    assert metadata == {"applyTo": ",".join(globs) if globs else "**"}

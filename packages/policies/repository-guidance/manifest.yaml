@@ -1,0 +1,22 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Policy",
+  "id": "policy.repository-guidance",
+  "name": "repository-guidance",
+  "version": "1.0.0",
+  "description": "Discover applicable repository instructions, load context selectively, and preserve authority across agent handoffs.",
+  "license": "MIT",
+  "entry": "POLICY.md",
+  "files": [
+    "POLICY.md"
+  ],
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "token_budget": 1200,
+  "policy": {
+    "globs": [],
+    "priority": 0
+  }
+}

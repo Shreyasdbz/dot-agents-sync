@@ -6,6 +6,10 @@ During authorized project work, draft context from inspected repository evidence
 
 Keep the document small: applicable scope, current facts, intended changes, constraints, unresolved questions and supporting references. Omit irrelevant sections. For material claims include source paths or approved document references, verification date/revision and evidence class: observed, intended, inferred or unknown. A configuration setting is not proof of a successful deployment or runtime behavior.
 
+When instructions or agent workflows affect the task, include a compact guidance map: provider, source, repository/subtree or path scope, activation/import mechanism, authority and last verification. Distinguish an instruction file, a context source and a role definition; see [repository guidance](repository-guidance.md). Record relevant context IDs and access requirements, not private bodies or an inventory of the user's files.
+
+For agent systems, distinguish available, selected and invoked roles and the actual context each receives. Record handoff constraints, role-specific grants, known omissions after compaction/resumption, and which loading/enforcement claims have runtime evidence. A parent agent's access does not establish a child's authorization.
+
 Use maintained code and configuration for current implementation; use approved design/product decisions for intended direction. Surface conflicts without silently discarding either source. Product goals, users and success measures cannot be inferred reliably from code. Preserve human-authored decisions and annotate what remains unresolved.
 
 Refresh only affected claims when related authorized changes invalidate them. Reinspect the relevant evidence, preserve unrelated content and mention consequential revisions. If the source is inaccessible or outside the write scope, flag staleness and propose an update. Do not create a background monitor, refresh timestamps without verification or rewrite all context after every edit.

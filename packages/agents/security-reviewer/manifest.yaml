@@ -3,7 +3,7 @@
   "kind": "Agent",
   "id": "agent.security-reviewer",
   "name": "security-reviewer",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Trace reachable security failures across trust boundaries, permissions, private data, dependencies, and executable content.",
   "license": "MIT",
   "entry": "AGENT.md",
@@ -21,6 +21,7 @@
     "verification-limits"
   ],
   "requires": {
+    "policy.repository-guidance": ">=1,<2",
     "policy.communication": ">=1,<2"
   }
 }

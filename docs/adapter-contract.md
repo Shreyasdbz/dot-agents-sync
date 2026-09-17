@@ -15,4 +15,6 @@ Sources checked for the v1 format mapping:
 
 Generated direct dependency references are relative to the consuming skill. Private bindings are represented by IDs, never copied bodies or embedded source paths. Hook commands contain a machine-bound absolute script path and Python executable; plans therefore bind to the executing machine.
 
+Unconditional policies use native discovery rather than repeated dependency copies; Cursor user policies retain explicit manual references. Copilot policy files always include `applyTo`, using `"**"` when no path restriction is selected. Runtime exclusions and actual host loading remain outside the renderer's evidence. See [repository guidance](repository-guidance.md) for the dated discovery matrix, instruction/role distinction and known provider-documentation conflicts.
+
 Tests check deterministic output, metadata parsing, expected discovery paths, no model pins, unsupported-feature diagnostics and idempotent sync through every provider. Live authenticated runtime behavior and future provider releases require separate conformance runs.

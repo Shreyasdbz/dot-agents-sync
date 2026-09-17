@@ -48,6 +48,8 @@ Propose makes supported design decisions. Plan Out elaborates only the next mile
 
 All catalog skills and agents inherit the natural-paragraph Markdown rule through `policy.communication`. Templates are dependencies where required, not permission to invent missing content.
 
+Do It, Investigate, Propose, Plan Out, PR Review and the five engineering reviewers also require `policy.repository-guidance`. It defines scoped instruction discovery, selective context loading and bounded agent handoffs without activating private bindings or additional roles. See [repository guidance](repository-guidance.md) for native filename and loading differences.
+
 ## Optional integrations and conventions
 
 The `ui-design` skill uses the read-only [UI Skills MCP server](https://www.ui-skills.com/mcp/docs) when available and requests registration at the selected scope when absent. SwiftUI guidance loads only for relevant Apple UI work; the supporting reference retains attribution to the MIT-licensed [fwc-swiftui-skills](https://github.com/FloWritesCode/fwc-swiftui-skills).

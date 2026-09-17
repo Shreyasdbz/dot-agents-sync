@@ -47,6 +47,11 @@ def test_entire_catalog_compiles(workspace, provider, tmp_path):
         artifact.relative.endswith("/LICENSE.fwc-swiftui-skills.txt") and artifact.content == notice
         for artifact in artifacts
     )
+    stateful_guide = catalog.packages["skill.do-it"].files["stateful-changes.md"]
+    assert any(
+        artifact.relative.endswith("/stateful-changes.md") and artifact.content == stateful_guide
+        for artifact in artifacts
+    )
 
 
 def test_all_public_selects_complete_safe_catalog(workspace):

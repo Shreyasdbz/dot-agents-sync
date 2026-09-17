@@ -53,9 +53,12 @@ def test_installed_wheel_license_and_metadata(installed_binary, tmp_path):
             """
 import importlib.metadata
 import json
+from dasync import __version__
 
 distribution = importlib.metadata.distribution("dot-agents-sync")
 print(json.dumps({
+    "version": distribution.version,
+    "runtime_version": __version__,
     "license": distribution.metadata["License-Expression"],
     "license_text": distribution.read_text("licenses/LICENSE"),
     "urls": distribution.metadata.get_all("Project-URL"),
@@ -69,6 +72,8 @@ print(json.dumps({
         cwd=tmp_path,
     )
     metadata = json.loads(result.stdout)
+    assert metadata["version"] == metadata["runtime_version"]
+    assert execute([str(installed_binary), "--version"], cwd=tmp_path).stdout.strip() == metadata["version"]
     assert metadata["license"] == "MIT"
     assert metadata["license_text"].startswith("MIT License\n")
     assert 'THE SOFTWARE IS PROVIDED "AS IS"' in metadata["license_text"]
