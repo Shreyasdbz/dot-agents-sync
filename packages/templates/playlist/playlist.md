@@ -10,10 +10,10 @@ For discovery, group candidates by listening purpose before proposing an order. 
 
 ## Track module
 
-| Order | Track / artist | Recording version | Verified identity / availability | Role in sequence |
-| --- | --- | --- | --- | --- |
+| Order | Track / artist | Album or source release | Version / rating | Verified song ID / availability | Role in sequence |
+| --- | --- | --- | --- | --- | --- |
 
-Add duration, explicit-content status or source only when known and useful. Distinguish studio/live/remaster/cover recordings. Deduplicate by reliable recording identity, not title alone; supplied IDs are not necessarily verified service IDs.
+Use an unrated or unknown label when song-level explicit status is not established; do not infer it from an album badge. Include the storefront with a verified Apple Music song ID, and link the selected song when available. Add duration only when known. Distinguish studio/live/remaster/cover recordings and the release chosen. Deduplicate by reliable recording identity, not title alone; supplied IDs are not necessarily verified service IDs.
 
 ## Alternatives and account action
 

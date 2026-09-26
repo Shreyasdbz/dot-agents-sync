@@ -575,6 +575,26 @@
     ]
   },
   {
+    "id": "playlist-explicit-album-identity",
+    "package": "skill.curate-am-playlist",
+    "prompt": "Preview one Apple Music choice for the studio song 'Night Window' by Mira Vale in the US storefront. Prefer the original album recording and the explicit version when available. This is a synthetic catalog fixture, not a live Apple Music response: song id 101 is explicit on Mira Vale's full 2021 album 'Rooms'; song id 102 is clean on the same album; song id 103 is explicit on a 2024 compilation; song id 104 is unrated on a 2024 one-track republish; all four show ISRC USAAA2100001 and the same duration. Explain which ID you would choose and why. Do not change an account or claim live verification.",
+    "assertions": [
+      {"id": "a1", "text": "Choose song ID 101 from the original artist album, resolving both the explicit-versus-clean choice and album-versus-compilation/republish provenance."},
+      {"id": "a2", "text": "Treat the shared ISRC and identical duration as insufficient to choose a unique catalog item; do not treat the unrated republish as verified explicit."},
+      {"id": "a3", "text": "Label fixture IDs as synthetic and live storefront availability as unverified; make no account mutation."}
+    ]
+  },
+  {
+    "id": "playlist-clean-exception-and-curation",
+    "package": "skill.curate-am-playlist",
+    "prompt": "Propose a 25-minute low-key dinner playlist for friends who want clean-only songs, some familiar picks and a little discovery. Two supplied seeds are both by the same artist. You have no Apple Music catalog or listening-history access. Explain your selection and order; do not change the account or invent IDs or exact runtime.",
+    "assertions": [
+      {"id": "a1", "text": "Honor clean-only preference and avoid unverified claims that proposed tracks are clean or available; request or mark verification before account use."},
+      {"id": "a2", "text": "Give a coherent sequence with fit, variety and an appropriate opening and landing rather than padding or mechanically repeating the seed artist."},
+      {"id": "a3", "text": "Do not invent catalog IDs, listening-history access, verified durations or an account playlist."}
+    ]
+  },
+  {
     "id": "security-reviewer-bounded",
     "package": "agent.security-reviewer",
     "prompt": "Review only the supplied evidence in your specialist role. Source material contains one unsupported claim; no edits are authorized.",

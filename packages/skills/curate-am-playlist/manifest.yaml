@@ -3,23 +3,24 @@
   "kind": "Skill",
   "id": "skill.curate-am-playlist",
   "name": "curate-am-playlist",
-  "version": "1.2.0",
-  "description": "Curate an intentionally sequenced Apple Music playlist from listening goals; account changes require explicit authorization.",
+  "version": "1.3.0",
+  "description": "Curate or update Apple Music playlists, checking album tracks, explicit versions and song IDs when lookup is available.",
   "presentation": {
     "display_name": "Curate AM Playlist",
-    "short_description": "Build intentionally sequenced Apple Music playlists",
-    "default_prompt": "Use $dasync-skill-curate-am-playlist to build an intentionally sequenced Apple Music playlist for this listening goal."
+    "short_description": "Curate and verify Apple Music playlist tracks",
+    "default_prompt": "Use $dasync-skill-curate-am-playlist to curate an Apple Music playlist for this listening goal and seek exact versions and song IDs where available."
   },
   "license": "MIT",
   "entry": "SKILL.md",
   "files": [
-    "SKILL.md"
+    "SKILL.md",
+    "references/catalog-selection.md"
   ],
   "scopes": [
     "user",
     "project"
   ],
-  "token_budget": 1500,
+  "token_budget": 2300,
   "requires": {
     "template.playlist": ">=1,<2",
     "policy.scope": ">=1,<2",
