@@ -3,12 +3,12 @@
   "kind": "Skill",
   "id": "skill.curate-am-playlist",
   "name": "curate-am-playlist",
-  "version": "1.3.0",
-  "description": "Curate or update Apple Music playlists, checking album tracks, explicit versions and song IDs when lookup is available.",
+  "version": "1.4.0",
+  "description": "Curate Apple Music playlists, verify song versions and IDs, and prepare CSVs for Music Transfer when requested.",
   "presentation": {
     "display_name": "Curate AM Playlist",
-    "short_description": "Curate and verify Apple Music playlist tracks",
-    "default_prompt": "Use $dasync-skill-curate-am-playlist to curate an Apple Music playlist for this listening goal and seek exact versions and song IDs where available."
+    "short_description": "Curate and export Apple Music playlist CSVs",
+    "default_prompt": "Use $dasync-skill-curate-am-playlist to curate an Apple Music playlist for this listening goal, verify exact versions and song IDs, and prepare a Music Transfer CSV."
   },
   "license": "MIT",
   "entry": "SKILL.md",
@@ -30,10 +30,9 @@
     "filesystem.read"
   ],
   "prefers": [
-    "music.search",
-    "music.playlist"
+    "music.search"
   ],
-  "fallback": "Return an ordered proposal without invented catalog IDs, verified availability or account mutations.",
+  "fallback": "Prepare a CSV with blank song IDs for unresolved rows and mark unverified versions for import review.",
   "outputs": [
     "inline",
     "playlist"

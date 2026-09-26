@@ -1,6 +1,6 @@
 ---
 name: curate-am-playlist
-description: "Curate or update Apple Music playlists, checking album tracks, explicit versions and song IDs when lookup is available."
+description: "Curate Apple Music playlists, verify song versions and IDs, and prepare CSVs for Music Transfer when requested."
 ---
 
 # Curate Apple Music Playlist
@@ -11,6 +11,8 @@ Choose tracks for a specific listening experience, not just topic matches. Estab
 
 Use available Apple Music catalog tools or public Apple Music pages to seek an exact song ID for every selected track, including user-supplied seeds. Follow [catalog-selection.md](references/catalog-selection.md) for storefront, recording, release, content-rating and ID checks. A supplied title, ISRC, link or ID is a lead, not proof of the desired catalog item. Keep deliberately requested live, remix, cover or alternate versions distinct.
 
-If no reliable catalog lookup is available, give an ordered proposal and mark IDs, versions, explicit status, availability and duration as unverified where applicable. Do not invent listening-history access, catalog IDs or a playlist URL. Load [playlist.md](references/template.playlist/playlist.md) when a durable proposal is useful.
+For this listener’s [Music Transfer](https://pages.shreyassane.com/music-transfer) workflow, deliver a real UTF-8 CSV when a playlist is ready for import. Load [playlist.md](references/template.playlist/playlist.md) for the format and check the app’s live CSV guide before export. Put verified Apple Music catalog song IDs in the CSV; leave unresolved IDs blank and identify those rows for review because the app uses conservative matching. Do not fill a blank ID with a guessed clean edition, album ID or library ID. The app adds to a selected Apple Music destination and does not remove or reorder existing recordings, so do not promise that an import will create a destination or rearrange its contents.
 
-Preview additions, removals and order before account mutation unless those actions are already authorized. For edits, read the existing playlist and preserve unrelated tracks. After an authorized write, read back the playlist; if a request times out, inspect current state before retrying. Report confirmed changes, partial failures and the resulting link. Never present a proposed list as an account playlist.
+If no reliable catalog lookup is available, still prepare an ordered proposal or CSV when useful, with IDs and unsupported version, rating, availability and duration claims left unverified. Do not invent listening-history access, catalog IDs or a playlist URL.
+
+Preparing a CSV does not import it. Preview the intended destination and rows before an authorized import. For updates, inspect the existing playlist and preserve unrelated tracks. After import, inspect the app’s review or transfer ledger and the destination playlist; reconcile uncertain or partial results before retrying. Report a playlist link only when confirmed. Never present a CSV or proposed list as an account playlist.
