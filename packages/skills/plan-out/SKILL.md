@@ -23,7 +23,7 @@ Load [sizing.md](sizing.md) for decomposition thresholds and PR/commit guardrail
 
 ## Reconcile and deliver
 
-Load [plan-context.md](references/template.plan-context/plan-context.md) to produce the machine-loadable Plan Context and any requested human view. Preserve one writable authority; Markdown/HTML projections do not become competing trackers. Map the logical hierarchy to verified native types and relationships, not assumed product terminology.
+Load [plan-context.md](references/template.plan-context/plan-context.md) to produce the machine-loadable Plan Context and any requested human view. For requested Markdown or HTML views, load context.artifact-routing; preserve the selected planning authority for Plan Context JSON. Preserve one writable authority; projections do not become competing trackers. Map the logical hierarchy to verified native types and relationships, not assumed product terminology.
 
 When a tracker is unavailable, produce an explicitly unrefreshed draft with portable IDs and unresolved external references. Preserve known work such as an in-progress task; do not invent tracker IDs, claim refreshed status, or block useful offline decomposition merely because publication is unavailable.
 

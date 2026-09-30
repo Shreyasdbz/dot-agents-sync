@@ -85,6 +85,32 @@ def test_workspace_skill_contexts_keep_private_sources_and_consumer_limits(
     assert f"--consumer {consumer}" in private_reference(package, engine.scope, consumer)
 
 
+@pytest.mark.parametrize("provider", ["codex", "claude"])
+def test_file_workflows_render_shared_artifact_routing_reference(workspace, provider):
+    engine, config = workspace
+    catalog = Catalog(config["source"])
+    workflows = (
+        "skill.pr-review",
+        "skill.pitch-deck",
+        "skill.propose",
+        "skill.plan-out",
+        "skill.investigate",
+        "skill.trip-publish",
+    )
+    config["packages"] = list(workflows)
+    config["providers"] = [provider]
+    selected, graph, bindings = resolve(catalog, config, engine.scope, None)
+    artifacts, _ = render(selected, graph, bindings, config, engine.scope)
+    outputs = {artifact.relative: artifact.content for artifact in artifacts}
+    reference = catalog.packages["context.artifact-routing"].files["CONTEXT.md"]
+    for skill in workflows:
+        assert "context.artifact-routing" in catalog.packages[skill].manifest["requires"]
+        slug = "dasync-" + skill.replace(".", "-")
+        root = f".agents/skills/{slug}" if provider == "codex" else f".claude/skills/{slug}"
+        assert reference == outputs[f"{root}/references/context.artifact-routing/CONTEXT.md"]
+        assert b"context.artifact-routing" in outputs[f"{root}/SKILL.md"]
+
+
 def test_skill_metadata_and_declared_references(workspace):
     catalog = Catalog(workspace[1]["source"])
     for package in catalog.packages.values():

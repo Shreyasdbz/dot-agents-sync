@@ -3,7 +3,7 @@
   "kind": "Skill",
   "id": "skill.pitch-deck",
   "name": "pitch-deck",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Create an outcome-focused, self-contained HTML presentation from source material; preserve evidence and visually verify the result.",
   "presentation": {
     "display_name": "Pitch Deck",
@@ -21,6 +21,7 @@
   ],
   "token_budget": 1500,
   "requires": {
+    "context.artifact-routing": ">=1,<2",
     "template.pitch-deck": ">=1,<2",
     "policy.accessibility": ">=1,<2",
     "policy.communication": ">=1,<2"

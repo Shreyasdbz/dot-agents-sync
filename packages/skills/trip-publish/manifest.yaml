@@ -3,7 +3,7 @@
   "kind": "Skill",
   "id": "skill.trip-publish",
   "name": "trip-publish",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Turn an approved itinerary into a mobile-friendly HTML travel guide. Creating the file is distinct from hosting or sharing it.",
   "presentation": {
     "display_name": "Trip Publish",
@@ -21,6 +21,7 @@
   ],
   "token_budget": 1500,
   "requires": {
+    "context.artifact-routing": ">=1,<2",
     "template.trip-publish": ">=1,<2",
     "policy.accessibility": ">=1,<2",
     "policy.communication": ">=1,<2",

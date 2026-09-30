@@ -19,4 +19,4 @@ Exclude booking references, identity documents, contact details and private note
 
 Compare the generated content against the itinerary, then render and exercise disclosure summaries, direct links that reveal a closed card, Copy and map controls, theme, print expansion/restoration and narrow-width overflow when tools permit. Confirm that collapsed summaries contain no action controls and that icon-only controls retain accessible names. Disclose any unperformed visual or interaction checks. Changing availability belongs to Travel Planner review, not an unsourced rewrite during publishing.
 
-Deliver the HTML file. The skill's name does not grant permission to host, upload or send it; do those actions only when requested, and verify the actual published result.
+Load context.artifact-routing for the HTML destination, then deliver the file. The skill's name does not grant permission to host, upload or send it; do those actions only when requested, and verify the actual published result.

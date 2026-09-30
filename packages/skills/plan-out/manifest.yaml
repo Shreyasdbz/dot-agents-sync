@@ -3,7 +3,7 @@
   "kind": "Skill",
   "id": "skill.plan-out",
   "name": "plan-out",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Break an approved design into reviewable work and a loadable Plan Context in the project's planning authority. Do not implement it.",
   "presentation": {
     "display_name": "Plan Out",
@@ -22,6 +22,7 @@
   ],
   "token_budget": 1800,
   "requires": {
+    "context.artifact-routing": ">=1,<2",
     "policy.repository-guidance": ">=1,<2",
     "template.plan-context": ">=1,<2",
     "policy.scope": ">=1,<2",

@@ -29,4 +29,4 @@ Conclude a failure investigation when decisive path evidence explains the sympto
 
 Return the answer inline: conclusion, decisive source/command evidence, alternatives eliminated, impact, uncertainty and the smallest useful next action. Separate observed facts, inference and proposed remedies; do not implement a fix or publish findings without authorization.
 
-For requested Markdown, load [report.md](references/template.investigation/report.md). For a requested deck, use the optional Pitch Deck skill with the established findings; if unavailable, disclose that limit without installing it implicitly. Do not delay the answer for an unsolicited artifact.
+For requested Markdown, load [report.md](references/template.investigation/report.md) and context.artifact-routing. For a requested deck, use the optional Pitch Deck skill with the established findings; if unavailable, disclose that limit without installing it implicitly. Do not delay the answer for an unsolicited artifact.

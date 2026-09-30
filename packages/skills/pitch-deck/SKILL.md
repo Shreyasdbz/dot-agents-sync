@@ -15,4 +15,4 @@ Load [deck.html](references/template.pitch-deck/deck.html) as the presentation s
 
 Render before completion when a browser is available. Test keyboard and pointer navigation, narrow and presentation-sized viewports, zoom, overflow and printing. Inspect every slide for missing content and placeholders. If rendering is unavailable, perform structural checks and label visual verification as outstanding; do not claim the deck looks correct.
 
-Deliver one self-contained HTML file with its CSS/JavaScript and concise verification notes. It must communicate without presenter coaching. External hosting or sharing requires separate authority.
+Deliver one self-contained HTML file with its CSS/JavaScript and concise verification notes. Load context.artifact-routing for its destination. It must communicate without presenter coaching. External hosting or sharing requires separate authority.

@@ -46,6 +46,8 @@ Add a profile to an existing environment with `dasync configure --scope user --p
 
 Propose makes supported design decisions. Plan Out elaborates only the next milestone against the project's planning authority. Investigate and PR Review return inline results by default. Pitch Deck and Trip Publish can produce self-contained HTML artifacts; creating a file is distinct from hosting it.
 
+`context.artifact-routing` is the shared public destination contract for requested review, deck, proposal, investigation, plan-view and trip-guide files. An explicit destination wins; otherwise an unambiguous workspace uses its `artifacts/<kind>/` folder. Ambiguous or unknown workspaces need a destination decision before writing. Inline answers stay inline, and Plan Context JSON remains with the selected planning authority. The contract guides skills; dasync does not itself write their artifacts.
+
 All catalog skills and agents inherit the natural-paragraph Markdown rule through `policy.communication`. Templates are dependencies where required, not permission to invent missing content.
 
 Do It, Investigate, Propose, Plan Out, PR Review and the five engineering reviewers also require `policy.repository-guidance`. It defines scoped instruction discovery, selective context loading and bounded agent handoffs without activating private bindings or additional roles. See [repository guidance](repository-guidance.md) for native filename and loading differences.

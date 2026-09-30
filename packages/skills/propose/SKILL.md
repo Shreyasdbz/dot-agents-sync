@@ -29,7 +29,7 @@ Stop when material alternatives are rejected or bounded with evidence and furthe
 
 ## Deliver
 
-Load [proposal.md](references/template.design-proposal/proposal.md) for the default durable Markdown proposal; use [proposal.html](references/template.design-proposal/proposal.html) only for a requested HTML companion. Preserve explicit output preferences.
+Load [proposal.md](references/template.design-proposal/proposal.md) for the default durable Markdown proposal; use [proposal.html](references/template.design-proposal/proposal.html) only for a requested HTML companion. For requested files, load context.artifact-routing and honor explicit output preferences.
 
 Include the decision, material alternatives, inspected mechanism, constraints, assumptions, risks, compatibility and validation criteria. Cite sources and separate executed probes from proposed checks. Keep only decision-relevant sections; a design document does not establish security, performance or production readiness.
 
