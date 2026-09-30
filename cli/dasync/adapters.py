@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from .errors import DasyncError
 from .io import parse
 
-ADAPTER_VERSION = "8"
+ADAPTER_VERSION = "9"
 PROVIDERS = ("codex", "claude", "copilot", "cursor")
 BASE_CAPABILITIES = {"filesystem.read", "filesystem.write", "git.read"}
 
@@ -205,7 +205,9 @@ def private_reference(package, scope, consumer=None):
     )
 
 
-def render(selected, graph, bindings, config, scope):
+def render(selected, graph, bindings, config, scope, hook_executables=None):
+    """Render provider files, retaining an installed hook interpreter when supplied."""
+    hook_executables = hook_executables or {}
     artifacts, decisions = [], []
     for provider in config["providers"]:
         available = BASE_CAPABILITIES | set(config.get("capabilities", []))
@@ -236,7 +238,8 @@ def render(selected, graph, bindings, config, scope):
                 for name, content in package.files.items():
                     artifacts.append(Artifact(script_root + "/" + name, content, provider, pid))
                 script = scope.root / script_root / m["entry"]
-                command = shlex.join([sys.executable, "-I", str(script)])
+                executable = hook_executables.get(provider, sys.executable)
+                command = shlex.join([executable, "-I", str(script)])
                 events = {"pre_tool": "PreToolUse", "session_start": "SessionStart", "stop": "Stop"}
                 cursor_events = {"pre_tool": "preToolUse", "session_start": "sessionStart", "stop": "stop"}
                 copilot_events = {
@@ -250,7 +253,7 @@ def render(selected, graph, bindings, config, scope):
                     if provider == "copilot":
                         entry = {
                             "type": "command",
-                            "exec": sys.executable,
+                            "exec": executable,
                             "args": ["-I", str(script)],
                             "timeoutSec": m["executable"]["timeout"],
                         }

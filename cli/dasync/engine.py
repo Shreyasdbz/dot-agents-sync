@@ -4,10 +4,11 @@ import base64
 import copy
 import os
 import platform
+import shlex
 from pathlib import Path
 
 from . import __version__
-from .adapters import ADAPTER_VERSION, provider_roots, render
+from .adapters import ADAPTER_VERSION, provider_directory, provider_roots, render
 from .catalog import Catalog
 from .config import Environment, Scope, encode_config, load_config
 from .contracts import validate
@@ -127,7 +128,14 @@ class Engine:
             catalog = Catalog(desired["source"], self.env.cache)
             sources[desired["source"]["location"]] = catalog.digest
             selected, graph, bindings = resolve(catalog, desired, scope, user)
-            artifacts, decisions = render(selected, graph, bindings, desired, scope)
+            artifacts, decisions = render(
+                selected,
+                graph,
+                bindings,
+                desired,
+                scope,
+                self._installed_hook_executables(current, desired["providers"]),
+            )
             config_only = request.get("config_only", operation == "configure")
             if config_only:
                 retain_outputs = True
@@ -279,6 +287,52 @@ class Engine:
             "operations": operations,
         }
         return plan, outputs
+
+    def _installed_hook_executables(self, receipt, providers):
+        """Recover approved hook runtimes from the last receipt, independent of this CLI launcher."""
+        if not receipt:
+            return {}
+        result = {}
+        for provider in providers:
+            relative = {
+                "claude": ".claude/settings.json",
+                "copilot": f"{provider_directory(provider, self.scope.kind, 'hook')}/dasync-hooks.json",
+            }.get(provider, f".{provider}/hooks.json")
+            path = str(self.scope.root / relative)
+            if receipt["owned"].get(path, {}).get("package") != "@hooks":
+                continue
+            encoded = receipt["files"].get(path)
+            if encoded is None:
+                raise DasyncError("STATE_INVALID", "The managed hook receipt has no settings body")
+            native = parse_jsonc(base64.b64decode(encoded))
+            hook_root = self.scope.root / provider_directory(provider, self.scope.kind, "hook")
+            for entries in native.get("hooks", {}).values():
+                for entry in entries:
+                    commands = (
+                        [(entry.get("exec"), entry.get("args", []))]
+                        if provider == "copilot"
+                        else [
+                            (None, shlex.split(hook.get("command", "")))
+                            for hook in (entry.get("hooks", []) if provider != "cursor" else [entry])
+                        ]
+                    )
+                    for executable, args in commands:
+                        parts = [executable, *args] if executable else args
+                        if (
+                            len(parts) == 3
+                            and parts[0]
+                            and parts[1] == "-I"
+                            and Path(parts[2]).is_relative_to(hook_root)
+                        ):
+                            result[provider] = parts[0]
+                            break
+                    if provider in result:
+                        break
+                if provider in result:
+                    break
+            if provider not in result:
+                raise DasyncError("STATE_INVALID", "The managed hook interpreter cannot be recovered")
+        return result
 
     def _preserve_settings(self, providers, outputs, owners, replacement_paths, replacing):
         if not replacing and not any(

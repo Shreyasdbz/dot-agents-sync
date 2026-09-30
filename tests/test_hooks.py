@@ -2,6 +2,7 @@ import json
 import subprocess
 
 import pytest
+from dasync import adapters
 from dasync.catalog import Catalog
 from dasync.errors import DasyncError
 
@@ -24,6 +25,10 @@ def test_generated_hook_executes_with_provider_payload(workspace, provider):
     config["approved_executables"] = [package.digest]
     plan, _ = engine.build({"operation": "setup", "config": config, "trust_source": True})
     engine.apply(plan)
+    with pytest.MonkeyPatch.context() as patch:
+        patch.setattr(adapters.sys, "executable", "/another/python")
+        sync_plan, _ = engine.build({"operation": "sync"})
+    assert all(operation["action"] == "keep" for operation in sync_plan["operations"])
     filename = {
         "claude": ".claude/settings.json",
         "copilot": ".github/hooks/dasync-hooks.json",
