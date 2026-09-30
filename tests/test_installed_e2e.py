@@ -366,6 +366,47 @@ def test_installed_private_context_grants_and_no_leak(journey):
         "--allow-private-path",
     )
     assert located["path"] == str(private)
+    workspace_context = "context.workspace-pr-review"
+    j.run(
+        "configure",
+        "--bind-context",
+        f"{workspace_context}={private}",
+        "--grant-project",
+        "allowed-project",
+        "--binding-provider",
+        "codex",
+        "--yes",
+        user=True,
+    )
+    j.run(
+        "configure",
+        "--enable",
+        workspace_context,
+        "--allow-context",
+        workspace_context,
+        "--apply",
+        "--yes",
+    )
+    j.run(
+        "context",
+        "locate",
+        workspace_context,
+        "--consumer",
+        "skill.do-it",
+        "--allow-private-path",
+        error="PRIVATE_CONTEXT",
+    )
+    located = j.run(
+        "context",
+        "locate",
+        workspace_context,
+        "--consumer",
+        "skill.pr-review",
+        "--allow-private-path",
+    )
+    assert located["path"] == str(private)
+    assert sentinel not in json.dumps(j.log)
+    assert str(private) not in repr(j.snapshot())
     other = j.root / "denied project"
     other.mkdir()
     j.project = other

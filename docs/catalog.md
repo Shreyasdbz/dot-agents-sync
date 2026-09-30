@@ -72,6 +72,8 @@ dasync configure --scope project --path /absolute/my-project \
 
 Both scopes must already be configured. The project ID must match `.dasync.yaml`, provider grants must cover its configured providers, and inherited scopes must share the same source and pin. Private bytes stay at their source; generated references identify an authorized lookup, not a copy of the private file. Never share private bindings or paths in public reports.
 
+For a workspace spanning several repositories, `context.workspace-overview` holds a separately granted private source for repository boundaries and environment combinations. Optional `context.workspace-pr-review`, `context.workspace-plan-out`, and `context.workspace-do-it` bind narrower sources for those skills; each declares its authorized consumer. Select and grant these per project rather than adding organization facts to public skill packages. The shared repository-guidance policy asks for relevant cross-repository and environment walkthroughs and bounded context refresh during related work.
+
 See [context authoring](context-authoring.md) for binding contracts and [the operator contract](AI-OPERATOR.md) for private-path access.
 
 ## Executable hooks

@@ -1,0 +1,19 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Context",
+  "id": "context.workspace-do-it",
+  "name": "workspace-do-it",
+  "version": "1.0.0",
+  "description": "Private workspace implementation context for related repositories and environments.",
+  "license": "MIT",
+  "entry": "CONTEXT.md",
+  "files": ["CONTEXT.md"],
+  "scopes": ["project"],
+  "token_budget": 500,
+  "context": {
+    "access": "explicit",
+    "sensitivity": "private",
+    "binding": "context.workspace-do-it",
+    "consumers": ["skill.do-it"]
+  }
+}

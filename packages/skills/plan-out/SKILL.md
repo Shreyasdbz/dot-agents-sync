@@ -9,6 +9,8 @@ Translate an approved design into executable work without reopening settled prod
 
 For repository work, apply policy.repository-guidance to establish applicable instructions, context provenance and role boundaries before decomposition. A planning-context template is not actual tracker state; a child agent does not inherit missing grants merely because the parent can read a source.
 
+If the active project selects `context.workspace-plan-out`, locate it as consumer `skill.plan-out` and read only planning-relevant sections. Continue with the base workflow when absent; do not search for a private substitute.
+
 When policy.github-planning is selected, load its github-planning reference and the relevant issue-body recipe before mapping or publishing work. Obtain the actual Project identity; do not infer native capabilities, labels or status fields. Other providers retain their own selected authority and mapping.
 
 ## Decompose

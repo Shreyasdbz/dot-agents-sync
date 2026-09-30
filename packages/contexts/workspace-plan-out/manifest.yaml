@@ -1,0 +1,19 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Context",
+  "id": "context.workspace-plan-out",
+  "name": "workspace-plan-out",
+  "version": "1.0.0",
+  "description": "Private workspace planning context for cross-repository dependencies and rollout stages.",
+  "license": "MIT",
+  "entry": "CONTEXT.md",
+  "files": ["CONTEXT.md"],
+  "scopes": ["project"],
+  "token_budget": 500,
+  "context": {
+    "access": "explicit",
+    "sensitivity": "private",
+    "binding": "context.workspace-plan-out",
+    "consumers": ["skill.plan-out"]
+  }
+}

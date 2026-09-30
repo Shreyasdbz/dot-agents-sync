@@ -26,6 +26,8 @@ Inspect relevant context indexes, manifests and selected bindings before bodies.
 
 Private context requires the applicable consumer, project and provider grants. Do not locate unrelated bindings, scan personal files, copy private bodies into artifacts, or infer access from a suggestion. Missing, inaccessible or stale context is a named gap, not permission to substitute another source. Refresh only affected authorized sources; do not create competing context stores or merely advance timestamps.
 
+If the active project selects `context.workspace-overview`, locate it for the authorized consumer when the task needs workspace facts. For a cross-repository path, inspect the affected producer, contract and consumer at their current revisions. Record each component's effective environment, including local execution, remote targets, data and authentication, flags and traces where relevant; matching environment names do not prove matching deployments. During related authorized work, update affected verified context claims and add focused topics as durable knowledge grows, with provenance and a recoverable prior version. If the source cannot be updated within its grant, report the needed correction.
+
 ## Use roles without laundering authority
 
 Inspect available agent descriptions, supported tools and role boundaries before delegating. A catalog role, installed file or model name does not prove runtime availability, invocation, isolation or permission. Load role-specific instructions when that role is actually used; suggestions do not activate it. Apply a role inline only when appropriate and disclose that no independent agent ran.

@@ -3,7 +3,7 @@
   "kind": "Skill",
   "id": "skill.do-it",
   "name": "do-it",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Implement an authorized task or bounded change, verify observable behavior, and report remaining work without expanding scope.",
   "presentation": {
     "display_name": "Do It",
@@ -20,7 +20,7 @@
     "user",
     "project"
   ],
-  "token_budget": 1500,
+  "token_budget": 1600,
   "requires": {
     "policy.repository-guidance": ">=1,<2",
     "policy.scope": ">=1,<2",

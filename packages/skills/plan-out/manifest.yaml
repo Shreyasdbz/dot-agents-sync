@@ -3,7 +3,7 @@
   "kind": "Skill",
   "id": "skill.plan-out",
   "name": "plan-out",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Break an approved design into reviewable work and a loadable Plan Context in the project's planning authority. Do not implement it.",
   "presentation": {
     "display_name": "Plan Out",

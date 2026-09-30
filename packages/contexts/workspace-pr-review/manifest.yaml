@@ -1,0 +1,19 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Context",
+  "id": "context.workspace-pr-review",
+  "name": "workspace-pr-review",
+  "version": "1.0.0",
+  "description": "Private workspace review context for cross-repository contracts and environments.",
+  "license": "MIT",
+  "entry": "CONTEXT.md",
+  "files": ["CONTEXT.md"],
+  "scopes": ["project"],
+  "token_budget": 500,
+  "context": {
+    "access": "explicit",
+    "sensitivity": "private",
+    "binding": "context.workspace-pr-review",
+    "consumers": ["skill.pr-review"]
+  }
+}

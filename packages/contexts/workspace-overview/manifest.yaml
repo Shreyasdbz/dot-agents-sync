@@ -1,0 +1,19 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Context",
+  "id": "context.workspace-overview",
+  "name": "workspace-overview",
+  "version": "1.0.0",
+  "description": "Private workspace repository boundaries, environment combinations, and evidence index.",
+  "license": "MIT",
+  "entry": "CONTEXT.md",
+  "files": ["CONTEXT.md"],
+  "scopes": ["project"],
+  "token_budget": 600,
+  "context": {
+    "access": "explicit",
+    "sensitivity": "private",
+    "binding": "context.workspace-overview",
+    "consumers": []
+  }
+}

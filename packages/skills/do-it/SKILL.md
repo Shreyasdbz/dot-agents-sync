@@ -11,6 +11,8 @@ Complete the authorized outcome, not merely the first plausible patch. For a pla
 
 Apply policy.repository-guidance to resolve applicable instructions, selected context and role boundaries. Trace active entrypoints and registrations through owning logic, state/effects and observable result; verify against effective configuration, tests and other consumers. Do not patch legacy or generated lookalikes.
 
+If the project selects `context.workspace-do-it`, locate it as consumer `skill.do-it` and use only relevant facts. Continue when absent; do not search for a private substitute.
+
 Keep a compact map of ownership, invariants and unresolved facts with source pointers. Inspect history or widen the search only to answer a concrete gap; batch related reads and delegate only independent questions. Inspect unfamiliar scripts for side effects before running them. Missing documentation is not permission to invent a mechanism or ask the user to rediscover facts available locally.
 
 ## Choose the change

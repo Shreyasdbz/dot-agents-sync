@@ -49,6 +49,42 @@ def test_private_package_attachments_never_materialize(workspace, tmp_path):
     assert "--allow-private-path" in lookup
 
 
+@pytest.mark.parametrize(
+    ("context_id", "consumer"),
+    [
+        ("context.workspace-pr-review", "skill.pr-review"),
+        ("context.workspace-plan-out", "skill.plan-out"),
+        ("context.workspace-do-it", "skill.do-it"),
+    ],
+)
+def test_workspace_skill_contexts_keep_private_sources_and_consumer_limits(
+    workspace, tmp_path, context_id, consumer
+):
+    engine, config = workspace
+    catalog = Catalog(config["source"])
+    package = catalog.packages[context_id]
+    assert package.manifest["context"]["consumers"] == [consumer]
+    source = tmp_path / "workspace.md"
+    source.write_text("PRIVATE WORKSPACE SENTINEL")
+    config["packages"] = [consumer, context_id]
+    config["contexts"] = [context_id]
+    user = {
+        "bindings": {
+            context_id: {
+                "path": str(source),
+                "projects": [config["project"]],
+                "providers": config["providers"],
+            }
+        }
+    }
+    selected, graph, bindings = resolve(catalog, config, engine.scope, user)
+    artifacts, _ = render(selected, graph, bindings, config, engine.scope)
+    assert any(context_id.encode() in artifact.content for artifact in artifacts)
+    assert all(b"PRIVATE WORKSPACE SENTINEL" not in artifact.content for artifact in artifacts)
+    assert all(str(source).encode() not in artifact.content for artifact in artifacts)
+    assert f"--consumer {consumer}" in private_reference(package, engine.scope, consumer)
+
+
 def test_skill_metadata_and_declared_references(workspace):
     catalog = Catalog(workspace[1]["source"])
     for package in catalog.packages.values():
