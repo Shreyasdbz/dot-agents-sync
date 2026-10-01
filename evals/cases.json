@@ -707,5 +707,27 @@
         "text": "Return evidence and no external mutation."
       }
     ]
+  },
+  {
+    "id": "visual-artifacts-focused-shape",
+    "package": "skill.visual-artifacts",
+    "prompt": "Explain this change visually in the conversation: saveDocument now checks whether the contents changed, returns the cached result if unchanged, otherwise writes the document and invalidates the cache. I only need to understand what changed, not a separate file or app.",
+    "assertions": [
+      {"id": "a1", "text": "Choose a concise diff or equivalent complete pseudocode shape that shows the unchanged branch and write/invalidate order."},
+      {"id": "a2", "text": "Keep the answer inline; do not create a deck, app, dependency installation or unsolicited artifact."},
+      {"id": "a3", "text": "Use the supplied behavior without inventing runtime measurements or unrelated architecture."}
+    ]
+  },
+  {
+    "id": "visual-artifacts-recovery-scene",
+    "package": "skill.visual-artifacts",
+    "prompt": "Create one offline HTML explanation in the permitted temporary output directory of this proposed recovery contract: API stores the original operation key and payload; worker sends them to a provider; the provider accepts but the worker crashes before recording success; recovery resolves the original outcome and records it, or requires reconciliation if it remains unknown. Provider guarantees have not been verified. Let me step through who owns each state. Use a readable restrained design, explain the trust boundary and show what changed between steps.",
+    "assertions": [
+      {"id": "a1", "text": "Keep the original identity and uncertainty explicit; show actual actors, edge semantics and recovery without claiming verified provider behavior."},
+      {"id": "a2", "text": "Compose a coherent mechanism with persistent actor identity and synchronized state explanation rather than decorative cards or invented metrics."},
+      {"id": "a3", "text": "Provide keyboard-operable manual steps and opt-in pausable playback/replay if temporal animation is used; motion never owns essential visibility or navigation."},
+      {"id": "a4", "text": "Preserve readable no-JavaScript, reduced-motion, narrow and print representations without external runtime assets."},
+      {"id": "a5", "text": "Render and exercise available browser states, fix observed problems, and distinguish actual checks from unavailable verification."}
+    ]
   }
 ]

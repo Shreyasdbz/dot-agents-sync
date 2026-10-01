@@ -5,6 +5,8 @@ description: "Explain a failure or answer a research question with traceable evi
 
 # Investigate
 
+For visual explanations, apply [Visual Artifacts](references/skill.visual-artifacts/SKILL.md). Keep the default answer inline.
+
 Answer the actual question, not the first matching error or search result. Separate observations, supplied claims and unknowns. For failures, define the symptom, expected behavior, impact and scope; align versions, timestamps, changes and effective configuration. For research, establish the exact claim and relevant source dates.
 
 ## Find the source of truth

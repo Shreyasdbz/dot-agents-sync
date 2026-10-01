@@ -1,0 +1,7 @@
+{
+  "id": "visual-artifacts",
+  "description": "Focused visual explanations and interactive HTML with on-demand composition, diagram and motion guidance.",
+  "packages": [
+    "skill.visual-artifacts"
+  ]
+}

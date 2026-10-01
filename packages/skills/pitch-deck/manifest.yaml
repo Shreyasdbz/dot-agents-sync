@@ -3,11 +3,11 @@
   "kind": "Skill",
   "id": "skill.pitch-deck",
   "name": "pitch-deck",
-  "version": "1.4.0",
-  "description": "Create an outcome-focused, self-contained HTML presentation from source material; preserve evidence and visually verify the result.",
+  "version": "1.5.0",
+  "description": "Create visually composed, self-contained HTML presentations with explanatory diagrams, purposeful motion and source-grounded evidence.",
   "presentation": {
     "display_name": "Pitch Deck",
-    "short_description": "Create outcome-focused HTML presentations",
+    "short_description": "Create visual HTML decks with diagrams and motion",
     "default_prompt": "Use $dasync-skill-pitch-deck to turn this source material into an outcome-focused HTML presentation."
   },
   "license": "MIT",
@@ -24,7 +24,8 @@
     "context.artifact-routing": ">=1,<2",
     "template.pitch-deck": ">=1,<2",
     "policy.accessibility": ">=1,<2",
-    "policy.communication": ">=1,<2"
+    "policy.communication": ">=1,<2",
+    "skill.visual-artifacts": ">=1,<2"
   },
   "capabilities": [
     "filesystem.read"

@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const path=require('node:path');
 const {pathToFileURL}=require('node:url');
 (async()=>{
- const browser=await chromium.launch();
+ const browser=await chromium.launch({executablePath:process.env.BROWSER_EXECUTABLE_PATH});
  try {
   const page=await browser.newPage({viewport:{width:1280,height:800},reducedMotion:'no-preference'});
   await page.goto(pathToFileURL(path.resolve(__dirname,'../packages/templates/pitch-deck/deck.html')).href);

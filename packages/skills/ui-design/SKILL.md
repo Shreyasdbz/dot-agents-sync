@@ -19,6 +19,8 @@ For SwiftUI or Apple-platform UI, read [swiftui.md](swiftui.md) before retrievin
 
 ## Make the interface
 
+For visual composition, explanatory graphics or interactive HTML, apply [Visual Artifacts](references/skill.visual-artifacts/SKILL.md) and load only its relevant references. Keep this workflow's platform and product constraints.
+
 Turn the dominant task into a clear hierarchy: primary action, supporting information, navigation, and secondary controls. Prefer meaningful grouping, restrained emphasis, readable measure, consistent spacing, and explicit interaction states over decorative card grids or slogans. Reuse native controls and repository components before inventing abstractions. Responsive changes should preserve task and state, not merely shrink coordinates.
 
 Implement loading, empty, error, disabled, focus, hover or pressed states that the surface can reach. Keep keyboard order, semantics, contrast, reduced motion, and touch targets intact. Motion should explain a change or confirm an action; remove motion that only announces the interface.

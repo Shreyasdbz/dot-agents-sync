@@ -5,6 +5,8 @@ description: "Break an approved design into reviewable work and a loadable Plan 
 
 # Plan Out
 
+For a requested visual plan companion, apply [Visual Artifacts](references/skill.visual-artifacts/SKILL.md). Keep dates, dependencies and status sourced from the planning authority; the visualization does not become a competing writable plan.
+
 Translate an approved design into executable work without reopening settled product decisions. Read relevant repository state, completed work, and selected planning-authority context first. Use existing domain terms and work-item IDs.
 
 For repository work, apply policy.repository-guidance to establish applicable instructions, context provenance and role boundaries before decomposition. A planning-context template is not actual tracker state; a child agent does not inherit missing grants merely because the parent can read a source.

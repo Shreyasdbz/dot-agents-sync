@@ -69,6 +69,8 @@ def render_all():
             page_css += (base / "travel.css").read_text()
         else:
             page_css += (base / "editorial.css").read_text()
+            if 'class="slide' in content or "data-sequence" in content or "process-map" in content:
+                page_css += (base / "visual.css").read_text()
         return content.replace("{{styles}}", page_css).replace("{{interactions}}", behavior)
 
     outputs = {

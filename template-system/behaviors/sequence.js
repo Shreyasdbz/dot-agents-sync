@@ -6,8 +6,13 @@
     const play = controls.querySelector('[data-play]'), next = controls.querySelector('[data-step-next]');
     const back = controls.querySelector('[data-step-back]'), status = controls.querySelector('[role=status]');
     let index = 0, timer;
+    const actors = [...sequence.querySelectorAll('[data-phases]')];
     const state = () => {
-      steps.forEach((step,i) => {step.dataset.active = String(i === index);});
+      steps.forEach((step,i) => {
+        step.dataset.active = String(i === index);
+        if (i === index) step.setAttribute('aria-current','step'); else step.removeAttribute('aria-current');
+      });
+      actors.forEach(actor => {actor.dataset.sceneActive = String(actor.dataset.phases.split(' ').includes(String(index)));});
       status.textContent = 'Step ' + (index+1) + ' of ' + steps.length;
       back.disabled = index === 0; next.disabled = index === steps.length-1;
     };
@@ -22,6 +27,13 @@
     back.onclick = () => {stop(); index = Math.max(0,index-1); state();};
     document.addEventListener('visibilitychange', () => {if(document.hidden) stop();});
     window.addEventListener('beforeprint',stop);
+    // Disclosure hiding does not set owner.hidden; stop rather than announcing invisible steps.
+    for (let parent = sequence.parentElement; parent; parent = parent.parentElement) {
+      if (parent.tagName === 'DETAILS') {
+        const disclosure = parent;
+        disclosure.addEventListener('toggle', () => {if (!disclosure.open) stop();});
+      }
+    }
     const owner = sequence.closest('.slide');
     if (owner) new MutationObserver(() => {if(owner.hidden) stop();}).observe(owner,{attributes:true,attributeFilter:['hidden']});
     state();

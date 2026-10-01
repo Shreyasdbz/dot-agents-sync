@@ -24,6 +24,7 @@ dasync explain skill.pr-review --scope project --path /absolute/my-project --jso
 | `dev-review` | PR Review and its supporting dependencies |
 | `technical-storytelling` | Pitch Deck and its supporting dependencies |
 | `ui-design` | One UI routing skill with on-demand guidance |
+| `visual-artifacts` | Focused visual explanations, diagrams and interactive HTML |
 | `engineering-cloudflare` | Cloudflare-first/GCP-next engineering conventions and public stack context |
 | `planning-github` | Plan Out, native GitHub planning conventions, and public reference material |
 | `travel` | Travel Planner and Trip Publish |
@@ -49,6 +50,8 @@ Propose makes supported design decisions. Plan Out elaborates only the next mile
 `context.artifact-routing` is the shared public destination contract for requested review, deck, proposal, investigation, plan-view and trip-guide files. An explicit destination wins; otherwise an unambiguous workspace uses its `artifacts/<kind>/` folder. Ambiguous or unknown workspaces need a destination decision before writing. Inline answers stay inline, and Plan Context JSON remains with the selected planning authority. The contract guides skills; dasync does not itself write their artifacts.
 
 All catalog skills and agents inherit the natural-paragraph Markdown rule through `policy.communication`. Templates are dependencies where required, not permission to invent missing content.
+
+`skill.visual-artifacts` supplies shared visual craft for Pitch Deck, UI Design, Propose, PR Review, Investigate, Plan Out and Trip Publish. Those workflows load it when creating or improving visuals; their original scope and default formats remain authoritative. Its compact entrypoint routes to composition, diagram and motion references only when relevant. It chooses focused trees, diffs, tables or Mermaid for simple relationships and interactive HTML/SVG for explanations that need spatial layout or state exploration. See its [inspiration and provenance](../packages/skills/visual-artifacts/composition.md#inspiration-and-provenance); this is original catalog guidance, not an installation of the upstream skills.
 
 Do It, Investigate, Propose, Plan Out, PR Review and the five engineering reviewers also require `policy.repository-guidance`. It defines scoped instruction discovery, selective context loading and bounded agent handoffs without activating private bindings or additional roles. See [repository guidance](repository-guidance.md) for native filename and loading differences.
 

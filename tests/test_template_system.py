@@ -16,7 +16,14 @@ def test_generated_templates_match_canonical_source():
     for path, expected in module.render_all().items():
         assert path.read_text() == expected
         assert "{{" not in expected
-        limit = 75000 if path.name == "trip.html" else 40000
+        # Diagram/actor scenes add inline SVG and local motion without runtime dependencies.
+        limit = (
+            75000
+            if path.name == "trip.html"
+            else 50000
+            if path.name in {"deck.html", "proposal.html"}
+            else 40000
+        )
         assert len(expected.encode()) < limit
 
 

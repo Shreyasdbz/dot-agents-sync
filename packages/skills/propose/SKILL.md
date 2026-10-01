@@ -25,11 +25,13 @@ Use observed or agreed volume, concurrency, latency and growth horizons for scal
 
 Challenge the recommendation with the strongest plausible counterexample and strongest competing approach. Use read-only checks or explicitly authorized disposable spikes for pivotal feasibility questions; use current primary sources for uncertain external guarantees. Delegate only bounded questions that add distinct evidence. A self-check is not independent review.
 
-Stop when material alternatives are rejected or bounded with evidence and further exploration would not change the choice. If a decision-changing unknown remains, make the recommendation conditional and name the evidence or human decision required; do not claim all possible solutions were exhausted.
+Stop when evidence bounds material alternatives and further exploration would not change the choice. For a decision-changing unknown, make the recommendation conditional and name the required evidence or decision.
 
 ## Deliver
 
 Load [proposal.md](references/template.design-proposal/proposal.md) for the default durable Markdown proposal; use [proposal.html](references/template.design-proposal/proposal.html) only for a requested HTML companion. For requested files, load context.artifact-routing and honor explicit output preferences.
+
+For HTML/diagrams, use [Visual Artifacts](references/skill.visual-artifacts/SKILL.md).
 
 Include the decision, material alternatives, inspected mechanism, constraints, assumptions, risks, compatibility and validation criteria. Cite sources and separate executed probes from proposed checks. Keep only decision-relevant sections; a design document does not establish security, performance or production readiness.
 

@@ -3,7 +3,7 @@
   "kind": "Context",
   "id": "context.design-editorial",
   "name": "design-editorial",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Optional editorial design preset for outcome-focused documents",
   "license": "MIT",
   "entry": "CONTEXT.md",
@@ -14,7 +14,7 @@
     "user",
     "project"
   ],
-  "token_budget": 1100,
+  "token_budget": 1500,
   "context": {
     "access": "inherit",
     "sensitivity": "public",

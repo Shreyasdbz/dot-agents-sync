@@ -9,7 +9,7 @@ const { pathToFileURL } = require('node:url');
   const root = path.resolve(__dirname, '..');
   const out = path.resolve(process.argv[2] || path.join(require('node:os').tmpdir(), 'dasync-template-browser'));
   fs.mkdirSync(out, {recursive:true});
-  const browser = await chromium.launch({headless:true});
+  const browser = await chromium.launch({headless:true,executablePath:process.env.BROWSER_EXECUTABLE_PATH});
   const results = [];
   const audit = async (page, name, state) => {
     if (!process.env.AXE_PATH) return {state,status:'not-run'};

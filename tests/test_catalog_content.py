@@ -126,6 +126,42 @@ def test_skill_metadata_and_declared_references(workspace):
     assert "sizing.md" in catalog.packages["skill.plan-out"].files
 
 
+@pytest.mark.parametrize("provider", ["codex", "claude", "copilot", "cursor"])
+def test_visual_workflows_install_loadable_shared_guidance(workspace, provider):
+    engine, config = workspace
+    catalog = Catalog(config["source"])
+    workflows = [
+        "skill.pitch-deck",
+        "skill.ui-design",
+        "skill.propose",
+        "skill.pr-review",
+        "skill.investigate",
+        "skill.plan-out",
+        "skill.trip-publish",
+    ]
+    config["packages"] = workflows
+    config["providers"] = [provider]
+    plan, _ = engine.build({"operation": "setup", "config": config, "trust_source": True})
+    engine.apply(plan)
+    skill_root = {
+        "codex": ".agents/skills",
+        "claude": ".claude/skills",
+        "copilot": ".github/skills",
+        "cursor": ".cursor/skills",
+    }[provider]
+    shared = catalog.packages["skill.visual-artifacts"]
+    for workflow in workflows:
+        consumer = engine.scope.root / skill_root / ("dasync-" + workflow.replace(".", "-"))
+        references = consumer / "references/skill.visual-artifacts"
+        for name, content in shared.files.items():
+            assert (references / name).read_bytes() == content
+        for link in re.findall(r"\]\(([^)]+)\)", (references / "SKILL.md").read_text()):
+            if "://" not in link and not link.startswith("#"):
+                target = (references / link).resolve()
+                assert target.is_relative_to(references) and target.is_file()
+    assert all(op["action"] == "keep" for op in engine.build({"operation": "sync"})[0]["operations"])
+
+
 def test_ui_design_profile_keeps_live_and_swiftui_guidance_bounded(workspace):
     catalog = Catalog(workspace[1]["source"])
     package = catalog.packages["skill.ui-design"]
@@ -198,7 +234,7 @@ def test_metrics_are_byte_counts_not_claimed_tokens():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     result = module.measure()
-    assert result["groups"]["Skill"]["packages"] == 10
+    assert result["groups"]["Skill"]["packages"] == 11
     assert result["groups"]["Skill"]["entry_bytes"] == sum(
         p["entry_bytes"] for key, p in result["packages"].items() if key.startswith("skill.")
     )

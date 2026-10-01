@@ -6,6 +6,10 @@
     const select = controls.querySelector('select'), status = controls.querySelector('[role=status]');
     const progress = controls.querySelector('progress'), view = document.querySelector('[data-deck-view]');
     let index = 0, readAll = false, printing = false;
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    let entrance;
+    const cancelEntrance = () => {if (entrance) entrance.cancel(); entrance = undefined;};
+    motion.addEventListener('change', cancelEntrance);
     slides.forEach((slide, i) => {
       slide.tabIndex = -1;
       const option = document.createElement('option'); option.value = String(i);
@@ -19,17 +23,29 @@
       progress.max = slides.length; progress.value = index + 1;
     };
     const go = (i) => {
+      const before = index;
       index = Math.max(0, Math.min(slides.length - 1, i));
+      cancelEntrance();
       const focused = slides.some(slide => slide.contains(document.activeElement));
       state();
       if (focused) slides[index].focus({preventScroll:true});
       slides[index].scrollIntoView({block:'start',behavior:'instant'});
+      // State is already selected: animation must never own navigation or visibility.
+      if (index !== before && !readAll && !printing && !motion.matches && slides[index].animate) {
+        const style = getComputedStyle(slides[index]);
+        const duration = parseFloat(style.getPropertyValue('--motion-scene')) || 240;
+        entrance = slides[index].animate([
+          {opacity:.35,transform:'translateX(' + (index > before ? 12 : -12) + 'px)'},
+          {opacity:1,transform:'translateX(0)'}
+        ],{duration,easing:style.getPropertyValue('--ease-scene').trim() || 'ease-out'});
+      }
     };
     previous.onclick = () => go(index - 1); next.onclick = () => go(index + 1);
     select.onchange = () => go(Number(select.value));
     if (view) {
       view.hidden = false; view.setAttribute('aria-pressed','false');
       view.onclick = () => {
+        cancelEntrance();
         readAll = !readAll;
         view.setAttribute('aria-pressed',String(readAll));
         view.title = readAll ? 'All slides shown · switch to presentation' : 'Read all slides';
@@ -42,7 +58,7 @@
       const destinations = {ArrowRight:index + 1,PageDown:index + 1,ArrowLeft:index - 1,PageUp:index - 1,Home:0,End:slides.length - 1};
       if (event.key in destinations) {event.preventDefault(); go(destinations[event.key]);}
     });
-    window.addEventListener('beforeprint', () => {printing = true; state();});
+    window.addEventListener('beforeprint', () => {cancelEntrance(); printing = true; state();});
     window.addEventListener('afterprint', () => {printing = false; state();});
     state();
   }

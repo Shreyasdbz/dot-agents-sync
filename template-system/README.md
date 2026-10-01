@@ -6,6 +6,7 @@ A small authoring system, not an application framework. Markdown recipes select 
 
 - `ui.css`: design tokens, layout and component styles, including reflow, theme, focus, motion and print behavior.
 - `editorial.css`: proposal, review and presentation shell; compact sticky navigation, neutral themes and document-specific typography. Excluded from travel output.
+- `visual.css`: diagram geometry, actor selection and composition/motion tokens; included only for editorial pages containing slides, sequences or process diagrams.
 - `icons.json`: canonical decorative SVG paths, expanded from `{{icon:name}}` at build time. Pair section icons with text; name every icon-only control. `components/page-tools.html` shares theme and print controls across the editorial pages.
 - `ui.js`: theme, disclosure controls, hash reveal, print restoration and finding search. No network calls or storage.
 - `behaviors/*.js`: separate deck navigation, sequence playback and optional travel currency modules. The builder includes only modules used by the composition. Travel-only styles live in `travel.css`.
@@ -33,6 +34,8 @@ Presentations use explicit selection, not intersection-based slide state. Arrow 
 
 Animated sequences are opt-in, pausable and non-looping, with every step available as static text. No essential explanation depends on watching the animation. [WAI animation and user-control guidance](https://www.w3.org/WAI/tutorials/carousels/)
 
+The payment example pairs a labeled SVG ownership/request/recovery graph with equivalent text. The sequence synchronizes persistent actors with the selected step using data-phases; it stops on document, slide or disclosure hiding and before print. Deck entrances follow immediate selection, cancel on rapid navigation and honor reduced-motion changes. These are working examples, not a mandatory palette, diagram shape or effect for every artifact. Apply skill.visual-artifacts for the subject-specific visual decisions.
+
 ## Component decisions
 
 **Disclosures:** native details/summary, closed by default. Multiple cards may be open. Essential dates, status, totals and warnings remain visible. Do not hide a critical caveat inside a collapsed body. This follows the distinction between optional supporting detail and information most readers need. [GOV.UK details guidance](https://design-system.service.gov.uk/components/details/)
@@ -52,6 +55,8 @@ Animated sequences are opt-in, pausable and non-looping, with every step availab
 ## Verification
 
 Run the ordinary Python suite and `python scripts/build_templates.py --check`. Browser acceptance uses `node scripts/test_templates.cjs OUTPUT_DIRECTORY` with Playwright available through Node resolution. Set `AXE_PATH` to a local axe-core script to include automated WCAG-tagged checks; results explicitly say not-run when absent. Dependencies are test tooling, not shipped runtime requirements.
+
+Set BROWSER_EXECUTABLE_PATH to an installed Chromium-compatible browser when the Playwright-managed binary is unavailable. Run `node scripts/test_visual_artifacts.cjs OUTPUT_DIRECTORY` for synchronized actor selection, terminal replay, rapid slide traversal, reduced-motion changes, disclosure hiding, zoom-equivalent reflow and print/static fallbacks. Browser captures still need visual inspection.
 
 Browser checks cover closed defaults, keyboard toggling, expand/collapse, hash reveal, repeated print restoration, finding search/empty states, all-findings print, deck navigation, light/dark, narrow layouts, long titles, IDs/anchors, no-JavaScript fallback and page errors. Captured screenshots and PDFs are evidence for the test fixture, not all possible consumer compositions.
 

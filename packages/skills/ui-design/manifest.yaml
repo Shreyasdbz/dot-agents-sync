@@ -3,7 +3,7 @@
   "kind": "Skill",
   "id": "skill.ui-design",
   "name": "ui-design",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Design, implement, or review a user interface using narrowly retrieved UI guidance; load SwiftUI-specific rules only for Apple UI work.",
   "presentation": {
     "display_name": "UI Design",
@@ -23,7 +23,8 @@
   ],
   "token_budget": 1800,
   "requires": {
-    "policy.communication": ">=1,<2"
+    "policy.communication": ">=1,<2",
+    "skill.visual-artifacts": ">=1,<2"
   },
   "capabilities": [
     "filesystem.read"

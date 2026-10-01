@@ -5,6 +5,8 @@ description: "Turn an approved itinerary into a mobile-friendly HTML travel guid
 
 # Trip Publish
 
+Apply [Visual Artifacts](references/skill.visual-artifacts/SKILL.md) for the guide's hierarchy, route/timeline explanations and useful state feedback. Preserve mobile travel priorities and verified itinerary facts; do not imply live maps, availability or tracking.
+
 Use the approved itinerary as the source of truth. Preserve dates, local times, locations, confirmed bookings and unresolved candidates. Ask about the sharing audience only when it changes what can safely appear.
 
 Before building the page, consult the selected Travel Planner agent for a bounded content review using only the necessary itinerary and authorized traveler constraints. Use native delegation when available and permitted; otherwise load its selected role reference and perform the review inline, disclosing that no separate agent ran. Resolve material corrections with the user, then implement the agreed content; do not let this review silently reopen the trip plan. Do not pass the raw private preference file to a subagent without authorization.

@@ -1,1 +1,13 @@
-<section class="sequence" data-sequence aria-label="Crash recovery sequence"><h3>Crash after provider success</h3><ol><li data-step><strong>1. Persist</strong><span>Store an immutable key and payload before the call.</span></li><li data-step><strong>2. Send</strong><span>The provider accepts the payment; the worker crashes before recording completion.</span></li><li data-step><strong>3. Recover</strong><span>A new worker resolves the original identity within the provider's verified guarantees.</span></li><li data-step><strong>4. Record</strong><span>Persist the result. If it cannot be established safely, require reconciliation.</span></li></ol><div class="sequence-controls" data-sequence-controls hidden><button data-step-back>Back step</button><button data-play aria-pressed="false">Play</button><button data-step-next>Next step</button><span role="status" aria-live="polite"></span></div></section>
+<section class="sequence" data-sequence aria-label="Crash recovery sequence">
+<h3>Crash after provider success</h3>
+<figure class="mechanism" aria-label="Recovery actors and the identity they share">
+<div class="mechanism-invariant"><strong>Same payment identity</strong><span>Original key + immutable payload across every step</span></div>
+<div class="mechanism-actors">
+<div class="mechanism-actor" data-phases="0 3"><strong>Operation store</strong><span>Persist identity → record result</span><span class="actor-selection" aria-hidden="true">Selected step</span></div>
+<div class="mechanism-actor" data-phases="1"><strong>Provider</strong><span>Accept charge → outcome not recorded</span><span class="actor-selection" aria-hidden="true">Selected step</span></div>
+<div class="mechanism-actor" data-phases="2"><strong>Recovery worker</strong><span>Resolve original outcome → store result</span><span class="actor-selection" aria-hidden="true">Selected step</span></div>
+</div><figcaption data-scene-caption>Persist → send → recover → record. Unknown outcomes require reconciliation. Illustrative sequence; provider guarantees remain unverified.</figcaption>
+</figure>
+<ol><li data-step><strong>1. Persist</strong><span>Store an immutable key and payload before the call.</span></li><li data-step><strong>2. Send</strong><span>The provider accepts the payment; the worker crashes before recording completion.</span></li><li data-step><strong>3. Recover</strong><span>A new worker resolves the original identity within the provider's verified guarantees.</span></li><li data-step><strong>4. Record</strong><span>Persist the result. If it cannot be established safely, require reconciliation.</span></li></ol>
+<div class="sequence-controls" data-sequence-controls hidden><button data-step-back>Back step</button><button data-play aria-pressed="false">Play</button><button data-step-next>Next step</button><span role="status" aria-live="polite"></span></div>
+</section>
