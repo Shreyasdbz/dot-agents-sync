@@ -35,3 +35,5 @@ Working-tree verification passed 180 Python tests, Ruff checks/format and genera
 Deck/proposal HTML is approximately 56/54KB after adding the geometry, theme tokens and path behavior; the fixture limit is now 60KB, while review/travel limits are unchanged. The shared skill's larger supporting-reference budget does not enlarge its entrypoint. The proposal reference-package budget is 22,000 approximate tokens; deck remains at 20,000. There are no new runtime libraries or remote assets.
 
 Axe, assistive technology, non-Chromium engines, actual browser zoom and behavioral model evaluations remain unrun. The zoom-equivalent viewport and template fixtures do not prove arbitrary generated artifacts will have the same quality.
+
+The clean 5a24b69 snapshot passed all 178 committed Python tests. A final print-state check found that explicit dark mode retained dark semantic fills; the follow-up resets those fills for print and adds a dark-to-print browser assertion. Focused template tests, generated parity and the full visual browser runner passed after that correction.

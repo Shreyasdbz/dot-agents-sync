@@ -91,8 +91,9 @@ const {pathToFileURL}=require('node:url');
     // A 640px layout viewport approximates desktop reflow at 200% browser zoom.
     await page.setViewportSize({width:640,height:400});
     assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
-    await page.evaluate(()=>window.dispatchEvent(new Event('beforeprint')));
+    await page.evaluate(()=>{document.documentElement.dataset.theme='dark';window.dispatchEvent(new Event('beforeprint'));});
     await page.emulateMedia({media:'print'});
+    assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--store-tint').trim()),'#def5ef','dark-theme print uses a light semantic surface');
     assert.equal(await page.locator('.slide:visible').count(),8);
     assert.equal(await sequence.locator('[data-step]:visible').count(),4);
     assert.equal(await sequence.locator('.actor-selection:visible').count(),0);
