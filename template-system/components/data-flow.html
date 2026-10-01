@@ -1,20 +1,21 @@
 <figure class="data-flow">
 <figcaption><strong>Payment request and recovery path</strong></figcaption>
 <div class="diagram-scroll" role="region" aria-label="Payment flow diagram" tabindex="0">
-<svg class="process-map" viewBox="0 0 920 320" role="img" aria-labelledby="payment-flow-title payment-flow-desc">
+<svg class="process-map" viewBox="0 0 920 340" role="img" aria-labelledby="payment-flow-title payment-flow-desc">
 <title id="payment-flow-title">One identity across the request and recovery paths</title>
 <desc id="payment-flow-desc">The API writes an operation to Postgres. The worker claims it and sends the original key and payload to the payment provider across a trust boundary. A confirmed result is recorded in Postgres. An unknown outcome enters reconciliation and retains the original identity.</desc>
-<defs><marker id="payment-flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="currentColor"/></marker></defs>
-<rect class="ownership" x="8" y="30" width="657" height="278" rx="12"/><text class="region-label" x="26" y="55">Application ownership</text>
-<path class="boundary" d="M685 30V308"/><text class="region-label" x="703" y="55">External provider</text>
-<g class="map-node"><rect x="26" y="104" width="135" height="70" rx="8"/><text x="44" y="132">API</text><text class="node-detail" x="44" y="154">operation_id</text></g>
-<g class="map-node"><rect x="251" y="104" width="135" height="70" rx="8"/><text x="269" y="132">Postgres</text><text class="node-detail" x="269" y="154">pending operation</text></g>
-<g class="map-node"><rect x="476" y="104" width="165" height="70" rx="8"/><text x="494" y="132">Worker</text><text class="node-detail" x="494" y="154">original key + payload</text></g>
-<g class="map-node"><rect x="744" y="104" width="158" height="70" rx="8"/><text x="760" y="132">Payment provider</text><text class="node-detail" x="760" y="154">result or unknown</text></g>
-<g class="map-edge" marker-end="url(#payment-flow-arrow)"><path d="M161 139H248"/><path d="M386 139H473"/><path d="M641 139H741"/><path d="M824 174V208H588V177"/><path d="M528 174V208H318V177"/><path class="uncertain" d="M558 174V247H389"/></g>
-<g class="edge-copy"><text x="170" y="94">writes</text><text x="402" y="94">claimed by</text><text x="646" y="94">request</text><text x="693" y="197">confirmed result</text><text x="340" y="197">worker records result</text><text x="428" y="274">unknown outcome → reconcile</text></g>
-<g class="map-node"><rect x="251" y="227" width="135" height="46" rx="8"/><text x="266" y="255">Reconciliation</text></g>
+<defs><marker id="payment-flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="currentColor"/></marker><marker id="payment-result-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--store)"/></marker><marker id="payment-unknown-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--uncertain)"/></marker></defs>
+<rect class="ownership" x="8" y="30" width="657" height="298" rx="12"/><text class="region-label" x="26" y="55">Application ownership</text>
+<path class="boundary" d="M685 30V328"/><text class="region-label" x="703" y="55">External provider</text>
+<g class="map-node"><path class="node-shape" d="M26 104H151L161 114V174H26Z"/><text x="44" y="132">API</text><text class="node-detail" x="44" y="154">operation_id</text></g>
+<g class="map-node store"><path class="node-shape" d="M251 110C251 96 386 96 386 110V172C386 186 251 186 251 172Z"/><path class="node-shape" fill="none" d="M251 110C251 124 386 124 386 110"/><text x="269" y="132">Postgres</text><text class="node-detail" x="269" y="154">pending operation</text></g>
+<g class="map-node"><path class="node-shape" d="M491 104H626L641 139L626 174H491L476 139Z"/><text x="494" y="132">Worker</text><text class="node-detail" x="494" y="154">original key + payload</text></g>
+<g class="map-node external"><rect class="node-shape" x="744" y="104" width="158" height="70" rx="10"/><rect class="node-shape" x="749" y="109" width="148" height="60" rx="6"/><text x="760" y="132">Payment provider</text><text class="node-detail" x="760" y="154">result or unknown</text></g>
+<g class="map-edge" marker-end="url(#payment-flow-arrow)"><path d="M161 139H248"/><path d="M386 139H473"/><path d="M641 139H741"/><path class="return-edge" marker-end="url(#payment-result-arrow)" d="M824 174V208H588V177"/><path class="return-edge" marker-end="url(#payment-result-arrow)" d="M528 174V208H318V177"/><path class="uncertain-edge" marker-end="url(#payment-unknown-arrow)" d="M558 174V253H426"/></g>
+<g class="edge-copy"><text x="170" y="94">writes</text><text x="402" y="94">claimed by</text><text x="646" y="94">request</text><text x="693" y="197">confirmed result</text><text x="340" y="197">worker records result</text><text x="440" y="303">unknown outcome → reconcile</text></g>
+<g class="map-node uncertain"><path class="node-shape" d="M251 253L274 224H400L423 253L400 282H274Z"/><text x="282" y="258">Reconciliation</text></g>
 </svg></div>
+<div class="diagram-legend" aria-label="Diagram shapes"><span><i class="legend-mark" aria-hidden="true"></i>Document · API request</span><span><i class="legend-mark store" aria-hidden="true"></i>Cylinder · durable store</span><span><i class="legend-mark worker" aria-hidden="true"></i>Hexagon · execution</span><span><i class="legend-mark external" aria-hidden="true"></i>Double border · external service</span></div>
 <ol class="flow-nodes"><li><strong>API</strong><code>operation_id</code><span class="edge-label">validates and writes →</span></li><li><strong>Postgres</strong><code>pending operation</code><span class="edge-label">claimed by →</span></li><li><strong>Worker</strong><code>original key + payload</code><span class="edge-label">request across trust boundary →</span></li><li><strong>Payment provider</strong><code>result or unknown</code></li></ol>
 <p class="small">Solid arrows show the request and confirmed result. The dashed path represents an unknown outcome requiring reconciliation. Both retain the original payment identity; a new charge is not implied. Illustrative architecture; provider guarantees remain unverified.</p>
 </figure>

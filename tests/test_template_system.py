@@ -20,7 +20,7 @@ def test_generated_templates_match_canonical_source():
         limit = (
             75000
             if path.name == "trip.html"
-            else 50000
+            else 60000
             if path.name in {"deck.html", "proposal.html"}
             else 40000
         )

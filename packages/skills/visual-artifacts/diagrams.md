@@ -22,6 +22,12 @@ Use inline SVG for precise geometry with a viewBox, unique title/description IDs
 
 Preserve entity identity across before/after and sequence views: same label, position and visual encoding unless movement itself has meaning. For a worked failure path, show the last confirmed state, the uncertain result and the recovery condition. Keep observed behavior separate from proposed contracts. Highlight selected paths with a label or shape as well as color.
 
+## Make entity types visible
+
+Use geometry to communicate type rather than putting every entity in the same rounded rectangle. For example, use a document outline for a request, a cylinder for durable storage, a hexagon for execution, a double outline for an external service, and a diamond for an actual decision. Give a visible legend when the grammar is unfamiliar. A reconciliation work queue is a process, not a diamond merely because its outcome is uncertain. Keep the same entity shape and color across architecture, sequence and state views.
+
+Build depth through containment and emphasis: quiet ownership surfaces, distinct node fills, stronger primary edges, and labeled return or exception lanes. Do not use drop shadows as a substitute for a hierarchy. Reserve the exception color and dashed line for a stated meaning. Prefer custom SVG paths and orthogonal routing when generic cards hide the relationship; review the real endpoints, label clearance and mobile alternative. Use small multiples when a single diagram would require tangled routes.
+
 ## Quantitative integrity
 
 Derive graphics and visible values from one data source. Keep units, denominators, periods and sources visible; distinguish measured values, targets, estimates and scenarios. Bar length starts at zero unless an explicitly explained alternative is necessary; small multiples share a scale. Do not animate counters from invented intermediate values. An uncertainty band or range needs sourced bounds. Provide a data table or text equivalent, and never rely on hover alone for a value.

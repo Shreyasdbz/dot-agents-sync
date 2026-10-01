@@ -143,6 +143,7 @@ const { pathToFileURL } = require('node:url');
         assert.equal(await sequence.locator('[data-play]').getAttribute('aria-pressed'),'true');
         await sequence.locator('[data-play]').click();
         assert.equal(await sequence.locator('[data-play]').getAttribute('aria-pressed'),'false');
+        assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),name+' opened sequence reflows at 320px');
       }
       // Stress real reflow rather than testing only short sample titles.
       await page.locator('h1').evaluate(n=>{n.textContent+=' — A substantially longer decision with a verylongunbrokencustomeridentifier012345678901234567890123456789';});

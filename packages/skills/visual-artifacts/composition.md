@@ -4,6 +4,14 @@ Design from the content rather than applying the same aesthetic to every subject
 
 Before building, identify the dominant visual, reading order and a few tokens: canvas/surface/ink/muted/accent/semantic colors, display/body/code type roles, spacing and container widths. Give accent a meaning. Keep semantic colors stable across scenes and pair them with words or symbols. Use a small coherent type system, deliberate line lengths and tabular numerals for aligned quantities; do not require external fonts for an offline artifact.
 
+## Color and contrast are part of the explanation
+
+Choose a palette with enough range to distinguish the actual roles. A useful technical starting point is deep navy ink on a cool near-white canvas, violet for execution, teal for durable state and amber for external or uncertain outcomes. Adapt it to the subject or supplied brand; this is a worked recipe, not a universal theme. Give each semantic role a strong foreground, pale surface and dark-theme equivalent. Do not stop at a single accent with four nearly identical gray fills.
+
+Use color in substantial areas when it establishes ownership, selected state or the main comparison: a tinted lane, a colored node header, a strong key line or a highlighted outcome. Keep body text dark on pale fills or light on deep fills. Measure contrast in the rendered themes: at least 4.5:1 for ordinary text, 3:1 for large text and meaningful graphic boundaries or controls. A pale divider can organize space, but cannot be the only way to identify an essential control or state. Pair colors with labels, shape or line style; do not assign severity colors to unrelated categories.
+
+Create hierarchy with explicit differences: display type, a dominant visual, compact supporting facts, and quieter sources. Design both light and dark palettes rather than inverting the canvas and leaving node fills behind. Inspect the selected, hover, focus, uncertainty and disabled states. A pleasing screenshot is not a contrast measurement.
+
 ## Choose a composition by its job
 
 | Audience question | Useful composition | Avoid |

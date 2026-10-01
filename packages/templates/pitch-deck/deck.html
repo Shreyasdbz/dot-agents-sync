@@ -23,9 +23,9 @@ body[data-deck-mode=document] .slide{min-height:0;padding:1.5rem 0;border-bottom
 @media(prefers-reduced-motion:no-preference){.sequence li{transition:background-color .18s,border-color .18s}}
 @media print{.slide[hidden]{display:block!important}.travel-filters,.sequence-controls,[data-travel-empty]{display:none!important}.travel .event .detail-body{padding:.5rem}.travel-day{break-inside:avoid}.sequence li{background:white;border-color:#999}.travel .layout{padding:0}.slide{min-height:0}.dense-grid{display:block}}
 /* Document and presentation shell. Travel retains its own layout and palette. */
-:root{--bg:#fafaf9;--ink:#242628;--muted:#5d6369;--line:#dfe1e3;--accent:#365e8b;--tint:#eef2f6;--radius:9px}
-:root[data-theme=dark]{--bg:#17181b;--surface:#202226;--ink:#f0f0f1;--muted:#b9bdc4;--line:#41454c;--accent:#a9c8ee;--tint:#2a3039}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#17181b;--surface:#202226;--ink:#f0f0f1;--muted:#b9bdc4;--line:#41454c;--accent:#a9c8ee;--tint:#2a3039}}
+:root{--bg:#f4f6fc;--surface:#fff;--ink:#17213b;--muted:#4c5870;--line:#b8c3d8;--accent:#4936b5;--tint:#edeafb;--radius:10px;--store:#07665e;--store-tint:#def5ef;--external:#8d3c11;--external-tint:#fff0df;--uncertain:#8b361c;--uncertain-tint:#fff0e8}
+:root[data-theme=dark]{--bg:#10172a;--surface:#1b2540;--ink:#f3f5ff;--muted:#c0cae0;--line:#647493;--accent:#c4b5ff;--tint:#302650;--store:#7ce2c8;--store-tint:#163c3a;--external:#ffc98b;--external-tint:#423022;--uncertain:#ffb898;--uncertain-tint:#442a27}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#10172a;--surface:#1b2540;--ink:#f3f5ff;--muted:#c0cae0;--line:#647493;--accent:#c4b5ff;--tint:#302650;--store:#7ce2c8;--store-tint:#163c3a;--external:#ffc98b;--external-tint:#423022;--uncertain:#ffb898;--uncertain-tint:#442a27}}
 .icon{width:20px;height:20px;flex:none;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.icon-button{display:inline-grid;place-items:center;width:44px;height:44px;padding:0;border-color:transparent;background:transparent;border-radius:8px}.icon-button span{display:flex}.tools{gap:.15rem;flex-wrap:nowrap}.topbar{position:sticky;top:0;z-index:5;background:var(--bg)}
 @supports(backdrop-filter:blur(16px)){.topbar{background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(16px)}}
 .topbar-inner{max-width:1280px;gap:1.2rem;padding:.35rem 1.5rem;flex-wrap:wrap}.brand{white-space:nowrap}.page-nav{display:flex;gap:.25rem;min-width:0;margin-left:auto}.page-nav a{display:flex;align-items:center;gap:.4rem;min-height:44px;padding:.45rem .65rem;text-decoration:none;color:var(--muted);font-size:.85rem;border-radius:6px;white-space:nowrap}.page-nav a:hover{background:var(--tint);color:var(--ink)}.page-nav .icon{width:17px;height:17px}.layout{display:block;max-width:1200px;padding:2.5rem 1.5rem 3rem}.hero{padding-bottom:1.3rem}.hero h1{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:600;letter-spacing:-.035em;margin:.4rem 0 .6rem}.lede{max-width:72ch;line-height:1.65;margin:.5rem 0 1rem}.eyebrow{text-transform:none;letter-spacing:0;font-weight:500;font-size:.85rem}.section{margin-top:2.2rem;scroll-margin-top:1rem}.section-head{margin-bottom:.8rem}.section-head h2{display:flex;align-items:center;gap:.55rem;font-weight:600}.section-head .icon{color:var(--muted)}.callout{border-radius:0 7px 7px 0;background:transparent;padding:.5rem 1rem}.callout p{max-width:85ch}.grid{gap:.8rem}.panel{padding:1.1rem}.panel p{max-width:75ch}.summary-title{font-weight:600}.summary-meta{margin-top:.2rem}.disclosure summary>.icon{color:var(--muted)}.disclosure summary{gap:.75rem}.detail-body>p:first-child{margin-top:0}.facts{grid-template-columns:9rem minmax(0,1fr);gap:.6rem 1rem}.meta code{font-size:.85rem}.section .facts{margin:0}.review-scope{margin-top:1.5rem}.finding-location{font-family:ui-monospace,monospace}.table-wrap{border-radius:8px}footer{padding-top:1rem;margin-top:2rem}.deck main{max-width:1200px;padding:1.6rem 2rem}.slide{padding:1.3rem 0 2rem}.slide h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:600;letter-spacing:-.035em}.slide h2{font-weight:600;letter-spacing:-.03em}.slide .facts{margin-top:1.6rem;font-size:1rem;grid-template-columns:11rem minmax(0,1fr);gap:1rem}.slide.dense .facts{font-size:.9rem}.deck-controls{z-index:6;background:var(--bg);gap:.6rem}.deck-controls select{border-color:transparent;background:transparent}.deck-controls [role=status]{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}.deck-controls .icon-button{flex:none}.dense-grid{gap:1rem 2rem}.flow-nodes li{background:var(--surface);border-radius:8px}.entity{border-radius:8px;overflow:hidden}.entity h3{background:var(--bg)}
@@ -33,39 +33,73 @@ body[data-deck-mode=document] .slide{min-height:0;padding:1.5rem 0;border-bottom
 @media(max-width:600px){.filter-bar{display:grid;grid-template-columns:1fr}.filter-bar input{width:100%}.filter-bar [role=status]{font-size:.8rem}}
 @media(max-width:400px){.facts{grid-template-columns:1fr;gap:.25rem}.facts dd{margin-bottom:.6rem}.deck-controls select{max-width:calc(100vw - 160px)}.disclosure summary{padding:.8rem}.detail-body{padding:.8rem}}
 @media print{:root,:root[data-theme=dark]{--bg:#fff;--surface:#fff;--ink:#000;--muted:#333;--line:#aaa;--accent:#222;--tint:#fff}.topbar{position:static;background:white;backdrop-filter:none}.page-nav{display:none}.topbar-inner{padding:0}.layout,.deck main{padding:0}.hero{padding-bottom:.5rem}.slide{min-height:0}.callout{background:none}}
-/* Visual grammar shared by editorial artifacts; content determines composition. */
-:root{--motion-feedback:160ms;--motion-scene:240ms;--ease-scene:cubic-bezier(.2,.7,.2,1)}
-.process-map{display:block;width:100%;min-width:690px;color:var(--accent)}
-.process-map text{fill:var(--ink);font:16px system-ui,sans-serif}
-.process-map .node-detail,.process-map .region-label,.process-map .edge-copy text{font-size:13px;fill:var(--muted)}
-.process-map .ownership{fill:var(--tint);stroke:var(--line)}
-.process-map .boundary{fill:none;stroke:var(--muted);stroke-dasharray:4 5}
-.process-map .map-node rect{fill:var(--surface);stroke:var(--accent);stroke-width:1.5}
-.process-map .map-edge{fill:none;stroke:currentColor;stroke-width:1.8}
-.process-map .uncertain{stroke-dasharray:6 5}
+/* Semantic color and geometry remain legible without motion or color perception. */
+:root{--motion-feedback:180ms;--motion-scene:420ms;--ease-scene:cubic-bezier(.16,1,.3,1)}
+.process-map{display:block;width:100%;min-width:760px;color:var(--accent)}
+.process-map text{fill:var(--ink);font:16px system-ui,sans-serif;font-weight:650}
+.process-map .node-detail,.process-map .region-label,.process-map .edge-copy text{font-size:13px;font-weight:450;fill:var(--muted)}
+.process-map .ownership{fill:var(--surface);stroke:var(--line)}
+.process-map .boundary{fill:none;stroke:var(--external);stroke-width:2;stroke-dasharray:4 5}
+.map-node{--node-color:var(--accent);--node-tint:var(--tint)}
+.map-node.store{--node-color:var(--store);--node-tint:var(--store-tint)}
+.map-node.external{--node-color:var(--external);--node-tint:var(--external-tint)}
+.map-node.uncertain{--node-color:var(--uncertain);--node-tint:var(--uncertain-tint)}
+.map-node .node-shape{fill:var(--node-tint);stroke:var(--node-color);stroke-width:2}
+.map-node .node-detail{fill:var(--node-color)}
+.process-map .map-edge{fill:none;stroke:currentColor;stroke-width:2.4}
+.process-map .return-edge{color:var(--store)}
+.process-map .uncertain-edge{color:var(--uncertain);stroke-dasharray:6 5}
+.diagram-legend{display:flex;gap:.6rem 1.5rem;flex-wrap:wrap;margin:.8rem 0;font-size:.85rem;color:var(--muted)}
+.diagram-legend span{display:flex;align-items:center;gap:.5rem}
+.legend-mark{width:16px;height:16px;background:var(--tint);border:2px solid var(--accent)}
+.legend-mark.store{border-radius:50%;border-color:var(--store);background:var(--store-tint)}
+.legend-mark.worker{clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);background:var(--accent)}
+.legend-mark.external{border-radius:4px;border:3px double var(--external);background:var(--external-tint)}
 .data-flow .flow-nodes{display:none;margin-top:1.2rem}
-.mechanism{margin:1rem 0 1.5rem;padding:1.2rem 0;border-block:1px solid var(--line)}
-.mechanism-invariant{display:flex;align-items:baseline;justify-content:space-between;gap:.5rem 1.5rem;flex-wrap:wrap;margin-bottom:1.1rem}
-.mechanism-invariant strong{color:var(--accent);font-size:1.05rem}
+.stack:has([data-sequence]){grid-template-columns:minmax(0,1fr)}
+.mechanism{margin:1rem 0 1.5rem;padding:1.25rem;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+.mechanism-invariant{display:flex;align-items:baseline;justify-content:space-between;gap:.5rem 1.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.mechanism-invariant strong{color:var(--accent);font-size:1.1rem}
 .mechanism-invariant span{font-size:.85rem;color:var(--muted)}
 .mechanism-actors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
-.mechanism-actor{min-width:0;position:relative;padding:1rem;border:1px solid var(--line);border-top:3px solid var(--line);background:var(--surface)}
+.mechanism-actor{--actor-color:var(--accent);--actor-tint:var(--tint);min-width:0;position:relative;padding:1rem;border:1px solid var(--line);border-top:4px solid var(--actor-color);border-radius:4px 4px 12px 12px;background:var(--surface)}
+.mechanism-actor:first-child{--actor-color:var(--store);--actor-tint:var(--store-tint)}
+.mechanism-actor:nth-child(2){--actor-color:var(--external);--actor-tint:var(--external-tint)}
 .mechanism-actor>span{display:block;font-size:.85rem;margin-top:.5rem}
-.mechanism-actor[data-scene-active=true]{border-color:var(--accent);background:var(--tint)}
-.mechanism-actor .actor-selection{visibility:hidden;font-weight:650;color:var(--accent)}
+.mechanism-actor[data-scene-active=true]{border-color:var(--actor-color);background:var(--actor-tint);box-shadow:inset 0 0 0 1px var(--actor-color)}
+.mechanism-actor .actor-selection{visibility:hidden;font-weight:650;color:var(--actor-color)}
 .mechanism-actor[data-scene-active=true] .actor-selection{visibility:visible}
+.identity-track{display:block;width:100%;min-width:600px;height:auto;margin:.25rem 0}
+.identity-track text{font:14px system-ui,sans-serif;fill:var(--muted)}
+.identity-track .track-path{fill:none;stroke:var(--muted);stroke-width:3}
+.identity-track .track-recovery{stroke:var(--uncertain);stroke-dasharray:6 6}
+.identity-track .track-stop{fill:var(--surface);stroke:var(--accent);stroke-width:3}
+.identity-track .track-stop.store{stroke:var(--store)}
+.identity-track .track-stop.external{stroke:var(--external)}
+.identity-token{transform:translate(150px,70px)}
+.identity-token rect{fill:var(--accent);stroke:var(--surface);stroke-width:3}
+.identity-token text{fill:var(--surface);font-weight:750;text-anchor:middle}
+:root[data-theme=dark] .identity-token text{fill:var(--bg)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .identity-token text{fill:var(--bg)}}
+.scene-readout{border-left:4px solid var(--accent);padding:.7rem 1rem;margin:.5rem 0 1rem;background:var(--tint);font-weight:600}
 .sequence li[aria-current=step] strong::after{content:' · current';font-weight:400;color:var(--accent)}
 .sequence li{grid-template-columns:9rem minmax(0,1fr)}
+.sequence li[data-active=true]{border-left:4px solid var(--accent);background:var(--tint)}
 .sequence figcaption{line-height:1.5}
 .slide-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:2rem;align-items:start}
 .slide-layout>*{min-width:0}.slide-layout .facts{margin-top:.5rem;grid-template-columns:1fr;font-size:.95rem;gap:.25rem}
 .slide-layout .facts dd{margin:0 0 1.2rem}.slide-layout .lede{font-size:clamp(1.15rem,2vw,1.55rem);line-height:1.5}
-.slide .visual-note{padding:1rem 0;border-block:1px solid var(--line);max-width:65ch}
-.slide .visual-note strong{display:block;font-size:1.15rem;margin-bottom:.4rem}
-@media(max-width:800px){.slide-layout{grid-template-columns:1fr;gap:.75rem}.mechanism-actors{grid-template-columns:1fr}.mechanism-actor{padding:.8rem}.process-map{min-width:690px}.data-flow .flow-nodes{display:grid}.sequence li{grid-template-columns:1fr}}
+.slide .visual-note{padding:1.2rem 1.4rem;border-left:5px solid var(--store);background:var(--store-tint);max-width:65ch;border-radius:0 12px 12px 0}
+.slide .visual-note strong{display:block;font-size:1.15rem;margin-bottom:.4rem;color:var(--store)}
+.deck .slide h1,.deck .slide h2{max-width:24ch;font-size:clamp(2rem,4vw,3.4rem);line-height:1.12;margin-bottom:1.4rem}
+.deck .slide .eyebrow{color:var(--accent);font-weight:650}
+.deck-controls progress{accent-color:var(--accent)}
+.entity{border-top:4px solid var(--store)}.entity h3{color:var(--store);background:var(--store-tint);padding:.85rem}.entity dl{font-size:.85rem;padding:1rem}
+.chart .bar{height:24px;border-radius:5px;background:var(--surface);outline:1px solid var(--muted)}.chart .bar.target span{border-color:var(--store);background:var(--store-tint)}.chart-row{margin:1.4rem 0}.chart-row>strong{font-size:1.2rem;color:var(--accent)}
+@media(max-width:800px){.slide-layout{grid-template-columns:1fr;gap:.75rem}.mechanism-actors{grid-template-columns:1fr}.mechanism-actor{padding:.8rem}.data-flow .flow-nodes{display:grid}.sequence li{grid-template-columns:1fr}.mechanism{padding:.85rem}.deck .slide h2{font-size:2rem}}
 @media(prefers-reduced-motion:no-preference){.mechanism-actor{transition:background-color var(--motion-feedback) ease,border-color var(--motion-feedback) ease}}
-@media(forced-colors:active){.mechanism-actor[data-scene-active=true]{border:3px solid Highlight}.process-map{color:CanvasText}}
-@media print{.process-map{min-width:0}.mechanism-actors{grid-template-columns:repeat(3,minmax(0,1fr))}.mechanism-actor,.mechanism-actor[data-scene-active=true]{background:white;border-color:#999}.mechanism-actor .actor-selection{display:none}.sequence li[aria-current=step] strong::after{content:none}.slide-layout{display:block}}
+@media(forced-colors:active){.mechanism-actor[data-scene-active=true]{border:3px solid Highlight}.process-map{color:CanvasText}.identity-token rect{fill:Highlight}.identity-token text{fill:HighlightText}}
+@media print{.process-map,.identity-track{min-width:0}.mechanism-actors{grid-template-columns:repeat(3,minmax(0,1fr))}.mechanism-actor,.mechanism-actor[data-scene-active=true]{background:white;border-color:#999;box-shadow:none}.mechanism-actor .actor-selection,.identity-token,.scene-readout{display:none}.sequence li[aria-current=step] strong::after{content:none}.sequence li[data-active=true]{border-left:0;background:white}.slide-layout{display:block}.deck .slide h1,.deck .slide h2{font-size:24pt}.slide .visual-note{background:white}.mechanism{padding:.6rem}.process-map text{fill:#000}.process-map .node-detail{fill:#333}}
 </style></head><body class="deck">
 <a class="skip" href="#main">Skip to content</a><header class="topbar"><div class="topbar-inner"><div class="brand">Payment retries</div><div class="tools"><button class="icon-button" data-deck-view aria-label="Read all slides" title="Read all slides" aria-pressed="false" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='m3 6 9-4 9 4-9 4Zm0 6 9 4 9-4M3 18l9 4 9-4'/></svg></button><button class="icon-button" data-theme-toggle aria-label="Dark theme" aria-pressed="false" title="Change theme" hidden><span data-theme-icon="light"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx='12' cy='12' r='4'/><path d='M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5'/></svg></span><span data-theme-icon="dark" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M20 14a8 8 0 0 1-10-10 8 8 0 1 0 10 10Z'/></svg></span></button><button class="icon-button" data-print aria-label="Print" title="Print" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M6 9V3h12v6M6 17H3V9h18v8h-3M6 14h12v7H6Z'/><path d='M17 11h1'/></svg></button>
 </div></div></header><main id="main" tabindex="-1">
@@ -75,20 +109,21 @@ body[data-deck-mode=document] .slide{min-height:0;padding:1.5rem 0;border-bottom
 <section class="slide" id="flow"><p class="eyebrow">2 · Architecture</p><h2>Request and recovery flow</h2><figure class="data-flow">
 <figcaption><strong>Payment request and recovery path</strong></figcaption>
 <div class="diagram-scroll" role="region" aria-label="Payment flow diagram" tabindex="0">
-<svg class="process-map" viewBox="0 0 920 320" role="img" aria-labelledby="payment-flow-title payment-flow-desc">
+<svg class="process-map" viewBox="0 0 920 340" role="img" aria-labelledby="payment-flow-title payment-flow-desc">
 <title id="payment-flow-title">One identity across the request and recovery paths</title>
 <desc id="payment-flow-desc">The API writes an operation to Postgres. The worker claims it and sends the original key and payload to the payment provider across a trust boundary. A confirmed result is recorded in Postgres. An unknown outcome enters reconciliation and retains the original identity.</desc>
-<defs><marker id="payment-flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="currentColor"/></marker></defs>
-<rect class="ownership" x="8" y="30" width="657" height="278" rx="12"/><text class="region-label" x="26" y="55">Application ownership</text>
-<path class="boundary" d="M685 30V308"/><text class="region-label" x="703" y="55">External provider</text>
-<g class="map-node"><rect x="26" y="104" width="135" height="70" rx="8"/><text x="44" y="132">API</text><text class="node-detail" x="44" y="154">operation_id</text></g>
-<g class="map-node"><rect x="251" y="104" width="135" height="70" rx="8"/><text x="269" y="132">Postgres</text><text class="node-detail" x="269" y="154">pending operation</text></g>
-<g class="map-node"><rect x="476" y="104" width="165" height="70" rx="8"/><text x="494" y="132">Worker</text><text class="node-detail" x="494" y="154">original key + payload</text></g>
-<g class="map-node"><rect x="744" y="104" width="158" height="70" rx="8"/><text x="760" y="132">Payment provider</text><text class="node-detail" x="760" y="154">result or unknown</text></g>
-<g class="map-edge" marker-end="url(#payment-flow-arrow)"><path d="M161 139H248"/><path d="M386 139H473"/><path d="M641 139H741"/><path d="M824 174V208H588V177"/><path d="M528 174V208H318V177"/><path class="uncertain" d="M558 174V247H389"/></g>
-<g class="edge-copy"><text x="170" y="94">writes</text><text x="402" y="94">claimed by</text><text x="646" y="94">request</text><text x="693" y="197">confirmed result</text><text x="340" y="197">worker records result</text><text x="428" y="274">unknown outcome → reconcile</text></g>
-<g class="map-node"><rect x="251" y="227" width="135" height="46" rx="8"/><text x="266" y="255">Reconciliation</text></g>
+<defs><marker id="payment-flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="currentColor"/></marker><marker id="payment-result-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--store)"/></marker><marker id="payment-unknown-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--uncertain)"/></marker></defs>
+<rect class="ownership" x="8" y="30" width="657" height="298" rx="12"/><text class="region-label" x="26" y="55">Application ownership</text>
+<path class="boundary" d="M685 30V328"/><text class="region-label" x="703" y="55">External provider</text>
+<g class="map-node"><path class="node-shape" d="M26 104H151L161 114V174H26Z"/><text x="44" y="132">API</text><text class="node-detail" x="44" y="154">operation_id</text></g>
+<g class="map-node store"><path class="node-shape" d="M251 110C251 96 386 96 386 110V172C386 186 251 186 251 172Z"/><path class="node-shape" fill="none" d="M251 110C251 124 386 124 386 110"/><text x="269" y="132">Postgres</text><text class="node-detail" x="269" y="154">pending operation</text></g>
+<g class="map-node"><path class="node-shape" d="M491 104H626L641 139L626 174H491L476 139Z"/><text x="494" y="132">Worker</text><text class="node-detail" x="494" y="154">original key + payload</text></g>
+<g class="map-node external"><rect class="node-shape" x="744" y="104" width="158" height="70" rx="10"/><rect class="node-shape" x="749" y="109" width="148" height="60" rx="6"/><text x="760" y="132">Payment provider</text><text class="node-detail" x="760" y="154">result or unknown</text></g>
+<g class="map-edge" marker-end="url(#payment-flow-arrow)"><path d="M161 139H248"/><path d="M386 139H473"/><path d="M641 139H741"/><path class="return-edge" marker-end="url(#payment-result-arrow)" d="M824 174V208H588V177"/><path class="return-edge" marker-end="url(#payment-result-arrow)" d="M528 174V208H318V177"/><path class="uncertain-edge" marker-end="url(#payment-unknown-arrow)" d="M558 174V253H426"/></g>
+<g class="edge-copy"><text x="170" y="94">writes</text><text x="402" y="94">claimed by</text><text x="646" y="94">request</text><text x="693" y="197">confirmed result</text><text x="340" y="197">worker records result</text><text x="440" y="303">unknown outcome → reconcile</text></g>
+<g class="map-node uncertain"><path class="node-shape" d="M251 253L274 224H400L423 253L400 282H274Z"/><text x="282" y="258">Reconciliation</text></g>
 </svg></div>
+<div class="diagram-legend" aria-label="Diagram shapes"><span><i class="legend-mark" aria-hidden="true"></i>Document · API request</span><span><i class="legend-mark store" aria-hidden="true"></i>Cylinder · durable store</span><span><i class="legend-mark worker" aria-hidden="true"></i>Hexagon · execution</span><span><i class="legend-mark external" aria-hidden="true"></i>Double border · external service</span></div>
 <ol class="flow-nodes"><li><strong>API</strong><code>operation_id</code><span class="edge-label">validates and writes →</span></li><li><strong>Postgres</strong><code>pending operation</code><span class="edge-label">claimed by →</span></li><li><strong>Worker</strong><code>original key + payload</code><span class="edge-label">request across trust boundary →</span></li><li><strong>Payment provider</strong><code>result or unknown</code></li></ol>
 <p class="small">Solid arrows show the request and confirmed result. The dashed path represents an unknown outcome requiring reconciliation. Both retain the original payment identity; a new charge is not implied. Illustrative architecture; provider guarantees remain unverified.</p>
 </figure>
@@ -103,9 +138,11 @@ body[data-deck-mode=document] .slide{min-height:0;padding:1.5rem 0;border-bottom
 <div class="mechanism-actor" data-phases="0 3"><strong>Operation store</strong><span>Persist identity → record result</span><span class="actor-selection" aria-hidden="true">Selected step</span></div>
 <div class="mechanism-actor" data-phases="1"><strong>Provider</strong><span>Accept charge → outcome not recorded</span><span class="actor-selection" aria-hidden="true">Selected step</span></div>
 <div class="mechanism-actor" data-phases="2"><strong>Recovery worker</strong><span>Resolve original outcome → store result</span><span class="actor-selection" aria-hidden="true">Selected step</span></div>
-</div><figcaption data-scene-caption>Persist → send → recover → record. Unknown outcomes require reconciliation. Illustrative sequence; provider guarantees remain unverified.</figcaption>
+</div>
+<div class="diagram-scroll" role="region" aria-label="Identity movement across recovery steps" tabindex="0"><svg class="identity-track" viewBox="0 0 900 180" role="img" aria-labelledby="recovery-track-title recovery-track-desc"><title id="recovery-track-title">The original key follows the recovery path</title><desc id="recovery-track-desc">Persist in the operation store, send to the provider, resolve with the recovery worker, then record in the store. The dashed link represents an uncertain outcome after a crash, not a second charge.</desc><path class="track-path" d="M150 70H750V135H150V70"/><path class="track-path track-recovery" d="M450 70H750"/><circle class="track-stop store" cx="150" cy="70" r="9"/><circle class="track-stop external" cx="450" cy="70" r="9"/><circle class="track-stop" cx="750" cy="70" r="9"/><text x="265" y="46">send key</text><text x="552" y="46">resolve after crash</text><text x="392" y="163">record original outcome</text><g class="identity-token" data-identity-token aria-hidden="true"><rect x="-28" y="-17" width="56" height="34" rx="8"/><text y="5">key</text></g></svg></div>
+<p class="scene-readout" data-scene-readout>Persist · Identity is durable before the provider call.</p><figcaption data-scene-caption>Persist → send → recover → record. Unknown outcomes require reconciliation. Illustrative sequence; provider guarantees remain unverified.</figcaption>
 </figure>
-<ol><li data-step><strong>1. Persist</strong><span>Store an immutable key and payload before the call.</span></li><li data-step><strong>2. Send</strong><span>The provider accepts the payment; the worker crashes before recording completion.</span></li><li data-step><strong>3. Recover</strong><span>A new worker resolves the original identity within the provider's verified guarantees.</span></li><li data-step><strong>4. Record</strong><span>Persist the result. If it cannot be established safely, require reconciliation.</span></li></ol>
+<ol><li data-step data-scene="Persist · Identity is durable before the provider call."><strong>1. Persist</strong><span>Store an immutable key and payload before the call.</span></li><li data-step data-scene="Send · Provider accepts; the local result remains unknown after a crash."><strong>2. Send</strong><span>The provider accepts the payment; the worker crashes before recording completion.</span></li><li data-step data-scene="Recover · Resolve the same key; do not introduce a new payment identity."><strong>3. Recover</strong><span>A new worker resolves the original identity within the provider's verified guarantees.</span></li><li data-step data-scene="Record · Save the established result or require reconciliation."><strong>4. Record</strong><span>Persist the result. If it cannot be established safely, require reconciliation.</span></li></ol>
 <div class="sequence-controls" data-sequence-controls hidden><button data-step-back>Back step</button><button data-play aria-pressed="false">Play</button><button data-step-next>Next step</button><span role="status" aria-live="polite"></span></div>
 </section>
 </section>
@@ -230,10 +267,10 @@ body[data-deck-mode=document] .slide{min-height:0;padding:1.5rem 0;border-bottom
       // State is already selected: animation must never own navigation or visibility.
       if (index !== before && !readAll && !printing && !motion.matches && slides[index].animate) {
         const style = getComputedStyle(slides[index]);
-        const duration = parseFloat(style.getPropertyValue('--motion-scene')) || 240;
+        const duration = parseFloat(style.getPropertyValue('--motion-scene')) || 420;
         entrance = slides[index].animate([
-          {opacity:.35,transform:'translateX(' + (index > before ? 12 : -12) + 'px)'},
-          {opacity:1,transform:'translateX(0)'}
+          {opacity:.7,transform:'translateX(' + (index > before ? 24 : -24) + 'px) scale(.985)',transformOrigin:'50% 0'},
+          {opacity:1,transform:'translateX(0) scale(1)',transformOrigin:'50% 0'}
         ],{duration,easing:style.getPropertyValue('--ease-scene').trim() || 'ease-out'});
       }
     };
@@ -266,9 +303,32 @@ body[data-deck-mode=document] .slide{min-height:0;padding:1.5rem 0;border-bottom
     controls.hidden = false;
     const play = controls.querySelector('[data-play]'), next = controls.querySelector('[data-step-next]');
     const back = controls.querySelector('[data-step-back]'), status = controls.querySelector('[role=status]');
-    let index = 0, timer;
+    let index = 0, timer, movement;
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    const token = sequence.querySelector('[data-identity-token]');
+    const readout = sequence.querySelector('[data-scene-readout]');
+    const positions = [[150,70],[450,70],[750,70],[150,70]];
+    const cancelMovement = () => {if (movement) movement.cancel(); movement = undefined;};
+    motion.addEventListener('change', cancelMovement);
     const actors = [...sequence.querySelectorAll('[data-phases]')];
     const state = () => {
+      const previous = Number(sequence.dataset.sceneIndex || 0);
+      sequence.dataset.sceneIndex = String(index);
+      cancelMovement();
+      if (readout) readout.textContent = steps[index].dataset.scene || steps[index].textContent;
+      if (token) {
+        const destination = positions[index];
+        const transform = point => 'translate(' + point[0] + 'px,' + point[1] + 'px)';
+        token.style.transform = transform(destination);
+        // Keep the committed endpoint in style; cancellation never restores a stale position.
+        if (previous !== index && !motion.matches) {
+          let route = [positions[previous],destination];
+          if (previous === 2 && index === 3) route = [[750,70],[750,135],[150,135],[150,70]];
+          if (previous === 3 && index === 2) route = [[150,70],[150,135],[750,135],[750,70]];
+          movement = token.animate(route.map(point => ({transform:transform(point)})),
+            {duration:720,easing:'cubic-bezier(.4,0,.2,1)'});
+        }
+      }
       steps.forEach((step,i) => {
         step.dataset.active = String(i === index);
         if (i === index) step.setAttribute('aria-current','step'); else step.removeAttribute('aria-current');
@@ -277,7 +337,7 @@ body[data-deck-mode=document] .slide{min-height:0;padding:1.5rem 0;border-bottom
       status.textContent = 'Step ' + (index+1) + ' of ' + steps.length;
       back.disabled = index === 0; next.disabled = index === steps.length-1;
     };
-    const stop = () => {clearInterval(timer); timer = undefined; play.textContent = 'Play'; play.setAttribute('aria-pressed','false');};
+    const stop = () => {cancelMovement(); clearInterval(timer); timer = undefined; play.textContent = 'Play'; play.setAttribute('aria-pressed','false');};
     play.onclick = () => {
       if (timer) return stop();
       if (index === steps.length-1) index = 0;

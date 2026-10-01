@@ -3,7 +3,7 @@
   "kind": "Skill",
   "id": "skill.visual-artifacts",
   "name": "visual-artifacts",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Create visual explanations, diagrams and interactive HTML artifacts; improve composition and motion in requested decks, reports and interfaces. Keep simple answers inline.",
   "presentation": {
     "display_name": "Visual Artifacts",
@@ -22,7 +22,7 @@
     "user",
     "project"
   ],
-  "token_budget": 4200,
+  "token_budget": 5200,
   "requires": {
     "context.artifact-routing": ">=1,<2",
     "policy.accessibility": ">=1,<2",

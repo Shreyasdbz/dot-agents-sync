@@ -8,6 +8,12 @@ For each effect, identify the user action or trigger, persistent object, changed
 
 Prefer opacity and transform for scene continuity. Use stroke or position only when it encodes an actual path. Do not animate layout dimensions on every frame or add a library for a fade. CSS transitions or the Web Animations API usually suffice for a portable file; use the established application library when already present. Avoid scroll hijacking, parallax, unbounded particles, flashing and perpetual decorative loops.
 
+## Choose a visible explanatory pattern
+
+A slide fade alone rarely teaches a mechanism. For a request or recovery explanation, keep actors stationary and move one labeled identity marker along the actual connectors. Update the state explanation and responsible actor together. For a state transformation, retain the object and change only the properties that changed. For a comparison, align the two states and reveal the delta without inventing intermediate numbers. For navigation, use a directional arrival with a stable reading anchor; keep text readable during the transition.
+
+Give meaningful movement enough time to follow, often 500–900ms for one path segment, with manual steps and a slower opt-in playback cadence. Avoid stacking independent bounces or fades on every label. Set the destination state before starting an effect, cancel the previous effect on reversal, and verify that cancellation leaves the selected endpoint. The example's timing is illustrative pacing, never a measurement of system latency. A static diagram must still show the full path and exception semantics.
+
 ## Preserve control and meaning
 
 Apply state changes immediately; animation follows the state and must never block navigation or input. Cancel or replace an in-flight animation when input changes. Rapid Next/Back must end at the selected state without stale callbacks restoring an earlier scene. Never use animation completion as the only way to show essential content.

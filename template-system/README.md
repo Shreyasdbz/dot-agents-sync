@@ -5,8 +5,8 @@ A small authoring system, not an application framework. Markdown recipes select 
 ## Source and delivery boundaries
 
 - `ui.css`: design tokens, layout and component styles, including reflow, theme, focus, motion and print behavior.
-- `editorial.css`: proposal, review and presentation shell; compact sticky navigation, neutral themes and document-specific typography. Excluded from travel output.
-- `visual.css`: diagram geometry, actor selection and composition/motion tokens; included only for editorial pages containing slides, sequences or process diagrams.
+- `editorial.css`: proposal, review and presentation shell; compact sticky navigation, semantic light/dark palettes and document-specific typography. Excluded from travel output.
+- `visual.css`: typed diagram shapes, semantic lanes, identity tracks, actor selection and composition/motion tokens; included only for editorial pages containing slides, sequences or process diagrams.
 - `icons.json`: canonical decorative SVG paths, expanded from `{{icon:name}}` at build time. Pair section icons with text; name every icon-only control. `components/page-tools.html` shares theme and print controls across the editorial pages.
 - `ui.js`: theme, disclosure controls, hash reveal, print restoration and finding search. No network calls or storage.
 - `behaviors/*.js`: separate deck navigation, sequence playback and optional travel currency modules. The builder includes only modules used by the composition. Travel-only styles live in `travel.css`.
@@ -26,7 +26,7 @@ For Markdown, begin at the package entrypoint and load only the relevant recipe.
 
 For HTML, begin with the appropriate worked page. Replace sample content from approved evidence, select useful components, remove irrelevant examples and preserve their semantics. The examples intentionally label their data as illustrative: they are not final travel plans, reviewed PRs or accepted designs. Keep one source of truth for facts across formats.
 
-Use direct headings, restrained type and compact organization. Labels should identify a subject, date, place, action, state or decision; do not insert slogans, poetic day names or paragraphs advertising the document's usefulness. Dense information is appropriate when it serves the task. This is consistent with research on concise, scannable, non-promotional web writing, not a claim that one visual style suits every product. [NN/g writing study](https://www.nngroup.com/articles/concise-scannable-and-objective-how-to-write-for-the-web/)
+Use direct headings, a readable type hierarchy and compact organization. Let expressive scale, semantic colors and distinct shapes clarify explanatory scenes. Labels should identify a subject, date, place, action, state or decision; do not insert slogans, poetic day names or paragraphs advertising the document's usefulness. Dense information is appropriate when it serves the task. This is consistent with research on concise, scannable, non-promotional web writing, not a claim that one visual style suits every product. [NN/g writing study](https://www.nngroup.com/articles/concise-scannable-and-objective-how-to-write-for-the-web/)
 
 The travel view has a headline, horizontal route preview with one trip paragraph, compact type-specific reservations, detailed daily timelines, to-dos and metadata. The preview wraps for print. Use names for split plans; no group/date filters. Transport-colored outgoing timeline segments also name their modes in text. Events carry local dates/zones and booking state; order known instants chronologically rather than sorting wall-clock strings across zones. Stays separate units, bedrooms, beds and occupant allocation. Optional copy controls use visible references/addresses and report blocked clipboard access honestly.
 
@@ -56,7 +56,7 @@ The payment example pairs a labeled SVG ownership/request/recovery graph with eq
 
 Run the ordinary Python suite and `python scripts/build_templates.py --check`. Browser acceptance uses `node scripts/test_templates.cjs OUTPUT_DIRECTORY` with Playwright available through Node resolution. Set `AXE_PATH` to a local axe-core script to include automated WCAG-tagged checks; results explicitly say not-run when absent. Dependencies are test tooling, not shipped runtime requirements.
 
-Set BROWSER_EXECUTABLE_PATH to an installed Chromium-compatible browser when the Playwright-managed binary is unavailable. Run `node scripts/test_visual_artifacts.cjs OUTPUT_DIRECTORY` for synchronized actor selection, terminal replay, rapid slide traversal, reduced-motion changes, disclosure hiding, zoom-equivalent reflow and print/static fallbacks. Browser captures still need visual inspection.
+Set BROWSER_EXECUTABLE_PATH to an installed Chromium-compatible browser when the Playwright-managed binary is unavailable. Run `node scripts/test_visual_artifacts.cjs OUTPUT_DIRECTORY` for measured semantic contrast in both themes, key-path movement and reversal, synchronized actor selection, terminal replay, rapid slide traversal, reduced-motion changes, disclosure hiding, zoom-equivalent reflow and print/static fallbacks. Browser captures still need visual inspection.
 
 Browser checks cover closed defaults, keyboard toggling, expand/collapse, hash reveal, repeated print restoration, finding search/empty states, all-findings print, deck navigation, light/dark, narrow layouts, long titles, IDs/anchors, no-JavaScript fallback and page errors. Captured screenshots and PDFs are evidence for the test fixture, not all possible consumer compositions.
 

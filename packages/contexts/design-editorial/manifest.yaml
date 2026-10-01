@@ -3,7 +3,7 @@
   "kind": "Context",
   "id": "context.design-editorial",
   "name": "design-editorial",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Optional editorial design preset for outcome-focused documents",
   "license": "MIT",
   "entry": "CONTEXT.md",

@@ -23,3 +23,15 @@ Rendered desktop flow, selected recovery actor and narrow sequence captures were
 ## Limits
 
 Chromium checks do not establish Safari/Firefox behavior or screen-reader conformance. axe-core was unavailable, so automated accessibility audits are explicitly not-run; keyboard, accessible names and reflow checks are separate evidence. A 640px layout viewport approximates reflow at 200% zoom but is not an actual browser zoom action. The diagrams and payment claims remain labeled illustrative, with unverified provider guarantees. No independent reviewer or model evaluator ran.
+
+## Color, shape and motion refinement · 2026-10-01
+
+The second pass changes the shipped examples as well as the guidance: navy ink with violet execution, teal durable state and amber external/uncertain outcomes; separate light/dark surfaces; request documents, storage cylinders, execution hexagons and external double outlines; stronger chart/data-model hierarchy; and a persistent key moving along the recovery path with a synchronized selected explanation. Navigation uses a directional 420ms arrival; the key path uses 720ms within an opt-in 1.8-second step cadence. These are illustrative explanatory timings.
+
+The visual browser runner measures 14 foreground/background pairs in each theme, requiring 4.5:1 for checked text and 3:1 for checked essential graphics. This is a bounded token-pair check, not an audit of every rendered text node. It exercises actual key motion, endpoint cancellation on reversal, actor/step synchronization, pause/replay/end, hidden scenes/disclosures, dynamic reduced motion, 320px and zoom-equivalent reflow, print and no-JavaScript use. An opened proposal disclosure initially widened the mobile page to 669px; constraining its grid track fixed the reproduced regression. General browser checks now include that open state.
+
+Working-tree verification passed 180 Python tests, Ruff checks/format and generated parity; the working tree also contains five preserved unrelated edits. Headless Chrome 154.0.8037.93 passed all four template acceptance fixtures and the visual runner. All eight A4 deck pages were rendered with Poppler and inspected without clipping. Browser screenshots were inspected in light/dark, desktop and narrow layouts. Artifacts remain in /private/tmp/dasync-visual-v2-browser, /private/tmp/dasync-visual-v2-general and /private/tmp/dasync-visual-v2-print rather than the catalog.
+
+Deck/proposal HTML is approximately 56/54KB after adding the geometry, theme tokens and path behavior; the fixture limit is now 60KB, while review/travel limits are unchanged. The shared skill's larger supporting-reference budget does not enlarge its entrypoint. The proposal reference-package budget is 22,000 approximate tokens; deck remains at 20,000. There are no new runtime libraries or remote assets.
+
+Axe, assistive technology, non-Chromium engines, actual browser zoom and behavioral model evaluations remain unrun. The zoom-equivalent viewport and template fixtures do not prove arbitrary generated artifacts will have the same quality.

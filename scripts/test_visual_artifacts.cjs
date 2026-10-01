@@ -14,6 +14,25 @@ const {pathToFileURL}=require('node:url');
     const errors=[];page.on('pageerror',e=>errors.push(e.message));
     const settle=()=>page.evaluate(()=>Promise.all(document.getAnimations().map(a=>a.finished.catch(()=>{}))));
     await page.goto(url('pitch-deck/deck.html'));
+    const contrastResults=[];
+    for (const theme of ['light','dark']) {
+      await page.evaluate(theme=>document.documentElement.dataset.theme=theme,theme);
+      const contrasts=await page.evaluate(()=>{
+        const style=getComputedStyle(document.documentElement);
+        const rgb=name=>{
+          const probe=document.createElement('span');probe.style.color=style.getPropertyValue('--'+name);document.body.append(probe);
+          const value=getComputedStyle(probe).color.match(/[\d.]+/g).slice(0,3).map(Number);probe.remove();return value;
+        };
+        const luminance=name=>rgb(name).map(x=>{x/=255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4;}).reduce((sum,x,i)=>sum+x*[.2126,.7152,.0722][i],0);
+        const pairs=[['ink','bg',4.5],['muted','bg',4.5],['ink','surface',4.5],['muted','surface',4.5],['accent','tint',4.5],['store','store-tint',4.5],['external','external-tint',4.5],['uncertain','uncertain-tint',4.5],['ink','store-tint',4.5],['ink','external-tint',4.5],['muted','tint',4.5],['accent','surface',3],['store','surface',3],['external','surface',3]];
+        return pairs.map(([foreground,background,minimum])=>{const a=luminance(foreground),b=luminance(background);return{foreground,background,minimum,ratio:(Math.max(a,b)+.05)/(Math.min(a,b)+.05)};});
+      });
+      for (const pair of contrasts) assert(pair.ratio>=pair.minimum,theme+': '+JSON.stringify(pair));
+      contrastResults.push({theme,pairs:contrasts});
+      await page.locator('#slide-choice').selectOption('2');await settle();
+      await page.screenshot({path:path.join(out,'flow-'+theme+'.png'),fullPage:true});
+    }
+    await page.evaluate(()=>document.documentElement.dataset.theme='light');
     await page.locator('#slide-choice').selectOption('2');
     await settle();
     await page.screenshot({path:path.join(out,'flow-desktop.png'),fullPage:true});
@@ -22,11 +41,27 @@ const {pathToFileURL}=require('node:url');
     const actor=()=>sequence.locator('[data-scene-active=true] strong').innerText();
     assert.equal(await actor(),'Operation store');
     await sequence.locator('[data-step-next]').click();assert.equal(await actor(),'Provider');
+    assert.equal(await sequence.getAttribute('data-scene-index'),'1');
+    assert((await sequence.locator('[data-scene-readout]').innerText()).startsWith('Send'));
+    assert(await sequence.locator('[data-identity-token]').evaluate(n=>n.getAnimations().length>0),'key moves along the path in normal motion');
+    // Rapid reversal must cancel the old path and commit the newly selected endpoint.
+    await sequence.locator('[data-step-back]').click();await settle();
+    assert.equal(await sequence.getAttribute('data-scene-index'),'0');
+    assert.equal(await sequence.locator('[data-identity-token]').evaluate(n=>getComputedStyle(n).transform),'matrix(1, 0, 0, 1, 150, 70)');
+    await sequence.locator('[data-step-next]').click();
     assert.equal(await sequence.locator('[aria-current=step] strong').innerText(),'2. Send');
     await sequence.locator('[data-step-next]').click();assert.equal(await actor(),'Recovery worker');
     await settle();
-    await page.screenshot({path:path.join(out,'sequence-desktop.png'),fullPage:true});
+    await page.evaluate(()=>{window.scrollTo(0,0);document.activeElement.blur();});
+    await page.screenshot({path:path.join(out,'sequence-desktop.png')});
     await sequence.locator('[data-step-next]').click();assert.equal(await actor(),'Operation store');
+    const movingFrame=await sequence.locator('[data-identity-token]').evaluate(n=>{
+      const animation=n.getAnimations()[0];animation.pause();animation.currentTime=360;
+      return getComputedStyle(n).transform;
+    });
+    assert.notEqual(movingFrame,'matrix(1, 0, 0, 1, 150, 70)','intermediate recovery frame follows the return lane');
+    await page.screenshot({path:path.join(out,'record-mid-motion.png')});
+    await sequence.locator('[data-identity-token]').evaluate(n=>n.getAnimations().forEach(a=>a.finish()));
     assert(await sequence.locator('[data-step-next]').isDisabled());
     await sequence.locator('[data-play]').click();
     assert.equal(await sequence.locator('[aria-current=step] strong').innerText(),'1. Persist','terminal replay starts at first step');
@@ -78,7 +113,7 @@ const {pathToFileURL}=require('node:url');
     assert.equal(await staticPage.locator('[data-sequence-controls]:visible').count(),0);
     assert(await staticPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
     await context.close();
-    const result={browser:browser.version(),status:'passed',checks:['actor/step synchronization','manual steps','pause/replay/end','hidden scene/disclosure stop','rapid reversal','dynamic reduced motion','320px and zoom-equivalent reflow','print all steps','no JavaScript'],limitations:['Chromium only','zoom-equivalent viewport is not a browser zoom action','not a behavioral model evaluation']};
+    const result={browser:browser.version(),status:'passed',contrast:contrastResults,checks:['light/dark semantic contrast','identity path motion and reversal','actor/step synchronization','manual steps','pause/replay/end','hidden scene/disclosure stop','rapid reversal','dynamic reduced motion','320px and zoom-equivalent reflow','print all steps','no JavaScript'],limitations:['Chromium only','zoom-equivalent viewport is not a browser zoom action','not a behavioral model evaluation']};
     fs.writeFileSync(path.join(out,'visual-results.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));
   } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

@@ -33,10 +33,10 @@
       // State is already selected: animation must never own navigation or visibility.
       if (index !== before && !readAll && !printing && !motion.matches && slides[index].animate) {
         const style = getComputedStyle(slides[index]);
-        const duration = parseFloat(style.getPropertyValue('--motion-scene')) || 240;
+        const duration = parseFloat(style.getPropertyValue('--motion-scene')) || 420;
         entrance = slides[index].animate([
-          {opacity:.35,transform:'translateX(' + (index > before ? 12 : -12) + 'px)'},
-          {opacity:1,transform:'translateX(0)'}
+          {opacity:.7,transform:'translateX(' + (index > before ? 24 : -24) + 'px) scale(.985)',transformOrigin:'50% 0'},
+          {opacity:1,transform:'translateX(0) scale(1)',transformOrigin:'50% 0'}
         ],{duration,easing:style.getPropertyValue('--ease-scene').trim() || 'ease-out'});
       }
     };
