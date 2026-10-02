@@ -47,7 +47,9 @@ Add a profile to an existing environment with `dasync configure --scope user --p
 
 Propose makes supported design decisions. Plan Out elaborates only the next milestone against the project's planning authority. Investigate and PR Review return inline results by default. Pitch Deck and Trip Publish can produce self-contained HTML artifacts; creating a file is distinct from hosting it.
 
-`context.artifact-routing` is the shared public destination contract for requested review, deck, proposal, investigation, plan-view and trip-guide files. An explicit destination wins; otherwise an unambiguous workspace uses its `artifacts/<kind>/` folder. Ambiguous or unknown workspaces need a destination decision before writing. Inline answers stay inline, and Plan Context JSON remains with the selected planning authority. The contract guides skills; dasync does not itself write their artifacts.
+`skill.change-quiz` creates a visual, four-option HTML quiz for a pinned PR or local change snapshot. It studies consequential behavior and external boundaries, varies question count by scope and severity, and reveals explanations for every option immediately on selection. Its `template.change-quiz` preserves prior revision sections inside one collapsed History disclosure. Select it with `--enable skill.change-quiz`; [the authoring research](../packages/skills/change-quiz/research.md) records the design choices and verification limits.
+
+`context.artifact-routing` is the shared public destination contract for requested review, quiz, deck, proposal, investigation, plan-view and trip-guide files. An explicit destination wins; otherwise an unambiguous workspace uses its `artifacts/<kind>/` folder. Ambiguous or unknown workspaces need a destination decision before writing. Inline answers stay inline, and Plan Context JSON remains with the selected planning authority. The contract guides skills; dasync does not itself write their artifacts.
 
 All catalog skills and agents inherit the natural-paragraph Markdown rule through `policy.communication`. Templates are dependencies where required, not permission to invent missing content.
 

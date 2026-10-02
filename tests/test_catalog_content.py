@@ -234,7 +234,7 @@ def test_metrics_are_byte_counts_not_claimed_tokens():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     result = module.measure()
-    assert result["groups"]["Skill"]["packages"] == 11
+    assert result["groups"]["Skill"]["packages"] == 12
     assert result["groups"]["Skill"]["entry_bytes"] == sum(
         p["entry_bytes"] for key, p in result["packages"].items() if key.startswith("skill.")
     )

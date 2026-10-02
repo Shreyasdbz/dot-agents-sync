@@ -30,9 +30,10 @@ Test-only dependencies are pinned in scripts/browser/package-lock.json. Run `npm
 node scripts/test_templates.cjs OUTPUT_DIRECTORY
 node scripts/test_template_navigation.cjs
 node scripts/test_travel_currency.cjs
+node scripts/test_change_quiz.cjs
 ```
 
-The three scripts check all four templates, narrow/desktop layouts, long-title reflow, no-JavaScript reading, keyboard interactions, deck navigation, disclosures, print restoration, currency edge cases, route scrolling and copy feedback. Output paths default to the operating system's temporary directory. Copy tests use a clipboard double, not the user's clipboard. Axe findings include incomplete/manual-review items; zero violations is not full accessibility certification.
+The four scripts check all five templates, narrow/desktop layouts, long-title reflow, no-JavaScript reading, keyboard interactions, deck navigation, disclosures, print restoration, currency edge cases, route scrolling, copy feedback and quiz feedback/retry/history isolation. Output paths default to the operating system's temporary directory. Copy tests use a clipboard double, not the user's clipboard. Axe findings include incomplete/manual-review items; zero violations is not full accessibility certification.
 
 The CI workflow includes the installed journeys in its Python matrix and a separate Linux Chromium browser job. Merely editing the workflow does not establish a hosted run; record the exact tested commit and run before calling hosted acceptance complete.
 

@@ -1,0 +1,18 @@
+<article class="quiz-question" data-quiz-question id="sample-v2-identity">
+<h3>Which tenant owns this delivery?</h3>
+<figure class="quiz-scene"><figcaption>Incoming invoice event · fictional scenario</figcaption>
+<ol class="quiz-flow"><li>Signed request<small>Route: tenant A<br>Body says: tenant B</small></li><li class="unknown">Ownership gate<small>Which identity proceeds?</small></li><li>Delivery transaction<small>Deduplication key: tenant + event</small></li><li>Invoice store<small>Write under resolved tenant</small></li></ol>
+<p>Read left to right. A valid signed request arrives on tenant A's endpoint; its payload names tenant B. The gate resolves identity before the transaction. The transaction's key and invoice write use that resolved identity.</p></figure>
+<fieldset><legend>Given the new route-owned identity contract, which outcome follows?</legend><div class="quiz-options">
+<label><input type="radio" name="sample-v2-identity" id="sample-v2-identity-a" value="a" data-correct="false"><span><strong>A.</strong> The body selects tenant B for both deduplication and the invoice write.</span></label>
+<label><input type="radio" name="sample-v2-identity" id="sample-v2-identity-b" value="b" data-correct="false"><span><strong>B.</strong> The endpoint selects tenant A for deduplication; the body selects tenant B for the write.</span></label>
+<label><input type="radio" name="sample-v2-identity" id="sample-v2-identity-c" value="c" data-correct="true"><span><strong>C.</strong> The endpoint selects tenant A for both deduplication and the invoice write.</span></label>
+<label><input type="radio" name="sample-v2-identity" id="sample-v2-identity-d" value="d" data-correct="false"><span><strong>D.</strong> The tenant mismatch rejects the event before deduplication or an invoice write.</span></label>
+</div></fieldset>
+<div class="quiz-actions"><button type="button" data-quiz-retry hidden>Retry question</button></div><p class="quiz-result" data-quiz-result role="status" aria-live="polite" aria-atomic="true"></p>
+<div class="quiz-feedback" data-quiz-feedback><h4>Why each option is right or wrong</h4><ol type="A">
+<li data-explanation="a"><strong>Incorrect · payload authority</strong><p>A valid signature proves the sender, but this contract resolves tenant ownership from the endpoint. Trusting the body would let the payload redirect the write.</p></li>
+<li data-explanation="b"><strong>Incorrect · split ownership</strong><p>The transaction receives one resolved tenant. Using different owners for deduplication and the invoice would break the isolation guarantee.</p></li>
+<li data-explanation="c"><strong>Correct · one resolved identity</strong><p>Tenant A owns the endpoint and supplies the identity passed into both operations. The body tenant field is ignored under this fictional contract.</p></li>
+<li data-explanation="d"><strong>Incorrect · assumed rejection</strong><p>The contract ignores the body tenant field; it does not reject a mismatch. Rejection would require an additional comparison absent from this example.</p></li>
+</ol><p class="small">Fictional evidence: the scenario's route-owned identity contract. No repository, real PR, service or test has been inspected for this example.</p></div></article>

@@ -7,12 +7,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = {
+    "quiz": "change-quiz/quiz.html",
     "proposal": "design-proposal/proposal.html",
     "review": "pr-review/report.html",
     "trip": "trip-publish/trip.html",
     "deck": "pitch-deck/deck.html",
 }
 FRAGMENTS = {
+    "quiz-question": "change-quiz/components/question.html",
     "travel-expenses": "trip-publish/components/expenses.html",
     "travel-copy-details": "trip-publish/components/copy-details.html",
     "route-map": "trip-publish/components/route-map.html",
@@ -57,6 +59,7 @@ def render_all():
         )
         behavior = js.rsplit("})();", 1)[0]
         for marker, name in (
+            ("data-quiz-question", "quiz"),
             ('class="slide', "deck"),
             ("data-sequence", "sequence"),
             ('class="travel"', "travel"),
@@ -65,6 +68,8 @@ def render_all():
                 behavior += (base / "behaviors" / (name + ".js")).read_text()
         behavior += "})();"
         page_css = css
+        if "data-quiz-snapshot" in content:
+            page_css += (base / "quiz.css").read_text()
         if 'class="travel"' in content:
             page_css += (base / "travel.css").read_text()
         else:

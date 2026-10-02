@@ -38,3 +38,4 @@ jobs:
           node scripts/test_templates.cjs "$RUNNER_TEMP/template-browser"
           node scripts/test_template_navigation.cjs
           node scripts/test_travel_currency.cjs
+          node scripts/test_change_quiz.cjs

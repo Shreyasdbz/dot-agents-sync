@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Invoice delivery change quiz · fictional example</title><style>
+/* Canonical foundation. Generated pages inline this file; no runtime dependency. */
+select{max-width:100%;min-width:0}
+:root{color-scheme:light;--bg:#fafbfc;--surface:#fff;--ink:#182230;--muted:#526172;--line:#dce2e8;--accent:#175cd3;--tint:#edf4ff;--good:#146343;--warn:#874600;--danger:#b42318;--radius:6px;--shadow:none;font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+:root[data-theme=dark]{color-scheme:dark;--bg:#10151d;--surface:#19212c;--ink:#eef2f6;--muted:#b4c0cf;--line:#394756;--accent:#a7c8ff;--tint:#21324a;--good:#90dfb4;--warn:#ffcf8a;--danger:#ffa69e;--shadow:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){color-scheme:dark;--bg:#10151d;--surface:#19212c;--ink:#eef2f6;--muted:#b4c0cf;--line:#394756;--accent:#a7c8ff;--tint:#21324a;--good:#90dfb4;--warn:#ffcf8a;--danger:#ffa69e;--shadow:none}}
+*{box-sizing:border-box}html{scroll-padding-top:6rem}body{margin:0;background:var(--bg);color:var(--ink)}[hidden]{display:none!important}a{color:var(--accent);text-underline-offset:.22em}button,input,select{font:inherit}button,select{min-height:44px;border:1px solid var(--line);border-radius:5px;padding:.45rem .7rem;background:var(--surface);color:var(--ink)}button{cursor:pointer}button:hover{background:var(--tint)}button:disabled{opacity:.5;cursor:default}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}::selection{background:var(--tint)}.skip{position:fixed;top:-100px;left:1rem;z-index:9;padding:.7rem;background:var(--surface)}.skip:focus{top:1rem}
+.topbar{border-bottom:1px solid var(--line);background:var(--surface)}.topbar-inner{max-width:1280px;margin:auto;min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.5rem 1.25rem}.brand{font-weight:600;letter-spacing:0;font-size:.95rem}.brand span{font-weight:400;color:var(--muted);margin-left:.6rem;letter-spacing:0;font-size:.875rem}.tools{display:flex;gap:.5rem;flex-wrap:wrap}.layout{display:grid;grid-template-columns:150px minmax(0,1fr);gap:2rem;max-width:1280px;margin:auto;padding:1.5rem 1.25rem 3rem}.sidebar{align-self:start;position:sticky;top:2rem}.sidebar p,.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:.72rem;font-weight:750;color:var(--muted)}.sidebar a{display:block;text-decoration:none;color:var(--muted);padding:.6rem .8rem;min-height:44px;border-left:2px solid transparent}.sidebar a:hover,.sidebar a[aria-current]{background:var(--tint);border-color:var(--accent);color:var(--accent)}main{min-width:0}h1,h2,h3{overflow-wrap:anywhere;line-height:1.2;letter-spacing:-.015em;text-wrap:balance}h1{font-size:clamp(1.6rem,3vw,2.1rem);margin:.8rem 0 1rem;max-width:42ch;font-weight:650}h2{font-size:1.2rem;margin:0}h3{font-size:1.05rem;margin:0 0 .5rem}.lede{color:var(--muted);font-size:1rem;max-width:62ch}.hero{padding-bottom:.6rem}.meta{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;color:var(--muted);font-size:.85rem}.badge{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--line);border-radius:4px;padding:.15rem .45rem;font-size:.75rem;font-weight:650;white-space:nowrap}.badge.good{color:var(--good)}.badge.warn{color:var(--warn)}.badge.danger{color:var(--danger)}.section{margin-top:1.6rem;scroll-margin-top:2rem}.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin-bottom:1rem}.section-head p{margin:0;color:var(--muted);font-size:.85rem}.panel,.disclosure{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.panel{padding:1rem}.panel>:last-child{margin-bottom:0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--line);margin:1.6rem 0}.metric{padding:1.3rem 1.5rem;background:var(--surface)}.metric dt{font-size:.8rem;color:var(--muted)}.metric dd{margin:.3rem 0 0;font-size:1.8rem;font-weight:650;letter-spacing:-.04em}.metric small{font-size:.75rem;color:var(--muted);display:block;letter-spacing:0;font-weight:400}.callout{border-left:3px solid var(--accent);padding:.8rem 1.2rem;background:var(--tint);border-radius:0 10px 10px 0}.callout p{margin:.3rem 0}.muted{color:var(--muted)}.small{font-size:.85rem}.stack{display:grid;gap:.8rem}
+.disclosure summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:1rem;padding:.7rem 1rem;min-height:56px;border-radius:var(--radius)}.disclosure summary::-webkit-details-marker{display:none}.disclosure summary::after{content:"+";font-size:1.5rem;color:var(--muted);margin-left:auto;flex-shrink:0}.disclosure[open]>summary::after{content:"−"}.disclosure[open]>summary{border-bottom:1px solid var(--line);border-radius:var(--radius) var(--radius) 0 0}.summary-title{font-weight:650;display:block}.summary-meta{display:block;font-size:.8rem;color:var(--muted);font-weight:400}.day-number{color:var(--accent);font-size:.8rem;font-weight:750;min-width:2rem}.detail-body{padding:1rem}.timeline{list-style:none;margin:0;padding:0}.timeline li{display:grid;grid-template-columns:5rem minmax(0,1fr);gap:1rem;position:relative;padding:0 0 1.6rem}.timeline li:last-child{padding-bottom:0}.timeline time{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.85rem}.timeline li>div{border-left:2px solid var(--line);padding-left:1.2rem}.timeline p{margin:.3rem 0;color:var(--muted);font-size:.9rem}.table-wrap{overflow-x:auto;max-width:100%;border:1px solid var(--line);border-radius:12px;background:var(--surface)}table{width:100%;border-collapse:collapse;font-size:.9rem}caption{text-align:left;font-weight:600;padding:1rem}th,td{text-align:left;vertical-align:top;padding:.65rem .8rem;border-top:1px solid var(--line)}thead th{background:var(--bg);font-size:.75rem;color:var(--muted)}th{font-weight:650}.number{text-align:right;font-variant-numeric:tabular-nums}tfoot{font-weight:750}.route-map{width:100%;height:auto;display:block;color:var(--accent);background:var(--bg);border-radius:10px}.route-map text{fill:var(--ink);font:14px system-ui,sans-serif}.route-map .gridline{stroke:var(--line);stroke-width:1}.route-map .route{fill:none;stroke:currentColor;stroke-width:2.5;stroke-dasharray:6 5}.route-map .point{fill:var(--surface);stroke:currentColor;stroke-width:3}figure{margin:0}figcaption{font-size:.8rem;color:var(--muted);margin-top:.7rem}.route-labels{display:flex;justify-content:space-between;gap:1rem;margin-top:1rem}.route-labels strong{font-size:1.7rem;display:block;letter-spacing:-.03em}.route-labels small{color:var(--muted)}.flow{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;list-style:none;padding:0}.flow li{border:1px solid var(--line);border-radius:8px;padding:.7rem 1rem;background:var(--surface)}pre{overflow:auto;max-width:100%;background:var(--bg);padding:1rem;border-radius:9px;font-size:.85rem}code{overflow-wrap:anywhere}p,li,td{overflow-wrap:anywhere}.source-list{padding-left:1.2rem;font-size:.85rem;color:var(--muted)}footer{border-top:1px solid var(--line);padding-top:1.5rem;margin-top:3rem;color:var(--muted);font-size:.8rem}.empty{border:1px dashed var(--line);padding:2rem;text-align:center;border-radius:var(--radius);color:var(--muted)}.filter-bar{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin:1rem 0}.filter-bar input{min-height:44px;min-width:0;flex:1;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:.6rem .8rem;border-radius:9px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.deck main{max-width:1100px;margin:auto;padding:2rem}.slide{min-height:75vh;padding:3rem 0;border-bottom:1px solid var(--line);scroll-margin-top:1rem}.slide h2{font-size:clamp(1.6rem,3vw,2.6rem);max-width:40ch}.deck-controls{position:sticky;bottom:0;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.7rem;padding:.8rem 1rem;border-top:1px solid var(--line);background:var(--surface)}progress{accent-color:var(--accent);width:6rem}.bars{display:grid;gap:1.4rem;margin:2rem 0}.bar{height:12px;background:var(--line);border-radius:99px;overflow:hidden}.bar span{display:block;height:100%;background:var(--accent)}.bars p{display:flex;justify-content:space-between;gap:1rem;margin:.4rem 0}
+@media(max-width:800px){.layout{grid-template-columns:1fr;gap:1.5rem;padding:1.5rem 1rem 3rem}.sidebar{position:static;border-bottom:1px solid var(--line);padding-bottom:.6rem}.sidebar p{display:none}.sidebar nav{display:flex;flex-wrap:wrap}.sidebar a{padding:.5rem .65rem;border-left:0;border-bottom:2px solid transparent}.topbar-inner{padding:1rem}.brand span{display:none}.grid{grid-template-columns:1fr}.metric{padding:1rem}.metric dd{font-size:1.4rem}.section-head{align-items:start;flex-direction:column;gap:.3rem}.deck main{padding:1rem}.slide{min-height:0;padding:2rem 0}.deck-controls{position:static}}
+@media(max-width:400px){.metrics{grid-template-columns:1fr}.metric{display:flex;justify-content:space-between;gap:1rem;align-items:baseline}.metric dd{margin:0}.disclosure summary{padding:1rem;gap:.5rem}.detail-body{padding:1rem}.timeline li{grid-template-columns:3.6rem 1fr;gap:.4rem}.tools button{padding:.5rem}}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}button,a,summary{transition:background-color .15s ease,border-color .15s ease}}
+@media(forced-colors:active){.badge,.panel,.disclosure,button{border:1px solid CanvasText}.route-map{forced-color-adjust:auto}}
+@media print{:root{color-scheme:light;--bg:#fff;--surface:#fff;--ink:#000;--muted:#333;--line:#aaa;--accent:#000;--tint:#fff;--shadow:none}.tools,.sidebar,.skip,.filter-bar,.deck-controls,.screen-only,[data-empty]{display:none!important}.layout{display:block;padding:0}.topbar-inner{padding:0;min-height:0}.topbar{padding-bottom:1rem}.panel,.disclosure{box-shadow:none;break-inside:avoid}.disclosure::details-content{content-visibility:visible!important}.disclosure>.detail-body{display:block!important}.section{margin-top:1.5rem}.slide{min-height:0;break-after:page;padding:1rem 0}.slide:last-child{break-after:auto}.deck main{padding:0}h2,h3{break-after:avoid}.table-wrap{overflow:visible}body{background:white;color:black}a{color:inherit}}
+
+/* Technical content: density changes grouping, not legibility. */
+body[data-deck-mode=document] .slide{min-height:0;padding:1.5rem 0;border-bottom:1px solid var(--line)}
+.deck main{padding:1.2rem 1.5rem}.slide{min-height:calc(100dvh - 150px);padding:1rem 0 2rem;border:0}.slide h1,.slide h2{margin:.3rem 0 1.2rem}.slide.dense{font-size:.93rem}.slide.dense h2{font-size:1.65rem}.dense-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem}.dense-grid>:last-child{grid-column:1/-1}.dense-grid h3{margin:.8rem 0 .4rem}.dense-grid p,.dense-grid ul{margin:.4rem 0}.deck-controls{position:sticky;bottom:0;min-height:60px;gap:.5rem;padding:.45rem}.deck-controls select{max-width:24rem}.deck-controls progress{display:none}.chart{padding:1rem 0}.chart figcaption,.data-flow figcaption,.entity-model figcaption{font-size:.95rem;color:var(--ink);margin:0 0 1rem}.chart-row{display:grid;grid-template-columns:7rem minmax(0,1fr) 3rem;align-items:center;gap:.7rem;margin:.9rem 0}.bar.target span{background:transparent;border:2px dashed var(--accent)}.flow-nodes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));list-style:none;padding:0;gap:1rem}.flow-nodes li{border:1px solid var(--line);padding:.8rem;min-width:0;border-radius:4px}.flow-nodes code,.edge-label{display:block;font-size:.78rem;margin-top:.4rem}.edge-label{color:var(--muted)}.entity-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.entity{border:1px solid var(--line);border-radius:4px;min-width:0}.entity h3{background:var(--tint);padding:.6rem;margin:0}.entity dl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.5rem;font-size:.78rem;padding:.7rem;margin:0}.entity dt{font-family:ui-monospace,monospace;overflow-wrap:anywhere}.entity dd{margin:0;overflow-wrap:anywhere}.relations{font-size:.85rem;padding-left:1.2rem}.diagram-scroll{overflow:auto}.technical-svg{width:100%;min-width:450px;display:block}.technical-svg text{fill:var(--ink);font:14px system-ui}.technical-svg .axis{stroke:var(--line);fill:none}.technical-svg .series{stroke:var(--accent);stroke-width:3;fill:none}.sequence ol{list-style:none;display:grid;gap:.6rem;padding:0}.sequence li{display:grid;grid-template-columns:7rem 1fr;gap:1rem;padding:.65rem .8rem;border-left:3px solid var(--line);background:var(--surface)}.sequence li[data-active=true]{border-color:var(--accent);background:var(--tint)}.sequence-controls{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}.sequence-controls [role=status]{font-size:.8rem;color:var(--muted)}
+/* Travel: chronological rows, with details available per item. */
+.travel .layout{display:block;max-width:960px;padding:1rem 1rem 3rem}.travel .hero h1{font-size:1.6rem;margin:.4rem 0}.travel .hero p{margin:.25rem 0}.travel-nav{display:flex;gap:1rem;border-bottom:1px solid var(--line);margin:.8rem 0}.travel-nav a{display:flex;align-items:center;min-height:44px;text-decoration:none;font-size:.88rem}.travel-filters{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;background:var(--bg);padding:.6rem 0;position:sticky;top:0;z-index:2;border-bottom:1px solid var(--line)}.travel-filters label{font-size:.8rem}.travel-filters select{max-width:11rem}.travel-filters [role=status]{font-size:.78rem;color:var(--muted)}.day-heading{font-size:1rem;padding:.7rem 0 .45rem;margin:0}.travel-day{margin-bottom:.9rem}.event{border:0;border-bottom:1px solid var(--line);border-radius:0;box-shadow:none;background:var(--surface)}.event summary{display:grid;grid-template-columns:4.2rem minmax(0,1fr) 1rem;gap:.6rem;padding:.7rem .5rem;min-height:66px;border-radius:0}.event summary::after{font-size:1.15rem}.event .event-time{font-size:.8rem;font-variant-numeric:tabular-nums;align-self:start}.event .event-time small{display:block;color:var(--muted)}.event .summary-title{font-size:.9rem;font-weight:600}.event .summary-meta{font-size:.77rem;margin-top:.15rem}.event .detail-body{padding:.8rem .8rem 1rem 5.3rem}.facts{display:grid;grid-template-columns:8rem 1fr;gap:.4rem .8rem;font-size:.85rem;margin:.4rem 0}.facts dt{color:var(--muted)}.facts dd{margin:0}.allocation{list-style:none;padding:0;font-size:.85rem}.allocation li{display:flex;justify-content:space-between;gap:1rem;border-top:1px solid var(--line);padding:.5rem 0}.travel .section-head{margin-bottom:.5rem}.travel .section{margin-top:1.2rem}.travel .tools{gap:.3rem}.travel .tools button{font-size:.85rem}.travel .group-list{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0}.travel .group-list span{font-size:.8rem;padding:.25rem .5rem;background:var(--tint);border-radius:4px}.travel .stay-list{display:grid;gap:.5rem}.travel footer{margin-top:1.5rem;padding-top:.7rem}.travel .cost-strip{display:flex;justify-content:space-between;gap:1rem;padding:.7rem 0;border-block:1px solid var(--line);font-size:.85rem}
+@media(max-width:800px){.slide{min-height:calc(100dvh - 180px)}.dense-grid,.entity-grid{grid-template-columns:1fr}.dense-grid>:last-child{grid-column:auto}.flow-nodes{grid-template-columns:1fr 1fr}.deck-controls{position:sticky}.deck-controls select{max-width:calc(100vw - 165px);font-size:.8rem}.deck-controls button{font-size:.85rem}.sequence li{grid-template-columns:1fr;gap:.2rem}.travel .topbar-inner{padding:.35rem .8rem}.travel .layout{padding:.65rem .8rem 2rem}.travel .section-head{flex-direction:row;align-items:center;gap:.5rem}.travel-nav{gap:.8rem;flex-wrap:wrap}.travel-filters select{max-width:9rem;font-size:.85rem}.travel .table-wrap th,.travel .table-wrap td{padding:.5rem;font-size:.8rem}.travel .event .detail-body{padding:.7rem}.facts{grid-template-columns:6rem 1fr}.chart-row{grid-template-columns:5rem minmax(0,1fr) 2.6rem}.travel .event .summary-meta{line-height:1.45}}
+@media(prefers-reduced-motion:no-preference){.sequence li{transition:background-color .18s,border-color .18s}}
+@media print{.slide[hidden]{display:block!important}.travel-filters,.sequence-controls,[data-travel-empty]{display:none!important}.travel .event .detail-body{padding:.5rem}.travel-day{break-inside:avoid}.sequence li{background:white;border-color:#999}.travel .layout{padding:0}.slide{min-height:0}.dense-grid{display:block}}
+/* Quiz layout: each visual and its choices form one reading unit. */
+.quiz main{max-width:1100px;margin:auto}.quiz-snapshot{margin:2rem 0}.quiz-question{padding:2rem 0;border-top:1px solid var(--line);scroll-margin-top:6rem}.quiz-question h3{font-size:1.45rem;max-width:42ch;margin:0 0 1rem}.quiz-scene{margin:1rem 0 1.5rem;padding:1.3rem;background:var(--tint);border:1px solid var(--line);border-radius:var(--radius)}.quiz-scene figcaption{font-weight:600;margin-bottom:1rem}.quiz-flow{list-style:none;display:flex;align-items:stretch;gap:.6rem;padding:0;margin:0;flex-wrap:wrap}.quiz-flow li{flex:1 1 140px;min-width:0;padding:.8rem;border:1px solid var(--accent);background:var(--surface)}.quiz-flow li+li::before{content:'→ ';color:var(--accent);font-weight:700}.quiz-flow small{display:block;color:var(--muted);margin-top:.4rem}.quiz-flow .unknown{border:2px dashed var(--accent)}.quiz-question fieldset{border:0;padding:0;margin:1rem 0}.quiz-question legend{font-weight:600;padding:0;margin-bottom:.7rem}.quiz-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}.quiz-options label{display:flex;align-items:flex-start;gap:.7rem;padding:1rem;min-height:56px;border:1px solid var(--muted);border-radius:var(--radius);background:var(--surface);cursor:pointer}.quiz-options label:has(:checked){border:2px solid var(--accent);padding:calc(1rem - 1px);background:var(--tint)}.quiz-options label:has(:focus-visible){outline:3px solid var(--accent);outline-offset:3px}.quiz-options input{flex-shrink:0;width:1.1rem;height:1.1rem;margin:.22rem 0 0;accent-color:var(--accent)}.quiz-feedback{border-left:3px solid var(--accent);padding:.5rem 1rem;margin-top:1rem}.quiz-feedback h4{font-size:1.1rem;margin:.6rem 0}.quiz-feedback ol{padding-left:1.4rem}.quiz-feedback li{padding:.5rem 0}.quiz-feedback li[data-selected=true]{font-weight:600}.quiz-feedback li p{font-weight:400;margin:.3rem 0}.quiz-result{font-weight:600;min-height:1.5em}.quiz-progress{color:var(--muted);font-variant-numeric:tabular-nums}.quiz-compare{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.quiz-compare section{border-left:3px solid var(--accent);padding:0 1rem}.quiz-compare h4{margin:0 0 .6rem}.quiz-compare p{margin:.4rem 0}.quiz-actions{display:flex;gap:1rem;align-items:center}.quiz .facts dd,.quiz code{overflow-wrap:anywhere}.quiz [data-quiz-error]{color:var(--danger);font-weight:600}.quiz-history{margin-top:2rem}.quiz-history .detail-body{padding-top:0}
+@media(max-width:650px){.quiz-options,.quiz-compare{grid-template-columns:1fr}.quiz-scene{padding:1rem}.quiz-flow{flex-direction:column}.quiz-flow li{flex:auto}.quiz-flow li+li::before{content:'↓ '}.quiz-question{padding:1.5rem 0}.quiz-question h3{font-size:1.25rem}}
+@media print{.quiz-actions,.quiz-result,.quiz-progress,[data-quiz-retry]{display:none!important}.quiz-feedback[hidden]{display:block!important}.quiz-question{break-inside:auto}.quiz-options label{break-inside:avoid}.quiz-scene{break-inside:avoid}.quiz .quiz-history>.detail-body{display:block!important}.quiz-feedback li{break-inside:avoid}}
+/* Document and presentation shell. Travel retains its own layout and palette. */
+:root{--bg:#f4f6fc;--surface:#fff;--ink:#17213b;--muted:#4c5870;--line:#b8c3d8;--accent:#4936b5;--tint:#edeafb;--radius:10px;--store:#07665e;--store-tint:#def5ef;--external:#8d3c11;--external-tint:#fff0df;--uncertain:#8b361c;--uncertain-tint:#fff0e8}
+:root[data-theme=dark]{--bg:#10172a;--surface:#1b2540;--ink:#f3f5ff;--muted:#c0cae0;--line:#647493;--accent:#c4b5ff;--tint:#302650;--store:#7ce2c8;--store-tint:#163c3a;--external:#ffc98b;--external-tint:#423022;--uncertain:#ffb898;--uncertain-tint:#442a27}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#10172a;--surface:#1b2540;--ink:#f3f5ff;--muted:#c0cae0;--line:#647493;--accent:#c4b5ff;--tint:#302650;--store:#7ce2c8;--store-tint:#163c3a;--external:#ffc98b;--external-tint:#423022;--uncertain:#ffb898;--uncertain-tint:#442a27}}
+.icon{width:20px;height:20px;flex:none;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.icon-button{display:inline-grid;place-items:center;width:44px;height:44px;padding:0;border-color:transparent;background:transparent;border-radius:8px}.icon-button span{display:flex}.tools{gap:.15rem;flex-wrap:nowrap}.topbar{position:sticky;top:0;z-index:5;background:var(--bg)}
+@supports(backdrop-filter:blur(16px)){.topbar{background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(16px)}}
+.topbar-inner{max-width:1280px;gap:1.2rem;padding:.35rem 1.5rem;flex-wrap:wrap}.brand{white-space:nowrap}.page-nav{display:flex;gap:.25rem;min-width:0;margin-left:auto}.page-nav a{display:flex;align-items:center;gap:.4rem;min-height:44px;padding:.45rem .65rem;text-decoration:none;color:var(--muted);font-size:.85rem;border-radius:6px;white-space:nowrap}.page-nav a:hover{background:var(--tint);color:var(--ink)}.page-nav .icon{width:17px;height:17px}.layout{display:block;max-width:1200px;padding:2.5rem 1.5rem 3rem}.hero{padding-bottom:1.3rem}.hero h1{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:600;letter-spacing:-.035em;margin:.4rem 0 .6rem}.lede{max-width:72ch;line-height:1.65;margin:.5rem 0 1rem}.eyebrow{text-transform:none;letter-spacing:0;font-weight:500;font-size:.85rem}.section{margin-top:2.2rem;scroll-margin-top:1rem}.section-head{margin-bottom:.8rem}.section-head h2{display:flex;align-items:center;gap:.55rem;font-weight:600}.section-head .icon{color:var(--muted)}.callout{border-radius:0 7px 7px 0;background:transparent;padding:.5rem 1rem}.callout p{max-width:85ch}.grid{gap:.8rem}.panel{padding:1.1rem}.panel p{max-width:75ch}.summary-title{font-weight:600}.summary-meta{margin-top:.2rem}.disclosure summary>.icon{color:var(--muted)}.disclosure summary{gap:.75rem}.detail-body>p:first-child{margin-top:0}.facts{grid-template-columns:9rem minmax(0,1fr);gap:.6rem 1rem}.meta code{font-size:.85rem}.section .facts{margin:0}.review-scope{margin-top:1.5rem}.finding-location{font-family:ui-monospace,monospace}.table-wrap{border-radius:8px}footer{padding-top:1rem;margin-top:2rem}.deck main{max-width:1200px;padding:1.6rem 2rem}.slide{padding:1.3rem 0 2rem}.slide h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:600;letter-spacing:-.035em}.slide h2{font-weight:600;letter-spacing:-.03em}.slide .facts{margin-top:1.6rem;font-size:1rem;grid-template-columns:11rem minmax(0,1fr);gap:1rem}.slide.dense .facts{font-size:.9rem}.deck-controls{z-index:6;background:var(--bg);gap:.6rem}.deck-controls select{border-color:transparent;background:transparent}.deck-controls [role=status]{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}.deck-controls .icon-button{flex:none}.dense-grid{gap:1rem 2rem}.flow-nodes li{background:var(--surface);border-radius:8px}.entity{border-radius:8px;overflow:hidden}.entity h3{background:var(--bg)}
+@media(max-width:900px){.topbar-inner{gap:.2rem .5rem;padding:.35rem 1rem}.topbar .tools{margin-left:auto}.page-nav{order:3;width:100%;overflow-x:auto;margin:0;flex-wrap:nowrap}.page-nav a{padding:.4rem .6rem}.layout{padding:1.5rem 1rem 2rem}html{scroll-padding-top:8rem}.deck main{padding:1rem}.deck .topbar-inner{flex-wrap:nowrap}.deck .brand{white-space:normal}.slide .facts{grid-template-columns:1fr;gap:.3rem}.slide .facts dd{margin-bottom:.7rem}}
+@media(max-width:600px){.filter-bar{display:grid;grid-template-columns:1fr}.filter-bar input{width:100%}.filter-bar [role=status]{font-size:.8rem}}
+@media(max-width:400px){.facts{grid-template-columns:1fr;gap:.25rem}.facts dd{margin-bottom:.6rem}.deck-controls select{max-width:calc(100vw - 160px)}.disclosure summary{padding:.8rem}.detail-body{padding:.8rem}}
+@media print{:root,:root[data-theme=dark]{--bg:#fff;--surface:#fff;--ink:#000;--muted:#333;--line:#aaa;--accent:#222;--tint:#fff;--store:#07665e;--store-tint:#def5ef;--external:#8d3c11;--external-tint:#fff0df;--uncertain:#8b361c;--uncertain-tint:#fff0e8}.topbar{position:static;background:white;backdrop-filter:none}.page-nav{display:none}.topbar-inner{padding:0}.layout,.deck main{padding:0}.hero{padding-bottom:.5rem}.slide{min-height:0}.callout{background:none}}
+</style></head><body class="quiz">
+<!-- Fictional worked composition. Replace sample content and identities with pinned evidence. -->
+<a class="skip" href="#main">Skip to content</a><header class="topbar"><div class="topbar-inner"><div class="brand">Change quiz<span>Sample</span></div><nav class="page-nav" aria-label="On this page"><a href="#sample-v2"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x='5' y='3' width='14' height='18' rx='2'/><path d='M9 7h6M9 11h6M9 15h4'/></svg><span>Latest</span></a><a href="#quiz-history"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='m3 6 9-4 9 4-9 4Zm0 6 9 4 9-4M3 18l9 4 9-4'/></svg><span>History</span></a></nav><div class="tools"><button class="icon-button" data-theme-toggle aria-label="Dark theme" aria-pressed="false" title="Change theme" hidden><span data-theme-icon="light"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx='12' cy='12' r='4'/><path d='M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5'/></svg></span><span data-theme-icon="dark" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M20 14a8 8 0 0 1-10-10 8 8 0 1 0 10 10Z'/></svg></span></button><button class="icon-button" data-print aria-label="Print" title="Print" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M6 9V3h12v6M6 17H3V9h18v8h-3M6 14h12v7H6Z'/><path d='M17 11h1'/></svg></button>
+</div></div></header>
+<div class="layout"><main id="main" tabindex="-1"><section class="hero"><h1>Invoice delivery changes</h1><p class="lede">Explain who owns a delivery and what happens after a failed write.</p><p class="callout">Fictional template example. These are invented contracts and revision labels, not verified customer behavior.</p><p>Select one answer to reveal all four explanations. You can change your answer or retry. Answers last for this page session.</p><noscript><p class="callout">JavaScript is off: read the scenarios, choices and explanations below. Self-grading and progress are unavailable.</p></noscript></section>
+<section class="quiz-snapshot" data-quiz-snapshot data-snapshot-id="fictional-v2" id="sample-v2" aria-labelledby="sample-v2-title"><h2 id="sample-v2-title">Latest · tenant ownership and atomic writes</h2><dl class="facts"><dt>Comparison</dt><dd>Fictional revision v1 → v2 · sample, no commit hash</dd><dt>Scope</dt><dd>Invoice endpoint and delivery transaction</dd><dt>Evidence limit</dt><dd>Only the fictional contracts written below; no external integration verified.</dd></dl><p class="quiz-progress" data-quiz-progress role="status" aria-live="polite"></p>
+<article class="quiz-question" data-quiz-question id="sample-v2-identity">
+<h3>Which tenant owns this delivery?</h3>
+<figure class="quiz-scene"><figcaption>Incoming invoice event · fictional scenario</figcaption>
+<ol class="quiz-flow"><li>Signed request<small>Route: tenant A<br>Body says: tenant B</small></li><li class="unknown">Ownership gate<small>Which identity proceeds?</small></li><li>Delivery transaction<small>Deduplication key: tenant + event</small></li><li>Invoice store<small>Write under resolved tenant</small></li></ol>
+<p>Read left to right. A valid signed request arrives on tenant A's endpoint; its payload names tenant B. The gate resolves identity before the transaction. The transaction's key and invoice write use that resolved identity.</p></figure>
+<fieldset><legend>Given the new route-owned identity contract, which outcome follows?</legend><div class="quiz-options">
+<label><input type="radio" name="sample-v2-identity" id="sample-v2-identity-a" value="a" data-correct="false"><span><strong>A.</strong> The body selects tenant B for both deduplication and the invoice write.</span></label>
+<label><input type="radio" name="sample-v2-identity" id="sample-v2-identity-b" value="b" data-correct="false"><span><strong>B.</strong> The endpoint selects tenant A for deduplication; the body selects tenant B for the write.</span></label>
+<label><input type="radio" name="sample-v2-identity" id="sample-v2-identity-c" value="c" data-correct="true"><span><strong>C.</strong> The endpoint selects tenant A for both deduplication and the invoice write.</span></label>
+<label><input type="radio" name="sample-v2-identity" id="sample-v2-identity-d" value="d" data-correct="false"><span><strong>D.</strong> The tenant mismatch rejects the event before deduplication or an invoice write.</span></label>
+</div></fieldset>
+<div class="quiz-actions"><button type="button" data-quiz-retry hidden>Retry question</button></div><p class="quiz-result" data-quiz-result role="status" aria-live="polite" aria-atomic="true"></p>
+<div class="quiz-feedback" data-quiz-feedback><h4>Why each option is right or wrong</h4><ol type="A">
+<li data-explanation="a"><strong>Incorrect · payload authority</strong><p>A valid signature proves the sender, but this contract resolves tenant ownership from the endpoint. Trusting the body would let the payload redirect the write.</p></li>
+<li data-explanation="b"><strong>Incorrect · split ownership</strong><p>The transaction receives one resolved tenant. Using different owners for deduplication and the invoice would break the isolation guarantee.</p></li>
+<li data-explanation="c"><strong>Correct · one resolved identity</strong><p>Tenant A owns the endpoint and supplies the identity passed into both operations. The body tenant field is ignored under this fictional contract.</p></li>
+<li data-explanation="d"><strong>Incorrect · assumed rejection</strong><p>The contract ignores the body tenant field; it does not reject a mismatch. Rejection would require an additional comparison absent from this example.</p></li>
+</ol><p class="small">Fictional evidence: the scenario's route-owned identity contract. No repository, real PR, service or test has been inspected for this example.</p></div></article>
+
+<article class="quiz-question" data-quiz-question id="sample-v2-retry"><h3>What survives a failed invoice write?</h3>
+<figure class="quiz-scene"><figcaption>Deduplication and invoice state · fictional change</figcaption><div class="quiz-compare"><section><h4>Before · separate commits</h4><ol><li>Commit event key</li><li>Attempt invoice write</li></ol><p>An invoice error can occur after the key is durable.</p></section><section><h4>After · one transaction</h4><ol><li>Begin transaction</li><li>Insert event key</li><li>Attempt invoice write <strong>← error here</strong></li><li>Commit both on success</li></ol><p>Any failure before commit rolls back both operations.</p></section></div><p>Assume neither row existed beforehand, the invoice write fails before commit, and rollback succeeds. A sender later retries the same event.</p></figure>
+<fieldset><legend>Under the new transaction, what does the retry encounter?</legend><div class="quiz-options">
+<label><input type="radio" name="sample-v2-retry" id="sample-v2-retry-a" value="a" data-correct="false"><span><strong>A.</strong> A durable event key without an invoice; the delivery is suppressed as a duplicate.</span></label>
+<label><input type="radio" name="sample-v2-retry" id="sample-v2-retry-b" value="b" data-correct="true"><span><strong>B.</strong> Neither row exists; the delivery can attempt both writes again.</span></label>
+<label><input type="radio" name="sample-v2-retry" id="sample-v2-retry-c" value="c" data-correct="false"><span><strong>C.</strong> Both rows exist; the retry returns the stored invoice as a duplicate.</span></label>
+<label><input type="radio" name="sample-v2-retry" id="sample-v2-retry-d" value="d" data-correct="false"><span><strong>D.</strong> An invoice without the event key; the retry must repair the key before proceeding.</span></label>
+</div></fieldset><div class="quiz-actions"><button type="button" data-quiz-retry hidden>Retry question</button></div><p class="quiz-result" data-quiz-result role="status" aria-live="polite" aria-atomic="true"></p><div class="quiz-feedback" data-quiz-feedback><h4>Why each option is right or wrong</h4><ol type="A">
+<li data-explanation="a"><strong>Incorrect · the old failure mode</strong><p>A separately committed event key could survive the invoice error before this change. In the new transaction it rolls back too, so it cannot suppress this retry.</p></li>
+<li data-explanation="b"><strong>Correct · shared rollback</strong><p>The event key and invoice share one commit boundary. The error happens before that commit and rollback succeeds, leaving neither row durable. The retry can reattempt the transaction; success is not guaranteed.</p></li>
+<li data-explanation="c"><strong>Incorrect · assumed completion</strong><p>Both rows become durable only after a successful commit. The specified error occurs earlier, so there is no stored invoice to return.</p></li>
+<li data-explanation="d"><strong>Incorrect · partial persistence</strong><p>The shared rollback prevents either inserted row surviving alone. An invoice-only result contradicts the given transaction boundary and successful rollback.</p></li>
+</ol><p class="small">Fictional evidence: the before/after transaction contract above. It says nothing about external side effects or failures after commit.</p></div></article></section>
+<details class="disclosure quiz-history" id="quiz-history"><summary><span><span class="summary-title">History · 1 earlier snapshot</span><span class="summary-meta">Original contracts and explanations preserved</span></span></summary><div class="detail-body">
+<section class="quiz-snapshot" data-quiz-snapshot data-snapshot-id="fictional-v1" id="sample-v1" aria-labelledby="sample-v1-title"><h2 id="sample-v1-title">Earlier · separate delivery commits</h2><dl class="facts"><dt>Comparison</dt><dd>Fictional initial revision → v1 · sample, no commit hash</dd><dt>Scope</dt><dd>Historical behavior; superseded by v2's shared transaction</dd></dl><p class="quiz-progress" data-quiz-progress role="status" aria-live="polite"></p>
+<article class="quiz-question" data-quiz-question id="sample-v1-retry"><h3>Which write survives the error in v1?</h3><figure class="quiz-scene"><figcaption>Original separate commit boundary</figcaption><ol class="quiz-flow"><li>Event key committed<small>Durable deduplication state</small></li><li>Invoice write fails<small>No invoice row written</small></li><li class="unknown">Retry same event<small>What state does it find?</small></li></ol><p>The event key is committed independently before the invoice is attempted. No invoice existed earlier. The later invoice write fails.</p></figure><fieldset><legend>Which rows are durable when the sender retries?</legend><div class="quiz-options">
+<label><input type="radio" name="sample-v1-retry" id="sample-v1-retry-a" value="a" data-correct="true"><span><strong>A.</strong> Only the event key; the retry is treated as a duplicate.</span></label>
+<label><input type="radio" name="sample-v1-retry" id="sample-v1-retry-b" value="b" data-correct="false"><span><strong>B.</strong> Neither row; the retry begins a new delivery attempt.</span></label>
+<label><input type="radio" name="sample-v1-retry" id="sample-v1-retry-c" value="c" data-correct="false"><span><strong>C.</strong> Both rows; the retry reads the previously stored invoice.</span></label>
+<label><input type="radio" name="sample-v1-retry" id="sample-v1-retry-d" value="d" data-correct="false"><span><strong>D.</strong> Only the invoice; the retry rebuilds the missing event key.</span></label>
+</div></fieldset><div class="quiz-actions"><button type="button" data-quiz-retry hidden>Retry question</button></div><p class="quiz-result" data-quiz-result role="status" aria-live="polite" aria-atomic="true"></p><div class="quiz-feedback" data-quiz-feedback><h4>Why each option is right or wrong</h4><ol type="A"><li data-explanation="a"><strong>Correct · an independent commit</strong><p>The key survives because its commit already completed. In this historical contract it suppresses the retry even though the invoice failed.</p></li><li data-explanation="b"><strong>Incorrect · assumed shared rollback</strong><p>The invoice failure cannot roll back the earlier separate event-key commit.</p></li><li data-explanation="c"><strong>Incorrect · assumed successful write</strong><p>The invoice attempt failed and no invoice existed before it. Only the key is durable.</p></li><li data-explanation="d"><strong>Incorrect · reversed persistence</strong><p>The event key committed; the invoice failed. This option reverses which operation reached durable state.</p></li></ol><p class="small">Fictional evidence: v1's separate-commit contract. Preserved for comparison, not the latest behavior.</p></div></article></section>
+</div></details><footer>Fictional learning example · No real changes analyzed; nothing published.</footer></main></div><script>/* Progressive enhancement only: semantic HTML remains useful without JavaScript. */
+(() => {
+  'use strict';
+  const all = (selector) => [...document.querySelectorAll(selector)];
+  const theme = document.querySelector('[data-theme-toggle]');
+  if (theme) {
+    theme.hidden = false;
+    const systemTheme = matchMedia('(prefers-color-scheme: dark)');
+    const refreshTheme = () => {
+      const dark = document.documentElement.dataset.theme
+        ? document.documentElement.dataset.theme === 'dark' : systemTheme.matches;
+      theme.setAttribute('aria-pressed', String(dark));
+      theme.querySelectorAll('[data-theme-icon]').forEach(icon => {
+        icon.hidden = icon.dataset.themeIcon !== (dark ? 'dark' : 'light');
+        icon.toggleAttribute('hidden', icon.hidden);
+      });
+      theme.title = dark ? 'Dark theme · switch to light' : 'Light theme · switch to dark';
+    };
+    theme.addEventListener('click', () => {
+      const dark = document.documentElement.dataset.theme
+        ? document.documentElement.dataset.theme === 'dark'
+        : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = dark ? 'light' : 'dark';
+      theme.setAttribute('aria-pressed', String(!dark));
+      refreshTheme();
+    });
+    refreshTheme();
+    systemTheme.addEventListener('change', refreshTheme);
+  }
+  all('[data-print]').forEach(button => {button.hidden = false; button.onclick = () => window.print();});
+  const disclosures = all('details.disclosure');
+  all('[data-expand]').forEach(button => {
+    button.hidden = false;
+    button.onclick = () => {disclosures.forEach(item => {item.open = button.dataset.expand === 'all';});};
+  });
+  const revealHash = () => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const target = document.getElementById(id);
+    if (!target) return;
+    let node = target;
+    while (node) {if (node.tagName === 'DETAILS') node.open = true; node = node.parentElement;}
+  };
+  try {revealHash();} catch {}
+  window.addEventListener('hashchange', () => {try {revealHash();} catch {}});
+  let printState;
+  window.addEventListener('beforeprint', () => {
+    if (!printState) printState = disclosures.map(item => item.open);
+    disclosures.forEach(item => {item.open = true;});
+  });
+  window.addEventListener('afterprint', () => {
+    if (printState) disclosures.forEach((item, index) => {item.open = printState[index];});
+    printState = undefined;
+  });
+  const filter = document.querySelector('[data-filter]');
+  if (filter) {
+    filter.closest('.filter-bar').hidden = false;
+    const items = all('[data-finding]');
+    const status = document.querySelector('[data-filter-status]');
+    filter.addEventListener('input', () => {
+      const query = filter.value.trim().toLocaleLowerCase();
+      let count = 0;
+      items.forEach(item => {
+        item.hidden = !item.textContent.toLocaleLowerCase().includes(query);
+        if (!item.hidden) count++;
+      });
+      status.textContent = count + ' of ' + items.length + ' findings shown';
+      const empty = document.querySelector('[data-empty]');
+      if (empty) empty.hidden = count !== 0;
+    });
+    // Printing must not silently omit filtered-out findings.
+    let hiddenState;
+    window.addEventListener('beforeprint', () => {
+      if (!hiddenState) hiddenState = items.map(item => item.hidden);
+      items.forEach(item => {item.hidden = false;});
+    });
+    window.addEventListener('afterprint', () => {
+      if (hiddenState) items.forEach((item, index) => {item.hidden = hiddenState[index];});
+      hiddenState = undefined;
+    });
+  }
+/* Learning state is local to each question and lasts only for this page session. */
+all('[data-quiz-snapshot]').forEach(snapshot => {
+  const questions = [...snapshot.querySelectorAll('[data-quiz-question]')];
+  const valid = [];
+  const progress = snapshot.querySelector('[data-quiz-progress]');
+  const refreshProgress = () => {
+    if (progress) progress.textContent = valid.filter(q => q.querySelector('input:checked')).length
+      + ' of ' + valid.length + ' questions answered';
+  };
+  questions.forEach(question => {
+    const inputs = [...question.querySelectorAll('input[type="radio"]')];
+    const feedback = question.querySelector('[data-quiz-feedback]');
+    const result = question.querySelector('[data-quiz-result]');
+    const retry = question.querySelector('[data-quiz-retry]');
+    const explanations = [...question.querySelectorAll('[data-explanation]')];
+    const values = inputs.map(input => input.value);
+    const names = inputs.map(input => input.name);
+    const correct = inputs.filter(input => input.dataset.correct === 'true');
+    const shapeValid = inputs.length === 4 && new Set(values).size === 4
+      && new Set(names).size === 1 && names[0]
+      && [...document.querySelectorAll('input[type="radio"]')].filter(input => input.name === names[0]).length === 4
+      && inputs.every(input => ['true', 'false'].includes(input.dataset.correct))
+      && correct.length === 1 && explanations.length === 4
+      && values.every(value => explanations.filter(item => item.dataset.explanation === value).length === 1)
+      && feedback && result && retry
+      && explanations.every(item => feedback.contains(item) && item.textContent.trim());
+    if (!shapeValid) {
+      inputs.forEach(input => { input.disabled = true; });
+      const error = document.createElement('p');
+      error.dataset.quizError = '';
+      error.textContent = 'Question unavailable: repair its four unique choices, single answer, explanations and controls.';
+      question.append(error);
+      return;
+    }
+    valid.push(question);
+    inputs.forEach(input => { input.checked = false; });
+    feedback.hidden = true;
+    retry.hidden = false;
+    const choose = () => {
+      const selected = inputs.find(input => input.checked);
+      if (!selected) return;
+      feedback.hidden = false;
+      const letter = String.fromCharCode(65 + inputs.indexOf(selected));
+      const answer = String.fromCharCode(65 + inputs.indexOf(correct[0]));
+      result.textContent = selected === correct[0]
+        ? 'Correct — you selected ' + letter + '. All four explanations follow.'
+        : 'You selected ' + letter + '. Correct answer: ' + answer + '. All four explanations follow.';
+      explanations.forEach(item => { item.dataset.selected = String(item.dataset.explanation === selected.value); });
+      refreshProgress();
+    };
+    inputs.forEach(input => { input.addEventListener('change', choose); });
+    retry.addEventListener('click', () => {
+      inputs.forEach(input => { input.checked = false; });
+      explanations.forEach(item => { delete item.dataset.selected; });
+      feedback.hidden = true;
+      result.textContent = '';
+      refreshProgress();
+      inputs[0].focus();
+    });
+  });
+  refreshProgress();
+});
+// Print every explanation, then restore the learner's precise screen state.
+let quizPrintState;
+window.addEventListener('beforeprint', () => {
+  if (!quizPrintState) quizPrintState = all('[data-quiz-feedback]').map(node => [node, node.hidden]);
+  all('[data-quiz-feedback]').forEach(node => { node.hidden = false; });
+});
+window.addEventListener('afterprint', () => {
+  if (quizPrintState) quizPrintState.forEach(([node, hidden]) => { node.hidden = hidden; });
+  quizPrintState = undefined;
+});
+})();</script></body></html>

@@ -1,0 +1,32 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Skill",
+  "id": "skill.change-quiz",
+  "name": "change-quiz",
+  "version": "1.0.0",
+  "description": "Create or update a visual, four-option HTML quiz that teaches how local changes or a PR work and what they affect, with evidence-backed explanations and revision history.",
+  "presentation": {
+    "display_name": "Change Quiz",
+    "short_description": "Understand changes through visual questions",
+    "default_prompt": "Use $dasync-skill-change-quiz to create or update a visual quiz for these changes."
+  },
+  "license": "MIT",
+  "entry": "SKILL.md",
+  "files": ["SKILL.md", "analysis.md", "questions.md", "research.md"],
+  "scopes": ["user", "project"],
+  "token_budget": 5000,
+  "requires": {
+    "policy.repository-guidance": ">=1,<2",
+    "policy.communication": ">=1,<2",
+    "policy.scope": ">=1,<2",
+    "policy.security": ">=1,<2",
+    "policy.research": ">=1,<2",
+    "context.artifact-routing": ">=1,<2",
+    "skill.visual-artifacts": ">=1,<2",
+    "template.change-quiz": ">=1,<2"
+  },
+  "capabilities": ["filesystem.read", "filesystem.write"],
+  "prefers": ["git.read", "web.search", "browser.render"],
+  "fallback": "Use supplied change evidence; disclose unknown revisions, external contracts and unavailable browser verification.",
+  "outputs": ["html"]
+}

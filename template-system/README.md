@@ -9,6 +9,7 @@ A small authoring system, not an application framework. Markdown recipes select 
 - `visual.css`: typed diagram shapes, semantic lanes, identity tracks, actor selection and composition/motion tokens; included only for editorial pages containing slides, sequences or process diagrams.
 - `icons.json`: canonical decorative SVG paths, expanded from `{{icon:name}}` at build time. Pair section icons with text; name every icon-only control. `components/page-tools.html` shares theme and print controls across the editorial pages.
 - `ui.js`: theme, disclosure controls, hash reveal, print restoration and finding search. No network calls or storage.
+- `quiz.css` and `behaviors/quiz.js`: visual question layout, immediate all-option explanations, retry, per-snapshot progress and print restoration. Only quiz pages include them. Answers are session-only; history is preserved HTML content.
 - `behaviors/*.js`: separate deck navigation, sequence playback and optional travel currency modules. The builder includes only modules used by the composition. Travel-only styles live in `travel.css`.
 - `components/*.html`: reusable charts, data flow, entity models, sequences, dense context, travel events, stays, costs and finding fragments.
 - `pages/*.html`: complete worked compositions. `{{component:name}}` includes a local fragment; `{{styles}}` and `{{interactions}}` inline the foundation.
@@ -16,7 +17,7 @@ A small authoring system, not an application framework. Markdown recipes select 
 - `packages/templates/*/components.md`: shipped usage contracts and copyable markup, loaded only when needed.
 - `packages/templates/*/components/*.html`: shipped, individually loadable fragments generated from the same canonical components. They inherit the entrypoint's foundation; they are not standalone pages.
 
-Edit canonical HTML source rather than generated HTML. Run `python scripts/build_templates.py --page trip` (or proposal/review/deck) to emit an apply_patch-compatible update; apply that patch. `python scripts/build_templates.py --check` detects stale outputs. The normal Python tests enforce exact generated/source parity and shipped Markdown links. Add new fragments under components, reference them from a page, and regenerate; never hand-maintain several copies of the CSS.
+Edit canonical HTML source rather than generated HTML. Run `python scripts/build_templates.py --page trip` (or proposal/review/deck/quiz) to emit an apply_patch-compatible update; apply that patch. `python scripts/build_templates.py --check` detects stale outputs. The normal Python tests enforce exact generated/source parity and shipped Markdown links. Add new fragments under components, reference them from a page, and regenerate; never hand-maintain several copies of the CSS.
 
 The builder processes trusted repository source, not arbitrary external HTML. It is not a sanitization service. Unknown component files fail the build; delivery tests reject unresolved template markers.
 
@@ -65,3 +66,5 @@ Run `node scripts/test_template_navigation.cjs` for the focused navigation regre
 Do not call an automated audit full accessibility certification. Screen-reader/assistive-technology testing, non-Chromium engines and final-document content accuracy remain distinct gates.
 
 See the [latest refinement evidence](../evals/runs/template-refinement/README.md) for the navigation reproduction, expanded component coverage, current sizes and browser results.
+
+Quiz checks run with `node scripts/test_change_quiz.cjs`, using host-provided Playwright. They exercise immediate feedback for all four options, retry isolation, independent snapshot progress, keyboard controls, history, deep links, repeated print restoration, themes, reflow, text zoom, no-JavaScript reading and invalid-question handling. Evidence is saved in a temporary directory. These checks use fictional contracts and do not establish model question quality.

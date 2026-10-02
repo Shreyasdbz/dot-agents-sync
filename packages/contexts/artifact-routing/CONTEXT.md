@@ -7,6 +7,7 @@ An explicit user destination takes precedence, subject to the applicable path an
 | Requested artifact | Default kind |
 | --- | --- |
 | PR review Markdown or HTML | `pr-reviews/` |
+| Change-understanding quiz HTML | `quizzes/` |
 | Presentation HTML | `decks/` |
 | Design proposal Markdown or HTML | `proposals/` |
 | Investigation Markdown | `investigations/` |
