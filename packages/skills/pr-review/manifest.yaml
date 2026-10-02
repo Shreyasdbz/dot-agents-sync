@@ -3,23 +3,26 @@
   "kind": "Skill",
   "id": "skill.pr-review",
   "name": "pr-review",
-  "version": "1.6.0",
-  "description": "Review a PR or supplied diff for actionable regressions and requirement gaps, inline by default; optionally post or create reports.",
+  "version": "1.7.0",
+  "description": "Review pinned PRs through surrounding code, isolated baseline comparisons and bounded reviewers; return actionable findings inline with optional reports or posting.",
   "presentation": {
     "display_name": "PR Review",
-    "short_description": "Review diffs for actionable regressions and gaps",
-    "default_prompt": "Use $dasync-skill-pr-review to review this diff for actionable regressions and requirement gaps."
+    "short_description": "Trace PR behavior and validate actionable findings",
+    "default_prompt": "Use $dasync-skill-pr-review to walk through this PR and its affected contracts, validate findings with bounded reviewers, and report the evidence."
   },
   "license": "MIT",
   "entry": "SKILL.md",
   "files": [
-    "SKILL.md"
+    "SKILL.md",
+    "references/revisions.md",
+    "references/walkthrough.md",
+    "references/reviewers.md"
   ],
   "scopes": [
     "user",
     "project"
   ],
-  "token_budget": 1500,
+  "token_budget": 5200,
   "requires": {
     "context.artifact-routing": ">=1,<2",
     "policy.repository-guidance": ">=1,<2",
@@ -27,15 +30,20 @@
     "policy.scope": ">=1,<2",
     "policy.verification": ">=1,<2",
     "policy.communication": ">=1,<2",
-    "skill.visual-artifacts": ">=1,<2"
+    "skill.visual-artifacts": ">=1,<2",
+    "policy.coding": ">=1,<2",
+    "policy.git": ">=1,<2",
+    "policy.security": ">=1,<2"
   },
   "capabilities": [
     "filesystem.read"
   ],
   "prefers": [
-    "github.review"
+    "github.review",
+    "agents.parallel",
+    "tests.execute"
   ],
-  "fallback": "Review the supplied diff snapshot inline; no claim of current PR state or posting.",
+  "fallback": "Review pinned evidence inline; name unavailable freshness, independent review, execution or posting without claiming success.",
   "outputs": [
     "inline",
     "markdown",
