@@ -28,6 +28,8 @@ const {pathToFileURL} = require('node:url');
       await question.locator('input[value="'+value+'"]').check();
       assert.equal(await feedback.locator('[data-explanation]:visible').count(), 4);
       assert((await question.locator('[data-quiz-result]').innerText()).includes(expected));
+      assert.equal(await question.locator('label[data-answer-state]').count(), 1);
+      assert.equal(await question.locator('label:has(input:checked)').getAttribute('data-answer-state'), value === 'c' ? 'correct' : 'incorrect');
       assert.equal(await progress.innerText(), '1 of 2 questions answered');
       assert.equal(await page.locator('#sample-v1 [data-quiz-progress]').textContent(), '0 of 1 questions answered');
     }
@@ -35,6 +37,7 @@ const {pathToFileURL} = require('node:url');
     await question.locator('[data-quiz-retry]').click();
     assert.equal(await question.locator('input:checked').count(), 0);
     assert.equal(await feedback.isVisible(), false);
+    assert.equal(await question.locator('[data-answer-state], [data-outcome]').count(), 0);
     assert.equal(await progress.innerText(), '1 of 2 questions answered');
     assert.equal(await page.evaluate(() => document.activeElement.id), 'sample-v2-identity-a');
     await page.keyboard.press('Space');
@@ -79,6 +82,7 @@ const {pathToFileURL} = require('node:url');
       for (const width of [320,390,640]) {
         await page.setViewportSize({width,height:844});
         assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'overflow '+width);
+        if (width === 390) await page.screenshot({path:path.join(out,theme+'-390.png'),fullPage:true});
       }
       await page.evaluate(() => window.scrollTo(0,0));
       await page.screenshot({path:path.join(out,theme+'-mobile.png'),fullPage:true});
@@ -90,6 +94,47 @@ const {pathToFileURL} = require('node:url');
     const ids = await page.locator('[id]').evaluateAll(nodes => nodes.map(n => n.id));
     assert.equal(new Set(ids).size, ids.length);
     assert.deepEqual(requests, []); assert.deepEqual(errors, []);
+    // Feedback is immediate during motion; changing preference or answers cannot restore stale state.
+    const motionPage = await browser.newPage({viewport:{width:1280,height:1000},reducedMotion:'no-preference'});
+    await motionPage.goto(url);
+    const motionQuestion = motionPage.locator('#sample-v2-identity');
+    const motionFeedback = motionQuestion.locator('[data-quiz-feedback]');
+    await motionQuestion.locator('input[value="a"]').check();
+    assert.equal(await motionFeedback.isVisible(), true);
+    assert((await motionQuestion.locator('[data-quiz-result]').innerText()).includes('Correct answer: C'));
+    const arrival = await motionFeedback.evaluate(node => node.getAnimations().map(animation => ({name:animation.animationName,duration:animation.effect.getTiming().duration})));
+    assert(arrival.some(animation => animation.name === 'quiz-reveal' && animation.duration === 220));
+    await motionPage.evaluate(() => document.getAnimations().forEach(animation => { animation.pause(); animation.currentTime = 110; }));
+    await motionQuestion.screenshot({path:path.join(out,'feedback-mid-motion.png')});
+    await motionQuestion.locator('input[value="c"]').check();
+    assert((await motionQuestion.locator('[data-quiz-result]').innerText()).includes('Correct —'));
+    await motionPage.emulateMedia({reducedMotion:'reduce'});
+    await motionPage.waitForFunction(() => document.querySelector('#sample-v2-identity [data-quiz-feedback]').getAnimations().length === 0);
+    assert.equal(await motionFeedback.evaluate(node => getComputedStyle(node).transform), 'none');
+    await motionQuestion.screenshot({path:path.join(out,'feedback-settled.png')});
+    await motionQuestion.locator('[data-quiz-retry]').click();
+    assert.equal(await motionFeedback.isVisible(), false);
+    await motionPage.emulateMedia({reducedMotion:'no-preference'});
+    await motionQuestion.locator('input[value="d"]').check();
+    await motionQuestion.locator('[data-quiz-retry]').click();
+    assert.equal(await motionFeedback.isVisible(), false);
+    assert.equal(await motionQuestion.locator('[data-quiz-result]').textContent(), '');
+    await motionPage.emulateMedia({media:'print'});
+    assert.equal(await motionFeedback.evaluate(node => node.getAnimations().length), 0);
+    await motionPage.close();
+    // Automatic OS dark mode must also print black text on white reading surfaces.
+    const printPage = await browser.newPage({colorScheme:'dark'});
+    await printPage.goto(url);
+    for (const theme of ['auto','dark','light']) {
+      await printPage.evaluate(value => {
+        if (value === 'auto') delete document.documentElement.dataset.theme;
+        else document.documentElement.dataset.theme = value;
+      }, theme);
+      await printPage.emulateMedia({media:'print',colorScheme:'dark'});
+      const colors = await printPage.locator('.quiz-question').first().evaluate(node => ({background:getComputedStyle(node).backgroundColor,text:getComputedStyle(node).color,scheme:getComputedStyle(document.documentElement).colorScheme}));
+      assert.deepEqual(colors, {background:'rgb(255, 255, 255)',text:'rgb(0, 0, 0)',scheme:'light'});
+    }
+    await printPage.close();
     const staticPage = await browser.newPage({javaScriptEnabled:false,viewport:{width:320,height:844}});
     await staticPage.goto(url);
     assert.equal(await staticPage.locator('[data-quiz-feedback]:visible').count(), 2);
@@ -121,7 +166,7 @@ const {pathToFileURL} = require('node:url');
     assert.equal(await page.locator('#sample-v3 [data-quiz-progress]').innerText(),'1 of 2 questions answered');
     assert.equal(await progress.textContent(),'0 of 2 questions answered');
     assert.equal(await history.evaluate(node => node.open),false);
-    fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks:'selection, feedback, retry, keyboard, independent history, hash, print, no-JS, themes, reflow, text zoom, invalid shape, third snapshot, no network',browser:browser.version(),accessibility:audits},null,2));
+    fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks:'selection states, feedback, retry, keyboard, independent history, hash, print, no-JS, themes, reflow, text zoom, invalid shape, third snapshot, no network, motion arrival, rapid reselection, live reduced-motion preference, retry during arrival',browser:browser.version(),accessibility:audits},null,2));
     console.log('Quiz browser checks passed. Evidence: '+out);
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode=1; });

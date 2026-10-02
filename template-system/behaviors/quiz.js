@@ -4,8 +4,11 @@ all('[data-quiz-snapshot]').forEach(snapshot => {
   const valid = [];
   const progress = snapshot.querySelector('[data-quiz-progress]');
   const refreshProgress = () => {
-    if (progress) progress.textContent = valid.filter(q => q.querySelector('input:checked')).length
-      + ' of ' + valid.length + ' questions answered';
+    const answered = valid.filter(q => q.querySelector('input:checked')).length;
+    if (progress) {
+      progress.textContent = answered + ' of ' + valid.length + ' questions answered';
+      progress.style.setProperty('--quiz-progress', valid.length ? answered / valid.length : 0);
+    }
   };
   questions.forEach(question => {
     const inputs = [...question.querySelectorAll('input[type="radio"]')];
@@ -42,6 +45,13 @@ all('[data-quiz-snapshot]').forEach(snapshot => {
       feedback.hidden = false;
       const letter = String.fromCharCode(65 + inputs.indexOf(selected));
       const answer = String.fromCharCode(65 + inputs.indexOf(correct[0]));
+      result.dataset.outcome = selected === correct[0] ? 'correct' : 'incorrect';
+      inputs.forEach(input => {
+        const label = input.closest('label');
+        if (!label) return;
+        if (input === selected) label.dataset.answerState = result.dataset.outcome;
+        else delete label.dataset.answerState;
+      });
       result.textContent = selected === correct[0]
         ? 'Correct — you selected ' + letter + '. All four explanations follow.'
         : 'You selected ' + letter + '. Correct answer: ' + answer + '. All four explanations follow.';
@@ -50,10 +60,15 @@ all('[data-quiz-snapshot]').forEach(snapshot => {
     };
     inputs.forEach(input => { input.addEventListener('change', choose); });
     retry.addEventListener('click', () => {
-      inputs.forEach(input => { input.checked = false; });
+      inputs.forEach(input => {
+        input.checked = false;
+        const label = input.closest('label');
+        if (label) delete label.dataset.answerState;
+      });
       explanations.forEach(item => { delete item.dataset.selected; });
       feedback.hidden = true;
       result.textContent = '';
+      delete result.dataset.outcome;
       refreshProgress();
       inputs[0].focus();
     });

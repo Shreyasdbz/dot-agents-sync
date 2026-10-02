@@ -3,11 +3,11 @@
   "kind": "Template",
   "id": "template.change-quiz",
   "name": "change-quiz",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Self-contained visual quiz with immediate option explanations and collapsed revision history.",
   "license": "MIT",
   "entry": "components.md",
   "files": ["components.md", "quiz.html", "components/question.html"],
   "scopes": ["user", "project"],
-  "token_budget": 15000
+  "token_budget": 16000
 }

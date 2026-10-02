@@ -68,14 +68,14 @@ def render_all():
                 behavior += (base / "behaviors" / (name + ".js")).read_text()
         behavior += "})();"
         page_css = css
-        if "data-quiz-snapshot" in content:
-            page_css += (base / "quiz.css").read_text()
         if 'class="travel"' in content:
             page_css += (base / "travel.css").read_text()
         else:
             page_css += (base / "editorial.css").read_text()
             if 'class="slide' in content or "data-sequence" in content or "process-map" in content:
                 page_css += (base / "visual.css").read_text()
+        if "data-quiz-snapshot" in content:
+            page_css += (base / "quiz.css").read_text()
         return content.replace("{{styles}}", page_css).replace("{{interactions}}", behavior)
 
     outputs = {

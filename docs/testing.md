@@ -33,7 +33,7 @@ node scripts/test_travel_currency.cjs
 node scripts/test_change_quiz.cjs
 ```
 
-The four scripts check all five templates, narrow/desktop layouts, long-title reflow, no-JavaScript reading, keyboard interactions, deck navigation, disclosures, print restoration, currency edge cases, route scrolling, copy feedback and quiz feedback/retry/history isolation. Output paths default to the operating system's temporary directory. Copy tests use a clipboard double, not the user's clipboard. Axe findings include incomplete/manual-review items; zero violations is not full accessibility certification.
+The four scripts check all five templates, narrow/desktop layouts, long-title reflow, no-JavaScript reading, keyboard interactions, deck navigation, disclosures, print restoration, currency edge cases, route scrolling, copy feedback and quiz feedback/retry/history isolation. Quiz checks also exercise normal motion, rapid reselection, retry during arrival and changing reduced-motion preference while feedback is visible. Output paths default to the operating system's temporary directory. Copy tests use a clipboard double, not the user's clipboard. Axe findings include incomplete/manual-review items; zero violations is not full accessibility certification.
 
 The CI workflow includes the installed journeys in its Python matrix and a separate Linux Chromium browser job. Merely editing the workflow does not establish a hosted run; record the exact tested commit and run before calling hosted acceptance complete.
 

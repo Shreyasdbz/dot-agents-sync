@@ -2,6 +2,12 @@
 
 Adapt [quiz.html](quiz.html), a fictional worked example with two current questions and an older snapshot. Copy [components/question.html](components/question.html) for additional questions. Remove sample facts, evidence and authoring comments from the final artifact. CSS and behaviors are inline; the page opens offline with no dependencies or network requests. The authoring source lives in template-system, not this generated distribution file.
 
+## Visual language and interaction
+
+Keep the quiz's minimal technical visual language: spacious hierarchy, smooth nested corners, restrained blue/mint/violet mesh gradients behind the header, neutral reading surfaces and rounded diagram nodes with distinct connectors. The gradient is static; text remains readable without translucency. Reuse the inline quiz palette in light and dark themes instead of importing the shared editorial palette over it. Adapt diagrams to actual relationships rather than adding decorative card grids.
+
+Selections receive an immediate textual result and a calm green or amber selected-choice treatment; color never supplies the answer alone. Retry clears that treatment and returns focus to the first choice. The answered count has a matching visual progress line, independent for each snapshot. Brief press feedback, explanation arrival and history expansion use opacity/transform; no perpetual motion or animation gates. Reduced motion updates immediately, including preference changes during use. Keep empty result space collapsed, preserve native controls, and print every explanation as static text.
+
 ## Snapshot structure and updates
 
 Keep one main heading and a current section with data-quiz-snapshot immediately above a single details.disclosure#quiz-history containing all earlier snapshot sections, newest first. Omit history when it is empty. Each snapshot has a globally unique id, a stable data-snapshot-id, its own heading, comparison metadata, scope/unknowns note, question list and data-quiz-progress status. Preserve full base/head identities, PR URL/repository when known, generation date and fingerprint for local changes. Display short hashes only alongside available full identities; fictional sample labels are not valid real revision identifiers.
