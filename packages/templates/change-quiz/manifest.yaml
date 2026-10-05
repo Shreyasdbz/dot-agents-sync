@@ -3,7 +3,7 @@
   "kind": "Template",
   "id": "template.change-quiz",
   "name": "change-quiz",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Self-contained visual quiz with immediate option explanations and collapsed revision history.",
   "license": "MIT",
   "entry": "components.md",
