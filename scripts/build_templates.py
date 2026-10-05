@@ -76,6 +76,7 @@ def render_all():
                 page_css += (base / "visual.css").read_text()
         if "data-quiz-snapshot" in content:
             page_css += (base / "quiz.css").read_text()
+        page_css += (base / "brand.css").read_text()
         return content.replace("{{styles}}", page_css).replace("{{interactions}}", behavior)
 
     outputs = {

@@ -49,3 +49,7 @@ The optional [route schematic](components/route-map.html) is not navigation or l
 ## Verification
 
 Fragments inherit the self-contained trip.html styles and interactions. Check 320px and 390px widths, long names, keyboard disclosures, summaries without nested controls, links revealing closed details, copy success and denied fallback, distinct map links, print/restoration, no-JavaScript reading, dark mode, currency round trips, invalid rates and budget reconciliation. Review timelines for correct outgoing segments and useful labels. Print opens all details. Automated accessibility checks do not replace screen-reader or traveler usability testing.
+
+## Workspace branding
+
+For a selected `context.workspace-artifacts`, use the Visual Artifacts authorized lookup and apply its private brand before refining this composition. Set `data-workspace-brand` on `html`, inline its CSS after the template styles, and embed needed logo/font/icon assets for offline use. The header supports `.brand-logo`, `.brand-name` and optional `.brand-label`; preserve the logo aspect ratio and accessible identity. Verify every used component in light/dark, narrow/wide, zoom, keyboard, reduced-motion, no-JavaScript and print states. Private paths and authoring comments do not belong in delivered HTML. An absent or denied binding retains the established design; do not locate a private substitute.

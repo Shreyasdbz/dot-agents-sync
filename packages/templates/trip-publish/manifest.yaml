@@ -3,7 +3,7 @@
   "kind": "Template",
   "id": "template.trip-publish",
   "name": "trip-publish",
-  "version": "1.10.1",
+  "version": "1.10.2",
   "description": "Traveler-friendly trip page with day summaries, reservations, transport timelines, to-dos and optional currency estimates.",
   "license": "MIT",
   "entry": "trip.html",

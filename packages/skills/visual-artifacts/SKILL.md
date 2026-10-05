@@ -15,7 +15,7 @@ Keep visuals beside the short explanation they support. Use actual names, values
 
 ## Compose deliberately
 
-Inspect the existing visual system and selected design context. Preserve explicit brand and preset choices. Otherwise derive a coherent direction from the subject and audience: type roles, palette roles, spacing, density, diagram grammar and the dominant visual. Make these choices briefly before coding; do not turn them into a separate deliverable. Read [composition.md](composition.md) for HTML or a substantial visual redesign.
+Inspect the existing visual system and selected design context. Preserve explicit brand and preset choices. Otherwise derive a coherent direction from the subject and audience: type roles, palette roles, spacing, density, diagram grammar and the dominant visual. Make these choices briefly before coding; do not turn them into a separate deliverable. Read [composition.md](composition.md) for HTML and authorized workspace branding.
 
 Build with real content. Give each scene one dominant relationship and a clear reading order; vary composition with its purpose. Use typography, alignment, scale and negative space to establish hierarchy. Avoid interchangeable card grids, decorative metrics, repeated heroes and diagrams that merely put prose in boxes. Sparse and dense views are both valid when their structure earns the space.
 

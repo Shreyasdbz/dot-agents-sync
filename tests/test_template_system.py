@@ -16,9 +16,9 @@ def test_generated_templates_match_canonical_source():
     for path, expected in module.render_all().items():
         assert path.read_text() == expected
         assert "{{" not in expected
-        # Diagram/actor scenes add inline SVG and local motion without runtime dependencies.
+        # Diagram scenes and optional brand slots inline their assets without runtime dependencies.
         limit = (
-            75000
+            77000
             if path.name == "trip.html"
             else 60000
             if path.name in {"deck.html", "proposal.html", "quiz.html"}

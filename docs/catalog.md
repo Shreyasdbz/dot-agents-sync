@@ -81,6 +81,8 @@ Both scopes must already be configured. The project ID must match `.dasync.yaml`
 
 For a workspace spanning several repositories, `context.workspace-overview` holds a separately granted private source for repository boundaries and environment combinations. Optional `context.workspace-pr-review`, `context.workspace-plan-out`, and `context.workspace-do-it` bind narrower sources for those skills; each declares its authorized consumer. Select and grant these per project rather than adding organization facts to public skill packages. The shared repository-guidance policy asks for relevant cross-repository and environment walkthroughs and bounded context refresh during related work.
 
+`context.workspace-artifacts` optionally binds workspace branding for HTML artifacts across visual workflows. Its private source owns the brand tokens, offline assets and visual verification guidance; the public templates provide optional logo/name/label slots. Select and grant it per project. Generic templates remain unbranded without an authorized composition.
+
 See [context authoring](context-authoring.md) for binding contracts and [the operator contract](AI-OPERATOR.md) for private-path access.
 
 ## Executable hooks

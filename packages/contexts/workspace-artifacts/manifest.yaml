@@ -1,0 +1,19 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Context",
+  "id": "context.workspace-artifacts",
+  "name": "workspace-artifacts",
+  "version": "1.0.0",
+  "description": "Private workspace branding, offline assets and visual verification for HTML artifacts.",
+  "license": "MIT",
+  "entry": "CONTEXT.md",
+  "files": ["CONTEXT.md"],
+  "scopes": ["project"],
+  "token_budget": 650,
+  "context": {
+    "access": "explicit",
+    "sensitivity": "private",
+    "binding": "context.workspace-artifacts",
+    "consumers": ["skill.visual-artifacts", "skill.pitch-deck", "skill.propose", "skill.pr-review", "skill.change-quiz", "skill.plan-out", "skill.investigate", "skill.trip-publish", "skill.ui-design"]
+  }
+}
