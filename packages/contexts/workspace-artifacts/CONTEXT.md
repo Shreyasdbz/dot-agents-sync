@@ -8,4 +8,6 @@ Apply the same brand across reports, proposals, decks, quizzes and other HTML co
 
 Walk through every used component and state: header/navigation, typography, panels/disclosures, tables/code, charts/diagrams, controls, errors/empty states and format-specific interactions. Record actual render and interaction evidence at narrow/wide sizes, zoom and both supported themes. Pixel inspection must address alignment, spacing, padding, line length, weight, tracking, icon geometry and clipping; an unrendered token list is not visual verification.
 
+Inspect supplied sites' rendered openings and lower sections. Record type roles, dominant visuals, proportions, rhythm, alignment and feedback; explain how they serve the artifact's reading task. Separate source measurements from chosen tokens. Vary covers, evidence, comparisons and reference layouts. Branding alone does not establish quality. Do not import proprietary imagery, unverified fonts, marketing copy or decorative effects.
+
 Keep private context bodies, local paths and proprietary assets out of public catalog files and generated authoring comments. Inline only assets needed by the authorized artifact; no remote font, icon or analytics dependency. Missing assets or access remain named gaps rather than invented substitutes. Context does not authorize publication, additional grants or deployment.

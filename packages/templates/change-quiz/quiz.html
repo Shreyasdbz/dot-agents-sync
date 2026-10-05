@@ -54,6 +54,7 @@ body[data-deck-mode=document] .slide{min-height:0;padding:1.5rem 0;border-bottom
 @media(forced-colors:active){.quiz-options label{border-color:CanvasText}.quiz-options label:has(:checked){outline:2px solid Highlight}.quiz-result{border:1px solid CanvasText}}
 @media print{:root,:root[data-theme=dark],:root:not([data-theme=light]){color-scheme:light;--bg:#fff;--surface:#fff;--ink:#000;--muted:#333;--line:#aaa;--accent:#222;--tint:#fff;--good:#000;--good-tint:#fff;--warn:#000;--warn-tint:#fff;--shadow:none}.quiz{background:white}.quiz .layout{padding:0}.quiz .hero h1{font-size:2rem}.quiz-actions,.quiz-result,.quiz-progress,[data-quiz-retry]{display:none!important}.quiz-feedback[hidden]{display:block!important}.quiz-question{break-inside:auto;padding:1rem;box-shadow:none}.quiz-options label,.quiz-scene,.quiz-feedback li{break-inside:avoid}.quiz-scene{background:white}.quiz .quiz-history>.detail-body{display:block!important}.quiz-history{break-inside:auto}.quiz *{animation:none!important;transition:none!important}}
 /* Optional workspace brand. Inline authorized private overrides after all template styles. */
+.artifact-cover,.artifact-cover-copy{display:contents}.artifact-cover-visual{display:none}
 :root[data-workspace-brand]{font-family:var(--brand-font,system-ui,sans-serif);font-size:var(--brand-body-size,16px)}
 [data-workspace-brand] .brand{display:flex;align-items:center;gap:12px;min-width:0;white-space:normal;line-height:1.25;letter-spacing:0}
 [data-workspace-brand] .brand-logo{display:block;flex:none;width:28px;height:28px;object-fit:contain}
@@ -61,11 +62,42 @@ body[data-deck-mode=document] .slide{min-height:0;padding:1.5rem 0;border-bottom
 [data-workspace-brand] .brand .brand-label{font-size:13px;font-weight:400;color:var(--muted);margin:0;padding-left:12px;border-left:1px solid var(--line);border-radius:0;background:none;letter-spacing:0;overflow-wrap:anywhere}
 @media(max-width:600px){[data-workspace-brand] .brand .brand-label{display:none}[data-workspace-brand] .brand-logo{width:24px;height:24px}[data-workspace-brand] .brand .brand-name{font-size:18px}}
 @media print{[data-workspace-brand] .brand{break-inside:avoid}[data-workspace-brand] .brand .brand-name{color:#000}}
+/* The selected workspace supplies color and type; these compositions preserve readable HTML labels. */
+[data-workspace-brand] .artifact-cover{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(32px,5vw,80px);align-items:center;padding:32px 0 56px}
+[data-workspace-brand] .artifact-cover-copy{display:block;min-width:0}
+[data-workspace-brand] .artifact-cover-visual{display:block;min-width:0;margin:0;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+[data-workspace-brand] .artifact-cover-visual figcaption{font-size:13px;line-height:1.6;max-width:56ch;margin-top:24px;color:var(--muted)}
+[data-workspace-brand] .scene-label{font:400 12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted)}
+[data-workspace-brand] .identity-orbits{position:relative;height:240px;display:grid;place-items:center;margin:16px 0}
+[data-workspace-brand] .identity-orbits svg{position:absolute;width:100%;height:100%;fill:none;stroke:var(--accent);stroke-width:1;opacity:.55}
+[data-workspace-brand] .identity-orbits circle{fill:var(--accent);stroke:none}
+[data-workspace-brand] .identity-key{position:relative;text-align:center;background:var(--bg);padding:12px 20px}
+[data-workspace-brand] .identity-key span{display:block;font-size:13px;color:var(--muted)}
+[data-workspace-brand] .identity-key strong{display:block;font-size:clamp(30px,3vw,46px);font-weight:450;letter-spacing:-.05em}
+[data-workspace-brand] .identity-states{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;border-top:1px solid var(--line);padding-top:16px;font-size:15px}
+[data-workspace-brand] .identity-states small{display:block;color:var(--muted);font:400 12px/1.8 ui-monospace,monospace}
+[data-workspace-brand] .cache-value{display:flex;flex-direction:column;align-items:center;padding:12px 0 24px;color:var(--muted);font-size:13px}
+[data-workspace-brand] .cache-value strong{font-size:124px;line-height:1.2;font-weight:350;color:var(--ink);letter-spacing:-.07em}
+[data-workspace-brand] .cache-branches{display:grid;gap:12px}
+[data-workspace-brand] .cache-branches>div{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;align-items:center;padding-top:12px;border-top:1px solid var(--line);font-size:14px}
+[data-workspace-brand] .ownership-input,[data-workspace-brand] .ownership-record{display:flex;flex-direction:column;gap:8px;padding:24px 0;font-size:14px}
+[data-workspace-brand] .ownership-input strong{font-weight:450;font-size:40px;letter-spacing:-.04em}
+[data-workspace-brand] .ownership-route{display:flex;align-items:center;gap:16px;color:var(--accent);font-size:14px;border-block:1px solid var(--line);padding:16px 0}
+[data-workspace-brand] .ownership-route>span:first-child{font-size:32px;line-height:1}
+[data-workspace-brand] .ownership-record code{font-size:20px;line-height:1.5}
+[data-workspace-brand] .journey-stops{list-style:none;margin:24px 0;padding:0}
+[data-workspace-brand] .journey-stops li{display:grid;grid-template-columns:90px 1fr;align-items:baseline;gap:20px;padding:12px 0;border-bottom:1px solid var(--line)}
+[data-workspace-brand] .journey-stops span,[data-workspace-brand] .journey-split span{font:400 13px/1.6 ui-monospace,monospace;color:var(--muted)}
+[data-workspace-brand] .journey-stops strong{font-size:40px;line-height:1.2;font-weight:400;letter-spacing:-.045em}
+[data-workspace-brand] .journey-split{display:flex;flex-direction:column;gap:6px}
+[data-workspace-brand] .journey-split strong{font-size:22px;font-weight:450}
+@media(max-width:800px){[data-workspace-brand] .artifact-cover{grid-template-columns:1fr;gap:24px;padding:16px 0 32px}[data-workspace-brand] .identity-orbits{height:200px}[data-workspace-brand] .artifact-cover-visual{padding:20px 0}}
+@media print{[data-workspace-brand] .artifact-cover{grid-template-columns:1fr 1fr;gap:24px;padding:16px 0}[data-workspace-brand] .artifact-cover-visual{break-inside:avoid}[data-workspace-brand] .identity-orbits{height:160px}}
 </style></head><body class="quiz">
 <!-- Fictional worked composition. Replace sample content and identities with pinned evidence. -->
 <a class="skip" href="#main">Skip to content</a><header class="topbar"><div class="topbar-inner"><div class="brand">Change quiz<span>Sample</span></div><nav class="page-nav" aria-label="On this page"><a href="#sample-v2"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x='5' y='3' width='14' height='18' rx='2'/><path d='M9 7h6M9 11h6M9 15h4'/></svg><span>Latest</span></a><a href="#quiz-history"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='m3 6 9-4 9 4-9 4Zm0 6 9 4 9-4M3 18l9 4 9-4'/></svg><span>History</span></a></nav><div class="tools"><button class="icon-button" data-theme-toggle aria-label="Dark theme" aria-pressed="false" title="Change theme" hidden><span data-theme-icon="light"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx='12' cy='12' r='4'/><path d='M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5'/></svg></span><span data-theme-icon="dark" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M20 14a8 8 0 0 1-10-10 8 8 0 1 0 10 10Z'/></svg></span></button><button class="icon-button" data-print aria-label="Print" title="Print" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M6 9V3h12v6M6 17H3V9h18v8h-3M6 14h12v7H6Z'/><path d='M17 11h1'/></svg></button>
 </div></div></header>
-<div class="layout"><main id="main" tabindex="-1"><section class="hero"><h1>Invoice delivery changes</h1><p class="lede">Explain who owns a delivery and what happens after a failed write.</p><p class="callout">Fictional template example. These are invented contracts and revision labels, not verified customer behavior.</p><p>Select one answer to reveal all four explanations. You can change your answer or retry. Answers last for this page session.</p><noscript><p class="callout">JavaScript is off: read the scenarios, choices and explanations below. Self-grading and progress are unavailable.</p></noscript></section>
+<div class="layout"><main id="main" tabindex="-1"><section class="hero"><div class="artifact-cover"><div class="artifact-cover-copy"><h1>Invoice delivery changes</h1><p class="lede">Explain who owns a delivery and what happens after a failed write.</p><p class="callout">Fictional template example. These are invented contracts and revision labels, not verified customer behavior.</p><p>Select one answer to reveal all four explanations. You can change your answer or retry. Answers last for this page session.</p><noscript><p class="callout">JavaScript is off: read the scenarios, choices and explanations below. Self-grading and progress are unavailable.</p></noscript></div><figure class="artifact-cover-visual ownership-scene"><div class="scene-label">Ownership at the request boundary</div><div class="ownership-input"><span>Authenticated tenant</span><strong>tenant_A</strong></div><div class="ownership-route"><span aria-hidden="true">↓</span><span>Server supplies ownership</span></div><div class="ownership-record"><span>Invoice record</span><code>tenant_id = tenant_A</code></div><figcaption>Fictional v2 contract. The caller’s tenant field cannot choose the record’s owner.</figcaption></figure></div></section>
 <section class="quiz-snapshot" data-quiz-snapshot data-snapshot-id="fictional-v2" id="sample-v2" aria-labelledby="sample-v2-title"><h2 id="sample-v2-title">Latest · tenant ownership and atomic writes</h2><dl class="facts"><dt>Comparison</dt><dd>Fictional revision v1 → v2 · sample, no commit hash</dd><dt>Scope</dt><dd>Invoice endpoint and delivery transaction</dd><dt>Evidence limit</dt><dd>Only the fictional contracts written below; no external integration verified.</dd></dl><p class="quiz-progress" data-quiz-progress role="status" aria-live="polite"></p>
 <article class="quiz-question" data-quiz-question id="sample-v2-identity">
 <h3>Which tenant owns this delivery?</h3>

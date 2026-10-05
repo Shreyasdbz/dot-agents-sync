@@ -3,7 +3,7 @@
   "kind": "Template",
   "id": "template.pitch-deck",
   "name": "pitch-deck",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "description": "Self-contained accessible briefing components with responsive layouts and progressive navigation.",
   "license": "MIT",
   "entry": "deck.html",
@@ -21,5 +21,5 @@
     "user",
     "project"
   ],
-  "token_budget": 20500
+  "token_budget": 22500
 }
