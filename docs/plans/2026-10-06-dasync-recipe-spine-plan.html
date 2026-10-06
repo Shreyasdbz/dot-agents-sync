@@ -1,0 +1,1417 @@
+<!doctype html>
+<html lang="en" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta name="description" content="Design-reviewed recipe-spine architecture and development plan for dasync, with source evidence, operator flows and launch gates."><title>dasync recipe architecture and development plan · 6 October 2026</title><style>
+:root{color-scheme:light;--bg:#f4f6f6;--surface:#fff;--ink:#182d39;--muted:#47616a;--line:#c3d0d4;--accent:#12634e;--soft:#e5f1ec;--warn:#7b4b09;--warnbg:#fff2d8;--nav:#132d3a;--navink:#edf5f7;--code:#102d39;--codeink:#edf5f7}
+html[data-theme=dark]{color-scheme:dark;--bg:#111e25;--surface:#182b34;--ink:#edf4f5;--muted:#b5c7ce;--line:#46616b;--accent:#84dab6;--soft:#213f37;--warn:#ffd489;--warnbg:#3f321c;--nav:#0c1920;--navink:#edf5f7;--code:#0c1920;--codeink:#edf5f7}
+*{box-sizing:border-box}html{scroll-padding-top:24px}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:16px;line-height:1.65}a{color:var(--accent);text-underline-offset:.18em}a:hover{text-decoration-thickness:2px}button,input{font:inherit}button{cursor:pointer;border:1px solid var(--muted);border-radius:5px;background:var(--surface);color:var(--ink);padding:8px 12px;min-height:42px}button:hover{background:var(--soft)}input{max-width:100%;border:1px solid var(--muted);border-radius:4px;padding:8px 10px;background:var(--surface);color:var(--ink)}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}.skip{position:fixed;top:8px;left:10px;z-index:50;background:var(--surface);padding:10px;transform:translateY(-150%)}.skip:focus{transform:none}
+.rail{position:fixed;inset:0 auto 0 0;width:274px;background:var(--nav);color:var(--navink);padding:24px 19px;overflow:auto;z-index:5}.rail a{color:var(--navink)}.rail-title{font-weight:750;font-size:20px;line-height:1.3;margin:0 0 6px}.rail-date{font-size:13px;margin:0 0 17px;color:#c0d2db}.rail label{font-size:13px;display:block;margin-bottom:5px}.rail input{width:100%;background:#203e4d;color:#fff;border-color:#91aebc}.rail input::placeholder{color:#c0d2db}.rail input:focus-visible,.rail a:focus-visible{outline-color:#9bedd1}.rail nav a{display:block;font-size:13px;line-height:1.4;padding:8px 10px;text-decoration:none;border-left:3px solid transparent;margin:2px 0}.rail nav a:hover,.rail nav a[aria-current]{background:#254957;border-left-color:#9bedd1}.rail nav{margin-top:16px}.rail .rail-help{font-size:12px;line-height:1.55;color:#c0d2db}.rail details>summary{display:none}.search-results{font-size:13px}.search-results a{display:block;margin-top:8px}
+.shell{margin-left:274px;padding:0 48px 80px}.page{max-width:1140px;margin:auto}.toolbar{display:flex;justify-content:flex-end;gap:10px;padding:20px 0}.hero{padding:18px 0 35px;border-bottom:2px solid var(--ink)}.hero h1{font-size:clamp(34px,4.5vw,57px);line-height:1.12;letter-spacing:-.035em;max-width:850px;margin:0 0 20px}.hero .subtitle{font-size:21px;color:var(--muted);max-width:750px;margin:0 0 16px}.status-line{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px}.badge{border:1px solid var(--line);padding:3px 9px;border-radius:3px;background:var(--surface)}.badge.design{background:var(--soft);color:var(--accent);border-color:var(--accent)}.hero .scope{font-size:14px;color:var(--muted);max-width:850px;margin-bottom:0}
+section{padding:40px 0;border-bottom:1px solid var(--line);scroll-margin-top:24px}h2{font-size:29px;line-height:1.25;letter-spacing:-.02em;margin:0 0 23px;display:flex;align-items:baseline;gap:14px}.section-number{font-size:13px;letter-spacing:0;color:var(--muted);min-width:22px}h3{font-size:21px;line-height:1.35;margin:23px 0 12px}h4{font-size:18px;line-height:1.4;margin:0 0 8px}p{margin:0 0 17px;max-width:90ch}ul,ol{padding-left:25px;margin:10px 0 20px}li{margin-bottom:8px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.87em;overflow-wrap:anywhere}p code,li code,td code{background:var(--soft);padding:2px 4px;border-radius:3px}
+.table-wrap{max-width:100%;overflow:auto;margin:23px 0 26px;border:1px solid var(--line);border-radius:4px}table{border-collapse:collapse;width:100%;font-size:14px;min-width:570px}th,td{text-align:left;vertical-align:top;padding:13px 15px;border-bottom:1px solid var(--line)}th{background:var(--soft);color:var(--ink);font-weight:700}tbody tr:last-child td{border-bottom:0}td:first-child{font-weight:600;min-width:155px}td{min-width:190px}.note{background:var(--warnbg);color:var(--warn);border-left:4px solid var(--warn);padding:18px 20px;margin:24px 0}.note a{color:inherit}.code{margin:22px 0;max-width:100%}.code figcaption{font-size:13px;color:var(--muted);margin-bottom:7px}.code pre{margin:0;background:var(--code);color:var(--codeink);padding:20px;overflow:auto;border-radius:4px;font-size:13px;line-height:1.65;max-height:520px}.code code{font-size:inherit;overflow-wrap:normal}details{margin:20px 0}summary{cursor:pointer;font-weight:650;min-height:40px;padding:8px 0}details>summary:focus-visible{outline:3px solid var(--accent)}
+.architecture{display:grid;grid-template-columns:1fr;gap:0;margin:25px 0}.lane{border:1px solid var(--line);padding:18px 22px;background:var(--surface)}.lane+.lane{border-top:0}.lane h3{margin-top:0}.lane p:last-child{margin-bottom:0;font-size:14px;color:var(--muted)}.lane.spine{border-left:5px solid var(--accent);background:var(--soft)}.steps li{padding:8px 0;border-bottom:1px solid var(--line)}.phase{border:1px solid var(--line);border-radius:4px;background:var(--surface);padding:0 20px}.phase>summary{font-size:19px;padding:16px 0}.phase-id{font-family:ui-monospace,monospace;font-size:12px;color:var(--muted);display:block;margin-left:20px}.task{padding:23px 0;border-top:1px solid var(--line)}.task-meta{color:var(--muted);font-size:13px}.task ul{font-size:14px}.task p{margin-bottom:7px}.future{padding:15px 0;border-bottom:1px solid var(--line)}.future h3{margin-top:0}.future:last-child{border-bottom:0}
+.terminal{background:#102d39;color:#eef6f7;border:1px solid #547c8f;border-radius:7px;margin:26px 0;padding:18px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px}.terminal-head{display:flex;justify-content:space-between;gap:12px;padding:0 0 15px;border-bottom:1px solid #547c8f;flex-wrap:wrap}.terminal-head span{color:#b5d3dc}.mock-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:17px 0}.terminal button{color:#edf6f7;background:#213f4e;border-color:#91aebc;font-size:13px;min-height:40px}.terminal button[aria-pressed=true]{background:#a7ebd2;color:#102d39;border-color:#a7ebd2}.terminal input{background:#213f4e;color:#edf6f7;border-color:#91aebc}.terminal input::placeholder{color:#bdd2db}.terminal label{display:block}.terminal input[type=search]{width:100%;margin-top:5px}.terminal input[type=checkbox]{accent-color:#a7ebd2;width:19px;height:19px}.terminal fieldset{border:1px solid #547c8f;border-radius:4px;margin:17px 0 0;padding:10px}.terminal legend{padding:0 6px;color:#c1d7df}.terminal .item-row{display:flex;gap:9px;align-items:flex-start;padding:9px 0;cursor:pointer}.item-row small{display:block;color:#b9d7e0;margin-top:3px}.mock-layout{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:25px}.mock-detail{border-left:1px solid #547c8f;padding-left:22px}.mock-detail h3,.terminal h3{font-size:16px;margin-top:0}.terminal-footer{border-top:1px solid #547c8f;padding-top:14px;margin:18px 0 0;color:#bde7d5}.terminal pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:360px;overflow:auto;font-size:12px}.terminal :focus-visible{outline-color:#a7ebd2}.terminal .blocker{color:#ffd49b}.terminal p{line-height:1.65}.page-foot{font-size:13px;color:var(--muted);padding-top:25px}.nojs{border:1px solid var(--line);padding:12px}.js-only{display:none}html.js .js-only{display:block}html.js .rail details>summary{display:none}[hidden]{display:none!important}
+@media(min-width:1450px){.shell{padding-left:68px;padding-right:68px}}
+@media(max-width:1000px){.rail{position:relative;width:auto;padding:17px 22px;overflow:visible}.rail-title{font-size:18px}.rail-date{margin-bottom:10px}.rail details>summary,html.js .rail details>summary{display:block;color:var(--navink)}.rail nav{max-height:330px;overflow:auto}.rail details:not([open]) nav{display:none}.rail input{max-width:520px}.shell{margin-left:0;padding:0 22px 50px}.toolbar{padding:16px 0}.hero{padding-top:12px}h2{font-size:25px}.mock-layout{grid-template-columns:1fr}.mock-detail{border-left:0;border-top:1px solid #547c8f;padding:16px 0 0}.rail .rail-help{display:none}}
+@media(max-width:480px){body{font-size:15px}.shell{padding:0 16px 40px}.hero h1{font-size:35px}.hero .subtitle{font-size:18px}section{padding:30px 0}.toolbar{justify-content:flex-start}.terminal{padding:12px}.terminal-head strong{overflow-wrap:anywhere}.phase{padding:0 13px}.code pre{padding:14px}.table-wrap{margin-left:0;margin-right:0}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+@media print{html,html[data-theme=dark]{color-scheme:light;--bg:#fff;--surface:#fff;--ink:#182d39;--muted:#47616a;--line:#b5c4ca;--accent:#12634e;--soft:#edf3f0;--warn:#684008;--warnbg:#fff7e7}.rail,.toolbar,.skip,button,input,.mock-tabs,#mock-browse{display:none!important}.shell{margin:0;padding:0}.page{max-width:none}.hero{padding-top:0}.hero h1{font-size:32px}body{font-size:10pt;line-height:1.5}h2{font-size:20pt;break-after:avoid}h3,h4,summary{break-after:avoid}section{padding:24px 0;break-before:auto}table{min-width:0;font-size:9pt}.table-wrap{overflow:visible}th,td{min-width:0;padding:8px}tr,.task h4{break-inside:avoid}.code pre{max-height:none;overflow:visible;white-space:pre-wrap;overflow-wrap:anywhere;background:#edf3f5;color:#18313b;font-size:8pt}.terminal{background:#edf3f5;color:#18313b;font-size:9pt}.terminal-footer{color:#18313b}.terminal .blocker{color:#684008}details>summary{list-style:none}details:not([open])>*:not(summary){display:block}#mock-review{display:block!important}#mock-machine{display:none!important}.note{break-inside:avoid}.phase{border-color:#b5c4ca}.badge{border-color:#82949b}.hero .scope{font-size:10pt}.nojs{display:none}}
+
+html:not(.js) .toolbar,html:not(.js) .terminal,html:not(.js) #download-plan{display:none}p,li,td,th,h1,h2,h3,h4,summary,figcaption,.terminal-head strong{overflow-wrap:anywhere}@media print{.context-json{display:none}}
+</style></head>
+<body><a class="skip" href="#main">Skip to plan</a><aside class="rail" aria-label="Document navigation"><p class="rail-title">dasync recipe plan</p><p class="rail-date">6 October 2026 · Unpublished draft</p><div class="js-only"><label for="document-search">Search this plan</label><input id="document-search" type="search" placeholder="Identity, context, recovery…"><div id="search-results" class="search-results" aria-live="polite"></div></div><details id="contents" open><summary>Contents</summary><nav aria-label="Plan chapters"><a href="#decisions">01 · Decisions and delivery boundary</a><a href="#people">02 · Who develops recipes, and why</a><a href="#baseline">03 · Inspected implementation and reusable boundaries</a><a href="#architecture">04 · Ownership and the installation pipeline</a><a href="#identity">05 · Identity, origins, aliases, and native names</a><a href="#selection">06 · Selection without profiles</a><a href="#format">07 · Canonical format and future stability</a><a href="#author-format">08 · Author examples and package responsibilities</a><a href="#dependencies">09 · Cross-recipe dependencies and bounded resolution</a><a href="#locks">10 · Portable project locks and effective machine state</a><a href="#sources">11 · Source preparation, authentication, and survival</a><a href="#contexts">12 · Contexts, slots, access, and progressive loading</a><a href="#adapters">13 · Provider portability without false equivalence</a><a href="#cli">14 · Human CLI and first-time onboarding</a><a href="#tui">15 · TUI design and interactive illustration</a><a href="#agents">16 · AI-friendly operation as a public API</a><a href="#local">17 · Local creation, preview, promotion, and forks</a><a href="#starter">18 · Starter extraction and optional content</a><a href="#trust">19 · Trust, privacy, recovery, and revocation</a><a href="#community">20 · Community maintenance and long-term survival</a><a href="#alternatives">21 · Alternatives, rejected shortcuts, and decision gates</a><a href="#roadmap">22 · Development sequence and launch gates</a><a href="#immediate">23 · Immediate milestone: implementation work</a><a href="#future">24 · Later milestones: explicit acceptance boundaries</a><a href="#verification">25 · Verification strategy and required release evidence</a><a href="#validation">26 · Validation evidence and remaining limits</a><a href="#planning">27 · Planning authority and embedded Plan Context</a><a href="#sources-evidence">28 · Source map and ready-to-file maintenance note</a></nav></details><p class="rail-help">User decisions → canonical contracts → operator journeys → implementation gates → evidence.</p></aside><div class="shell"><div class="page"><div class="toolbar"><button id="theme" type="button">Use dark theme</button><button id="print" type="button">Print / save PDF</button></div><header class="hero"><h1>Recipe architecture and development plan</h1><p class="subtitle">Engine-only dasync, independent recipe repositories, and individual local items.</p><div class="status-line"><span class="badge design">Design reviewed</span><span class="badge">Implementation proposed</span><span class="badge">No profiles</span><span class="badge">Individuals + teams</span></div><p class="scope">One provider-neutral format. Same-name items can coexist. Personal and project selections compose by default. Current snapshot selection; explicit new items and cross-recipe dependencies.</p></header><noscript><p class="nojs">The complete plan and implementation tasks are readable without JavaScript. Interactive controls and the TUI illustration require JavaScript; the contract descriptions remain available.</p></noscript><main id="main" tabindex="-1"><section id="decisions" aria-labelledby="heading-decisions"><h2 id="heading-decisions"><span class="section-number">01</span>Decisions and delivery boundary</h2><p><strong>dasync becomes the engine; independently maintained recipe repositories and individual local items supply content.</strong> One canonical format serves authors. The engine translates it into provider-native output and exposes the same operations through a human CLI, a polished TUI, and a versioned machine interface.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Settled with the user table"><table><thead><tr><th scope="col">Settled with the user</th><th scope="col">Effect on the design</th></tr></thead><tbody><tr><td>Individuals and teams at first public launch</td><td>Git/private sources, local items, composition, author tooling, recovery, and the TUI are launch gates—not distant ecosystem aspirations.</td></tr><tr><td>Provider-neutral authorship</td><td>Recipes contain canonical content and essential semantics. Adapters own native formats. Authors do not maintain Claude/Codex/etc. variants.</td></tr><tr><td>No profiles</td><td>Recipes and individual items are the selection model. No presets, bundles, default-item groups, or hidden profile replacement.</td></tr><tr><td>Small development starter, default yes</td><td>Onboarding offers the starter, another approved source, or none. It selects current items only; trust and additional approvals remain distinct.</td></tr><tr><td>Same names may coexist</td><td>Identity includes the source. Names never imply override priority or install-order precedence.</td></tr><tr><td>Explicit cross-recipe dependencies</td><td>Supported at first stable launch. Sources and pins are deliberate; no silent substitution or source fetch triggered by recipe prose.</td></tr><tr><td>Current-revision bulk selection</td><td>Selecting a recipe expands current item IDs into explicit roots. New items appear available during update but are not selected automatically.</td></tr><tr><td>Compose personal and project selections by default</td><td>Resolve both with explicit conflict checks. Team locks remain project-owned. Private contexts and hooks keep separate gates.</td></tr><tr><td>No backward compatibility requirement</td><td>Design a clean protocol. Existing user files still need protection; format reset does not authorize destructive migration.</td></tr><tr><td>HTML only</td><td>One offline document, including an embedded validated Plan Context; no external publication or separate delivered JSON file.</td></tr></tbody></table></div><aside class="note"><strong>Status:</strong> design reviewed through independent evidence gathering and two scrutiny rounds; implementation is proposed. Synthetic contract probes and document checks are recorded in <a href="#validation">Validation evidence</a>. They do not certify the future engine, native host discovery, or model behavior.</aside><p>This is an unpublished planning projection of the existing GitHub authority. Live issue, milestone, field, and workflow refresh could not be completed through the available shell network. No tracker IDs, assignments, dates, estimates, or completion statuses are invented. All implementation work below is proposed.</p></section><section id="people" aria-labelledby="heading-people"><h2 id="heading-people"><span class="section-number">02</span>Who develops recipes, and why</h2><div class="table-wrap" tabindex="0" role="region" aria-label="Contributor or user table"><table><thead><tr><th scope="col">Contributor or user</th><th scope="col">Motivation</th><th scope="col">Smallest successful journey</th><th scope="col">Support owner</th></tr></thead><tbody><tr><td>Individual practitioner</td><td>Share a useful review, debugging, writing, or planning technique; keep personal variants.</td><td>Create one local item, preview it, then promote it into a recipe repository when sharing becomes useful.</td><td>Item/recipe publisher for content; spine maintainers for protocol errors.</td></tr><tr><td>Team curator</td><td>Give coworkers maintained project knowledge and agreed workflows without copying personal directories.</td><td>Publish a private recipe, add owners and evidence dates, bind contexts explicitly, and give coworkers a reproducible project lock.</td><td>Team publisher for facts/access; adapter owners for host translation.</td></tr><tr><td>Domain specialist</td><td>Distribute a focused workflow, agent role, template, or context reference.</td><td>Use the canonical schema and scaffold; declare essential capabilities and test synthetic examples.</td><td>Specialist publisher; no central approval required for ordinary distribution.</td></tr><tr><td>Open-source recipe maintainer</td><td>Build a reusable collection with contributions, releases, and a documented lifecycle.</td><td>Run offline validation and conformance CI, publish a reviewed snapshot, document deprecations and license provenance.</td><td>Recipe maintainers with a succession/archival path.</td></tr><tr><td>End user</td><td>Find, compare, select, update, and understand what is installed.</td><td>Onboard with starter/custom/none, browse source-tagged items, review one plan, apply, inspect the receipt.</td><td>CLI identifies the correct owner and supplies a redacted support export.</td></tr><tr><td>AI operator</td><td>Perform authorized configuration work reliably with bounded context and no guessing.</td><td>Discover the command protocol, inspect the environment, prepare explicitly, plan, apply exactly, verify the receipt.</td><td>Spine machine contract; recipe descriptions remain untrusted input.</td></tr></tbody></table></div><p>Recipe authors should spend their effort on content, references, and examples. A first useful item should not require a package registry account, a hosted service, a provider-specific build system, a model API key, or knowledge of every adapter. Team and community maintainers can add review discipline without creating another content format.</p><p>Content ownership, protocol ownership, and adapter ownership have different reasons to change. A poor Harmonic architecture reference is a recipe issue; a correctly declared role losing an essential restriction during translation is an adapter issue; nondeterministic selection or broken rollback is a spine issue. Diagnostics and contributor documentation must route those reports accordingly.</p></section><section id="baseline" aria-labelledby="heading-baseline"><h2 id="heading-baseline"><span class="section-number">03</span>Inspected implementation and reusable boundaries</h2><p>Evidence was collected from repository HEAD <code>0d7f790eb5e2da0cf07231198ea20e2f2291bd5e</code> and the current working tree. Existing edits to <code>cli.py</code>, <code>engine.py</code>, operator/CLI documentation, and CLI tests were preserved. Historical design and verification reports were treated as revision-specific evidence.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Observed boundary table"><table><thead><tr><th scope="col">Observed boundary</th><th scope="col">Reuse</th><th scope="col">Required redesign</th></tr></thead><tbody><tr><td>Catalog reads immutable Git objects or explicitly hashed local trees</td><td>Declared file lists, strict parsing, size/path checks, digests</td><td>Multiple source snapshots, source identity, singleton local items, recipe-root metadata</td></tr><tr><td>Resolver handles one catalog with unqualified IDs</td><td>Dependency closure, cycles, version checks, explicit disables</td><td>Qualified graph, imported sources, personal/project composition, slots and richer explanations</td></tr><tr><td>Provider renderers are pure and reject casefolded duplicate paths</td><td>Serialization, native layout ownership, collision failure</td><td>Stable name mapping, typed references, private closure, essential semantic-loss reporting</td></tr><tr><td>Engine binds reviewed inputs and re-renders during apply</td><td>One plan/apply path, stale-plan rejection, observed-file protection</td><td>All source pins, project lock, local authority generations, mapping/adapter transitions</td></tr><tr><td>SQLite state journals writes and retains receipt backups</td><td>Serialized transactions, crash recovery, byte restoration</td><td>Source-aware provenance, authority-aware reactivation, retention and state-format contracts</td></tr><tr><td>JSON/no-input and schema commands already exist</td><td>Structured errors and explicit mutation confirmation</td><td>Stable bootstrap, command/result schemas, bounded data, engine-owned remediation</td></tr><tr><td>TUI is one checkbox dialog; most human output is JSON</td><td>A keyboard interaction exists</td><td>Purposeful human output, searchable views, detail/plan/recovery flows, draft semantics</td></tr></tbody></table></div><p>The observed current catalog contains 65 packages. The proposed starter roots—Propose, Plan Out, Do It, and Investigate—currently resolve to 17 packages: five Skills, eight Policies, three Templates, and one public Context. The fifth Skill is supporting Visual Artifacts. This read-only closure contains no private contexts or executable packages.</p><aside class="note">The current renderer already rejects output collisions. The gap is that flattening dots into hyphens can reject legitimate distinct IDs; this is not evidence of silent overwriting. Likewise, installed executables and rendered files are not evidence that a provider or model exercised a workflow.</aside></section><section id="architecture" aria-labelledby="heading-architecture"><h2 id="heading-architecture"><span class="section-number">04</span>Ownership and the installation pipeline</h2><div class="architecture"><div class="lane"><h3>Content owners</h3><p>Starter recipe · community recipes · private team recipes · local individual items</p><p>Canonical content, declared files, item metadata, references, provenance, and examples.</p></div><div class="lane spine"><h3>Spine</h3><p>Source preparation → validation → composition → plan → apply → receipt / recovery</p><p>Protocol, schemas, adapters, authority checks, durable state, CLI / TUI / machine interface.</p></div><div class="lane"><h3>Provider boundary</h3><p>Native files and supported semantics → documented or observed host discovery → model workflows</p><p>Each step has its own evidence. The spine does not become an agent runtime.</p></div></div><p>Implement cohesive application functions around the existing Engine. The CLI, TUI, and machine mode call those functions with the same typed requests; they do not independently resolve graphs or write provider files. Source preparation has a separate effect boundary because it contacts networks and populates immutable caches without selecting or activating content.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Operation table"><table><thead><tr><th scope="col">Operation</th><th scope="col">Permitted effects</th><th scope="col">Failure / cancellation contract</th></tr></thead><tbody><tr><td>Inspect</td><td>Read registered metadata, intent, source snapshots, status</td><td>No fetch, activation, approval, or configuration change; report unavailable inputs.</td></tr><tr><td>Prepare</td><td>Contact an explicitly named permitted origin; populate staged immutable cache</td><td>No durable registration/selection/trust change. Cache bytes may remain and are accounted for.</td></tr><tr><td>Plan</td><td>Pure validation, resolution, rendering and observed-target comparison</td><td>No network, no provider writes, no permission widening. Blockers remain inspectable.</td></tr><tr><td>Apply</td><td>One Engine transaction writes reviewed registration/intent/lock/provider state</td><td>Revalidate all inputs. Recoverable multi-file transition; not simultaneous filesystem atomicity.</td></tr><tr><td>Revoke</td><td>Explicit local authority deny record under the transaction lock</td><td>Can deny even during pending recovery; does not promise to terminate a running host.</td></tr><tr><td>Recover / rollback</td><td>Reviewed restoration or reconciliation from journal/receipts</td><td>Preserve independent edits; check current authority for managed reactivation; retain evidence on conflict.</td></tr></tbody></table></div><p>The spine repository owns its synthetic fixtures, conformance kit, schema reference, and examples. Recipe-specific generated templates, content tests, and behavioral evaluation cases follow the recipe that owns them. The engine test suite must be usable when the official starter origin is unavailable.</p></section><section id="identity" aria-labelledby="heading-identity"><h2 id="heading-identity"><span class="section-number">05</span>Identity, origins, aliases, and native names</h2><p>Use a stable source UUID for each recipe or standalone local-item source. A recipe-local item ID identifies kind and responsibility. The authoritative item key is the structured pair <code>(source UUID, local item ID)</code>. Display aliases such as <code>harmonic/skill.pr-review</code> are selectors, not authentication or precedence.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Concept table"><table><thead><tr><th scope="col">Concept</th><th scope="col">Purpose</th><th scope="col">Change rule</th></tr></thead><tbody><tr><td>Source UUID</td><td>Continuity of a content collection or singleton local item</td><td>Forking creates a new UUID. Copying the UUID does not copy trust.</td></tr><tr><td>Approved origin + root + transport + registration generation</td><td>Where trusted bytes may be retrieved</td><td>Origin/root changes need a dedicated provenance review; UUID equality alone cannot authorize relocation.</td></tr><tr><td>Alias</td><td>Readable CLI/TUI selection</td><td>Rename changes labels only. Ambiguous bare selectors show candidates; no implicit winner.</td></tr><tr><td>Snapshot pin</td><td>Exact content used by the environment</td><td>One immutable snapshot per source UUID in one effective environment.</td></tr><tr><td>Item version</td><td>Dependency/contract compatibility</td><td>Check constraints against the selected snapshot; do not infer byte identity from version text.</td></tr><tr><td>Native invocation/path mapping</td><td>Distinct valid provider output</td><td>Deterministic stable-key mapping, adapter limits, collision checks, reviewed naming-version migration.</td></tr></tbody></table></div><p>Native names use a bounded readable component plus a fixed digest of the authoritative key. Recipe alias, registration order, and display-name edits do not determine identity. Exact, casefolded, file/directory, reserved-name, character, and length checks run before a plan can apply. A digest collision is an error; no ordinal suffix or last-writer winner silently changes names. Mapping versions and assignments live in machine installation records and receipts, not the portable source lock.</p><p>Same-named items from different recipes coexist. Two revisions of the same source UUID do not coexist in one effective graph. A user aligns pins, stops inheriting that source, or intentionally forks under a new identity. Disabling inheritance only changes dasync composition; globally materialized provider content may remain discoverable. Diagnostics must show that separate fact.</p><figure class="code"><figcaption>Qualified selectors; all identities here are illustrative</figcaption><pre tabindex="0" role="region" aria-label="Qualified selectors; all identities here are illustrative"><code>harmonic/skill.pr-review    → (source UUID A, skill.pr-review)
+personal/skill.pr-review    → (source UUID B, skill.pr-review)
+my-local-review/skill.review → (local source UUID C, skill.review)</code></pre></figure></section><section id="selection" aria-labelledby="heading-selection"><h2 id="heading-selection"><span class="section-number">06</span>Selection without profiles</h2><p>Registered sources are available to browse. Root selections express user intent. Dependencies are derived. The resolved graph records direct, inherited, and dependency reasons separately; materialization and observed host visibility are separate states.</p><ul><li>Selecting a recipe is a bulk UI action over its currently pinned item IDs. It writes explicit roots, not an ongoing subscription to all future items.</li><li>New items in an updated recipe appear in the update review as available and unselected. Modified selected items and changed dependency closures still appear in the plan.</li><li>Removing a root removes that selection reason. A dependency needed by another root remains. Explicitly disabling a required item produces a bounded causal blocker.</li><li>Personal user selections compose with project selections by default when scope/access/capability rules permit. Hooks and private contexts never acquire project/provider grants through inheritance.</li><li>Same-named context selections do not imply substitution into a workflow. The workflow’s explicit dependency or slot binding decides which content it receives.</li><li>Selecting two declared conflicting policies fails. Conflict domains are recipe-local unless an explicit shared conflict contract is declared. The engine does not detect all contradictions in natural language.</li><li>Unregistering an in-use source refuses and shows dependent roots. A reviewed removal may deselect those roots; it never rewrites publisher-authored dependency declarations.</li><li>Machine-wide unregister cannot silently affect other projects. The initial implementation may unregister only unused sources; multi-scope removal must explicitly enumerate and authorize each scope.</li></ul><p>There are no authored selection groups, hidden default-item lists, or profile aliases. A small starter recipe is small by its actual contents. Supporting templates/policies/references are installed through ordinary dependency closure and remain explainable in the same item model.</p><p>A checkbox must not convert a derived selection into a direct choice merely because it is visible. The TUI edits intent and keeps its draft separate from persisted configuration. Search, navigation, resize, and inspection have no selection effects.</p></section><section id="format" aria-labelledby="heading-format"><h2 id="heading-format"><span class="section-number">07</span>Canonical format and future stability</h2><p>Recommend strict YAML authored documents with JSON-equivalent semantics and bundled JSON Schema 2020-12 validation. Reject duplicate keys, aliases, unsafe tags, unknown core fields, and remote schema resolution. A single authoritative ItemSpec schema is reused by recipe items and local item envelopes; provider frontmatter is generated, not independently authored.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Contract table"><table><thead><tr><th scope="col">Contract</th><th scope="col">Version independently</th><th scope="col">Compatibility rule</th></tr></thead><tbody><tr><td>Recipe and ItemSpec</td><td>Authored content semantics</td><td>Freeze core behavior before stable launch. Unknown required features fail before writes.</td></tr><tr><td>Intent and portable lock</td><td>Selection and resolution semantics</td><td>Explicit migrations; local grants cannot be encoded as portable authority.</td></tr><tr><td>Machine protocol</td><td>Command inputs, outputs, errors, event channels</td><td>Permanent discovery bootstrap advertises supported versions; old agents get actionable version refusal.</td></tr><tr><td>Plan</td><td>Local reviewed execution artifact</td><td>Bind exact versions/inputs; version changes invalidate and require replan.</td></tr><tr><td>State / receipt / journal</td><td>Recovery and historical interpretation</td><td>Back up state before migrations; unknown formats fail safely; support obligations apply to published generations.</td></tr><tr><td>Adapter / name mapping</td><td>Native translation and semantic preservation</td><td>Source pins stay portable; output/name transitions require reviewed materialization migration.</td></tr></tbody></table></div><p>Keep PEP 440 item versions and constraint syntax, deliberately reusing the current Python packaging implementation. Document the grammar rather than calling it SemVer. Publisher release labels are not a solver: the commit/tree and digest pin bytes; item versions validate contracts within that selected snapshot. SemVer principles can guide the engine’s public API promises only when that public API is explicitly defined.</p><p>Permit namespaced annotation-only extensions inside one bounded <code>extensions</code> field. They cannot alter dependency, access, execution, identity, or rendering semantics. Semantic additions require understood feature gates and conformance fixtures. Do not turn extensions into a second plugin runtime or expression language.</p><p>The stable-spec process requires a written change rationale, valid/invalid fixtures, reference implementation evidence, an author-facing upgrade note, and a support/migration decision. Publish only compatibility windows maintainers can staff. No indefinite backport promise or automatic reinterpretation of old security semantics.</p><aside class="note">Normative schemas are an immediate implementation deliverable. Examples below are concrete design examples; they are not commands or formats supported by the current CLI. <a href="https://json-schema.org/draft/2020-12/json-schema-core">JSON Schema’s dialect/vocabulary model</a> informs offline version negotiation. <a href="https://semver.org/">SemVer</a> informs explicit API stability, not the selected PEP 440 parser.</aside></section><section id="author-format" aria-labelledby="heading-author-format"><h2 id="heading-author-format"><span class="section-number">08</span>Author examples and package responsibilities</h2><figure class="code"><figcaption>Proposed recipe layout; no provider directories</figcaption><pre tabindex="0" role="region" aria-label="Proposed recipe layout; no provider directories"><code>recipe.yaml
+README.md
+LICENSE
+items/
+  skills/review/item.yaml
+  skills/review/SKILL.md
+  skills/review/LICENSE.txt
+  contexts/workspace/item.yaml
+  contexts/workspace/CONTEXT.md</code></pre></figure><figure class="code"><figcaption>Proposed recipe.yaml data, shown as JSON for exact types</figcaption><pre tabindex="0" role="region" aria-label="Proposed recipe.yaml data, shown as JSON for exact types"><code>{
+  &quot;format&quot;: 1,
+  &quot;source_id&quot;: &quot;11111111-1111-4111-8111-111111111111&quot;,
+  &quot;name&quot;: &quot;development-starter&quot;,
+  &quot;description&quot;: &quot;Development workflows in the canonical dasync format.&quot;,
+  &quot;requires_engine&quot;: &quot;&gt;=1.0,&lt;2.0&quot;,
+  &quot;required_features&quot;: [],
+  &quot;items&quot;: [
+    &quot;items/skills/review/item.yaml&quot;
+  ],
+  &quot;imports&quot;: {}
+}</code></pre></figure><figure class="code"><figcaption>Proposed ItemSpec example; synthetic, not a published recipe</figcaption><pre tabindex="0" role="region" aria-label="Proposed ItemSpec example; synthetic, not a published recipe"><code>{
+  &quot;format&quot;: 1,
+  &quot;kind&quot;: &quot;Skill&quot;,
+  &quot;id&quot;: &quot;skill.review&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;name&quot;: &quot;Review&quot;,
+  &quot;description&quot;: &quot;Review a bounded code change using source evidence.&quot;,
+  &quot;entry&quot;: &quot;SKILL.md&quot;,
+  &quot;files&quot;: [
+    &quot;SKILL.md&quot;,
+    &quot;LICENSE.txt&quot;
+  ],
+  &quot;license&quot;: &quot;MIT&quot;,
+  &quot;scopes&quot;: [
+    &quot;user&quot;,
+    &quot;project&quot;
+  ],
+  &quot;requires&quot;: {},
+  &quot;required_capabilities&quot;: [
+    &quot;filesystem.read&quot;
+  ],
+  &quot;optional_capabilities&quot;: [],
+  &quot;default_prompt&quot;: &quot;Review this change and explain actionable findings.&quot;
+}</code></pre></figure><div class="table-wrap" tabindex="0" role="region" aria-label="Kind table"><table><thead><tr><th scope="col">Kind</th><th scope="col">Content responsibility</th><th scope="col">Essential boundary</th></tr></thead><tbody><tr><td>Skill</td><td>A discoverable workflow with a bounded task and finish condition</td><td>Required capabilities and references; generated native discovery metadata</td></tr><tr><td>Agent</td><td>Role instructions and delegation contract</td><td>Essential host restrictions versus optional preferences; reject unenforceable essential semantics</td></tr><tr><td>Context</td><td>Reference facts, a binding source, or a declared context contract</td><td>Sensitivity, access, provenance, freshness, and compatible slot declaration</td></tr><tr><td>Policy</td><td>Operative rules and selectors</td><td>Declared conflict scope; native applicability where supported; no claim that prose alone enforces permissions</td></tr><tr><td>Template</td><td>Reusable output structure and supporting assets</td><td>Declared file closure, licenses, relative references, private-content propagation</td></tr><tr><td>Hook</td><td>Explicit executable guardrail</td><td>Exact digest, permissions, event support, timeout, and independent approval; no portable sandbox claim</td></tr></tbody></table></div><p>The manifest supplies name, description, entrypoint, version, and declared files once. Canonical bodies can be ordinary Markdown without native frontmatter. Kind-specific metadata must stay small and meaningful; semantic checks sit beside schema validation instead of hiding in a prose convention. Resource budgets apply to files, snapshot totals, graph depth, rendering, and disclosure—not only approximate per-package token counts.</p><p>Use finite typed references: canonical Markdown destinations <code>dasync:dependency/&lt;item-reference&gt;</code> and <code>dasync:slot/&lt;slot-name&gt;</code>, plus declared typed invocation fields. The renderer translates those references through the qualified graph. Plain prose and fenced examples are literal. No blanket replacements, expression evaluation, recursive templates, or automatic web dereferencing. Default prompts contain task text; the adapter supplies the correct self-invocation name.</p></section><section id="dependencies" aria-labelledby="heading-dependencies"><h2 id="heading-dependencies"><span class="section-number">09</span>Cross-recipe dependencies and bounded resolution</h2><p>Within a recipe, bare item references resolve locally. A declared import gives another source a local author-facing key, but it does not authorize registration, fetching, or trust. The environment supplies the approved origin and chosen immutable snapshot for that source UUID.</p><figure class="code"><figcaption>Proposed imported dependency; locator hints, if present, are untrusted suggestions</figcaption><pre tabindex="0" role="region" aria-label="Proposed imported dependency; locator hints, if present, are untrusted suggestions"><code>imports:
+  shared:
+    source_id: 22222222-2222-4222-8222-222222222222
+
+# In an item: the import key is explicit.
+requires:
+  shared/template.review: &#x27;&gt;=1.0,&lt;2.0&#x27;</code></pre></figure><p>Resolve one snapshot per source UUID. Check selected item versions against all incoming constraints. Do not search arbitrary historical package releases or silently advance another recipe to make a graph fit. On conflict, report the affected roots, requirement edges, current pins, and the source whose revision needs a deliberate decision.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Case table"><table><thead><tr><th scope="col">Case</th><th scope="col">Resolution behavior</th></tr></thead><tbody><tr><td>Missing imported source</td><td>Show SOURCE_UNBOUND and the declared UUID/import; offer explicit preparation/registration, with no guessed origin.</td></tr><tr><td>Registered source but missing item</td><td>Show exact source/snapshot/item and dependent roots; do not use another same-named item.</td></tr><tr><td>Conflicting version requirements</td><td>Reject the combined plan; leave current installation intact. Propose bounded choices, never choose new authority.</td></tr><tr><td>Cycle across recipes</td><td>Return a short cycle path with qualified identities; no recursive rendering.</td></tr><tr><td>Optional suggestion</td><td>Show as available; no implicit root, dependency, grant, or capability.</td></tr><tr><td>Explicit disable of required dependency</td><td>Explain reverse dependents; user removes affected roots or cancels.</td></tr><tr><td>Unused imported source</td><td>Do not fetch merely because it appears in author metadata.</td></tr></tbody></table></div><p>Keep dependency resolution separate from context binding. A fixed dependency selects a specific item. A slot asks for one explicitly bound compatible context. Arbitrary user substitution of any dependency is deferred; it adds a broad override system before a demonstrated need. A proposed source URL or import declaration is data to inspect, not permission to contact a service.</p></section><section id="locks" aria-labelledby="heading-locks"><h2 id="heading-locks"><span class="section-number">10</span>Portable project locks and effective machine state</h2><div class="table-wrap" tabindex="0" role="region" aria-label="Store table"><table><thead><tr><th scope="col">Store</th><th scope="col">Owns</th><th scope="col">Must exclude</th></tr></thead><tbody><tr><td>Project intent</td><td>Project-owned sources, roots, explicit bindings/imports, provider selection, permitted inheritance behavior</td><td>Operative trust, executable approval, machine paths, authentication, private consumer grants</td></tr><tr><td>Project .dasync.lock</td><td>Project dependency closure, source identities/root/origins allowed by audience, immutable pins and item digests</td><td>Personal-only sources, private binding paths, effective user graph, machine adapter/output assignment</td></tr><tr><td>User intent and local source map</td><td>Personal selections/pins, local paths, approved registrations and machine-owned project identities</td><td>Anything silently copied into a shared project lock</td></tr><tr><td>Machine authority ledger</td><td>Trust/grants/deny generations bound to source, item/consumer, registered target and provider</td><td>Authority supplied by publisher metadata or a checked-in lock</td></tr><tr><td>Effective resolution / receipt</td><td>Composed user+project graph, naming assignments, actual paths/hashes, evidence and backups</td><td>Assumption that this machine record is portable or safe to publish</td></tr></tbody></table></div><p>Two coworkers with different personal selections must retain identical project-owned intent and locks. Their machine-effective plans differ transparently. A project dependency on a personal-only or unresolved local source is marked nonportable. Sharing requires promotion, an approved portable locator, or an explicit unresolved binding that fails with SOURCE_UNBOUND until supplied.</p><p>Personal and project selections compose by default. The same source at incompatible pins fails before rendering; stopping inheritance is explicit per source or for the environment. Same-key/same-pin items deduplicate in the resolved graph. Native global/project discovery overlap is reported independently because the engine cannot assert one universal provider precedence.</p><p>An explicit machine-owned audience policy—local, team, or public—controls which classified source/item metadata may enter a project lock or export. The stricter of publisher classification and local policy wins. Offline software cannot prove that a remote repository is private; the operator owns actual publication visibility. Classifying a private source as shareable needs a separate reviewed decision.</p><p>Redacted support exports are diagnostic-only, clearly non-installable. They redact classified IDs, topology, filenames, digests and origins as well as paths. They never guess a source from a UUID or display name. Generated source locks are reviewable resolution records; update and migration own changes instead of silently rewriting manual edits.</p></section><section id="sources" aria-labelledby="heading-sources"><h2 id="heading-sources"><span class="section-number">11</span>Source preparation, authentication, and survival</h2><p>Initial transport scope: HTTPS Git, explicit local Git snapshots, local directory recipes, and local item folders. SSH support requires its own authentication, quoting, and transport acceptance before becoming a claim. Git host neutrality is a protocol goal; enterprise credential-helper/proxy/TLS configurations need documented and tested support rather than implicit acceptance of every Git setting.</p><ol class="steps"><li><strong>Name the candidate.</strong> User selects an exact locator, recipe root, and tracking ref or full revision.</li><li><strong>Prepare explicitly.</strong> Contact only permitted endpoints; populate an immutable staging cache. No selection, durable registration, or trust is saved.</li><li><strong>Validate identity and files.</strong> Parse bounded metadata, check source UUID/root/declared files, resolve full commit/tree and digest.</li><li><strong>Inspect an ephemeral draft.</strong> Browse items, imports, sensitivity, capabilities and proposed output. Authentication failures preserve the draft.</li><li><strong>Review one concrete plan.</strong> Origin trust, executable digests, context grants, classification changes, and overwrites have separate choices.</li><li><strong>Apply through Engine.</strong> Commit exact durable intent/lock/registration/output state and receipt. Report actual effects and activation evidence.</li></ol><p>A branch or release tag is an update preference. Execution uses the resolved immutable commit plus declared-content digest. Sync and apply do not fetch. Updating one source prepares a candidate, validates the complete resulting graph, holds other pins fixed, and applies one reviewed environment transaction. Mutable or unavailable origins leave the last installed snapshot usable where retained bytes suffice.</p><p>Centralize restricted Git invocation. Read managed objects with replacement objects disabled. Do not load source-owned hooks/helpers/config/filters, submodules, LFS, or arbitrary executable installation steps. Do not fetch inside a user's local source checkout. Local object import uses a managed reading boundary and leaves the source untouched.</p><p>Explicitly filter transport configuration and environment. Allow vetted user credential-helper inputs, locale, executable lookup, TLS trust, and explicit enterprise settings; reject source-owned settings and uncontrolled GIT_CONFIG_*, GIT_DIR, GIT_WORK_TREE, GIT_NAMESPACE, SSH command overrides, URL rewriting, and injected headers. Disable redirect following; a redirect requires explicit registration of the new endpoint before contacting it or passing credentials. Integration tests must prove this policy with the actual Git interface.</p><p>Retain complete validated metadata and required content for active locks and retained receipts independently of disposable download caches. Eviction cannot silently break active offline sync or promised rollback. Quotas, tree limits, timeouts, permission errors and interrupted preparation get distinct diagnostics. Purge serializes with preparation/apply/recovery, reports lost recovery capability, and does not claim physical erasure or revocation of downloaded copies.</p><aside class="note"><a href="https://git-scm.com/docs/git-config">Git configuration</a> is part of the execution boundary, not just a URL concern. <a href="https://git-scm.com/docs/git-bundle">Git bundles</a> are a later offline-transfer mechanism. <a href="https://docs.github.com/en/code-security/concepts/supply-chain-security/immutable-releases">GitHub immutable releases</a> can strengthen official releases where available; ordinary tags are not assumed immutable.</aside></section><section id="contexts" aria-labelledby="heading-contexts"><h2 id="heading-contexts"><span class="section-number">12</span>Contexts, slots, access, and progressive loading</h2><p>Context distribution and context use are distinct. Public references may be materialized when permitted. Team/private bytes live in retained private source storage or externally bound local files; generated provider output carries an authorized lookup rather than copying private bodies, linked assets, or paths. Credentials are not context content.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Slot field table"><table><thead><tr><th scope="col">Slot field</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td>Local name</td><td>A workflow-owned input, such as workspace</td></tr><tr><td>Required / optional</td><td>Missing required input blocks; absent optional input is explicitly visible</td></tr><tr><td>Cardinality</td><td>One context at launch; no implicit merge or precedence</td></tr><tr><td>Accepted contract UUID and version constraint</td><td>Explicit structural compatibility with an imported/local context contract</td></tr><tr><td>Content format</td><td>Markdown initially; optional structured validation only where declared and supported</td></tr><tr><td>Binding owner</td><td>Project/user intent binds qualified consumer#slot to qualified context</td></tr><tr><td>Validation evidence</td><td>Contract/version/format checks; not proof of factual truth or semantic sufficiency</td></tr></tbody></table></div><figure class="code"><figcaption>Context compatibility and authorization are independent</figcaption><pre tabindex="0" role="region" aria-label="Context compatibility and authorization are independent"><code># Conceptual slot binding, not name-based substitution:
+consumer: starter/skill.investigate
+slot: workspace
+context: harmonic/context.workspace
+
+# Local authority is a separate record:
+context × qualified consumer × registered project root × provider</code></pre></figure><p>A reusable context contract does not enumerate every future external consumer. Local grants authorize actual selected consumers with a binding/dependency edge; author declarations may narrow access but cannot broaden those grants. Project grants bind the machine-registered project and canonical target, not merely a copyable YAML project name.</p><p>The lookup/read protocol reports exact qualified identity, snapshot, declared evidence dates, freshness status, missing-grant state, and bounded references. Public metadata lookup is separate from an explicit private read/locate request. Generated private snippets contain the exact consumer, scope, and item identity—no unresolved consumer placeholder. Selecting another same-named context never repairs a missing binding automatically.</p><p>A compact index lets an agent discover relevant references without loading every body. Content is loaded task by task. Parent/child and resumed-agent handoffs carry environment identity, pins, permitted actions, authorized references and unresolved facts; they exclude private bodies by default and recheck grants and decision-critical inputs. The CLI's declared consumer/provider strings are routing checks, not authenticated caller identity.</p><p>Sensitivity covers metadata, all declared files, and validated reference closure. A public template cannot declassify a private dependency. A private-to-public update requires an explicit classification review. Arbitrary prose and disguised files cannot be proven harmless by a link validator; documentation must bound the claim. Same-user processes able to read the clone/cache are outside the secrecy guarantee. Repository access revocation cannot revoke downloaded bytes.</p></section><section id="adapters" aria-labelledby="heading-adapters"><h2 id="heading-adapters"><span class="section-number">13</span>Provider portability without false equivalence</h2><p>Authors supply canonical instructions, references, and essential versus optional requirements. Adapters own native serialization, applicability, role registration, invocation naming, hooks and supporting references. A format translation is successful only when required semantics are preserved—or the operation stops with a clear incompatibility.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Evidence/state table"><table><thead><tr><th scope="col">Evidence/state</th><th scope="col">Can establish</th><th scope="col">Cannot establish alone</th></tr></thead><tbody><tr><td>Format supported</td><td>Adapter understands this item and its required canonical semantics</td><td>Host configuration currently enforces a restriction</td></tr><tr><td>Executable detected</td><td>A provider executable is on the inspected path</td><td>Authentication, services, discovery, or model behavior</td></tr><tr><td>Materialized</td><td>Expected output was written and verified against the reviewed plan</td><td>Host loaded every file or ran the intended role</td></tr><tr><td>Host discovery observed</td><td>An exact host/version/platform discovered an item in a recorded session</td><td>Equivalent behavior on all hosts or models</td></tr><tr><td>Workflow exercised</td><td>An observable outcome was tested at exact revisions with stated tools/grants</td><td>Universal reliability, security isolation, or future-version certification</td></tr></tbody></table></div><p>For agents, separate normative role instructions, essential host restrictions, optional preferences and permitted degradations. A read-only requirement cannot become mere prose while being called enforced read-only execution. If current host configuration disables a documented native restriction, essential enforcement remains blocked/unverified. Unsupported optional semantics may proceed only with disclosed, accepted degradation.</p><p>The current spine has Codex, Claude, Copilot and Cursor adapters. Mentioning ChatGPT does not create an adapter or establish filesystem integration there. Qualify actual launch providers/platforms with dated evidence, document unsupported/degraded cases, and use the same adapter contract for future hosts. Mac/Linux are the existing release-testing baseline; Windows support requires its own path, locking, terminal, recovery and executable lifecycle gates.</p><p>Aggregate policy and hook files need contributor-level provenance: one file may represent several qualified items. Output ownership remains one authoritative installation owner per concrete path, with all contributing items visible. Adapter/name migrations compare old/new outputs, preserve originals, and keep receipt restoration interpretable within the published support contract.</p></section><section id="cli" aria-labelledby="heading-cli"><h2 id="heading-cli"><span class="section-number">14</span>Human CLI and first-time onboarding</h2><p>Human CLI output should show useful tables, concise diffs, exact scope/source/pin, selection reasons, and actionable errors. Raw JSON is machine mode, not the default explanation. Nested help must expose valid options for each purpose. Every essential TUI action has a complete CLI equivalent, including source preparation, local creation, grants, diagnostics, cancellation and recovery.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Command family table"><table><thead><tr><th scope="col">Command family</th><th scope="col">Proposed responsibility</th></tr></thead><tbody><tr><td>init / tui</td><td>Onboard an exact target; launch explicit interactive exploration</td></tr><tr><td>recipe</td><td>Prepare/register/inspect/update/unregister source collections</td></tr><tr><td>item</td><td>Search, show, select/deselect, explain, create and promote individual items</td></tr><tr><td>context</td><td>Inspect compatibility/bindings and perform explicitly scoped lookup/read</td></tr><tr><td>plan / apply</td><td>Review exact candidate changes, then execute that plan</td></tr><tr><td>status / doctor / recover / rollback</td><td>Inspect materialization and recovery without needing a successful new sync plan</td></tr><tr><td>authority</td><td>Inspect grants/approvals, revoke or deliberately review specific authorization</td></tr><tr><td>describe / agent</td><td>Machine discovery, bounded operating brief and environment handoff</td></tr><tr><td>author</td><td>Canonical scaffolding, offline validation, disposable preview, conformance and release preparation</td></tr></tbody></table></div><figure class="code"><figcaption>Target UX transcript; candidate ID is illustrative; example URL is nonfunctional; current CLI does not implement this grammar</figcaption><pre tabindex="0" role="region" aria-label="Target UX transcript; candidate ID is illustrative; example URL is nonfunctional; current CLI does not implement this grammar"><code>dasync init --scope project --path /absolute/project
+# Interactive: starter [Yes] · another source · no recipe
+
+# Prepare yields a candidate handle, not a registered alias.
+dasync recipe prepare --source https://example.invalid/team/recipes.git --json
+dasync recipe show --candidate CANDIDATE_ID
+# Review and apply a registration plan before using an alias.
+# Its plan records exact source trust separately from confirmation.
+
+# Separate example: harmonic and personal already registered.
+dasync item list --recipe harmonic --scope project --path /absolute/project
+dasync item select harmonic/skill.pr-review personal/skill.pr-review \
+  --scope project --path /absolute/project
+
+dasync plan sync --scope project --path /absolute/project --json
+dasync apply --scope project --path /absolute/project \
+  --plan /absolute/reviewed-plan.json --no-input --yes</code></pre></figure><p>Onboarding starts with project materialization while composing permitted personal selections. It shows detected providers as detection only, names the target, and offers the small official starter with a default-yes selection. Custom source and skip are equally visible. The final plan can collect distinct source trust, exact executable approval, context grant, classification and overwrite decisions on one screen; ordinary confirmation cannot supply omitted categories.</p><p>Fetching is explicit and progress is meaningful without unmeasured completion percentages. Cancellation before apply discards draft durable intent but may retain documented cache. Authentication or network failure retains choices and the installed snapshot. Existing files receive drift/collision diagnostics; no generic overwrite recommendation dismisses a real ownership conflict.</p></section><section id="tui" aria-labelledby="heading-tui"><h2 id="heading-tui"><span class="section-number">15</span>TUI design and interactive illustration</h2><p>Recommend a bounded Textual prototype before committing its version/dependency choice. It offers a Python-native application structure and headless interaction testing; that is evidence for a candidate, not proof of this product's accessibility or responsiveness. Retain a fully useful plain CLI and test real terminals and assistive technology.</p><div id="mock" class="terminal" aria-label="Illustrative TUI; no real configuration is changed"><div class="terminal-head"><strong>dasync · project /example/work</strong><span>Illustrative state</span></div><div class="mock-tabs" role="group" aria-label="Choose illustration view"><button type="button" data-view="browse" aria-pressed="true">Browse items</button><button type="button" data-view="review" aria-pressed="false">Review plan</button><button type="button" data-view="machine" aria-pressed="false">Machine request</button></div><div id="mock-browse"><div class="mock-layout"><div><label for="mock-query">Filter available items</label><input id="mock-query" placeholder="Search names or sources" type="search"><fieldset><legend>Current pinned items</legend><label class="item-row"><input type="checkbox" value="personal/skill.pr-review" checked><span><b>PR Review</b><small>personal · skill.pr-review</small></span></label><label class="item-row"><input type="checkbox" value="harmonic/skill.pr-review"><span><b>PR Review</b><small>harmonic · skill.pr-review</small></span></label><label class="item-row"><input type="checkbox" value="local-debug/skill.investigate"><span><b>Investigate</b><small>local item · skill.investigate</small></span></label></fieldset></div><div class="mock-detail"><h3>Why a source badge matters</h3><p>Both PR Review items may be selected. They have different authoritative keys and native invocation names.</p><p>Selecting the team review exposes its required workspace binding as a blocker. It never grants access or substitutes personal context.</p><p>Selection here edits a synthetic draft only.</p></div></div></div><div id="mock-review" hidden><h3>Draft plan summary</h3><div id="mock-summary"></div><p>No changes are applied by this illustration. The real TUI must render source pins, dependencies, paths/hashes, approvals and removals.</p></div><div id="mock-machine" hidden><h3>Same selection as a typed request</h3><pre id="mock-json"></pre><p>The real machine interface uses the same request/Engine and never needs screen scraping.</p></div><p class="terminal-footer" id="mock-status" aria-live="polite"></p></div><div class="table-wrap" tabindex="0" role="region" aria-label="Screen table"><table><thead><tr><th scope="col">Screen</th><th scope="col">Essential information</th><th scope="col">Reachable states</th></tr></thead><tbody><tr><td>Environment overview</td><td>Exact target, intent/lock, inherited roots, materialization, recovery</td><td>Empty, configured, drifted, pending recovery, unavailable source</td></tr><tr><td>Recipes / local items</td><td>Origin, identity, current/candidate pin, registration/trust, item count</td><td>Uncached, preparing, auth error, offline, relocated, duplicate UUID</td></tr><tr><td>Browse / detail</td><td>Source badge, search, kind, provenance, declared support, references, reasons</td><td>Direct/inherited/dependency, selected/blocked, no results, long labels</td></tr><tr><td>Context bindings</td><td>Consumer slot, compatible candidates, explicit binding and grant status</td><td>Optional unbound, required missing, incompatible, denied, stale evidence</td></tr><tr><td>Review</td><td>Full effects, old/new pins, approvals by category, overwritten originals</td><td>Ready, blocked, invalidated, cancelled draft</td></tr><tr><td>Apply / receipt</td><td>Transaction stage, actual effects, receipt, doctor and activation caveats</td><td>Completed, interruption, conflict, retained journal</td></tr><tr><td>Author preview</td><td>Source tree vs committed snapshot, validation field locations, native outputs</td><td>Valid/invalid, malformed refs, unsupported essentials, preview-only</td></tr></tbody></table></div><p>Preserve focus, filter, selection and scroll where meaningful. Narrow terminals switch to list→detail navigation instead of shrinking text; test 80×24 and larger layouts. Visible keyboard help, Tab/arrow/Space navigation, Escape/back, pointer use, monochrome, NO_COLOR, dumb terminals, non-TTY and Unicode widths are part of acceptance. Sanitized recipe strings cannot inject ANSI/OSC, Rich actions, HTML, or bidi display control.</p><p>No background apply or automatic fetch while browsing. Draft changes survive recoverable inspection errors and are not saved on exit. Worker cancellation does not mean a transaction rolled back; once apply begins, the transaction owns its lifetime and the UI reports real completion/recovery state. <a href="https://textual.textualize.io/guide/testing/">Textual Pilot tests</a> support keyboard/click/resize checks; <a href="https://textual.textualize.io/guide/workers/">worker documentation</a> explains why cancellation needs explicit lifecycle handling.</p></section><section id="agents" aria-labelledby="heading-agents"><h2 id="heading-agents"><span class="section-number">16</span>AI-friendly operation as a public API</h2><p>Freeze a tiny permanent bootstrap: <code>dasync --version</code> and <code>dasync describe --json</code>. It advertises machine protocol versions, command input/output schemas, side-effect classes, required target fields, approval categories and result/diagnostic schemas. An unsupported protocol request fails before configuration reads/writes or prompts.</p><figure class="code"><figcaption>Proposed diagnostic shape; structured remediation is data, not approval</figcaption><pre tabindex="0" role="region" aria-label="Proposed diagnostic shape; structured remediation is data, not approval"><code>{
+  &quot;protocol&quot;: 1,
+  &quot;ok&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;CONTEXT_DENIED&quot;,
+    &quot;origin&quot;: &quot;engine&quot;,
+    &quot;effects&quot;: &quot;none&quot;,
+    &quot;retryable&quot;: false,
+    &quot;details&quot;: {
+      &quot;consumer&quot;: &quot;harmonic/skill.pr-review&quot;,
+      &quot;slot&quot;: &quot;workspace&quot;
+    },
+    &quot;required_approval&quot;: {
+      &quot;kind&quot;: &quot;context-grant&quot;,
+      &quot;scope&quot;: &quot;exact-project-and-provider&quot;
+    },
+    &quot;next_request&quot;: {
+      &quot;operation&quot;: &quot;authority.inspect&quot;,
+      &quot;argv&quot;: [
+        &quot;dasync&quot;,
+        &quot;authority&quot;,
+        &quot;inspect&quot;,
+        &quot;--scope&quot;,
+        &quot;project&quot;,
+        &quot;--path&quot;,
+        &quot;/example/work&quot;,
+        &quot;--json&quot;,
+        &quot;--no-input&quot;
+      ]
+    }
+  }
+}</code></pre></figure><ul><li>One promised JSON envelope on stdout. Human progress uses stderr; optional event streaming is explicitly negotiated and schema-versioned.</li><li>Strict no-input mode: no TUI, credential prompt, guessed target, implicit trust, context approval, or overwrite permission.</li><li>Command schemas come from the authoritative operation definitions; help, machine description, operator brief and tests cannot drift into independent contracts.</li><li>Engine-owned diagnostics/risk classifications are separate from provenance-tagged recipe prose. JSON serialization does not make source descriptions authoritative.</li><li>Remediation uses validated structured requests/argv arrays; never execute shell strings from metadata or treat a suggested approval as existing authority.</li><li>Bounded search/status/summary with pagination and explicit detail/read operations. No requirement to ingest all recipe bodies before choosing an item.</li><li>Inspection explains intent, dependencies and blockers even when drift or a missing grant prevents a complete render plan.</li><li>A scope token and plan hash bind target/concurrency inputs. They are not authenticated proof of human permission.</li><li>Apply returns actual receipt/effects and postconditions. Repeated identical sync is idempotent; stale plans get a replan request rather than blind write retry.</li><li>Operator handoff/resumption includes pinned references, allowed actions and unknowns, rechecked against current authority; no assumption that a child inherits its parent's access.</li></ul><p>The agent operating brief should teach the complete minimum journey: describe → inspect → explicit prepare if required → select/bind draft → plan → inspect risks/effects → apply exact plan → doctor → report actual evidence. It should link to richer command schemas, not embed a long permanent prompt into every provider instruction file.</p></section><section id="local" aria-labelledby="heading-local"><h2 id="heading-local"><span class="section-number">17</span>Local creation, preview, promotion, and forks</h2><p>Local creation must not require a Git repository or a recipe repository. A standalone item folder uses an <code>item.yaml</code> envelope containing a durable source UUID, imports, and the same ItemSpec used inside recipes. The internal source snapshot treats it as a singleton; the product surface calls it a local item.</p><figure class="code"><figcaption>Proposed standalone local-item envelope, reusing ItemSpec</figcaption><pre tabindex="0" role="region" aria-label="Proposed standalone local-item envelope, reusing ItemSpec"><code>{
+  &quot;format&quot;: 1,
+  &quot;source_id&quot;: &quot;33333333-3333-4333-8333-333333333333&quot;,
+  &quot;imports&quot;: {},
+  &quot;item&quot;: {
+    &quot;format&quot;: 1,
+    &quot;kind&quot;: &quot;Skill&quot;,
+    &quot;id&quot;: &quot;skill.review&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;name&quot;: &quot;Review&quot;,
+    &quot;description&quot;: &quot;Review a bounded code change using source evidence.&quot;,
+    &quot;entry&quot;: &quot;SKILL.md&quot;,
+    &quot;files&quot;: [
+      &quot;SKILL.md&quot;,
+      &quot;LICENSE.txt&quot;
+    ],
+    &quot;license&quot;: &quot;MIT&quot;,
+    &quot;scopes&quot;: [
+      &quot;user&quot;,
+      &quot;project&quot;
+    ],
+    &quot;requires&quot;: {},
+    &quot;required_capabilities&quot;: [
+      &quot;filesystem.read&quot;
+    ],
+    &quot;optional_capabilities&quot;: [],
+    &quot;default_prompt&quot;: &quot;Review this change and explain actionable findings.&quot;
+  }
+}</code></pre></figure><p>A scaffold command creates the smallest valid item of the requested kind, its content entrypoint, and explicit metadata. It does not invent personal facts, choose a public license for private content, initialize remote accounts, or execute native files. Registering it assigns a readable alias; moving a folder requires a reviewed locator rebind while preserving its source UUID.</p><p>Local directory installs use explicitly accepted snapshots. Editing source bytes invalidates reviewed plans. Preview works on current tree bytes in a disposable home/project, clearly distinct from committed Git snapshots. A watch mode may recompute previews; it must not repeatedly apply to real provider roots.</p><p>Promotion into a shared recipe changes tuple identity. The export/import workflow produces an explicit old→new item mapping, shows affected selected roots, declared typed references, context slots/bindings and authority, and keeps the old source until the new transaction succeeds. It updates only authorized authored fields; no general prose rewrite or automatic trust/grant transfer. Fork scaffolding regenerates source UUID and rewrites declared self references, preserving licenses and provenance.</p><p>Author journey: create recipe/item → edit canonical content → offline validate → disposable provider preview → installed doctor/idempotent sync → PR review → release preparation. Native-file import is an explicit conversion tool with diagnostics and manual gaps. The runtime never supports two competing source formats or executes imported hooks during conversion.</p></section><section id="starter" aria-labelledby="heading-starter"><h2 id="heading-starter"><span class="section-number">18</span>Starter extraction and optional content</h2><p>The official starter is a separate recipe with four proposed user-facing development workflows: <strong>Propose, Plan Out, Do It, and Investigate</strong>. Their current dependency closure contains 17 items. Selecting the whole starter selects its current compatible items as direct roots, including supporting items; the four-workflow closure was an extraction probe, not a hidden selection preset. Users can choose individual items instead. The starter is offered default yes, with another source or none visible.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Move / retain table"><table><thead><tr><th scope="col">Move / retain</th><th scope="col">Boundary</th></tr></thead><tbody><tr><td>Starter content</td><td>The verified current 17-package closure, audited into the new canonical references and metadata; no actual private bound facts.</td></tr><tr><td>Broader optional collection</td><td>Remaining review roles, UI, storytelling, travel/music and specialized context contracts; preserve content without broadening starter onboarding.</td></tr><tr><td>Content-specific generation</td><td>Canonical template sources, declared distributed assets, build logic and content tests follow their owning recipe. Split only where ownership warrants it.</td></tr><tr><td>Spine</td><td>Synthetic fixtures, protocol/conformance tests, schemas, adapter tests, author tools and minimal examples. No operational dependency on starter availability.</td></tr><tr><td>Notices / provenance</td><td>Preserve root MIT and declared third-party notices, original copyrights, upstream pins and per-file license facts.</td></tr></tbody></table></div><p>Extraction is a closure and ownership audit, not a directory move. Current default prompts and workflow references contain rendered names and consumer IDs; convert deliberate references to canonical form and validate invocation/dependency links for two same-named items. Template-system ownership must remain canonical, with generated files declared in the correct recipe.</p><p>The starter owner/repository URL, release version, maintenance ownership and publication accounts remain explicit launch decisions. The engine distribution can ship a reviewed bootstrap descriptor with expected UUID/origin/pin/digest, while installation still reviews source identity and any changed approval category. A compromised update cannot inherit executable/private authorization from the original starter choice.</p><p>Ordinary authors need protocol/install conformance, not a model API budget. Official starter maintainers should additionally record representative authenticated workflows at exact recipe/engine/adapter/model revisions. A successful static render cannot become a behavioral-certification badge.</p></section><section id="trust" aria-labelledby="heading-trust"><h2 id="heading-trust"><span class="section-number">19</span>Trust, privacy, recovery, and revocation</h2><div class="table-wrap" tabindex="0" role="region" aria-label="Boundary table"><table><thead><tr><th scope="col">Boundary</th><th scope="col">Enforceable rule</th><th scope="col">Limit</th></tr></thead><tbody><tr><td>Source identity</td><td>Local registration binds UUID, approved origin/root/transport and generation</td><td>Self-declared UUID/digest is not cryptographic publisher authenticity</td></tr><tr><td>Execution</td><td>Exact executable digest and supported event/permission contract require separate approval</td><td>Hooks run with provider permissions; no portable OS sandbox</td></tr><tr><td>Context</td><td>Selected graph edge + structural binding + local project/provider/consumer grant</td><td>Caller labels do not authenticate an agent; same-user filesystem readers can bypass routing</td></tr><tr><td>Rendering</td><td>Strict serializers, inert metadata, declared references, private closure, output uniqueness</td><td>Natural-language instructions can still influence a model; validation is not prompt safety certification</td></tr><tr><td>Project / export audience</td><td>Stricter local/source classification controls allowed metadata</td><td>Offline engine cannot establish actual remote publication visibility</td></tr><tr><td>Filesystem</td><td>Safe paths, no-follow traversal, observed-state protection, journal/backups</td><td>Windows hostile junction behavior requires separate evidence; user-owned source files are preserved</td></tr></tbody></table></div><p>Plan inputs bind every source snapshot, intent/lock, selected graph, local authority generation, adapter/name version, exact target, observed outputs and last receipt. Apply revalidates and re-renders. Source/selection/authority/target changes invalidate the plan. Independent edits are never adopted as canonical, and overwrites require a specific reviewed action with recoverable originals.</p><p>Intentional rollback checks current origin trust, executable approvals and context grants before managed reactivation. Old receipt bytes are evidence, not permission. Crash recovery distinguishes restoring unmanaged user originals from reactivating managed hooks/private references. It restores only recognized recorded before/after states; independent file or authority edits leave a conflict and intact evidence.</p><p>An urgent revocation-only Engine operation can record a deny and new authority generation under the same lock even while a file journal is pending. It invalidates automatic reactivation and future CLI retrieval/install; it does not terminate a running host or erase existing copies. Doctor reports remaining activation. New grants stay blocked until recovery is reconciled. Denied managed restoration becomes RECOVERY_BLOCKED, with reviewed recovery/removal choices and retained backups rather than silent renewal of authority.</p><p>Private bytes, paths, metadata, linked assets, parsing failures, logs and support exports require sentinel tests across the complete closure. Browsing does not execute HTML/SVG, follow remote previews, or turn metadata into TUI actions. No account mutation, posting, hosted registry, telemetry backend, automatic update application or connector permission is inferred from recipe installation.</p></section><section id="community" aria-labelledby="heading-community"><h2 id="heading-community"><span class="section-number">20</span>Community maintenance and long-term survival</h2><div class="table-wrap" tabindex="0" role="region" aria-label="Owner table"><table><thead><tr><th scope="col">Owner</th><th scope="col">Accountability</th><th scope="col">Sustainable boundary</th></tr></thead><tbody><tr><td>Protocol maintainers</td><td>Spec, schemas, conformance fixtures, public machine contract and migrations</td><td>Small normative surface; RFCs for semantic changes; stable references archived with releases</td></tr><tr><td>Adapter maintainers</td><td>Host formats, semantic gaps, support matrix, dated runtime evidence</td><td>Bounded adapters; no claim of permanent universal equivalence</td></tr><tr><td>Starter maintainers</td><td>Content, examples, notices, releases, representative workflow evidence</td><td>Independent releases and content ownership; engine does not wait for every starter edit</td></tr><tr><td>Recipe publishers</td><td>Facts, licenses, support, security intake, deprecation and archival</td><td>Independent distribution without central approval; conformance is inspectable</td></tr><tr><td>Listing curators</td><td>Optional future discovery links and evidence provenance</td><td>Listing is not endorsement or authority; removal does not delete installed content</td></tr></tbody></table></div><p>Ship a public offline conformance kit with valid/invalid fixtures, canonical examples, deterministic renders, failure-path checks, and a reusable CI entrypoint. Derive schema/help/reference docs from one contract. Contributors should be able to understand a diagnostic, add a focused fixture, and verify a change without a real personal installation or authenticated model session.</p><p>Publish contribution, code-of-conduct, issue routing, security disclosure, release ownership, supported-version and succession/archival policies before stable launch. Assign real people during release readiness; do not invent staffing or response guarantees here. Protocol, adapter and starter changes should have separate review ownership with a shared conformance boundary.</p><p>Deprecation metadata names the reason and explicit replacement, but never silently substitutes content. Locked removed/archived content remains usable where bytes and current authority allow. An update removing a required selected item blocks until the user reviews migration. Never reuse an old item identity for a different responsibility.</p><p>Recipe-wide immutable releases and retained snapshots make origin outages and publisher departure survivable. A fork gets a new source UUID and an explicit migration; citations and notices travel with copied content. Optional signed provenance should use an established format later, not custom cryptography. Provenance establishes production history, not benign instructions or successful model behavior.</p><aside class="note"><a href="https://www.bestpractices.dev/en/criteria/0">OpenSSF criteria</a> inform contribution/release/security documentation. <a href="https://reuse.software/spec/">REUSE</a> informs file-level licensing preservation. <a href="https://slsa.dev/spec/v1.2/provenance">SLSA provenance</a> is a later integrity mechanism; no badge or conformance claim is made by this plan.</aside></section><section id="alternatives" aria-labelledby="heading-alternatives"><h2 id="heading-alternatives"><span class="section-number">21</span>Alternatives, rejected shortcuts, and decision gates</h2><div class="table-wrap" tabindex="0" role="region" aria-label="Alternative table"><table><thead><tr><th scope="col">Alternative</th><th scope="col">Why considered</th><th scope="col">Decision</th></tr></thead><tbody><tr><td>Keep one combined catalog</td><td>Simplest current resolver</td><td>Does not preserve independent recipe identity/releases or same-name ownership; rejected as the target.</td></tr><tr><td>Flatten sources during a build step</td><td>Could bridge existing single-source code</td><td>Adds a second pipeline and hides pin/reference authority. No compatibility requirement justifies it.</td></tr><tr><td>Support native files directly</td><td>Lower initial conversion effort</td><td>Two runtime source contracts burden authors and adapters. Offer explicit import, canonical runtime only.</td></tr><tr><td>Independent historical package-version solver</td><td>Maximum mix-and-match</td><td>Unnecessary registry/SAT complexity. One snapshot per source with constraint checks meets current requirements.</td></tr><tr><td>Item UUIDs surviving every promotion</td><td>Moves preserve identity</td><td>Adds ownership/provenance ambiguity. Tuple identity plus explicit promotion mapping is the smaller initial contract.</td></tr><tr><td>Global materialization only</td><td>Convenient repeated setup</td><td>Team scopes and host overlap need project targets. Compose personal intent by default, report actual discovery separately.</td></tr><tr><td>Hosted registry / marketplace</td><td>Popular-recipe discovery</td><td>Not needed for Git/local launch. Later curated links can remain data, with no runtime dependency.</td></tr><tr><td>Generic plugin/templating framework</td><td>Future flexibility</td><td>Speculative complexity and executable trust. Keep six kinds, bounded annotation extensions and finite references.</td></tr></tbody></table></div><p>Before stable launch, resolve evidence-backed gates: Textual real-terminal/assistive-technology acceptance and dependency version; supported providers/platforms; starter/optional-recipe names and owners; sustainable support/migration window; exact Git credential-helper/proxy/TLS allowlist; measured source/render/context budgets; distribution account authority; and maintained conformance CI. Each has an acceptance gate below. None authorizes account setup or publication now.</p><p>No backward compatibility requirement means we can remove old schemas/selection concepts rather than build adapters for them. It does not permit resetting real configuration, deleting user output, or discarding backups. Validate the new protocol in isolated environments; any real adoption is an explicit reviewed replacement with receipt recovery.</p></section><section id="roadmap" aria-labelledby="heading-roadmap"><h2 id="heading-roadmap"><span class="section-number">22</span>Development sequence and launch gates</h2><p>The design and acceptance contracts cover the full launch. The work hierarchy expands only the next milestone, following the repository planning policy. Later milestones carry outcome, scope, dependencies, risks and exit criteria plus exactly one planning task; they are elaborated from current evidence when immediate. This avoids a stale implementation tree while preserving detailed launch requirements.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Milestone table"><table><thead><tr><th scope="col">Milestone</th><th scope="col">Planning state</th><th scope="col">Gating dependencies</th><th scope="col">Boundary</th></tr></thead><tbody><tr><td>M1 · Two independent local recipes or items install same-named canonical skills through one reviewed, recoverable engine path.</td><td>Detailed next milestone</td><td>None</td><td>New protocol, local snapshots, qualified composition, one provider, project-owned lock and machine bootstrap; isolated experimental release only.</td></tr><tr><td>M2 · Git/private sources and explicit cross-recipe/team composition</td><td>Future: one Plan Out task</td><td>local-recipe-engine</td><td>Approved HTTPS transport, candidate updates, imported identities/constraints, personal/project composition, audience-aware portable locks and offline retention.</td></tr><tr><td>M3 · Context contracts, local promotion and development starter extraction</td><td>Future: one Plan Out task</td><td>git-team-composition</td><td>Explicit slots/grants/read protocol/private closure, local-item promotion/forks, development starter and optional-content ownership split.</td></tr><tr><td>M4 · Polished human CLI/TUI and complete AI operation</td><td>Future: one Plan Out task</td><td>context-and-content</td><td>Purposeful human rendering, Textual decision spike, same-operation TUI, machine schemas/bootstrap, lookup/handoff, diagnostic/recovery flows.</td></tr><tr><td>M5 · Author conformance and sustainable community operations</td><td>Future: one Plan Out task</td><td>context-and-content</td><td>Scaffold/import/validate/disposable preview, reusable conformance CI, docs/license provenance, deprecation, issue/security routing, protocol RFC/support/succession policy.</td></tr><tr><td>M6 · Qualify and publish the first stable recipe-spine ecosystem</td><td>Future: one Plan Out task</td><td>operator-experience, author-community</td><td>Frozen protocol, tested adapters/platforms, source/package distribution, official starter release, real host/model evidence where claimed, security/retention/migration support.</td></tr></tbody></table></div><p>The active marker means the immediate <em>planning</em> milestone, not that implementation has started. All tasks are planned/unpublished. Phase means a coherent PR boundary; task means an independently verifiable commit-sized change. Tests accompany behavior. Split a phase when review crosses multiple major boundaries or exceeds the sizing guidance; do not pad small changes or invent line-count promises.</p><p>No delivery dates, staffing, story points, or calendar estimates are assigned. Schedule estimates require actual maintainers, the first vertical-slice measurements, and resolved launch support commitments. Independent work can proceed where dependency edges permit; completion never follows from status labels alone.</p></section><section id="immediate" aria-labelledby="heading-immediate"><h2 id="heading-immediate"><span class="section-number">23</span>Immediate milestone: implementation work</h2><p>Deliver a usable local two-source path before remote transport, a large catalog, or visual polish. One provider establishes the canonical contract; the later launch milestone qualifies the actual supported matrix. This is a new experimental protocol, exercised only in disposable environments.</p><details open class="phase"><summary>Freeze and exercise the source/item contract <span class="phase-id">protocol</span></summary><p><strong>Phase gate:</strong> None. Independently reviewable; scope adjusted after contract fixtures reveal actual code size.</p><article class="task" id="task-source-key"><h4>Define source/item identity and selector resolution</h4><p class="task-meta"><code>source-key</code> · Planned · cli/dasync/contracts.py; focused domain types and tests</p><p><strong>Depends on:</strong> None</p><p><strong>Acceptance</strong></p><ul><li>Source UUID, local ID, display alias and origin are distinct; ambiguous selectors fail with candidates.</li><li>Fork identity differs; alias rename does not change authoritative key.</li></ul><p><strong>Verification</strong></p><ul><li>Valid/invalid source and singleton-item fixtures; deterministic identity tests.</li></ul></article><article class="task" id="task-format-schema"><h4>Publish strict offline recipe/ItemSpec/local-envelope schemas</h4><p class="task-meta"><code>format-schema</code> · Planned · contracts and schema fixtures/reference docs</p><p><strong>Depends on:</strong> source-key</p><p><strong>Acceptance</strong></p><ul><li>ItemSpec reused once; no target profile/group schema.</li><li>Unknown core/required features, duplicate YAML keys and remote refs fail.</li></ul><p><strong>Verification</strong></p><ul><li>Offline JSON Schema fixtures; parser negative cases; schema exporter.</li></ul></article><article class="task" id="task-reference-contract"><h4>Define finite typed references and context-slot records</h4><p class="task-meta"><code>reference-contract</code> · Planned · contracts; reference parser; synthetic fixtures</p><p><strong>Depends on:</strong> format-schema</p><p><strong>Acceptance</strong></p><ul><li>Link destinations and invocation fields resolve explicitly; prose/fences unchanged.</li><li>Slot required/cardinality/contract/version rules have deterministic diagnostics.</li></ul><p><strong>Verification</strong></p><ul><li>Reference escaping/missing target fixtures; slot positive/negative contract examples.</li></ul></article><article class="task" id="task-command-bootstrap"><h4>Define permanent machine discovery and operation schemas</h4><p class="task-meta"><code>command-bootstrap</code> · Planned · cli application contract; describe tests</p><p><strong>Depends on:</strong> format-schema</p><p><strong>Acceptance</strong></p><ul><li>Describe/version work without an environment; inputs/outputs/effects/approvals versioned.</li><li>No-input unknown protocol fails without prompting or writing.</li></ul><p><strong>Verification</strong></p><ul><li>Subprocess JSON bootstrap tests; stdout/error envelope fixtures.</li></ul></article><p><strong>Rollback:</strong> Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.</p></details><details open class="phase"><summary>Prepare immutable local recipe and singleton snapshots <span class="phase-id">local-snapshots</span></summary><p><strong>Phase gate:</strong> protocol. Independently reviewable; scope adjusted after contract fixtures reveal actual code size.</p><article class="task" id="task-source-reader"><h4>Read declared source metadata and files through safe local boundaries</h4><p class="task-meta"><code>source-reader</code> · Planned · catalog.py; io.py; local-source tests</p><p><strong>Depends on:</strong> format-schema</p><p><strong>Acceptance</strong></p><ul><li>Recipe root and every file is bounded/declared; no symlink, traversal or undeclared executable.</li><li>Source checkout is never mutated.</li></ul><p><strong>Verification</strong></p><ul><li>Synthetic local recipes/items; traversal/symlink/size cases.</li></ul></article><article class="task" id="task-snapshot-pin"><h4>Hash complete source contracts and retain immutable local snapshots</h4><p class="task-meta"><code>snapshot-pin</code> · Planned · catalog.py; sources.py; retention records</p><p><strong>Depends on:</strong> source-reader</p><p><strong>Acceptance</strong></p><ul><li>Metadata/content/identity changes alter pin; current bytes cannot silently replace accepted pin.</li><li>Retained selected snapshot supports offline reads.</li></ul><p><strong>Verification</strong></p><ul><li>Tree-edit invalidation; missing/tampered snapshot; deterministic hashes.</li></ul></article><article class="task" id="task-prepare-boundary"><h4>Expose preparation without durable registration or selection</h4><p class="task-meta"><code>prepare-boundary</code> · Planned · source application functions; operation schemas</p><p><strong>Depends on:</strong> snapshot-pin, command-bootstrap</p><p><strong>Acceptance</strong></p><ul><li>Prepare only creates accounted immutable cache; cancel retains no registration/trust/intent.</li><li>Registration candidate identity/origin collision remains inspectable.</li></ul><p><strong>Verification</strong></p><ul><li>Effects-before/after assertions in temporary home; source errors and cancellation.</li></ul></article><article class="task" id="task-local-scaffold"><h4>Create one canonical local item without a repository</h4><p class="task-meta"><code>local-scaffold</code> · Planned · author scaffolder; local item fixtures</p><p><strong>Depends on:</strong> source-reader, command-bootstrap</p><p><strong>Acceptance</strong></p><ul><li>One ItemSpec envelope plus entrypoint; stable source identity; no invented facts/license.</li><li>Preview clearly distinguishes tree bytes from Git snapshots.</li></ul><p><strong>Verification</strong></p><ul><li>Create/validate/prepare singleton skill and context examples.</li></ul></article><p><strong>Rollback:</strong> Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.</p></details><details open class="phase"><summary>Resolve two local sources with same-name items <span class="phase-id">composition</span></summary><p><strong>Phase gate:</strong> local-snapshots. Independently reviewable; scope adjusted after contract fixtures reveal actual code size.</p><article class="task" id="task-qualified-graph"><h4>Resolve qualified roots and recipe-local dependencies</h4><p class="task-meta"><code>qualified-graph</code> · Planned · resolver.py; graph tests</p><p><strong>Depends on:</strong> snapshot-pin, source-key</p><p><strong>Acceptance</strong></p><ul><li>Two same-named skills coexist; cycles/missing/disabled edges identify qualified roots.</li><li>Direct/dependency reasons retained without automatic promotion.</li></ul><p><strong>Verification</strong></p><ul><li>Two-source graph cases and reverse-dependent explanations.</li></ul></article><article class="task" id="task-snapshot-selection"><h4>Implement current-revision bulk selection as explicit roots</h4><p class="task-meta"><code>snapshot-selection</code> · Planned · intent application functions; selection tests</p><p><strong>Depends on:</strong> qualified-graph</p><p><strong>Acceptance</strong></p><ul><li>Future items stay unselected; removal preserves other dependency reasons.</li><li>No hidden authored groups or selection priority.</li></ul><p><strong>Verification</strong></p><ul><li>Add/remove/update synthetic item lists; shared dependency cases.</li></ul></article><article class="task" id="task-lock-ownership"><h4>Separate project source lock from personal effective resolution</h4><p class="task-meta"><code>lock-ownership</code> · Planned · config.py; lock schema; state projections</p><p><strong>Depends on:</strong> qualified-graph, format-schema</p><p><strong>Acceptance</strong></p><ul><li>Project lock excludes personal locators, grants and native mapping.</li><li>Two user homes preserve identical project lock while effective additions differ.</li></ul><p><strong>Verification</strong></p><ul><li>Two-home/one-project pure resolution fixtures; private metadata sentinels.</li></ul></article><article class="task" id="task-snapshot-conflict"><h4>Reject competing pins and expose inheritance/discovery differences</h4><p class="task-meta"><code>snapshot-conflict</code> · Planned · resolver diagnostics; environment read model</p><p><strong>Depends on:</strong> lock-ownership</p><p><strong>Acceptance</strong></p><ul><li>One snapshot per source; personal/project conflict actionable.</li><li>Resolver inheritance and native global visibility are distinct fields.</li></ul><p><strong>Verification</strong></p><ul><li>Different-pin fixtures; explicit inheritance disable; no host-equivalence claim.</li></ul></article><p><strong>Rollback:</strong> Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.</p></details><details open class="phase"><summary>Render a collision-safe one-provider vertical slice <span class="phase-id">native-output</span></summary><p><strong>Phase gate:</strong> composition. Independently reviewable; scope adjusted after contract fixtures reveal actual code size.</p><article class="task" id="task-name-map"><h4>Implement deterministic native-name mapping and full collision checks</h4><p class="task-meta"><code>name-map</code> · Planned · adapters.py; mapping tests</p><p><strong>Depends on:</strong> qualified-graph</p><p><strong>Acceptance</strong></p><ul><li>Alias/order independent; same names and dot/hyphen IDs distinct.</li><li>Exact/casefold/file-dir/reserved/length collisions stop before writes.</li></ul><p><strong>Verification</strong></p><ul><li>Adversarial identifiers; injected digest collision; cross-platform path cases.</li></ul></article><article class="task" id="task-typed-render"><h4>Render dependency/slot/invocation references from qualified keys</h4><p class="task-meta"><code>typed-render</code> · Planned · adapter reference rendering; fixtures</p><p><strong>Depends on:</strong> name-map, reference-contract</p><p><strong>Acceptance</strong></p><ul><li>Generated links and self invocation point to correct source.</li><li>Literal prose/fences remain untouched; missing targets are errors.</li></ul><p><strong>Verification</strong></p><ul><li>Two-same-name nested reference/default-prompt snapshots.</li></ul></article><article class="task" id="task-artifact-provenance"><h4>Record contributing items and essential-semantic decisions</h4><p class="task-meta"><code>artifact-provenance</code> · Planned · Artifact record; adapter decision schema</p><p><strong>Depends on:</strong> typed-render</p><p><strong>Acceptance</strong></p><ul><li>Every output names owner and contributors; unsupported essentials fail.</li><li>Metadata is inert and serialized; no private content copied through dependencies.</li></ul><p><strong>Verification</strong></p><ul><li>Aggregate contributor fixtures; malicious strings; private sentinel closure.</li></ul></article><p><strong>Rollback:</strong> Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.</p></details><details open class="phase"><summary>Apply and recover the reviewed local composition <span class="phase-id">transaction</span></summary><p><strong>Phase gate:</strong> native-output. Independently reviewable; scope adjusted after contract fixtures reveal actual code size.</p><article class="task" id="task-plan-inputs"><h4>Bind all source/lock/authority/mapping/target inputs</h4><p class="task-meta"><code>plan-inputs</code> · Planned · engine.py; plan schema and tests</p><p><strong>Depends on:</strong> artifact-provenance, lock-ownership</p><p><strong>Acceptance</strong></p><ul><li>Changing either snapshot, intent, grant generation, observed target or receipt invalidates plan.</li><li>Plan contains no private source body/path.</li></ul><p><strong>Verification</strong></p><ul><li>Stale-plan matrix; unchanged inputs produce deterministic effects.</li></ul></article><article class="task" id="task-multi-source-apply"><h4>Write reviewed registration/intent/lock/provider output through one transaction</h4><p class="task-meta"><code>multi-source-apply</code> · Planned · Engine/State focused boundaries</p><p><strong>Depends on:</strong> plan-inputs</p><p><strong>Acceptance</strong></p><ul><li>No second mutation path; durable registration/source-map/trust choices use the reviewed Engine operation.</li><li>Existing unmanaged/modified files protected; receipt records exact graph, pins, hashes and effects.</li></ul><p><strong>Verification</strong></p><ul><li>Temporary-home saved-plan→apply→doctor→idempotent sync; registration cancellation/rollback and collision failure.</li></ul></article><article class="task" id="task-source-aware-restore"><h4>Preserve source-aware rollback and crash evidence</h4><p class="task-meta"><code>source-aware-restore</code> · Planned · state.py; recovery/receipt tests</p><p><strong>Depends on:</strong> multi-source-apply</p><p><strong>Acceptance</strong></p><ul><li>Offline restoration uses retained receipts; current authority gates managed reactivation.</li><li>Unmanaged originals preserved; independent edits retain journal conflict.</li></ul><p><strong>Verification</strong></p><ul><li>Injected process interruption before/after writes; origin unavailable; revoked activation.</li></ul></article><article class="task" id="task-revocation-ledger"><h4>Allow urgent deny while recovery remains pending</h4><p class="task-meta"><code>revocation-ledger</code> · Planned · local authority Engine operation; ledger tests</p><p><strong>Depends on:</strong> plan-inputs, source-aware-restore</p><p><strong>Acceptance</strong></p><ul><li>Revocation under lock invalidates managed activation without deleting file journal.</li><li>New grants stay blocked; existing host activation limit is reported.</li></ul><p><strong>Verification</strong></p><ul><li>Interrupt→deny→recover conflict; no automatic hook/private locator restoration.</li></ul></article><p><strong>Rollback:</strong> Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.</p></details><details open class="phase"><summary>Demonstrate a self-contained local recipe engine <span class="phase-id">vertical-acceptance</span></summary><p><strong>Phase gate:</strong> transaction. Independently reviewable; scope adjusted after contract fixtures reveal actual code size.</p><article class="task" id="task-machine-journey"><h4>Exercise the source/item/plan lifecycle through no-input JSON</h4><p class="task-meta"><code>machine-journey</code> · Planned · CLI subprocess acceptance fixtures</p><p><strong>Depends on:</strong> multi-source-apply, command-bootstrap</p><p><strong>Acceptance</strong></p><ul><li>Parseable one-envelope stdout and exact scope/approval errors.</li><li>Two same-named items materialize distinctly and explain all reasons.</li></ul><p><strong>Verification</strong></p><ul><li>Installed disposable wheel CLI journey; no network or model credentials.</li></ul></article><article class="task" id="task-negative-journey"><h4>Exercise blocked operations and preservation guarantees</h4><p class="task-meta"><code>negative-journey</code> · Planned · installed lifecycle/fault tests</p><p><strong>Depends on:</strong> revocation-ledger, machine-journey</p><p><strong>Acceptance</strong></p><ul><li>Invalid identity/ref/graph/drift/source pin makes no installation change.</li><li>Cancellation/source errors do not persist draft selection.</li></ul><p><strong>Verification</strong></p><ul><li>File-hash before/after matrix; recovery conflicts; simultaneous applies.</li></ul></article><article class="task" id="task-protocol-docs"><h4>Publish exact conformance evidence and remaining launch limits</h4><p class="task-meta"><code>protocol-docs</code> · Planned · spec/reference/examples; release checklist</p><p><strong>Depends on:</strong> negative-journey</p><p><strong>Acceptance</strong></p><ul><li>Examples match exported schemas; no profile/native-authorship leftovers.</li><li>Local vertical slice labeled experimental; later launch capabilities not claimed.</li></ul><p><strong>Verification</strong></p><ul><li>Schema/example validation; final diff/boundary audit; required repository checks.</li></ul></article><p><strong>Rollback:</strong> Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.</p></details></section><section id="future" aria-labelledby="heading-future"><h2 id="heading-future"><span class="section-number">24</span>Later milestones: explicit acceptance boundaries</h2><article class="future"><h3>Git/private sources and explicit cross-recipe/team composition</h3><p><strong>Scope:</strong> Approved HTTPS transport, candidate updates, imported identities/constraints, personal/project composition, audience-aware portable locks and offline retention.</p><p><strong>Risks:</strong> No cross-origin contact/credential forwarding before authorization. Missing imports and incompatible pin constraints leave installed graph intact.</p><p><strong>Exit criteria</strong></p><ul><li>Actual Git integration tests prove config/env/redirect policy.</li><li>Two coworkers share project lock with different personal additions.</li><li>Cross-recipe cycles/version conflicts/source removal/offline update failures are actionable.</li></ul><p><strong>Single planning task:</strong> <code>plan-git-team-composition</code> — Plan Out Git/private sources and explicit cross-recipe/team composition. No implementation phases published yet.</p></article><article class="future"><h3>Context contracts, local promotion and development starter extraction</h3><p><strong>Scope:</strong> Explicit slots/grants/read protocol/private closure, local-item promotion/forks, development starter and optional-content ownership split.</p><p><strong>Risks:</strong> Semantic prose compatibility cannot be certified by schema. Content-specific template sources/notices must follow actual owners.</p><p><strong>Exit criteria</strong></p><ul><li>Required, optional, missing, ambiguous, incompatible and denied context cases are deterministic.</li><li>Private sentinel closure stays out of provider output, summaries/logs/exports.</li><li>Promotion old→new map reviews references and authority without transfer.</li><li>Clean starter installs without private facts or optional recipes; generated templates/licenses reproducible.</li></ul><p><strong>Single planning task:</strong> <code>plan-context-and-content</code> — Plan Out Context contracts, local promotion and development starter extraction. No implementation phases published yet.</p></article><article class="future"><h3>Polished human CLI/TUI and complete AI operation</h3><p><strong>Scope:</strong> Purposeful human rendering, Textual decision spike, same-operation TUI, machine schemas/bootstrap, lookup/handoff, diagnostic/recovery flows.</p><p><strong>Risks:</strong> Headless UI tests do not establish real-terminal or assistive-technology quality. Cancelled worker cannot be treated as cancelled transaction.</p><p><strong>Exit criteria</strong></p><ul><li>CLI/TUI/JSON parity proves identical selected graph/effects.</li><li>Keyboard, pointer, resize, narrow terminal, monochrome, plain/non-TTY and error/recovery journeys exercised.</li><li>Describe/operator examples match command contracts; malicious metadata remains inert.</li><li>Scope/pin/approval changes invalidate reviewed operations without false completion claims.</li></ul><p><strong>Single planning task:</strong> <code>plan-operator-experience</code> — Plan Out Polished human CLI/TUI and complete AI operation. No implementation phases published yet.</p></article><article class="future"><h3>Author conformance and sustainable community operations</h3><p><strong>Scope:</strong> Scaffold/import/validate/disposable preview, reusable conformance CI, docs/license provenance, deprecation, issue/security routing, protocol RFC/support/succession policy.</p><p><strong>Risks:</strong> Contribution burden can outgrow a small maintainer team. Conformance badges can be mistaken for model or security certification.</p><p><strong>Exit criteria</strong></p><ul><li>An independent author creates a valid recipe/local item without provider-specific files or real-home install.</li><li>Offline conformance kit and reference examples work without starter origin.</li><li>Maintainer/release/security ownership and supported-version obligations are actual documented commitments.</li><li>Deprecated/removed/forked sources have explicit migration and archived bytes behavior.</li></ul><p><strong>Single planning task:</strong> <code>plan-author-community</code> — Plan Out Author conformance and sustainable community operations. No implementation phases published yet.</p></article><article class="future"><h3>Qualify and publish the first stable recipe-spine ecosystem</h3><p><strong>Scope:</strong> Frozen protocol, tested adapters/platforms, source/package distribution, official starter release, real host/model evidence where claimed, security/retention/migration support.</p><p><strong>Risks:</strong> Publishing authority/accounts and real maintainers are not yet selected. Platform/provider claims can outrun actual evidence.</p><p><strong>Exit criteria</strong></p><ul><li>Candidate wheel/source archives install in clean disposable environments; content and third-party notices audited.</li><li>Supported provider/platform matrix has exact dated evidence and degraded/unsupported states.</li><li>Threat-boundary, process-death, transport, authority and UI acceptance gates pass at the release candidate.</li><li>Documented bootstrap source UUID/origin/pin/digest and starter release are verified.</li><li>Publication occurs only with separate authority and read-back of actual artifacts; no automatic deployment from this plan.</li></ul><p><strong>Single planning task:</strong> <code>plan-stable-launch</code> — Plan Out Qualify and publish the first stable recipe-spine ecosystem. No implementation phases published yet.</p></article></section><section id="verification" aria-labelledby="heading-verification"><h2 id="heading-verification"><span class="section-number">25</span>Verification strategy and required release evidence</h2><p>Choose cases by boundary risk, not a coverage quota. Unit/schema/graph tests cover deterministic contracts; integration tests exercise actual Git, state, filesystem and serialization boundaries; installed CLI journeys verify distribution; PTY/TUI tests and real-terminal inspection verify operator journeys; authenticated host/model cases establish only their recorded outcomes.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Boundary table"><table><thead><tr><th scope="col">Boundary</th><th scope="col">Cases to exercise</th><th scope="col">Observable acceptance</th></tr></thead><tbody><tr><td>Identity and source continuity</td><td>Same names; dot/hyphen; alias rename; fork UUID; another origin claims UUID; root relocation</td><td>Distinct keys/names or explicit blocker; no authority transferred</td></tr><tr><td>Resolution and selection</td><td>Cross-source cycle; missing import/item; incompatible pin; shared dependency; disabled transitive item; new recipe item</td><td>Bounded causal diagnostics; installed graph untouched; future items unselected</td></tr><tr><td>User/project portability</td><td>Two homes, one project; personal-only local source; same source different pins; copied project ID</td><td>Project lock stable; effective records differ; exact target/grants checked</td></tr><tr><td>Canonical references</td><td>Nested dependency; escaped literal; fenced example; self invocation; missing typed target; alias change</td><td>Only finite declared references translated; literal content preserved</td></tr><tr><td>Context binding</td><td>Missing required; optional absent; two candidates; wrong contract/version; same local ID different source; no graph edge</td><td>No automatic substitution; compatible structure and local grants both required</td></tr><tr><td>Privacy closure</td><td>Sentinels in body/description/filename/logo/URL/asset/error/receipt; public parent/private child; classification downgrade</td><td>No unintended materialization/export; metadata audience rules; downgrade review</td></tr><tr><td>Transport</td><td>Repo-local hooks/config; replacement objects; injected Git environment; redirect/rewrite; credential helper; timeout/oversize</td><td>No contact/auth to disallowed endpoint; no source-owned executable behavior/source mutation</td></tr><tr><td>Offline and retention</td><td>Origin removed; lost credentials; active cache purge; missing/tampered snapshot; quota failure</td><td>Retained operations work or exact missing-byte gap; recovery retention not silently lost</td></tr><tr><td>Plan and transaction</td><td>Change source/intent/lock/grant/adapter/target/receipt; competing apply; modified/unmanaged target</td><td>Stale/protected blocker before writes; verified actual effects and originals retained</td></tr><tr><td>Recovery and authority</td><td>Kill before/after write/receipt; independent file edit; revoke while pending; rollback revoked hook; unmanaged original</td><td>Preserve journal and originals; no automatic managed reactivation; exact scoped reconciliation</td></tr><tr><td>TUI</td><td>80×24/resize/long names; keyboard/pointer/focus; no results; auth failure; cancellation; stale inspection; worker exception</td><td>Draft/focus preserved; terminal restored; transaction outcome never invented</td></tr><tr><td>Machine interface</td><td>Unknown protocol; no-input; JSON success/error; malicious prose/ANSI/OSC/markup; shell characters in remediation</td><td>One typed envelope; no prompts; source text inert; engine-owned argv distinct</td></tr><tr><td>Adapter semantics</td><td>Essential unenforceable restriction; configured restriction disabled; optional degradation; global/project discovery overlap</td><td>Blocked/unverified or accepted disclosed fallback; no equivalence claims</td></tr><tr><td>Author lifecycle</td><td>Minimal item; Git-less preview; local promotion/fork; lost license notice; deprecated/removed item</td><td>Same format/Engine, no trust transfer, notices retained, explicit migrations</td></tr><tr><td>Distribution / host workflows</td><td>Wheel outside checkout; fresh starter fetch at pin; native discovery; representative actual workflow; unsupported platform</td><td>Exact candidate evidence, no real-home install, bounded support claims</td></tr></tbody></table></div><figure class="code"><figcaption>Current required repository checks; adjust owned content paths explicitly after extraction</figcaption><pre tabindex="0" role="region" aria-label="Current required repository checks; adjust owned content paths explicitly after extraction"><code>uv run pytest
+uv run ruff check cli tests packages/hooks
+uv run ruff format --check cli tests packages/hooks</code></pre></figure><p>All tests use disposable homes, projects and sources. Never install test content into the real user environment. Existing gates remain required for implementation changes. This planning exercise ran read-only command/schema probes and standalone proposed-contract checks; it did not run the application regression suite against an implementation of recipes.</p><p>Release evidence must name exact candidate commit, engine/protocol/adapter/mapping versions, recipe UUID/pin/digest, host/platform/model where relevant, tools/grants, expected outcome, actual result, date and limits. Separate configured capability from exercised behavior. Approximate token budgets do not certify total host context or tokenizer-accurate limits.</p></section><section id="validation" aria-labelledby="heading-validation"><h2 id="heading-validation"><span class="section-number">26</span>Validation evidence and remaining limits</h2><div class="table-wrap" tabindex="0" role="region" aria-label="Executed during this exercise table"><table><thead><tr><th scope="col">Executed during this exercise</th><th scope="col">Result / scope</th></tr></thead><tbody><tr><td>Repository/source inspection and capabilities/schema commands</td><td>Current four-adapter declarations and Plan Context schema observed. Executable detection only; no authenticated provider session.</td></tr><tr><td>Starter dependency-closure probe</td><td>17-package closure for the four proposed roots; no private contexts or executable packages. No content publication or real-home installation.</td></tr><tr><td>Standalone proposed-contract probes</td><td>21 synthetic assertions passed for qualified names, graph/cycle/version checks, slots/grants, lock ownership, snapshot selection, promotion and authority generation. These do not invoke the future Engine.</td></tr><tr><td>Independent evidence gathering</td><td>Composition/state, author/lifecycle, and operator/TUI/AI boundaries inspected independently.</td></tr><tr><td>Independent scrutiny and correction</td><td>Architecture, security and AI-systems reviews; material gaps corrected in subsequent rounds. Final bounded reviews found coherent proposed contracts, not launch certification.</td></tr><tr><td>Embedded Plan Context validation</td><td>Validated with the current dasync schema and semantic DAG/ID checks. Draft references; one immediate milestone, later milestones each one planning task.</td></tr><tr><td>HTML rendering and interaction checks</td><td>Results recorded in the document validation record below after execution.</td></tr></tbody></table></div><div id="document-validation"><p><strong>Document QA, 6 October 2026:</strong> 30 assertions passed in isolated headless system Chrome via Playwright. Visual inspection covered the desktop cover, mobile cover, dark theme and synthetic TUI. The artifact made zero remote requests and raised zero browser script errors.</p><div class="table-wrap" tabindex="0" role="region" aria-label="HTML boundary table"><table><thead><tr><th scope="col">HTML boundary</th><th scope="col">Executed checks</th></tr></thead><tbody><tr><td>Navigation and interactions</td><td>28 chapters, 22 immediate tasks, anchor targets, keyboard skip link, search, theme toggle, TUI filtering/selection/blocker/machine view and embedded-context download.</td></tr><tr><td>Responsive and visual behavior</td><td>1440px desktop, 390px mobile, 200% CSS zoom without page-level overflow; light/dark semantic text contrast pairs measured at least 4.5:1.</td></tr><tr><td>Print and offline fallback</td><td>Print hides the sidebar and exposes task detail; a temporary print PDF generated. With JavaScript disabled, all chapters/tasks remain and mobile has no page-level overflow.</td></tr><tr><td>Limits</td><td>No screen-reader session, Safari/Firefox qualification or full accessibility audit. The illustration exercises synthetic HTML state; it does not prove production Textual behavior.</td></tr></tbody></table></div></div><p>Unverified future boundaries: actual new recipe engine integration, hardened Git/auth transport, source-purge concurrency, authority-aware rollback, Textual product behavior, assistive technology, authenticated provider discovery, model workflows, distribution publication and live tracker reconciliation. These are named launch gates, not evidence hidden behind a completion claim.</p><p>The final HTML is a design-reviewed development draft. It cannot eliminate every future question; it makes the current decisions, contracts, failure behavior and acceptance evidence explicit enough to begin the next milestone without pretending later implementation has already been proved.</p></section><section id="planning" aria-labelledby="heading-planning"><h2 id="heading-planning"><span class="section-number">27</span>Planning authority and embedded Plan Context</h2><p>GitHub remains the single planning authority: <a href="https://github.com/users/Shreyasdbz/projects/8">Project 8</a>, documented ID <code>PVT_kwHOAOKmv84Bjuvj</code>, repository <code>Shreyasdbz/dot-agents-sync</code>. The attempted live refresh failed; native issue types, fields, workflows and current work are not represented as refreshed. Historical issues/statuses are not copied into this new draft.</p><p>The embedded context therefore uses <code>authority: github</code> and <code>authority_state: unavailable</code>, with portable IDs and <code>draft:</code> references. No GitHub changes were requested or made. Before any later publication, refresh and reconcile existing work, verify native types/relationships, preview writes, and retain actual IDs and partial results. Do not create competing local status stores.</p><p>The user requested HTML only. The loadable JSON is embedded as inert application/json in this file; the visible work sections are generated from that same object. Copying or downloading it is a convenience, not publication or a new tracker. Future milestone boundaries are detailed above, while each carries only one Plan Out task until immediate.</p><button type="button" id="download-plan">Download embedded Plan Context</button><p id="download-status" role="status"></p><details class="context-json"><summary>Inspect embedded JSON</summary><figure class="code"><figcaption>Schema-validated unpublished Plan Context</figcaption><pre tabindex="0" role="region" aria-label="Schema-validated unpublished Plan Context"><code>{
+  &quot;version&quot;: 1,
+  &quot;authority&quot;: &quot;github&quot;,
+  &quot;authority_state&quot;: &quot;unavailable&quot;,
+  &quot;reference&quot;: &quot;https://github.com/users/Shreyasdbz/projects/8&quot;,
+  &quot;active_milestone&quot;: &quot;local-recipe-engine&quot;,
+  &quot;design_references&quot;: [
+    &quot;2026-10-06-dasync-recipe-spine-plan.html&quot;
+  ],
+  &quot;milestones&quot;: [
+    {
+      &quot;id&quot;: &quot;local-recipe-engine&quot;,
+      &quot;outcome&quot;: &quot;Two independent local recipes or items install same-named canonical skills through one reviewed, recoverable engine path.&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;dependencies&quot;: [],
+      &quot;scope&quot;: &quot;New protocol, local snapshots, qualified composition, one provider, project-owned lock and machine bootstrap; isolated experimental release only.&quot;,
+      &quot;risks&quot;: [
+        &quot;Identity/naming/lock decisions become expensive to change after publication.&quot;,
+        &quot;Authority-aware restoration crosses existing receipt and journal boundaries.&quot;
+      ],
+      &quot;exit_criteria&quot;: [
+        &quot;Two same-named skills remain distinct through selection, rendering, saved plan, receipt and offline restore.&quot;,
+        &quot;Project lock remains identical under different personal additions.&quot;,
+        &quot;No hidden groups, provider-specific authorship or private approval transfer.&quot;,
+        &quot;Negative input, stale plan, drift, interrupted apply and urgent deny preserve evidence/user files.&quot;
+      ],
+      &quot;reference&quot;: &quot;draft:local-recipe-engine&quot;,
+      &quot;phases&quot;: [
+        {
+          &quot;id&quot;: &quot;protocol&quot;,
+          &quot;outcome&quot;: &quot;Freeze and exercise the source/item contract&quot;,
+          &quot;dependencies&quot;: [],
+          &quot;tasks&quot;: [
+            {
+              &quot;id&quot;: &quot;source-key&quot;,
+              &quot;outcome&quot;: &quot;Define source/item identity and selector resolution&quot;,
+              &quot;scope&quot;: &quot;cli/dasync/contracts.py; focused domain types and tests&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Source UUID, local ID, display alias and origin are distinct; ambiguous selectors fail with candidates.&quot;,
+                &quot;Fork identity differs; alias rename does not change authoritative key.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Valid/invalid source and singleton-item fixtures; deterministic identity tests.&quot;
+              ],
+              &quot;dependencies&quot;: [],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:source-key&quot;
+            },
+            {
+              &quot;id&quot;: &quot;format-schema&quot;,
+              &quot;outcome&quot;: &quot;Publish strict offline recipe/ItemSpec/local-envelope schemas&quot;,
+              &quot;scope&quot;: &quot;contracts and schema fixtures/reference docs&quot;,
+              &quot;acceptance&quot;: [
+                &quot;ItemSpec reused once; no target profile/group schema.&quot;,
+                &quot;Unknown core/required features, duplicate YAML keys and remote refs fail.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Offline JSON Schema fixtures; parser negative cases; schema exporter.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;source-key&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:format-schema&quot;
+            },
+            {
+              &quot;id&quot;: &quot;reference-contract&quot;,
+              &quot;outcome&quot;: &quot;Define finite typed references and context-slot records&quot;,
+              &quot;scope&quot;: &quot;contracts; reference parser; synthetic fixtures&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Link destinations and invocation fields resolve explicitly; prose/fences unchanged.&quot;,
+                &quot;Slot required/cardinality/contract/version rules have deterministic diagnostics.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Reference escaping/missing target fixtures; slot positive/negative contract examples.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;format-schema&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:reference-contract&quot;
+            },
+            {
+              &quot;id&quot;: &quot;command-bootstrap&quot;,
+              &quot;outcome&quot;: &quot;Define permanent machine discovery and operation schemas&quot;,
+              &quot;scope&quot;: &quot;cli application contract; describe tests&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Describe/version work without an environment; inputs/outputs/effects/approvals versioned.&quot;,
+                &quot;No-input unknown protocol fails without prompting or writing.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Subprocess JSON bootstrap tests; stdout/error envelope fixtures.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;format-schema&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:command-bootstrap&quot;
+            }
+          ],
+          &quot;acceptance&quot;: [
+            &quot;Coherent independently reviewable outcome with behavior tests alongside code; preserve unrelated dirty work.&quot;
+          ],
+          &quot;rollback&quot;: &quot;Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.&quot;,
+          &quot;reference&quot;: &quot;draft:protocol&quot;
+        },
+        {
+          &quot;id&quot;: &quot;local-snapshots&quot;,
+          &quot;outcome&quot;: &quot;Prepare immutable local recipe and singleton snapshots&quot;,
+          &quot;dependencies&quot;: [
+            &quot;protocol&quot;
+          ],
+          &quot;tasks&quot;: [
+            {
+              &quot;id&quot;: &quot;source-reader&quot;,
+              &quot;outcome&quot;: &quot;Read declared source metadata and files through safe local boundaries&quot;,
+              &quot;scope&quot;: &quot;catalog.py; io.py; local-source tests&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Recipe root and every file is bounded/declared; no symlink, traversal or undeclared executable.&quot;,
+                &quot;Source checkout is never mutated.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Synthetic local recipes/items; traversal/symlink/size cases.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;format-schema&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:source-reader&quot;
+            },
+            {
+              &quot;id&quot;: &quot;snapshot-pin&quot;,
+              &quot;outcome&quot;: &quot;Hash complete source contracts and retain immutable local snapshots&quot;,
+              &quot;scope&quot;: &quot;catalog.py; sources.py; retention records&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Metadata/content/identity changes alter pin; current bytes cannot silently replace accepted pin.&quot;,
+                &quot;Retained selected snapshot supports offline reads.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Tree-edit invalidation; missing/tampered snapshot; deterministic hashes.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;source-reader&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:snapshot-pin&quot;
+            },
+            {
+              &quot;id&quot;: &quot;prepare-boundary&quot;,
+              &quot;outcome&quot;: &quot;Expose preparation without durable registration or selection&quot;,
+              &quot;scope&quot;: &quot;source application functions; operation schemas&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Prepare only creates accounted immutable cache; cancel retains no registration/trust/intent.&quot;,
+                &quot;Registration candidate identity/origin collision remains inspectable.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Effects-before/after assertions in temporary home; source errors and cancellation.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;snapshot-pin&quot;,
+                &quot;command-bootstrap&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:prepare-boundary&quot;
+            },
+            {
+              &quot;id&quot;: &quot;local-scaffold&quot;,
+              &quot;outcome&quot;: &quot;Create one canonical local item without a repository&quot;,
+              &quot;scope&quot;: &quot;author scaffolder; local item fixtures&quot;,
+              &quot;acceptance&quot;: [
+                &quot;One ItemSpec envelope plus entrypoint; stable source identity; no invented facts/license.&quot;,
+                &quot;Preview clearly distinguishes tree bytes from Git snapshots.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Create/validate/prepare singleton skill and context examples.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;source-reader&quot;,
+                &quot;command-bootstrap&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:local-scaffold&quot;
+            }
+          ],
+          &quot;acceptance&quot;: [
+            &quot;Coherent independently reviewable outcome with behavior tests alongside code; preserve unrelated dirty work.&quot;
+          ],
+          &quot;rollback&quot;: &quot;Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.&quot;,
+          &quot;reference&quot;: &quot;draft:local-snapshots&quot;
+        },
+        {
+          &quot;id&quot;: &quot;composition&quot;,
+          &quot;outcome&quot;: &quot;Resolve two local sources with same-name items&quot;,
+          &quot;dependencies&quot;: [
+            &quot;local-snapshots&quot;
+          ],
+          &quot;tasks&quot;: [
+            {
+              &quot;id&quot;: &quot;qualified-graph&quot;,
+              &quot;outcome&quot;: &quot;Resolve qualified roots and recipe-local dependencies&quot;,
+              &quot;scope&quot;: &quot;resolver.py; graph tests&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Two same-named skills coexist; cycles/missing/disabled edges identify qualified roots.&quot;,
+                &quot;Direct/dependency reasons retained without automatic promotion.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Two-source graph cases and reverse-dependent explanations.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;snapshot-pin&quot;,
+                &quot;source-key&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:qualified-graph&quot;
+            },
+            {
+              &quot;id&quot;: &quot;snapshot-selection&quot;,
+              &quot;outcome&quot;: &quot;Implement current-revision bulk selection as explicit roots&quot;,
+              &quot;scope&quot;: &quot;intent application functions; selection tests&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Future items stay unselected; removal preserves other dependency reasons.&quot;,
+                &quot;No hidden authored groups or selection priority.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Add/remove/update synthetic item lists; shared dependency cases.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;qualified-graph&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:snapshot-selection&quot;
+            },
+            {
+              &quot;id&quot;: &quot;lock-ownership&quot;,
+              &quot;outcome&quot;: &quot;Separate project source lock from personal effective resolution&quot;,
+              &quot;scope&quot;: &quot;config.py; lock schema; state projections&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Project lock excludes personal locators, grants and native mapping.&quot;,
+                &quot;Two user homes preserve identical project lock while effective additions differ.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Two-home/one-project pure resolution fixtures; private metadata sentinels.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;qualified-graph&quot;,
+                &quot;format-schema&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:lock-ownership&quot;
+            },
+            {
+              &quot;id&quot;: &quot;snapshot-conflict&quot;,
+              &quot;outcome&quot;: &quot;Reject competing pins and expose inheritance/discovery differences&quot;,
+              &quot;scope&quot;: &quot;resolver diagnostics; environment read model&quot;,
+              &quot;acceptance&quot;: [
+                &quot;One snapshot per source; personal/project conflict actionable.&quot;,
+                &quot;Resolver inheritance and native global visibility are distinct fields.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Different-pin fixtures; explicit inheritance disable; no host-equivalence claim.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;lock-ownership&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:snapshot-conflict&quot;
+            }
+          ],
+          &quot;acceptance&quot;: [
+            &quot;Coherent independently reviewable outcome with behavior tests alongside code; preserve unrelated dirty work.&quot;
+          ],
+          &quot;rollback&quot;: &quot;Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.&quot;,
+          &quot;reference&quot;: &quot;draft:composition&quot;
+        },
+        {
+          &quot;id&quot;: &quot;native-output&quot;,
+          &quot;outcome&quot;: &quot;Render a collision-safe one-provider vertical slice&quot;,
+          &quot;dependencies&quot;: [
+            &quot;composition&quot;
+          ],
+          &quot;tasks&quot;: [
+            {
+              &quot;id&quot;: &quot;name-map&quot;,
+              &quot;outcome&quot;: &quot;Implement deterministic native-name mapping and full collision checks&quot;,
+              &quot;scope&quot;: &quot;adapters.py; mapping tests&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Alias/order independent; same names and dot/hyphen IDs distinct.&quot;,
+                &quot;Exact/casefold/file-dir/reserved/length collisions stop before writes.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Adversarial identifiers; injected digest collision; cross-platform path cases.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;qualified-graph&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:name-map&quot;
+            },
+            {
+              &quot;id&quot;: &quot;typed-render&quot;,
+              &quot;outcome&quot;: &quot;Render dependency/slot/invocation references from qualified keys&quot;,
+              &quot;scope&quot;: &quot;adapter reference rendering; fixtures&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Generated links and self invocation point to correct source.&quot;,
+                &quot;Literal prose/fences remain untouched; missing targets are errors.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Two-same-name nested reference/default-prompt snapshots.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;name-map&quot;,
+                &quot;reference-contract&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:typed-render&quot;
+            },
+            {
+              &quot;id&quot;: &quot;artifact-provenance&quot;,
+              &quot;outcome&quot;: &quot;Record contributing items and essential-semantic decisions&quot;,
+              &quot;scope&quot;: &quot;Artifact record; adapter decision schema&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Every output names owner and contributors; unsupported essentials fail.&quot;,
+                &quot;Metadata is inert and serialized; no private content copied through dependencies.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Aggregate contributor fixtures; malicious strings; private sentinel closure.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;typed-render&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:artifact-provenance&quot;
+            }
+          ],
+          &quot;acceptance&quot;: [
+            &quot;Coherent independently reviewable outcome with behavior tests alongside code; preserve unrelated dirty work.&quot;
+          ],
+          &quot;rollback&quot;: &quot;Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.&quot;,
+          &quot;reference&quot;: &quot;draft:native-output&quot;
+        },
+        {
+          &quot;id&quot;: &quot;transaction&quot;,
+          &quot;outcome&quot;: &quot;Apply and recover the reviewed local composition&quot;,
+          &quot;dependencies&quot;: [
+            &quot;native-output&quot;
+          ],
+          &quot;tasks&quot;: [
+            {
+              &quot;id&quot;: &quot;plan-inputs&quot;,
+              &quot;outcome&quot;: &quot;Bind all source/lock/authority/mapping/target inputs&quot;,
+              &quot;scope&quot;: &quot;engine.py; plan schema and tests&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Changing either snapshot, intent, grant generation, observed target or receipt invalidates plan.&quot;,
+                &quot;Plan contains no private source body/path.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Stale-plan matrix; unchanged inputs produce deterministic effects.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;artifact-provenance&quot;,
+                &quot;lock-ownership&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:plan-inputs&quot;
+            },
+            {
+              &quot;id&quot;: &quot;multi-source-apply&quot;,
+              &quot;outcome&quot;: &quot;Write reviewed registration/intent/lock/provider output through one transaction&quot;,
+              &quot;scope&quot;: &quot;Engine/State focused boundaries&quot;,
+              &quot;acceptance&quot;: [
+                &quot;No second mutation path; durable registration/source-map/trust choices use the reviewed Engine operation.&quot;,
+                &quot;Existing unmanaged/modified files protected; receipt records exact graph, pins, hashes and effects.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Temporary-home saved-plan\u2192apply\u2192doctor\u2192idempotent sync; registration cancellation/rollback and collision failure.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;plan-inputs&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:multi-source-apply&quot;
+            },
+            {
+              &quot;id&quot;: &quot;source-aware-restore&quot;,
+              &quot;outcome&quot;: &quot;Preserve source-aware rollback and crash evidence&quot;,
+              &quot;scope&quot;: &quot;state.py; recovery/receipt tests&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Offline restoration uses retained receipts; current authority gates managed reactivation.&quot;,
+                &quot;Unmanaged originals preserved; independent edits retain journal conflict.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Injected process interruption before/after writes; origin unavailable; revoked activation.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;multi-source-apply&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:source-aware-restore&quot;
+            },
+            {
+              &quot;id&quot;: &quot;revocation-ledger&quot;,
+              &quot;outcome&quot;: &quot;Allow urgent deny while recovery remains pending&quot;,
+              &quot;scope&quot;: &quot;local authority Engine operation; ledger tests&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Revocation under lock invalidates managed activation without deleting file journal.&quot;,
+                &quot;New grants stay blocked; existing host activation limit is reported.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Interrupt\u2192deny\u2192recover conflict; no automatic hook/private locator restoration.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;plan-inputs&quot;,
+                &quot;source-aware-restore&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:revocation-ledger&quot;
+            }
+          ],
+          &quot;acceptance&quot;: [
+            &quot;Coherent independently reviewable outcome with behavior tests alongside code; preserve unrelated dirty work.&quot;
+          ],
+          &quot;rollback&quot;: &quot;Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.&quot;,
+          &quot;reference&quot;: &quot;draft:transaction&quot;
+        },
+        {
+          &quot;id&quot;: &quot;vertical-acceptance&quot;,
+          &quot;outcome&quot;: &quot;Demonstrate a self-contained local recipe engine&quot;,
+          &quot;dependencies&quot;: [
+            &quot;transaction&quot;
+          ],
+          &quot;tasks&quot;: [
+            {
+              &quot;id&quot;: &quot;machine-journey&quot;,
+              &quot;outcome&quot;: &quot;Exercise the source/item/plan lifecycle through no-input JSON&quot;,
+              &quot;scope&quot;: &quot;CLI subprocess acceptance fixtures&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Parseable one-envelope stdout and exact scope/approval errors.&quot;,
+                &quot;Two same-named items materialize distinctly and explain all reasons.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Installed disposable wheel CLI journey; no network or model credentials.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;multi-source-apply&quot;,
+                &quot;command-bootstrap&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:machine-journey&quot;
+            },
+            {
+              &quot;id&quot;: &quot;negative-journey&quot;,
+              &quot;outcome&quot;: &quot;Exercise blocked operations and preservation guarantees&quot;,
+              &quot;scope&quot;: &quot;installed lifecycle/fault tests&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Invalid identity/ref/graph/drift/source pin makes no installation change.&quot;,
+                &quot;Cancellation/source errors do not persist draft selection.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;File-hash before/after matrix; recovery conflicts; simultaneous applies.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;revocation-ledger&quot;,
+                &quot;machine-journey&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:negative-journey&quot;
+            },
+            {
+              &quot;id&quot;: &quot;protocol-docs&quot;,
+              &quot;outcome&quot;: &quot;Publish exact conformance evidence and remaining launch limits&quot;,
+              &quot;scope&quot;: &quot;spec/reference/examples; release checklist&quot;,
+              &quot;acceptance&quot;: [
+                &quot;Examples match exported schemas; no profile/native-authorship leftovers.&quot;,
+                &quot;Local vertical slice labeled experimental; later launch capabilities not claimed.&quot;
+              ],
+              &quot;verification&quot;: [
+                &quot;Schema/example validation; final diff/boundary audit; required repository checks.&quot;
+              ],
+              &quot;dependencies&quot;: [
+                &quot;negative-journey&quot;
+              ],
+              &quot;status&quot;: &quot;planned&quot;,
+              &quot;reference&quot;: &quot;draft:protocol-docs&quot;
+            }
+          ],
+          &quot;acceptance&quot;: [
+            &quot;Coherent independently reviewable outcome with behavior tests alongside code; preserve unrelated dirty work.&quot;
+          ],
+          &quot;rollback&quot;: &quot;Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.&quot;,
+          &quot;reference&quot;: &quot;draft:vertical-acceptance&quot;
+        }
+      ]
+    },
+    {
+      &quot;id&quot;: &quot;git-team-composition&quot;,
+      &quot;outcome&quot;: &quot;Git/private sources and explicit cross-recipe/team composition&quot;,
+      &quot;status&quot;: &quot;future&quot;,
+      &quot;dependencies&quot;: [
+        &quot;local-recipe-engine&quot;
+      ],
+      &quot;scope&quot;: &quot;Approved HTTPS transport, candidate updates, imported identities/constraints, personal/project composition, audience-aware portable locks and offline retention.&quot;,
+      &quot;risks&quot;: [
+        &quot;No cross-origin contact/credential forwarding before authorization.&quot;,
+        &quot;Missing imports and incompatible pin constraints leave installed graph intact.&quot;
+      ],
+      &quot;exit_criteria&quot;: [
+        &quot;Actual Git integration tests prove config/env/redirect policy.&quot;,
+        &quot;Two coworkers share project lock with different personal additions.&quot;,
+        &quot;Cross-recipe cycles/version conflicts/source removal/offline update failures are actionable.&quot;
+      ],
+      &quot;planning_task&quot;: {
+        &quot;id&quot;: &quot;plan-git-team-composition&quot;,
+        &quot;outcome&quot;: &quot;Plan Out Git/private sources and explicit cross-recipe/team composition&quot;,
+        &quot;reference&quot;: &quot;draft:plan-git-team-composition&quot;
+      },
+      &quot;reference&quot;: &quot;draft:git-team-composition&quot;
+    },
+    {
+      &quot;id&quot;: &quot;context-and-content&quot;,
+      &quot;outcome&quot;: &quot;Context contracts, local promotion and development starter extraction&quot;,
+      &quot;status&quot;: &quot;future&quot;,
+      &quot;dependencies&quot;: [
+        &quot;git-team-composition&quot;
+      ],
+      &quot;scope&quot;: &quot;Explicit slots/grants/read protocol/private closure, local-item promotion/forks, development starter and optional-content ownership split.&quot;,
+      &quot;risks&quot;: [
+        &quot;Semantic prose compatibility cannot be certified by schema.&quot;,
+        &quot;Content-specific template sources/notices must follow actual owners.&quot;
+      ],
+      &quot;exit_criteria&quot;: [
+        &quot;Required, optional, missing, ambiguous, incompatible and denied context cases are deterministic.&quot;,
+        &quot;Private sentinel closure stays out of provider output, summaries/logs/exports.&quot;,
+        &quot;Promotion old\u2192new map reviews references and authority without transfer.&quot;,
+        &quot;Clean starter installs without private facts or optional recipes; generated templates/licenses reproducible.&quot;
+      ],
+      &quot;planning_task&quot;: {
+        &quot;id&quot;: &quot;plan-context-and-content&quot;,
+        &quot;outcome&quot;: &quot;Plan Out Context contracts, local promotion and development starter extraction&quot;,
+        &quot;reference&quot;: &quot;draft:plan-context-and-content&quot;
+      },
+      &quot;reference&quot;: &quot;draft:context-and-content&quot;
+    },
+    {
+      &quot;id&quot;: &quot;operator-experience&quot;,
+      &quot;outcome&quot;: &quot;Polished human CLI/TUI and complete AI operation&quot;,
+      &quot;status&quot;: &quot;future&quot;,
+      &quot;dependencies&quot;: [
+        &quot;context-and-content&quot;
+      ],
+      &quot;scope&quot;: &quot;Purposeful human rendering, Textual decision spike, same-operation TUI, machine schemas/bootstrap, lookup/handoff, diagnostic/recovery flows.&quot;,
+      &quot;risks&quot;: [
+        &quot;Headless UI tests do not establish real-terminal or assistive-technology quality.&quot;,
+        &quot;Cancelled worker cannot be treated as cancelled transaction.&quot;
+      ],
+      &quot;exit_criteria&quot;: [
+        &quot;CLI/TUI/JSON parity proves identical selected graph/effects.&quot;,
+        &quot;Keyboard, pointer, resize, narrow terminal, monochrome, plain/non-TTY and error/recovery journeys exercised.&quot;,
+        &quot;Describe/operator examples match command contracts; malicious metadata remains inert.&quot;,
+        &quot;Scope/pin/approval changes invalidate reviewed operations without false completion claims.&quot;
+      ],
+      &quot;planning_task&quot;: {
+        &quot;id&quot;: &quot;plan-operator-experience&quot;,
+        &quot;outcome&quot;: &quot;Plan Out Polished human CLI/TUI and complete AI operation&quot;,
+        &quot;reference&quot;: &quot;draft:plan-operator-experience&quot;
+      },
+      &quot;reference&quot;: &quot;draft:operator-experience&quot;
+    },
+    {
+      &quot;id&quot;: &quot;author-community&quot;,
+      &quot;outcome&quot;: &quot;Author conformance and sustainable community operations&quot;,
+      &quot;status&quot;: &quot;future&quot;,
+      &quot;dependencies&quot;: [
+        &quot;context-and-content&quot;
+      ],
+      &quot;scope&quot;: &quot;Scaffold/import/validate/disposable preview, reusable conformance CI, docs/license provenance, deprecation, issue/security routing, protocol RFC/support/succession policy.&quot;,
+      &quot;risks&quot;: [
+        &quot;Contribution burden can outgrow a small maintainer team.&quot;,
+        &quot;Conformance badges can be mistaken for model or security certification.&quot;
+      ],
+      &quot;exit_criteria&quot;: [
+        &quot;An independent author creates a valid recipe/local item without provider-specific files or real-home install.&quot;,
+        &quot;Offline conformance kit and reference examples work without starter origin.&quot;,
+        &quot;Maintainer/release/security ownership and supported-version obligations are actual documented commitments.&quot;,
+        &quot;Deprecated/removed/forked sources have explicit migration and archived bytes behavior.&quot;
+      ],
+      &quot;planning_task&quot;: {
+        &quot;id&quot;: &quot;plan-author-community&quot;,
+        &quot;outcome&quot;: &quot;Plan Out Author conformance and sustainable community operations&quot;,
+        &quot;reference&quot;: &quot;draft:plan-author-community&quot;
+      },
+      &quot;reference&quot;: &quot;draft:author-community&quot;
+    },
+    {
+      &quot;id&quot;: &quot;stable-launch&quot;,
+      &quot;outcome&quot;: &quot;Qualify and publish the first stable recipe-spine ecosystem&quot;,
+      &quot;status&quot;: &quot;future&quot;,
+      &quot;dependencies&quot;: [
+        &quot;operator-experience&quot;,
+        &quot;author-community&quot;
+      ],
+      &quot;scope&quot;: &quot;Frozen protocol, tested adapters/platforms, source/package distribution, official starter release, real host/model evidence where claimed, security/retention/migration support.&quot;,
+      &quot;risks&quot;: [
+        &quot;Publishing authority/accounts and real maintainers are not yet selected.&quot;,
+        &quot;Platform/provider claims can outrun actual evidence.&quot;
+      ],
+      &quot;exit_criteria&quot;: [
+        &quot;Candidate wheel/source archives install in clean disposable environments; content and third-party notices audited.&quot;,
+        &quot;Supported provider/platform matrix has exact dated evidence and degraded/unsupported states.&quot;,
+        &quot;Threat-boundary, process-death, transport, authority and UI acceptance gates pass at the release candidate.&quot;,
+        &quot;Documented bootstrap source UUID/origin/pin/digest and starter release are verified.&quot;,
+        &quot;Publication occurs only with separate authority and read-back of actual artifacts; no automatic deployment from this plan.&quot;
+      ],
+      &quot;planning_task&quot;: {
+        &quot;id&quot;: &quot;plan-stable-launch&quot;,
+        &quot;outcome&quot;: &quot;Plan Out Qualify and publish the first stable recipe-spine ecosystem&quot;,
+        &quot;reference&quot;: &quot;draft:plan-stable-launch&quot;
+      },
+      &quot;reference&quot;: &quot;draft:stable-launch&quot;
+    }
+  ]
+}</code></pre></figure></details></section><section id="sources-evidence" aria-labelledby="heading-sources-evidence"><h2 id="heading-sources-evidence"><span class="section-number">28</span>Source map and ready-to-file maintenance note</h2><div class="table-wrap" tabindex="0" role="region" aria-label="Repository source table"><table><thead><tr><th scope="col">Repository source</th><th scope="col">Evidence used</th></tr></thead><tbody><tr><td>cli/dasync/contracts.py</td><td>Strict schemas, current ID/version constraints, Plan Context validation</td></tr><tr><td>cli/dasync/catalog.py; sources.py</td><td>Immutable source objects, declared files, local pins and actual transport boundary</td></tr><tr><td>cli/dasync/resolver.py</td><td>Single-source inheritance, graph/access checks, dependencies and context routing</td></tr><tr><td>cli/dasync/adapters.py</td><td>Native naming/default-prompt coupling, capability declarations, private lookup, collision rejection</td></tr><tr><td>cli/dasync/engine.py; state.py; io.py</td><td>Plan input binding, file ownership, journals, backups, rollback and safe filesystem writes</td></tr><tr><td>cli/dasync/cli.py; tui.py</td><td>Current machine/no-input behavior, schema discovery, human rendering, checkbox-selection semantics</td></tr><tr><td>docs/AI-OPERATOR.md; docs/architecture/implementation.md</td><td>Operator authority, source update boundaries, current implementation limits</td></tr><tr><td>docs/releasing.md; SECURITY.md; LICENSE; THIRD_PARTY_NOTICES.md</td><td>Planning identity, publication gates, unsupported-version facts and redistribution provenance</td></tr><tr><td>docs/package-authoring.md; template-system</td><td>Canonical content/build ownership and declared notices during extraction</td></tr></tbody></table></div><p>External primary sources are linked at the claims they informed. Research date: 6 October 2026. No Harmonic private context bodies, credentials or unrelated personal files were read or included.</p><details><summary>Unpublished maintenance note for the existing TUI</summary><p><strong>Title:</strong> Preserve selection provenance in the existing checkbox selector.<br><strong>Classification:</strong> observed source-trace defect, ready to file as Bug if that native type is available; unpublished and not tracker-refreshed.<br><strong>Evidence:</strong> <code>cli/dasync/tui.py:27</code> promotes checked catalog roots into explicit packages; the selector at line 9 uses catalog roots rather than the resolver's expanded effective graph.<br><strong>Impact:</strong> derived selections can become sticky, and inherited/derived items lack accurate presentation.<br><strong>Bounded acceptance:</strong> selecting an already derived item preserves its origin; removal of a legacy group removes only that reason; effective dependencies/inheritance are shown without promotion.<br><strong>Scope:</strong> no fix made here. The new no-profile selection design supersedes this UI, but the existing defect should remain recorded if that implementation is maintained in parallel. No live reproduction or new vulnerability claim is made.</p></details></section></main><footer class="page-foot">Prepared from inspected source and primary references on 6 October 2026. Local artifact only; no source implementation, recipe publication, account changes, or tracker writes.</footer></div></div><script type="application/json" id="plan-context">{
+  "version": 1,
+  "authority": "github",
+  "authority_state": "unavailable",
+  "reference": "https://github.com/users/Shreyasdbz/projects/8",
+  "active_milestone": "local-recipe-engine",
+  "design_references": [
+    "2026-10-06-dasync-recipe-spine-plan.html"
+  ],
+  "milestones": [
+    {
+      "id": "local-recipe-engine",
+      "outcome": "Two independent local recipes or items install same-named canonical skills through one reviewed, recoverable engine path.",
+      "status": "active",
+      "dependencies": [],
+      "scope": "New protocol, local snapshots, qualified composition, one provider, project-owned lock and machine bootstrap; isolated experimental release only.",
+      "risks": [
+        "Identity/naming/lock decisions become expensive to change after publication.",
+        "Authority-aware restoration crosses existing receipt and journal boundaries."
+      ],
+      "exit_criteria": [
+        "Two same-named skills remain distinct through selection, rendering, saved plan, receipt and offline restore.",
+        "Project lock remains identical under different personal additions.",
+        "No hidden groups, provider-specific authorship or private approval transfer.",
+        "Negative input, stale plan, drift, interrupted apply and urgent deny preserve evidence/user files."
+      ],
+      "reference": "draft:local-recipe-engine",
+      "phases": [
+        {
+          "id": "protocol",
+          "outcome": "Freeze and exercise the source/item contract",
+          "dependencies": [],
+          "tasks": [
+            {
+              "id": "source-key",
+              "outcome": "Define source/item identity and selector resolution",
+              "scope": "cli/dasync/contracts.py; focused domain types and tests",
+              "acceptance": [
+                "Source UUID, local ID, display alias and origin are distinct; ambiguous selectors fail with candidates.",
+                "Fork identity differs; alias rename does not change authoritative key."
+              ],
+              "verification": [
+                "Valid/invalid source and singleton-item fixtures; deterministic identity tests."
+              ],
+              "dependencies": [],
+              "status": "planned",
+              "reference": "draft:source-key"
+            },
+            {
+              "id": "format-schema",
+              "outcome": "Publish strict offline recipe/ItemSpec/local-envelope schemas",
+              "scope": "contracts and schema fixtures/reference docs",
+              "acceptance": [
+                "ItemSpec reused once; no target profile/group schema.",
+                "Unknown core/required features, duplicate YAML keys and remote refs fail."
+              ],
+              "verification": [
+                "Offline JSON Schema fixtures; parser negative cases; schema exporter."
+              ],
+              "dependencies": [
+                "source-key"
+              ],
+              "status": "planned",
+              "reference": "draft:format-schema"
+            },
+            {
+              "id": "reference-contract",
+              "outcome": "Define finite typed references and context-slot records",
+              "scope": "contracts; reference parser; synthetic fixtures",
+              "acceptance": [
+                "Link destinations and invocation fields resolve explicitly; prose/fences unchanged.",
+                "Slot required/cardinality/contract/version rules have deterministic diagnostics."
+              ],
+              "verification": [
+                "Reference escaping/missing target fixtures; slot positive/negative contract examples."
+              ],
+              "dependencies": [
+                "format-schema"
+              ],
+              "status": "planned",
+              "reference": "draft:reference-contract"
+            },
+            {
+              "id": "command-bootstrap",
+              "outcome": "Define permanent machine discovery and operation schemas",
+              "scope": "cli application contract; describe tests",
+              "acceptance": [
+                "Describe/version work without an environment; inputs/outputs/effects/approvals versioned.",
+                "No-input unknown protocol fails without prompting or writing."
+              ],
+              "verification": [
+                "Subprocess JSON bootstrap tests; stdout/error envelope fixtures."
+              ],
+              "dependencies": [
+                "format-schema"
+              ],
+              "status": "planned",
+              "reference": "draft:command-bootstrap"
+            }
+          ],
+          "acceptance": [
+            "Coherent independently reviewable outcome with behavior tests alongside code; preserve unrelated dirty work."
+          ],
+          "rollback": "Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.",
+          "reference": "draft:protocol"
+        },
+        {
+          "id": "local-snapshots",
+          "outcome": "Prepare immutable local recipe and singleton snapshots",
+          "dependencies": [
+            "protocol"
+          ],
+          "tasks": [
+            {
+              "id": "source-reader",
+              "outcome": "Read declared source metadata and files through safe local boundaries",
+              "scope": "catalog.py; io.py; local-source tests",
+              "acceptance": [
+                "Recipe root and every file is bounded/declared; no symlink, traversal or undeclared executable.",
+                "Source checkout is never mutated."
+              ],
+              "verification": [
+                "Synthetic local recipes/items; traversal/symlink/size cases."
+              ],
+              "dependencies": [
+                "format-schema"
+              ],
+              "status": "planned",
+              "reference": "draft:source-reader"
+            },
+            {
+              "id": "snapshot-pin",
+              "outcome": "Hash complete source contracts and retain immutable local snapshots",
+              "scope": "catalog.py; sources.py; retention records",
+              "acceptance": [
+                "Metadata/content/identity changes alter pin; current bytes cannot silently replace accepted pin.",
+                "Retained selected snapshot supports offline reads."
+              ],
+              "verification": [
+                "Tree-edit invalidation; missing/tampered snapshot; deterministic hashes."
+              ],
+              "dependencies": [
+                "source-reader"
+              ],
+              "status": "planned",
+              "reference": "draft:snapshot-pin"
+            },
+            {
+              "id": "prepare-boundary",
+              "outcome": "Expose preparation without durable registration or selection",
+              "scope": "source application functions; operation schemas",
+              "acceptance": [
+                "Prepare only creates accounted immutable cache; cancel retains no registration/trust/intent.",
+                "Registration candidate identity/origin collision remains inspectable."
+              ],
+              "verification": [
+                "Effects-before/after assertions in temporary home; source errors and cancellation."
+              ],
+              "dependencies": [
+                "snapshot-pin",
+                "command-bootstrap"
+              ],
+              "status": "planned",
+              "reference": "draft:prepare-boundary"
+            },
+            {
+              "id": "local-scaffold",
+              "outcome": "Create one canonical local item without a repository",
+              "scope": "author scaffolder; local item fixtures",
+              "acceptance": [
+                "One ItemSpec envelope plus entrypoint; stable source identity; no invented facts/license.",
+                "Preview clearly distinguishes tree bytes from Git snapshots."
+              ],
+              "verification": [
+                "Create/validate/prepare singleton skill and context examples."
+              ],
+              "dependencies": [
+                "source-reader",
+                "command-bootstrap"
+              ],
+              "status": "planned",
+              "reference": "draft:local-scaffold"
+            }
+          ],
+          "acceptance": [
+            "Coherent independently reviewable outcome with behavior tests alongside code; preserve unrelated dirty work."
+          ],
+          "rollback": "Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.",
+          "reference": "draft:local-snapshots"
+        },
+        {
+          "id": "composition",
+          "outcome": "Resolve two local sources with same-name items",
+          "dependencies": [
+            "local-snapshots"
+          ],
+          "tasks": [
+            {
+              "id": "qualified-graph",
+              "outcome": "Resolve qualified roots and recipe-local dependencies",
+              "scope": "resolver.py; graph tests",
+              "acceptance": [
+                "Two same-named skills coexist; cycles/missing/disabled edges identify qualified roots.",
+                "Direct/dependency reasons retained without automatic promotion."
+              ],
+              "verification": [
+                "Two-source graph cases and reverse-dependent explanations."
+              ],
+              "dependencies": [
+                "snapshot-pin",
+                "source-key"
+              ],
+              "status": "planned",
+              "reference": "draft:qualified-graph"
+            },
+            {
+              "id": "snapshot-selection",
+              "outcome": "Implement current-revision bulk selection as explicit roots",
+              "scope": "intent application functions; selection tests",
+              "acceptance": [
+                "Future items stay unselected; removal preserves other dependency reasons.",
+                "No hidden authored groups or selection priority."
+              ],
+              "verification": [
+                "Add/remove/update synthetic item lists; shared dependency cases."
+              ],
+              "dependencies": [
+                "qualified-graph"
+              ],
+              "status": "planned",
+              "reference": "draft:snapshot-selection"
+            },
+            {
+              "id": "lock-ownership",
+              "outcome": "Separate project source lock from personal effective resolution",
+              "scope": "config.py; lock schema; state projections",
+              "acceptance": [
+                "Project lock excludes personal locators, grants and native mapping.",
+                "Two user homes preserve identical project lock while effective additions differ."
+              ],
+              "verification": [
+                "Two-home/one-project pure resolution fixtures; private metadata sentinels."
+              ],
+              "dependencies": [
+                "qualified-graph",
+                "format-schema"
+              ],
+              "status": "planned",
+              "reference": "draft:lock-ownership"
+            },
+            {
+              "id": "snapshot-conflict",
+              "outcome": "Reject competing pins and expose inheritance/discovery differences",
+              "scope": "resolver diagnostics; environment read model",
+              "acceptance": [
+                "One snapshot per source; personal/project conflict actionable.",
+                "Resolver inheritance and native global visibility are distinct fields."
+              ],
+              "verification": [
+                "Different-pin fixtures; explicit inheritance disable; no host-equivalence claim."
+              ],
+              "dependencies": [
+                "lock-ownership"
+              ],
+              "status": "planned",
+              "reference": "draft:snapshot-conflict"
+            }
+          ],
+          "acceptance": [
+            "Coherent independently reviewable outcome with behavior tests alongside code; preserve unrelated dirty work."
+          ],
+          "rollback": "Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.",
+          "reference": "draft:composition"
+        },
+        {
+          "id": "native-output",
+          "outcome": "Render a collision-safe one-provider vertical slice",
+          "dependencies": [
+            "composition"
+          ],
+          "tasks": [
+            {
+              "id": "name-map",
+              "outcome": "Implement deterministic native-name mapping and full collision checks",
+              "scope": "adapters.py; mapping tests",
+              "acceptance": [
+                "Alias/order independent; same names and dot/hyphen IDs distinct.",
+                "Exact/casefold/file-dir/reserved/length collisions stop before writes."
+              ],
+              "verification": [
+                "Adversarial identifiers; injected digest collision; cross-platform path cases."
+              ],
+              "dependencies": [
+                "qualified-graph"
+              ],
+              "status": "planned",
+              "reference": "draft:name-map"
+            },
+            {
+              "id": "typed-render",
+              "outcome": "Render dependency/slot/invocation references from qualified keys",
+              "scope": "adapter reference rendering; fixtures",
+              "acceptance": [
+                "Generated links and self invocation point to correct source.",
+                "Literal prose/fences remain untouched; missing targets are errors."
+              ],
+              "verification": [
+                "Two-same-name nested reference/default-prompt snapshots."
+              ],
+              "dependencies": [
+                "name-map",
+                "reference-contract"
+              ],
+              "status": "planned",
+              "reference": "draft:typed-render"
+            },
+            {
+              "id": "artifact-provenance",
+              "outcome": "Record contributing items and essential-semantic decisions",
+              "scope": "Artifact record; adapter decision schema",
+              "acceptance": [
+                "Every output names owner and contributors; unsupported essentials fail.",
+                "Metadata is inert and serialized; no private content copied through dependencies."
+              ],
+              "verification": [
+                "Aggregate contributor fixtures; malicious strings; private sentinel closure."
+              ],
+              "dependencies": [
+                "typed-render"
+              ],
+              "status": "planned",
+              "reference": "draft:artifact-provenance"
+            }
+          ],
+          "acceptance": [
+            "Coherent independently reviewable outcome with behavior tests alongside code; preserve unrelated dirty work."
+          ],
+          "rollback": "Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.",
+          "reference": "draft:native-output"
+        },
+        {
+          "id": "transaction",
+          "outcome": "Apply and recover the reviewed local composition",
+          "dependencies": [
+            "native-output"
+          ],
+          "tasks": [
+            {
+              "id": "plan-inputs",
+              "outcome": "Bind all source/lock/authority/mapping/target inputs",
+              "scope": "engine.py; plan schema and tests",
+              "acceptance": [
+                "Changing either snapshot, intent, grant generation, observed target or receipt invalidates plan.",
+                "Plan contains no private source body/path."
+              ],
+              "verification": [
+                "Stale-plan matrix; unchanged inputs produce deterministic effects."
+              ],
+              "dependencies": [
+                "artifact-provenance",
+                "lock-ownership"
+              ],
+              "status": "planned",
+              "reference": "draft:plan-inputs"
+            },
+            {
+              "id": "multi-source-apply",
+              "outcome": "Write reviewed registration/intent/lock/provider output through one transaction",
+              "scope": "Engine/State focused boundaries",
+              "acceptance": [
+                "No second mutation path; durable registration/source-map/trust choices use the reviewed Engine operation.",
+                "Existing unmanaged/modified files protected; receipt records exact graph, pins, hashes and effects."
+              ],
+              "verification": [
+                "Temporary-home saved-plan\u2192apply\u2192doctor\u2192idempotent sync; registration cancellation/rollback and collision failure."
+              ],
+              "dependencies": [
+                "plan-inputs"
+              ],
+              "status": "planned",
+              "reference": "draft:multi-source-apply"
+            },
+            {
+              "id": "source-aware-restore",
+              "outcome": "Preserve source-aware rollback and crash evidence",
+              "scope": "state.py; recovery/receipt tests",
+              "acceptance": [
+                "Offline restoration uses retained receipts; current authority gates managed reactivation.",
+                "Unmanaged originals preserved; independent edits retain journal conflict."
+              ],
+              "verification": [
+                "Injected process interruption before/after writes; origin unavailable; revoked activation."
+              ],
+              "dependencies": [
+                "multi-source-apply"
+              ],
+              "status": "planned",
+              "reference": "draft:source-aware-restore"
+            },
+            {
+              "id": "revocation-ledger",
+              "outcome": "Allow urgent deny while recovery remains pending",
+              "scope": "local authority Engine operation; ledger tests",
+              "acceptance": [
+                "Revocation under lock invalidates managed activation without deleting file journal.",
+                "New grants stay blocked; existing host activation limit is reported."
+              ],
+              "verification": [
+                "Interrupt\u2192deny\u2192recover conflict; no automatic hook/private locator restoration."
+              ],
+              "dependencies": [
+                "plan-inputs",
+                "source-aware-restore"
+              ],
+              "status": "planned",
+              "reference": "draft:revocation-ledger"
+            }
+          ],
+          "acceptance": [
+            "Coherent independently reviewable outcome with behavior tests alongside code; preserve unrelated dirty work."
+          ],
+          "rollback": "Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.",
+          "reference": "draft:transaction"
+        },
+        {
+          "id": "vertical-acceptance",
+          "outcome": "Demonstrate a self-contained local recipe engine",
+          "dependencies": [
+            "transaction"
+          ],
+          "tasks": [
+            {
+              "id": "machine-journey",
+              "outcome": "Exercise the source/item/plan lifecycle through no-input JSON",
+              "scope": "CLI subprocess acceptance fixtures",
+              "acceptance": [
+                "Parseable one-envelope stdout and exact scope/approval errors.",
+                "Two same-named items materialize distinctly and explain all reasons."
+              ],
+              "verification": [
+                "Installed disposable wheel CLI journey; no network or model credentials."
+              ],
+              "dependencies": [
+                "multi-source-apply",
+                "command-bootstrap"
+              ],
+              "status": "planned",
+              "reference": "draft:machine-journey"
+            },
+            {
+              "id": "negative-journey",
+              "outcome": "Exercise blocked operations and preservation guarantees",
+              "scope": "installed lifecycle/fault tests",
+              "acceptance": [
+                "Invalid identity/ref/graph/drift/source pin makes no installation change.",
+                "Cancellation/source errors do not persist draft selection."
+              ],
+              "verification": [
+                "File-hash before/after matrix; recovery conflicts; simultaneous applies."
+              ],
+              "dependencies": [
+                "revocation-ledger",
+                "machine-journey"
+              ],
+              "status": "planned",
+              "reference": "draft:negative-journey"
+            },
+            {
+              "id": "protocol-docs",
+              "outcome": "Publish exact conformance evidence and remaining launch limits",
+              "scope": "spec/reference/examples; release checklist",
+              "acceptance": [
+                "Examples match exported schemas; no profile/native-authorship leftovers.",
+                "Local vertical slice labeled experimental; later launch capabilities not claimed."
+              ],
+              "verification": [
+                "Schema/example validation; final diff/boundary audit; required repository checks."
+              ],
+              "dependencies": [
+                "negative-journey"
+              ],
+              "status": "planned",
+              "reference": "draft:protocol-docs"
+            }
+          ],
+          "acceptance": [
+            "Coherent independently reviewable outcome with behavior tests alongside code; preserve unrelated dirty work."
+          ],
+          "rollback": "Revert only this reviewed phase in the isolated candidate; do not reset real user configuration or unrelated edits.",
+          "reference": "draft:vertical-acceptance"
+        }
+      ]
+    },
+    {
+      "id": "git-team-composition",
+      "outcome": "Git/private sources and explicit cross-recipe/team composition",
+      "status": "future",
+      "dependencies": [
+        "local-recipe-engine"
+      ],
+      "scope": "Approved HTTPS transport, candidate updates, imported identities/constraints, personal/project composition, audience-aware portable locks and offline retention.",
+      "risks": [
+        "No cross-origin contact/credential forwarding before authorization.",
+        "Missing imports and incompatible pin constraints leave installed graph intact."
+      ],
+      "exit_criteria": [
+        "Actual Git integration tests prove config/env/redirect policy.",
+        "Two coworkers share project lock with different personal additions.",
+        "Cross-recipe cycles/version conflicts/source removal/offline update failures are actionable."
+      ],
+      "planning_task": {
+        "id": "plan-git-team-composition",
+        "outcome": "Plan Out Git/private sources and explicit cross-recipe/team composition",
+        "reference": "draft:plan-git-team-composition"
+      },
+      "reference": "draft:git-team-composition"
+    },
+    {
+      "id": "context-and-content",
+      "outcome": "Context contracts, local promotion and development starter extraction",
+      "status": "future",
+      "dependencies": [
+        "git-team-composition"
+      ],
+      "scope": "Explicit slots/grants/read protocol/private closure, local-item promotion/forks, development starter and optional-content ownership split.",
+      "risks": [
+        "Semantic prose compatibility cannot be certified by schema.",
+        "Content-specific template sources/notices must follow actual owners."
+      ],
+      "exit_criteria": [
+        "Required, optional, missing, ambiguous, incompatible and denied context cases are deterministic.",
+        "Private sentinel closure stays out of provider output, summaries/logs/exports.",
+        "Promotion old\u2192new map reviews references and authority without transfer.",
+        "Clean starter installs without private facts or optional recipes; generated templates/licenses reproducible."
+      ],
+      "planning_task": {
+        "id": "plan-context-and-content",
+        "outcome": "Plan Out Context contracts, local promotion and development starter extraction",
+        "reference": "draft:plan-context-and-content"
+      },
+      "reference": "draft:context-and-content"
+    },
+    {
+      "id": "operator-experience",
+      "outcome": "Polished human CLI/TUI and complete AI operation",
+      "status": "future",
+      "dependencies": [
+        "context-and-content"
+      ],
+      "scope": "Purposeful human rendering, Textual decision spike, same-operation TUI, machine schemas/bootstrap, lookup/handoff, diagnostic/recovery flows.",
+      "risks": [
+        "Headless UI tests do not establish real-terminal or assistive-technology quality.",
+        "Cancelled worker cannot be treated as cancelled transaction."
+      ],
+      "exit_criteria": [
+        "CLI/TUI/JSON parity proves identical selected graph/effects.",
+        "Keyboard, pointer, resize, narrow terminal, monochrome, plain/non-TTY and error/recovery journeys exercised.",
+        "Describe/operator examples match command contracts; malicious metadata remains inert.",
+        "Scope/pin/approval changes invalidate reviewed operations without false completion claims."
+      ],
+      "planning_task": {
+        "id": "plan-operator-experience",
+        "outcome": "Plan Out Polished human CLI/TUI and complete AI operation",
+        "reference": "draft:plan-operator-experience"
+      },
+      "reference": "draft:operator-experience"
+    },
+    {
+      "id": "author-community",
+      "outcome": "Author conformance and sustainable community operations",
+      "status": "future",
+      "dependencies": [
+        "context-and-content"
+      ],
+      "scope": "Scaffold/import/validate/disposable preview, reusable conformance CI, docs/license provenance, deprecation, issue/security routing, protocol RFC/support/succession policy.",
+      "risks": [
+        "Contribution burden can outgrow a small maintainer team.",
+        "Conformance badges can be mistaken for model or security certification."
+      ],
+      "exit_criteria": [
+        "An independent author creates a valid recipe/local item without provider-specific files or real-home install.",
+        "Offline conformance kit and reference examples work without starter origin.",
+        "Maintainer/release/security ownership and supported-version obligations are actual documented commitments.",
+        "Deprecated/removed/forked sources have explicit migration and archived bytes behavior."
+      ],
+      "planning_task": {
+        "id": "plan-author-community",
+        "outcome": "Plan Out Author conformance and sustainable community operations",
+        "reference": "draft:plan-author-community"
+      },
+      "reference": "draft:author-community"
+    },
+    {
+      "id": "stable-launch",
+      "outcome": "Qualify and publish the first stable recipe-spine ecosystem",
+      "status": "future",
+      "dependencies": [
+        "operator-experience",
+        "author-community"
+      ],
+      "scope": "Frozen protocol, tested adapters/platforms, source/package distribution, official starter release, real host/model evidence where claimed, security/retention/migration support.",
+      "risks": [
+        "Publishing authority/accounts and real maintainers are not yet selected.",
+        "Platform/provider claims can outrun actual evidence."
+      ],
+      "exit_criteria": [
+        "Candidate wheel/source archives install in clean disposable environments; content and third-party notices audited.",
+        "Supported provider/platform matrix has exact dated evidence and degraded/unsupported states.",
+        "Threat-boundary, process-death, transport, authority and UI acceptance gates pass at the release candidate.",
+        "Documented bootstrap source UUID/origin/pin/digest and starter release are verified.",
+        "Publication occurs only with separate authority and read-back of actual artifacts; no automatic deployment from this plan."
+      ],
+      "planning_task": {
+        "id": "plan-stable-launch",
+        "outcome": "Plan Out Qualify and publish the first stable recipe-spine ecosystem",
+        "reference": "draft:plan-stable-launch"
+      },
+      "reference": "draft:stable-launch"
+    }
+  ]
+}</script><script>
+document.documentElement.classList.add('js');
+const themeButton=document.getElementById('theme');
+let theme='light';
+themeButton.addEventListener('click',()=>{theme=theme==='light'?'dark':'light';document.documentElement.dataset.theme=theme;themeButton.textContent=theme==='light'?'Use dark theme':'Use light theme';});
+document.getElementById('print').addEventListener('click',()=>window.print());
+const contents=document.getElementById('contents');
+if(window.innerWidth<=1000) contents.open=false;
+const search=document.getElementById('document-search');
+const results=document.getElementById('search-results');
+const chapters=[...document.querySelectorAll('main section')];
+search.addEventListener('input',()=>{const query=search.value.trim().toLowerCase();results.replaceChildren();if(!query)return;const matched=chapters.filter(x=>x.textContent.toLowerCase().includes(query));const text=document.createElement('p');text.textContent=`${matched.length} sections match. Full document remains visible.`;results.append(text);for(const section of matched){const link=document.createElement('a');link.href='#'+section.id;link.textContent=section.querySelector('h2').textContent;results.append(link);}});
+const navigation=[...document.querySelectorAll('nav a')];
+const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting){for(const link of navigation){if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');}}}},{rootMargin:'-5% 0px -75% 0px'});chapters.forEach(x=>observer.observe(x));
+let view='browse';
+const mockButtons=[...document.querySelectorAll('[data-view]')];
+const selections=[...document.querySelectorAll('.item-row input')];
+function updateMock(){const selected=selections.filter(x=>x.checked).map(x=>x.value).sort();const blocked=selected.includes('harmonic/skill.pr-review');document.getElementById('mock-status').textContent=`${selected.length} direct roots in this synthetic draft · ${blocked?'Blocked: team workspace binding/grant required':'No simulated binding blocker'} · no real effects`;const summary=document.getElementById('mock-summary');summary.replaceChildren();const list=document.createElement('ul');for(const value of selected){const li=document.createElement('li');li.textContent=value;list.append(li);}summary.append(list);if(!selected.length){const empty=document.createElement('p');empty.textContent='No direct roots selected.';summary.append(empty);}const status=document.createElement('p');status.className=blocked?'blocker':'';status.textContent=blocked?'Cannot apply: required workspace slot is unbound. Source trust and provider permissions are separate.':'Illustrative plan has no simulated context blocker; real planning still validates every boundary.';summary.append(status);document.getElementById('mock-json').textContent=JSON.stringify({operation:'selection.propose',scope:{kind:'project',path:'/example/work'},roots:selected,mode:'illustration-only'},null,2);}
+for(const button of mockButtons){button.addEventListener('click',()=>{view=button.dataset.view;for(const other of mockButtons)other.setAttribute('aria-pressed',String(other===button));for(const key of ['browse','review','machine'])document.getElementById('mock-'+key).hidden=key!==view;updateMock();});}
+selections.forEach(x=>x.addEventListener('change',updateMock));
+document.getElementById('mock-query').addEventListener('input',event=>{const query=event.target.value.toLowerCase();for(const row of document.querySelectorAll('.item-row'))row.hidden=!row.textContent.toLowerCase().includes(query);});
+updateMock();
+document.getElementById('download-plan').addEventListener('click',()=>{const data=document.getElementById('plan-context').textContent;const blob=new Blob([data],{type:'application/json'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='dasync-recipe-plan-context.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);document.getElementById('download-status').textContent='Downloaded an unpublished projection; this does not update GitHub.';});
+let printOpen=[];window.addEventListener('beforeprint',()=>{printOpen=[...document.querySelectorAll('details')].map(x=>[x,x.open]);for(const [detail]of printOpen)detail.open=true;});window.addEventListener('afterprint',()=>{for(const[detail,open]of printOpen)detail.open=open;printOpen=[];});
+</script></body></html>

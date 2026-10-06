@@ -27,6 +27,8 @@
 
 [Implementation decisions](architecture/implementation.md) describe the current runtime, source pins, transaction engine, provider behavior, and known limitations. The [original design](architecture/design.md) is a historical design snapshot, not the current implementation contract.
 
+The [recipe architecture and development plan](plans/2026-10-06-dasync-recipe-spine-plan.html), reviewed on 6 October 2026, proposes an engine-only spine, independent recipe repositories, local items, and a CLI/TUI shared by people and agents. It includes the agreed decisions, failure and recovery contracts, validation limits, and a six-milestone roadmap with detailed work for the next milestone. The embedded Plan Context is an unpublished GitHub planning projection; implementation and live tracker reconciliation remain pending. Open the standalone HTML in a browser to use its navigation and interactive illustration.
+
 Optional conventions have their own guides: [engineering profile](engineering-profile.md), [GitHub planning and travel context](planning-and-travel-context.md), and the dated [observability comparison](observability-options.md).
 
 ## Evidence and historical reports
