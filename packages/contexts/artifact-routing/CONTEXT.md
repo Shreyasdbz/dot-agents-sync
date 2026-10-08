@@ -8,6 +8,7 @@ An explicit user destination takes precedence, subject to the applicable path an
 | --- | --- |
 | PR review Markdown or HTML | `pr-reviews/` |
 | Change-understanding quiz HTML | `quizzes/` |
+| Visual change explanation HTML | `explanations/` |
 | Presentation HTML | `decks/` |
 | Design proposal Markdown or HTML | `proposals/` |
 | Investigation Markdown | `investigations/` |

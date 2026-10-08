@@ -1,0 +1,20 @@
+/* Scrollable explanation views reuse the shared theme, tools and disclosure behavior. */
+[data-artifact-kind=explanation] .layout{max-width:1160px}
+.change-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem;margin:1.5rem 0}
+.change-path{border-top:3px solid var(--accent);padding:1rem;background:var(--surface);min-width:0}
+.change-path h3{margin-top:0}
+.change-path ol{padding-left:1.4rem}
+.change-path li{padding:.5rem 0}
+.change-path .result{border-top:1px solid var(--line);padding-top:.8rem;font-weight:600}
+.change-path .condition{display:block;color:var(--muted);font-size:.88rem}
+.evidence-ref{font-size:.85rem;white-space:nowrap}
+.explanation-note{max-width:78ch;border-left:3px solid var(--accent);padding:.2rem 1rem;margin:1.5rem 0}
+.lens-rows{margin:1rem 0}
+.lens-rows>div{display:grid;grid-template-columns:12rem minmax(0,1fr);gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line)}
+.lens-rows dt{font-weight:600}.lens-rows dd{margin:0;max-width:75ch}
+.evidence-appendix li{margin:1rem 0;scroll-margin-top:8rem}
+.evidence-appendix pre{color:var(--ink)}
+.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+[data-artifact-kind=explanation] .table-wrap table{min-width:560px}
+@media(max-width:700px){.change-map{grid-template-columns:1fr;gap:1rem}.lens-rows>div{grid-template-columns:1fr;gap:.3rem}}
+@media print{.change-map{gap:.5rem}.change-path{background:white;break-inside:avoid}.lens-rows>div{break-inside:avoid}.evidence-appendix pre{white-space:pre-wrap}.page-nav{display:none}}

@@ -23,7 +23,8 @@ const { pathToFileURL } = require('node:url');
   try {
     for (const [name, file] of Object.entries({
       trip:'trip-publish/trip.html', proposal:'design-proposal/proposal.html',
-      review:'pr-review/report.html', deck:'pitch-deck/deck.html'
+      review:'pr-review/report.html', deck:'pitch-deck/deck.html',
+      explanation:'explain-changes/explanation.html'
     })) {
       const context = await browser.newContext({viewport:{width:1440,height:1000}, reducedMotion:'reduce'});
       const page = await context.newPage();
@@ -157,6 +158,15 @@ const { pathToFileURL } = require('node:url');
       if (await fallback.locator('details').count()) {
         await fallback.locator('summary').first().click();
         assert(await fallback.locator('details').first().evaluate(n=>n.open));
+      }
+      if (name!=='trip') {
+        await fallback.emulateMedia({media:'print',colorScheme:'dark'});
+        const printPalette=await fallback.evaluate(()=>{
+          const styles=getComputedStyle(document.documentElement);
+          return ['--bg','--surface','--ink','--muted'].map(name=>styles.getPropertyValue(name).trim());
+        });
+        assert.deepEqual(printPalette,['#fff','#fff','#000','#333'],name+' system-dark no-JS print palette');
+        await fallback.pdf({path:path.join(out,name+'-nojs-system-dark.pdf'),format:'A4',printBackground:true});
       }
       await noJS.close();
       results.push({page:name,status:'passed',accessibility,checks:['light/dark','320/390/1440 reflow','long title','unique IDs','fragment links','no page errors','no-JavaScript fallback','applicable interactions and print']});

@@ -3,7 +3,7 @@
   "kind": "Context",
   "id": "context.artifact-routing",
   "name": "artifact-routing",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Generic workspace layout and destination rules for requested durable artifacts.",
   "license": "MIT",
   "entry": "CONTEXT.md",

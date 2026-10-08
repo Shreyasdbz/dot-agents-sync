@@ -1,0 +1,19 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Context",
+  "id": "context.workspace-explain-changes",
+  "name": "workspace-explain-changes",
+  "version": "1.0.0",
+  "description": "Private workspace repository and connected-source index for visual change explanations.",
+  "license": "MIT",
+  "entry": "CONTEXT.md",
+  "files": ["CONTEXT.md"],
+  "scopes": ["project"],
+  "token_budget": 550,
+  "context": {
+    "access": "explicit",
+    "sensitivity": "private",
+    "binding": "context.workspace-explain-changes",
+    "consumers": ["skill.explain-changes"]
+  }
+}

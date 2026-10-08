@@ -55,6 +55,7 @@ def test_private_package_attachments_never_materialize(workspace, tmp_path):
         ("context.workspace-pr-review", "skill.pr-review"),
         ("context.workspace-plan-out", "skill.plan-out"),
         ("context.workspace-do-it", "skill.do-it"),
+        ("context.workspace-explain-changes", "skill.explain-changes"),
     ],
 )
 def test_workspace_skill_contexts_keep_private_sources_and_consumer_limits(
@@ -96,6 +97,7 @@ def test_file_workflows_render_shared_artifact_routing_reference(workspace, prov
         "skill.plan-out",
         "skill.investigate",
         "skill.trip-publish",
+        "skill.explain-changes",
     )
     config["packages"] = list(workflows)
     config["providers"] = [provider]
@@ -138,6 +140,7 @@ def test_visual_workflows_install_loadable_shared_guidance(workspace, provider):
         "skill.investigate",
         "skill.plan-out",
         "skill.trip-publish",
+        "skill.explain-changes",
     ]
     config["packages"] = workflows
     config["providers"] = [provider]
@@ -234,7 +237,7 @@ def test_metrics_are_byte_counts_not_claimed_tokens():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     result = module.measure()
-    assert result["groups"]["Skill"]["packages"] == 12
+    assert result["groups"]["Skill"]["packages"] == 13
     assert result["groups"]["Skill"]["entry_bytes"] == sum(
         p["entry_bytes"] for key, p in result["packages"].items() if key.startswith("skill.")
     )

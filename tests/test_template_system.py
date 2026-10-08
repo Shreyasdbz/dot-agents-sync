@@ -21,7 +21,7 @@ def test_generated_templates_match_canonical_source():
             82000
             if path.name == "trip.html"
             else 65000
-            if path.name in {"deck.html", "proposal.html", "quiz.html"}
+            if path.name in {"deck.html", "proposal.html", "quiz.html", "explanation.html"}
             else 45000
         )
         assert len(expected.encode()) < limit

@@ -7,6 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = {
+    "explanation": "explain-changes/explanation.html",
     "quiz": "change-quiz/quiz.html",
     "proposal": "design-proposal/proposal.html",
     "review": "pr-review/report.html",
@@ -76,6 +77,8 @@ def render_all():
                 page_css += (base / "visual.css").read_text()
         if "data-quiz-snapshot" in content:
             page_css += (base / "quiz.css").read_text()
+        if 'data-artifact-kind="explanation"' in content:
+            page_css += (base / "explanation.css").read_text()
         page_css += (base / "brand.css").read_text()
         return content.replace("{{styles}}", page_css).replace("{{interactions}}", behavior)
 

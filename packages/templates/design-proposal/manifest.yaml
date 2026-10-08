@@ -3,7 +3,7 @@
   "kind": "Template",
   "id": "template.design-proposal",
   "name": "design-proposal",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "Adaptive bug-fix, feature, migration and decision recipes with a self-contained proposal UI.",
   "license": "MIT",
   "entry": "proposal.md",

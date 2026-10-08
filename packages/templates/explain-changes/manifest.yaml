@@ -1,0 +1,15 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Template",
+  "id": "template.explain-changes",
+  "name": "explain-changes",
+  "version": "1.0.0",
+  "description": "One scrollable visual change explanation with before/after mechanisms, evidence and offline reading.",
+  "license": "MIT",
+  "entry": "components.md",
+  "files": ["components.md", "explanation.html"],
+  "scopes": ["user", "project"],
+  "token_budget": 18000,
+  "capabilities": ["filesystem.read"],
+  "outputs": ["html"]
+}

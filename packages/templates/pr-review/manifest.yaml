@@ -3,7 +3,7 @@
   "kind": "Template",
   "id": "template.pr-review",
   "name": "pr-review",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "Canonical review structures and an accessible HTML findings interface with local search.",
   "license": "MIT",
   "entry": "report.md",

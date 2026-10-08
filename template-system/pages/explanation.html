@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" data-artifact-kind="explanation">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stored zero lookup — fictional change explanation</title><style>
+{{styles}}</style></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar"><div class="topbar-inner"><div class="brand">Explain changes<span>Fictional example</span></div><nav class="page-nav" aria-label="On this page"><a href="#overview">Overview</a><a href="#mechanism">Mechanism</a><a href="#effects">Effects</a><a href="#checks">Checks</a><a href="#sources">Sources</a></nav><div class="tools">{{component:page-tools}}</div></div></header>
+<div class="layout"><main id="main" tabindex="-1">
+<section class="hero" id="overview">
+<h1>A stored zero returns without another loader call</h1>
+<p class="lede">The new branch checks whether the cache contains the key. The old branch checks whether the stored value is true.</p>
+<div class="meta"><span class="badge">Fictional source example</span><span>Comparison: two functions below</span></div>
+<dl class="facts"><dt>Purpose</dt><dd>Keep zero as a valid stored count.</dd><dt>Scope</dt><dd>One lookup function. No real PR or repository was inspected.</dd><dt>Snapshot</dt><dd>The complete old and new functions in <a href="#source-code">S1</a>. No Git revision exists for this fixture.</dd><dt>Verification</dt><dd>Source reasoning only. No application tests or benchmarks were run.</dd></dl>
+<p class="explanation-note">This example uses a local cache of integer counts. It does not establish behavior for a remote or concurrent cache.</p>
+</section>
+<section class="section" id="mechanism">
+<div class="section-head"><h2>One input takes a different path</h2></div>
+<p>Input: key <code>company-count</code>. Stored value: <code>0</code>. The loader reads the count when the lookup needs a new value. <a class="evidence-ref" href="#source-code">Source S1</a></p>
+<figure aria-labelledby="paths-caption">
+<div class="change-map">
+<div class="change-path"><h3>Before: check the value</h3><ol><li>Read <code>0</code> from the cache.</li><li>Evaluate <code>if value</code>.<span class="condition">Zero makes this condition false.</span></li><li>Call <code>load(key)</code>.<span class="condition">The stored value does not return.</span></li></ol><p class="result">Result: one loader call.</p></div>
+<div class="change-path"><h3>After: check the key</h3><ol><li>Evaluate <code>if key in cache</code>.</li><li>Find <code>company-count</code>.<span class="condition">The key exists, even when its value is zero.</span></li><li>Return <code>cache[key]</code>.<span class="condition">The function returns the stored zero.</span></li></ol><p class="result">Result: no loader call.</p></div>
+</div>
+<figcaption id="paths-caption">The same key and stored value take different branches. The new branch uses key membership instead of value truth.</figcaption>
+</figure>
+<div class="table-wrap" role="region" aria-label="Lookup cases" tabindex="0"><table><caption>Three cases separate presence from value</caption><thead><tr><th scope="col">Cache state</th><th scope="col">Old path</th><th scope="col">New path</th><th scope="col">Change</th></tr></thead><tbody><tr><th scope="row">Key stores <code>0</code></th><td>Call loader</td><td>Return <code>0</code></td><td>Stored zero is used</td></tr><tr><th scope="row">Key stores <code>7</code></th><td>Return <code>7</code></td><td>Return <code>7</code></td><td>No change</td></tr><tr><th scope="row">Key is absent</th><td>Call loader</td><td>Call loader</td><td>No change</td></tr></tbody></table></div>
+<p>The table follows the functions in <a href="#source-code">S1</a>. It describes branches, not measured request latency.</p>
+<details class="disclosure" id="code-detail"><summary><span class="summary-title">Inspect the changed condition</span></summary><div class="detail-body"><div class="grid"><div><h3>Old condition</h3><pre><code>value = cache.get(key)
+if value:
+    return value</code></pre></div><div><h3>New condition</h3><pre><code>if key in cache:
+    return cache[key]</code></pre></div></div><p>Both versions call the loader when the key is absent. Neither version writes to the cache.</p></div></details>
+</section>
+<section class="section" id="effects">
+<div class="section-head"><h2>Consequences of this branch change</h2></div>
+<dl class="lens-rows"><div><dt>Correctness and product</dt><dd>A stored count of zero becomes a usable result. The application must still decide how to show that count. No product requirement or UI was supplied.</dd></div><div><dt>Performance and scaling</dt><dd>The stored-zero case removes one loader call per lookup. Request latency and system throughput were not measured. No workload or paid-call cost was supplied.</dd></div><div><dt>Reliability and operations</dt><dd>A stored-zero lookup avoids failures from that loader call. A missing-key lookup can still fail in the loader. Cache freshness and invalidation remain unspecified.</dd></div><div><dt>Security and privacy</dt><dd>The change does not alter key construction or access control. Tenant isolation cannot be assessed from this function. Shared tenant caches need evidence from their key owner.</dd></div><div><dt>Observability</dt><dd>The functions emit no hit, miss or error signal. Operators cannot identify this branch from a new signal in the supplied code.</dd></div><div><dt>Maintainability</dt><dd>The new condition states the presence contract directly. A regression test should distinguish a stored zero from an absent key.</dd></div></dl>
+<p>These conclusions follow <a href="#source-code">S1</a>. The security, UI and runtime limits identify missing evidence. They are not claims about a real application.</p>
+</section>
+<section class="section" id="failure">
+<div class="section-head"><h2>The loader failure path still exists</h2></div>
+<ol class="flow" aria-label="Missing-key path"><li>Key is absent</li><li>Call loader</li><li>Loader returns or raises</li></ol>
+<p>Both functions return the loader result. Both let a loader exception reach the caller. No retry or recovery owner appears here. <a class="evidence-ref" href="#source-code">Source S1</a></p>
+<p class="explanation-note">A membership check followed by a read is not an atomic operation across all cache implementations. Concurrent removal requires a separate contract.</p>
+</section>
+<section class="section" id="checks">
+<div class="section-head"><h2>Coverage and verification limits</h2></div>
+<div class="table-wrap" role="region" aria-label="Perspective coverage" tabindex="0"><table><caption>Perspectives applied inline to the fictional functions</caption><thead><tr><th scope="col">Area</th><th scope="col">Evidence and limit</th></tr></thead><tbody><tr><th scope="row">Architecture, performance, reliability, coding</th><td>Branch and caller contract examined. Storage, workload and runtime integration are unavailable.</td></tr><tr><th scope="row">Security, privacy, observability</th><td>Function examined. Tenant keys, data policy and operator signals are unavailable.</td></tr><tr><th scope="row">Product and UI/UX</th><td>No requirements or rendered UI supplied. No user outcome or accessibility change is established.</td></tr><tr><th scope="row">AI/LLM systems</th><td>Not applicable to the supplied functions. No prompt, retrieval, model or tool path appears.</td></tr><tr><th scope="row">Independent review</th><td>No independent reviewer ran for this fictional example.</td></tr></tbody></table></div>
+<p>No application checks were executed for this example. The following cases are proposed verification, not passing test results.</p>
+<ul><li>Store zero. Check that lookup returns zero and the loader is not called.</li><li>Store seven. Check that lookup returns seven and the loader is not called.</li><li>Use an absent key. Check that the loader is called once and its result returns.</li><li>Make the loader raise for an absent key. Check that the same error reaches the caller.</li></ul>
+<p class="small">This text uses ASD-STE100 writing guidance. The official dictionary was not checked.</p>
+</section>
+<section class="section" id="sources">
+<div class="section-head"><h2>Sources and terms</h2></div>
+<ol class="evidence-appendix"><li id="source-code"><strong>S1 · Complete fictional source comparison</strong><p>Evidence class: illustrative source. These functions define the whole example. They are not excerpts from a real repository.</p><details class="disclosure"><summary><span class="summary-title">Read both complete functions</span></summary><div class="detail-body"><h3>Before</h3><pre><code>def lookup(cache, key, load):
+    value = cache.get(key)
+    if value:
+        return value
+    return load(key)</code></pre><h3>After</h3><pre><code>def lookup(cache, key, load):
+    if key in cache:
+        return cache[key]
+    return load(key)</code></pre></div></details></li></ol>
+<dl class="facts"><dt>Cache</dt><dd>A store that holds a value under a key for later use.</dd><dt>Key membership</dt><dd>The check that a key exists in the store.</dd><dt>Loader</dt><dd>The function called when lookup needs a new value.</dd><dt>Regression test</dt><dd>A test that detects the return of a corrected failure.</dd></dl>
+</section>
+<footer>Fictional worked example. Replace its evidence and claims before delivery.</footer>
+</main></div><script>{{interactions}}</script></body></html>

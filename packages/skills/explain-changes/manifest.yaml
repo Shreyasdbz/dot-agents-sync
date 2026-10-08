@@ -1,0 +1,34 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Skill",
+  "id": "skill.explain-changes",
+  "name": "explain-changes",
+  "version": "1.0.0",
+  "description": "Explain a PR, diff or current-session effort as one scrollable, self-contained visual HTML document, with source-backed before/after behavior and relevant engineering and product perspectives.",
+  "presentation": {
+    "display_name": "Explain Changes",
+    "short_description": "Understand changes with a detailed visual walkthrough",
+    "default_prompt": "Use $dasync-skill-explain-changes to explain these changes in one visual HTML file using ASD-STE100 writing guidance."
+  },
+  "license": "MIT",
+  "entry": "SKILL.md",
+  "files": ["SKILL.md", "evidence.md", "perspectives.md", "language.md", "workspace.md"],
+  "scopes": ["user", "project"],
+  "token_budget": 5500,
+  "requires": {
+    "policy.repository-guidance": ">=1,<2",
+    "policy.communication": ">=1,<2",
+    "policy.scope": ">=1,<2",
+    "policy.security": ">=1,<2",
+    "policy.research": ">=1,<2",
+    "policy.verification": ">=1,<2",
+    "context.artifact-routing": ">=1,<2",
+    "skill.visual-artifacts": ">=1,<2",
+    "template.explain-changes": ">=1,<2"
+  },
+  "suggests": ["context.workspace-explain-changes", "context.workspace-artifacts", "context.workspace-overview"],
+  "capabilities": ["filesystem.read", "filesystem.write"],
+  "prefers": ["git.read", "web.search", "browser.render"],
+  "fallback": "Use supplied evidence and inline static visuals; identify unavailable repositories, documents, connectors, revisions and browser checks without claiming full context.",
+  "outputs": ["html"]
+}
