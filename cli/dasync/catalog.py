@@ -53,6 +53,12 @@ def tree_digest(files: dict[str, bytes]) -> str:
     return digest(canonical({key: digest(data) for key, data in sorted(files.items())}))
 
 
+def validate_git_revision(revision: str | None):
+    """Reject symbolic or malformed explicit Git revisions before source I/O."""
+    if revision is not None and not re.fullmatch(r"[a-f0-9]{40}|[a-f0-9]{64}", revision):
+        raise DasyncError("SOURCE_INVALID", "Use a full immutable Git commit ID")
+
+
 def pin(location: str, kind: str, revision: str | None = None, cache: Path | None = None) -> dict:
     from .config import Environment
 
@@ -63,8 +69,7 @@ def pin(location: str, kind: str, revision: str | None = None, cache: Path | Non
         if revision and revision != resolved:
             raise DasyncError("SOURCE_INTEGRITY", "Local catalog does not match the requested pin")
     else:
-        if revision and not re.fullmatch(r"[a-f0-9]{40}|[a-f0-9]{64}", revision):
-            raise DasyncError("SOURCE_INVALID", "Use a full immutable Git commit ID")
+        validate_git_revision(revision)
         resolved = git(root, "rev-parse", "--verify", (revision or "HEAD") + "^{commit}").decode().strip()
     return {"location": location if is_remote(location) else str(root), "kind": kind, "revision": resolved}
 
@@ -94,8 +99,7 @@ class Catalog:
             if revision != "sha256:" + tree_digest(files):
                 raise DasyncError("SOURCE_INTEGRITY", "Local catalog changed; use update to accept a new pin")
         else:
-            if not re.fullmatch(r"[a-f0-9]{40}|[a-f0-9]{64}", revision):
-                raise DasyncError("SOURCE_INVALID", "Git catalog revision is not an immutable commit ID")
+            validate_git_revision(revision or "")
             files = {}
             entries = git(root, "ls-tree", "-rz", revision, "--", "packages", "profiles").split(b"\0")
             for entry in filter(None, entries):

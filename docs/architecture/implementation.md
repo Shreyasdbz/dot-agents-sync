@@ -16,6 +16,8 @@ JSON serialization is used for generated configuration because JSON is valid YAM
 
 HTTPS Git sources use a global mirror cache and full immutable commit IDs. Local Git sources read commit objects rather than checkout bytes. Local development directories use an explicit `sha256:` tree pin and reject changes until update accepts a new pin. Manifests and declared content determine computed package digests; no self-referential manifest digest is required.
 
+Source relocation uses update with explicit source trust, retains the source kind and may retain the current pin. Both the CLI and Engine reject kind changes; imported plans cannot bypass that boundary. Git revision validation precedes CLI fetches, and a newly supplied remote source requires ordinary confirmation before fetching. Setup and relocation validate remote URLs before displaying them in confirmation prompts or fetching. Preview operations use only available local objects and never fetch.
+
 Version 1 resolves one catalog pin per effective environment. Inherited user and project environments must use the same source and pin; mismatches fail explicitly. Projects can have independent pins when inheritance is disabled. Multiple independently versioned source graphs remain a future feature requiring a lockfile design.
 
 Scopes may opt into `all_public`, which adds every current and future non-private package compatible with the scope and all configured providers before dependency resolution. Explicit disabled tombstones still apply. Private contexts remain explicit because their source path, project grant and provider grant cannot be inferred, and executable packages still require exact digest approval.

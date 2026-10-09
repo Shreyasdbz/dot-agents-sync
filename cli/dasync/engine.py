@@ -103,6 +103,14 @@ class Engine:
                 raise DasyncError("PLAN_INVALID", "Sync and repair cannot change desired state")
             if operation == "configure" and existing and desired["source"] != existing["source"]:
                 raise DasyncError("SOURCE_INVALID", "Only update may advance the catalog pin")
+            if operation == "update" and existing:
+                if desired["source"]["kind"] != existing["source"]["kind"]:
+                    raise DasyncError("SOURCE_INVALID", "Source updates must retain the source kind")
+                if (
+                    desired["source"]["location"] != existing["source"]["location"]
+                    and request.get("trust_source") is not True
+                ):
+                    raise DasyncError("TRUST_REQUIRED", "Source relocation requires explicit trust")
             if operation == "setup" and not request.get("trust_source"):
                 raise DasyncError("TRUST_REQUIRED", "Review the source and pass --trust-source explicitly")
             if scope.kind == "user" and "copilot" in desired["providers"]:

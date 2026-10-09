@@ -9,7 +9,7 @@ Run `dasync --help` for available options, `dasync capabilities --json` for prov
 | `setup` | Create scope config and first materialization; requires explicit source trust |
 | `configure` | Edit selection; interactive terminals open a keyboard selector; `--apply` includes generated output |
 | `sync` | Reconcile from the current catalog pin without fetching; unchanged sync is a no-op |
-| `update` | Fetch and advance the source pin with output changes; `--config-only` defers materialization |
+| `update` | Fetch and advance the source pin, or relocate a trusted source while retaining the current pin; `--config-only` defers materialization |
 | `status` | Inspect configuration, provenance, drift, pending changes, and the last receipt |
 | `doctor` | Diagnose the environment; return a nonzero exit status if it needs attention |
 | `repair` | Rebuild missing output; `--recover` restores an interrupted transaction |
@@ -48,7 +48,9 @@ Use `--enable ID`, `--disable ID`, `--profile NAME`, and `--remove-profile NAME`
 
 `sync` never fetches or advances the source pin. `update` accepts new catalog content; it does not upgrade the installed CLI. Upgrade the CLI separately by installing a reviewed source revision.
 
-`plan update` and `update --dry-run` require an explicit Git `--revision` already available locally. Read-only setup plans cannot fetch an uncached remote source. For local authoring, use `--source /absolute/catalog --source-kind local`; changes require `update` to accept a new content pin. Git sources read committed objects, not uncommitted checkout bytes.
+Previews of a Git pin advance require an explicit `--revision` already available locally. Read-only plans cannot fetch an uncached remote source. For local authoring, use `--source /absolute/catalog --source-kind local`; changes require `update` to accept a new content pin. Git sources read committed objects, not uncommitted checkout bytes.
+
+To relocate an existing source after moving a checkout, use `plan update --source /absolute/new-checkout --trust-source`. It retains the current revision and all selections; the same Git commit or local tree must be present at the new path. Inspect the saved plan, apply it, and run `doctor`. Source kind changes are not part of relocation, and `--yes` does not grant source trust. A new HTTPS Git location needs confirmation before fetching; a read-only preview needs its revision already cached. Invalid kinds or explicit Git revisions are rejected before a relocation fetch.
 
 ## Protection and recovery
 

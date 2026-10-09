@@ -12,7 +12,9 @@ Read `status`, `list` and `explain` before changing selection. Preview mutations
 
 Never edit generated output as the source of truth. Change canonical packages or desired selection. Never include private context bodies in reports, logs, plans, or source control. The private-path lookup itself requires `context locate ID --consumer ID --allow-private-path`; do not call it for an unrelated consumer.
 
-`configure` changes desired state only. `configure --apply` changes configuration and provider output in one transaction. `sync` never fetches or advances a source pin. `update` advances the pin; `plan update` and `update --dry-run` require an already-available explicit Git revision. Read-only plans do not fetch uncached remote sources.
+`configure` changes desired state only. `configure --apply` changes configuration and provider output in one transaction. `sync` never fetches or advances a source pin. `update` advances the pin; previews of a Git pin advance require an already-available explicit revision. A source relocation may retain the current pin. Read-only plans do not fetch uncached remote sources.
+
+When a checkout moves, `plan update --source NEW_PATH --trust-source` may relocate the existing source at its current pin without resetting selections. Review the changed source identity and generated output in the plan, apply it through the Engine, then run doctor. A source-kind change requires a separate migration decision.
 
 `--all-public` persists an opt-in selection mode for every current and future non-private package compatible with the scope and all configured providers. Explicit disables remain effective. Private contexts, source trust and executable approvals retain their separate gates.
 

@@ -7,13 +7,14 @@ from pathlib import Path
 
 from . import __version__
 from .adapters import capabilities
-from .catalog import Catalog, pin
+from .catalog import Catalog, pin, validate_git_revision
 from .config import Environment, Scope, default_project_id, initial, load_config
 from .contracts import SCHEMAS, validate
 from .engine import Engine
 from .errors import DasyncError
 from .io import canonical, parse, read
 from .sources import fetch, is_remote
+from .sources import repository as source_repository
 
 AI_INSTRUCTIONS = """Use dasync capabilities --json and dasync schema before choosing options.
 Inspect status with --scope and an absolute --path. Use list and explain to inspect selections.
@@ -65,8 +66,8 @@ def parser():
     p.add_argument("--no-input", action="store_true")
     p.add_argument("--yes", action="store_true")
     p.add_argument("--dry-run", action="store_true")
-    p.add_argument("--source", help="Local Git checkout or local catalog directory")
-    p.add_argument("--source-kind", choices=["git", "local"], default="git")
+    p.add_argument("--source", help="HTTPS Git URL, local Git checkout, or local catalog directory")
+    p.add_argument("--source-kind", choices=["git", "local"])
     p.add_argument("--revision", help="Full immutable commit ID (Git sources)")
     p.add_argument("--trust-source", action="store_true")
     p.add_argument("--project", help="Stable portable project ID")
@@ -194,7 +195,7 @@ def run(args):
         return {"valid": True, "schema": args.subject}
     env = Environment.current()
     if args.command in ("list", "search") and args.source:
-        catalog = Catalog(pin(args.source, args.source_kind, args.revision))
+        catalog = Catalog(pin(args.source, args.source_kind or "git", args.revision))
     else:
         scope = Scope.get(env, args.scope, args.path)
         engine = Engine(env, scope)
@@ -281,14 +282,19 @@ def run(args):
     if operation == "setup":
         if not args.source:
             raise DasyncError("USAGE", "setup requires --source CATALOG")
+        if (args.source_kind or "git") == "git":
+            validate_git_revision(args.revision)
         if is_remote(args.source):
+            if args.source_kind == "local":
+                raise DasyncError("SOURCE_INVALID", "Remote sources require the Git source kind")
+            source_repository(args.source, env.cache)
             if not args.trust_source:
                 raise DasyncError("TRUST_REQUIRED", "Review the source and pass --trust-source")
             if not args.dry_run and args.command != "plan":
                 if not args.yes:
                     confirm(args, {"fetch_source": args.source})
                 fetch(args.source, env.cache)
-        source = pin(args.source, args.source_kind, args.revision, env.cache)
+        source = pin(args.source, args.source_kind or "git", args.revision, env.cache)
         request["config"] = initial(
             args.project or ("user" if scope.kind == "user" else default_project_id(scope.root)),
             source,
@@ -303,16 +309,36 @@ def run(args):
         config = copy.deepcopy(load_config(scope.config))
         if operation == "update":
             source = config["source"]
-            if source["kind"] == "git" and not args.revision:
+            if args.source and not args.trust_source:
+                raise DasyncError("TRUST_REQUIRED", "Review the new source and pass --trust-source")
+            if args.source_kind and args.source_kind != source["kind"]:
+                raise DasyncError("SOURCE_INVALID", "Source relocation must retain the source kind")
+            if source["kind"] == "git":
+                validate_git_revision(args.revision)
+            if args.source and is_remote(args.source):
+                if source["kind"] != "git":
+                    raise DasyncError("SOURCE_INVALID", "Remote sources require the Git source kind")
+                source_repository(args.source, env.cache)
+                if not args.dry_run and args.command != "plan":
+                    if not args.yes:
+                        confirm(args, {"fetch_source": args.source})
+                    fetch(args.source, env.cache)
+            if args.source:
+                revision = args.revision or source["revision"]
+                location = args.source
+                request["trust_source"] = True
+            elif source["kind"] == "git" and not args.revision:
                 if args.dry_run or args.command == "plan":
                     raise DasyncError(
                         "REVISION_REQUIRED",
                         "An update preview requires --revision already present locally; it never fetches",
                     )
                 revision = fetch(source["location"], env.cache)
+                location = source["location"]
             else:
                 revision = args.revision
-            config["source"] = pin(source["location"], source["kind"], revision, env.cache)
+                location = source["location"]
+            config["source"] = pin(location, source["kind"], revision, env.cache)
             request["config_only"] = args.config_only
         else:
             has_changes = any(
