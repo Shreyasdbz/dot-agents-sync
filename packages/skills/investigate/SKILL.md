@@ -7,7 +7,7 @@ description: "Explain a failure or answer a research question with traceable evi
 
 For visual explanations, apply [Visual Artifacts](references/skill.visual-artifacts/SKILL.md). Keep the default answer inline.
 
-Answer the actual question, not the first matching error or search result. Separate observations, supplied claims and unknowns. For failures, define the symptom, expected behavior, impact and scope; align versions, timestamps, changes and effective configuration. For research, establish the exact claim and relevant source dates.
+Answer the actual question, not the first matching error or search result. Separate observations, supplied claims and unknowns. For failures, define the symptom, expected behavior, customer impact and scope; align versions, timestamps, changes and effective configuration. For research, establish the exact claim and relevant source dates.
 
 ## Find the source of truth
 
@@ -29,6 +29,6 @@ Diagnosis is read-only by default. Inspect unfamiliar commands for side effects.
 
 Conclude a failure investigation when decisive path evidence explains the symptom and material rivals are ruled out or bounded. Conclude factual research when the claim is supported, material conflicts are addressed, and freshness/access limits are stated; do not invent causal hypotheses for a factual lookup. No fixed hypothesis quota or search of imaginary causes is required. A material unresolved rival means a provisional conclusion and next discriminating check, not certainty.
 
-Return the answer inline: conclusion, decisive source/command evidence, alternatives eliminated, impact, uncertainty and the smallest useful next action. Separate observed facts, inference and proposed remedies; do not implement a fix or publish findings without authorization.
+Return the answer inline: conclusion, decisive source/command evidence, alternatives eliminated, customer impact, uncertainty and the smallest useful next action. Separate observed facts, inference and proposed remedies; do not implement a fix or publish findings without authorization.
 
 For requested Markdown, load [report.md](references/template.investigation/report.md) and context.artifact-routing. For a requested deck, use the optional Pitch Deck skill with the established findings; if unavailable, disclose that limit without installing it implicitly. Do not delay the answer for an unsolicited artifact.

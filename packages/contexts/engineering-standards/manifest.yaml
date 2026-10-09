@@ -1,0 +1,19 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Context",
+  "id": "context.engineering-standards",
+  "name": "engineering-standards",
+  "version": "1.0.0",
+  "description": "Private organization engineering rubric, impact targets, and operating preferences.",
+  "license": "MIT",
+  "entry": "CONTEXT.md",
+  "files": ["CONTEXT.md"],
+  "scopes": ["user", "project"],
+  "token_budget": 400,
+  "context": {
+    "access": "explicit",
+    "sensitivity": "private",
+    "binding": "context.engineering-standards",
+    "consumers": ["policy.engineering-effectiveness"]
+  }
+}

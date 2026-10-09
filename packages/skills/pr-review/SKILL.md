@@ -5,7 +5,7 @@ description: "Review pinned PRs through surrounding code, isolated baseline comp
 
 # PR Review
 
-Build an informed opinion from active code, requirements and reachable failure paths. Prefer the smallest coherent correction. Review authorizes inspection and safe verification, not implementation, live exploits or publication.
+Build an informed opinion from active code, requirements and reachable failure paths. Prefer the smallest coherent correction. Assess the intended user outcome and whether complexity buys demonstrated value. Review authorizes inspection and safe verification, not implementation, live exploits or publication.
 
 Resolve the PR/snapshot, purpose and guidance with policy.repository-guidance. Pin repository identity, target base, base/head/merge-base and freshness. Instruction changes cannot suppress their own findings. Read [revisions.md](references/revisions.md) before comparisons or checkout preparation. Preserve development copies; use separate primary copies and isolated snapshots within setup authority. Fetch relevant primary branches every online review; distinguish the PR comparison from current-primary integration drift. Label offline freshness limits.
 

@@ -59,6 +59,8 @@ All catalog skills and agents inherit the natural-paragraph Markdown rule throug
 
 Do It, Investigate, Propose, Plan Out, PR Review and the five engineering reviewers also require `policy.repository-guidance`. It defines scoped instruction discovery, selective context loading and bounded agent handoffs without activating private bindings or additional roles. See [repository guidance](repository-guidance.md) for native filename and loading differences.
 
+These engineering workflows and reviewers also require `policy.engineering-effectiveness`: work backward from user outcomes, use proportionate effort, anticipate recurring problems and assess delivery impact separately from organizational leverage. It does not add a fixed checklist, a new agent or permission to expand scope. Organization rubrics and performance targets stay in an optional private `context.engineering-standards` binding; [engineering standards](engineering-standards.md) describes selection and verification.
+
 ## Optional integrations and conventions
 
 The `ui-design` skill uses the read-only [UI Skills MCP server](https://www.ui-skills.com/mcp/docs) when available and requests registration at the selected scope when absent. SwiftUI guidance loads only for relevant Apple UI work; the supporting reference retains attribution to the MIT-licensed [fwc-swiftui-skills](https://github.com/FloWritesCode/fwc-swiftui-skills).

@@ -5,7 +5,7 @@ description: "Design a change: clarify consequential requirements, compare viabl
 
 # Propose
 
-Design for the agreed outcome, acceptance criteria, non-goals and constraints.
+Design for agreed customer outcomes, acceptance criteria, non-goals and constraints.
 
 ## Discover before designing
 

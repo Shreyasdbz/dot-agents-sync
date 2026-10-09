@@ -5,7 +5,7 @@ description: "Implement an authorized task or bounded change, verify observable 
 
 # Do It
 
-Complete the authorized outcome, not merely the first plausible patch. For a plan reference, resolve the requested/current task, acceptance criteria and design decisions; refresh available dependency and completion status before implementing. Preserve dirty work. A stale plan is context, not proof of progress or permission.
+Complete the authorized customer outcome, not merely the first plausible patch. For a plan reference, resolve the requested/current task, acceptance criteria and design decisions; refresh available dependency and completion status before implementing. Preserve dirty work. A stale plan is context, not proof of progress or permission. Establish an observable acceptance check.
 
 ## Discover the mechanism
 
@@ -31,4 +31,4 @@ Cover the public path, other consumers and consequential negative cases. Use tar
 
 Inspect the final diff for scope creep, duplicated mechanisms, dead code and unfinished paths. Finish only when acceptance is supported and material alternatives and counterexamples are resolved by evidence or explicit constraints. Do not enumerate imaginary alternatives indefinitely; stop when further exploration would not change the decision. A material unresolved risk means a conditional result or blocker, not "done."
 
-Report the outcome, decisive checks, trade-offs and remaining limits concisely. Distinguish proposed, mocked, locally executed and external evidence; never label an untested solution secure, scalable or battle-tested. Commit, publish or update external state only within granted authority. Stop at the requested task, not the entire roadmap.
+Report the outcome, measured impact, predicted gains, decisive checks, trade-offs and remaining limits concisely. Distinguish proposed, mocked, locally executed and external evidence; never label an untested solution secure, scalable or battle-tested. Commit, publish or update external state only within granted authority. Stop at the requested task, not the entire roadmap.

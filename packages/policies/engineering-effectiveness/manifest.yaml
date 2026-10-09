@@ -1,0 +1,14 @@
+{
+  "apiVersion": "dasync.dev/v1",
+  "kind": "Policy",
+  "id": "policy.engineering-effectiveness",
+  "name": "engineering-effectiveness",
+  "version": "1.0.0",
+  "description": "Customer outcomes, proportionate engineering judgment, and measured organizational leverage.",
+  "license": "MIT",
+  "entry": "POLICY.md",
+  "files": ["POLICY.md"],
+  "scopes": ["user", "project"],
+  "token_budget": 850,
+  "policy": {"globs": [], "priority": 0}
+}

@@ -9,6 +9,8 @@ For a requested visual plan companion, apply [Visual Artifacts](references/skill
 
 Translate an approved design into executable work without reopening settled product decisions. Read relevant repository state, completed work, and selected planning-authority context first. Use existing domain terms and work-item IDs.
 
+Sequence usable outcomes and decision-changing feedback early. For substantial work, carry the approved delivery and organizational-leverage measures into milestone acceptance checks with their evidence source and owner. Use policy.engineering-effectiveness; do not invent targets, add reporting bureaucracy or turn an adjacent opportunity into approved scope.
+
 For repository work, apply policy.repository-guidance to establish applicable instructions, context provenance and role boundaries before decomposition. A planning-context template is not actual tracker state; a child agent does not inherit missing grants merely because the parent can read a source.
 
 If the active project selects `context.workspace-plan-out`, locate it as consumer `skill.plan-out` and read only planning-relevant sections. Continue with the base workflow when absent; do not search for a private substitute.
