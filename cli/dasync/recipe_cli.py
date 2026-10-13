@@ -133,6 +133,29 @@ def describe():
     )
     for command in ("create", "apply", "sync"):
         operations[command]["output"] = {"oneOf": [SCHEMAS["recipe-plan"], receipt]}
+    commands = [
+        {
+            "argv": ["dasync", "recipe", command],
+            **definition,
+            "target": {"scope": ["user", "project"], "project_path": "absolute existing directory"}
+            if definition["scope"]
+            else None,
+        }
+        for command, definition in operations.items()
+    ]
+    commands.append(
+        {
+            "argv": ["dasync", "tui"],
+            "operation": "workspace.open",
+            "interactive": True,
+            "effects": "reviewed-session",
+            "scope": True,
+            "approvals": ["source-trust", "reviewed-replacements", "ordinary-confirmation"],
+            "input": obj({}),
+            "output": {"type": "string"},
+            "target": {"scope": ["user", "project"], "project_path": "absolute existing directory"},
+        }
+    )
     return {
         "bootstrap": "dasync describe --json",
         "protocols": [PROTOCOL],
@@ -143,16 +166,7 @@ def describe():
         "state_metadata_format": 1,
         "adapter": "recipe-codex/1",
         "mapping_version": 1,
-        "commands": [
-            {
-                "argv": ["dasync", "recipe", command],
-                **definition,
-                "target": {"scope": ["user", "project"], "project_path": "absolute existing directory"}
-                if definition["scope"]
-                else None,
-            }
-            for command, definition in operations.items()
-        ],
+        "commands": commands,
         "schemas": {
             name: {"$schema": "https://json-schema.org/draft/2020-12/schema", **schema}
             for name, schema in SCHEMAS.items()
@@ -187,7 +201,7 @@ def describe():
             "context slot binding",
             "hooks",
             "Agent/Policy adapters",
-            "TUI",
+            "broader terminal/platform qualification of the TUI",
             "stable publication",
         ],
     }

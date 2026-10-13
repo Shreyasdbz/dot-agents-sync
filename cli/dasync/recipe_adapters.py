@@ -111,29 +111,41 @@ def render_references(text, translate):
     """
     result, fence, comment = [], None, False
     for line in text.splitlines(keepends=True):
+        mask = _literal_mask(line)
+        if comment:
+            close = line.find("-->")
+            if close < 0:
+                result.append(line)
+                continue
+            mask[: close + 3] = [True] * (close + 3)
+            comment = False
         marker = re.match(r"^ {0,3}(`{3,}|~{3,})", line)
         if fence:
-            if marker and marker[1][0] == fence[0] and len(marker[1]) >= len(fence):
+            if re.fullmatch(
+                r" {0,3}" + re.escape(fence[0]) + "{" + str(len(fence)) + r",}[ \t]*(?:\r?\n)?", line
+            ):
                 fence = None
             result.append(line)
             continue
-        if marker:
+        if marker and not any(mask[: marker.end()]):
             fence = marker[1]
-            result.append(line)
-            continue
-        if comment:
-            result.append(line)
-            if "-->" in line:
-                comment = False
-            continue
-        if "<!--" in line and "-->" not in line:
-            comment = True
             result.append(line)
             continue
         if line.startswith(("    ", "\t")):
             result.append(line)
             continue
-        mask = _literal_mask(line)
+        start = 0
+        while (begin := line.find("<!--", start)) >= 0:
+            start = begin + 4
+            if mask[begin]:
+                continue
+            close = line.find("-->", start)
+            end = len(line) if close < 0 else close + 3
+            mask[begin:end] = [True] * (end - begin)
+            if close < 0:
+                comment = True
+                break
+            start = end
         spans = []
         # Explicit destinations use no whitespace/parentheses; angle form is supported.
         for match in re.finditer(

@@ -58,6 +58,7 @@ def parser():
             "validate",
             "describe",
             "recipe",
+            "tui",
         ],
     )
     p.add_argument("subject", nargs="?")
@@ -160,6 +161,61 @@ def run(args):
         from .recipe_cli import describe
 
         return describe()
+    if args.command == "tui":
+        if args.json or args.no_input or not sys.stdin.isatty() or not sys.stdout.isatty():
+            raise DasyncError(
+                "INTERACTIVE_REQUIRED",
+                "The workspace needs a terminal; use describe and recipe commands for no-input operation",
+            )
+        if any(
+            (
+                args.subject,
+                args.item,
+                args.source,
+                args.source_kind,
+                args.revision,
+                args.project,
+                args.request_file,
+                args.plan_file,
+                args.yes,
+                args.dry_run,
+                args.enable,
+                args.disable,
+                args.profile,
+                args.remove_profile,
+                args.provider,
+                args.trust_source,
+                args.conflict != "protect",
+                args.inherit_user is not None,
+                args.all_public is not None,
+                args.config_only,
+                args.apply,
+                args.receipt,
+                args.before,
+                args.recover,
+                args.replace_provider_config,
+                args.allow_context,
+                args.capability,
+                args.bind_context,
+                args.approve_executable,
+                args.grant_project,
+                args.binding_provider,
+                args.effective,
+                args.consumer,
+                args.allow_private_path,
+                args.query,
+                args.limit != 50,
+                args.offset != 0,
+            )
+        ):
+            raise DasyncError(
+                "USAGE", "Launch the workspace with only an explicit scope/path; stage choices interactively"
+            )
+        from .recipe_tui import RecipeApp
+
+        env = Environment.current()
+        scope = Scope.get(env, args.scope, args.path)
+        return RecipeApp(Engine(env, scope)).run()
     if args.command == "recipe":
         from .recipe_cli import run as recipe_run
 
@@ -437,10 +493,13 @@ def run(args):
 
 def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
-    protocol = 1 if "recipe" in argv or "describe" in argv else None
+    protocol = 1 if argv and argv[0] in ("recipe", "describe", "tui") else None
     machine = "--json" in argv or (protocol is not None and "--no-input" in argv)
     try:
-        result = run(parser().parse_args(argv))
+        args = parser().parse_args(argv)
+        protocol = 1 if args.command in ("recipe", "describe", "tui") else None
+        machine = args.json or (protocol is not None and args.no_input)
+        result = run(args)
         emit(result, machine, protocol)
         return 1 if isinstance(result, dict) and result.get("healthy") is False else 0
     except DasyncError as exc:

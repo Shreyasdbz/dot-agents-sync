@@ -3,6 +3,7 @@
 import base64
 import os
 import re
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 
@@ -37,22 +38,25 @@ def relative_path(name):
 
 
 def check_paths(names):
+    def folded_name(name):
+        return unicodedata.normalize("NFC", name).casefold()
+
     names = list(names)
     folded = set()
     components = {}
     for name in sorted(names):
         relative_path(name)
-        key = name.casefold()
+        key = folded_name(name)
         if key in folded:
             raise DasyncError("OUTPUT_COLLISION", "Exact or casefolded path collision")
         folded.add(key)
         for prefix in [name, *[str(parent) for parent in relative_path(name).parents if str(parent) != "."]]:
-            prior = components.setdefault(prefix.casefold(), prefix)
+            prior = components.setdefault(folded_name(prefix), prefix)
             if prior != prefix:
                 raise DasyncError("OUTPUT_COLLISION", "Casefolded directory spelling collision")
     for name in names:
         for parent in relative_path(name).parents:
-            if str(parent) != "." and str(parent).casefold() in folded:
+            if str(parent) != "." and folded_name(str(parent)) in folded:
                 raise DasyncError("OUTPUT_COLLISION", "File/directory path collision")
 
 

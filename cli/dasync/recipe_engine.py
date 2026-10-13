@@ -115,8 +115,18 @@ def _desired(engine, request, existing, registered):
     if "inherit_user" in request:
         desired["inherit_user"] = request["inherit_user"]
     pins = {record["source_id"]: record["pin"] for record in desired["sources"]}
+    for record in request.get("bind_sources", []):
+        sid, pin = record["source_id"], record["pin"]
+        if any(other["source_id"] == sid and other["pin"] != pin for other in request["bind_sources"]):
+            raise DasyncError("SNAPSHOT_CONFLICT", "A draft cannot bind competing pins for one source")
+        pins[sid] = pin
     for registration in request.get("registrations", []):
         record, _ = Snapshots(engine.env.cache).candidate(registration["candidate"])
+        if any(
+            binding["source_id"] == record["source_id"] and binding["pin"] != record["pin"]
+            for binding in request.get("bind_sources", [])
+        ):
+            raise DasyncError("SNAPSHOT_CONFLICT", "Registration and binding disagree on a source pin")
         pins[record["source_id"]] = record["pin"]
     sources = load_sources(engine, pins, registered)
     roots, disabled = {key_tuple(k) for k in desired["roots"]}, {key_tuple(k) for k in desired["disabled"]}
@@ -133,11 +143,53 @@ def _desired(engine, request, existing, registered):
         roots.add(key)
         disabled.discard(key)
     for value in request.get("remove", []):
-        roots.discard(selector(value, sources, registered["sources"]))
+        try:
+            key = selector(value, sources, registered["sources"])
+        except DasyncError as exc:
+            if exc.code != "ITEM_UNKNOWN":
+                raise
+            qualifier, separator, local_id = value.partition("/")
+            if not separator:
+                local_id, qualifier = qualifier, None
+            candidates = [
+                key
+                for key in roots
+                if key[1] == local_id
+                and (qualifier is None or qualifier in (key[0], registered["sources"][key[0]]["alias"]))
+            ]
+            if len(candidates) != 1:
+                raise DasyncError(
+                    "SELECTOR_AMBIGUOUS" if candidates else "ITEM_UNKNOWN",
+                    "Removing a missing item requires one existing qualified direct root",
+                    details={"candidates": [key_record(key) for key in sorted(candidates)]},
+                ) from exc
+            key = candidates[0]
+        roots.discard(key)
     for value in request.get("disable", []):
         key = selector(value, sources, registered["sources"])
         roots.discard(key)
         disabled.add(key)
+    for value in request.get("undisable", []):
+        try:
+            key = selector(value, sources, registered["sources"])
+        except DasyncError as exc:
+            if exc.code != "ITEM_UNKNOWN":
+                raise
+        else:
+            disabled.discard(key)
+            continue
+        matching = [
+            key
+            for key in disabled
+            if value in (key_text(key), registered["sources"][key[0]]["alias"] + "/" + key[1])
+            or value == key[1]
+        ]
+        if len(matching) > 1:
+            raise DasyncError("SELECTOR_AMBIGUOUS", "Clearing a disable requires an unambiguous item key")
+        if matching:
+            disabled.discard(matching[0])
+        else:
+            selector(value, sources, registered["sources"])
     desired["sources"] = [{"source_id": sid, "pin": pin} for sid, pin in sorted(pins.items())]
     desired["roots"] = [key_record(k) for k in sorted(roots)]
     desired["disabled"] = [key_record(k) for k in sorted(disabled)]

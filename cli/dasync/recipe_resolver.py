@@ -128,7 +128,7 @@ def resolve(sources, intent, scope_kind, personal=None, denied=()):
             )
         if key in selected:
             return
-        if len(visiting) >= 64 or len(selected) >= 512:
+        if len(visiting) >= 64 or len(selected) + len(visiting) >= 512:
             raise DasyncError("GRAPH_LIMIT", "Recipe graph exceeds depth or item limits")
         visiting.append(key)
         for local_id, constraint in sorted(spec.get("requires", {}).items()):

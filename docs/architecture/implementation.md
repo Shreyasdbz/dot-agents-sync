@@ -2,7 +2,7 @@
 
 The design snapshot in `design.md` preserves the agreed product direction. This file records concrete v1 implementation choices and verification limits.
 
-The [experimental recipe protocol](../recipe-protocol.md) implements the immediate local milestone of the October recipe-spine plan alongside the catalog runtime described below. It uses qualified identity, retained local snapshots, explicit roots, a project-only nonportable lock and Codex rendering through the existing Engine/State apply/recovery boundary. Its formats are separate from legacy v1; later Git/context/UI/stable-launch milestones and automatic migration remain unimplemented.
+The [experimental recipe protocol](../recipe-protocol.md) implements the immediate local milestone of the October recipe-spine plan alongside the catalog runtime described below. It uses qualified identity, retained local snapshots, explicit roots, a project-only nonportable lock and Codex rendering through the existing Engine/State apply/recovery boundary. A Textual workspace keeps a disposable RecipeSession draft and submits ordinary recipe requests to that same engine; it has no independent renderer, persistence or authority path. Jobs run in a dedicated executor; started transactions finish even if the UI is cancelled. Selection or approval changes invalidate the reviewed plan; apply still rebuilds under the State lock. Its formats are separate from legacy v1; later Git/context/stable-launch milestones and automatic migration remain unimplemented. See [recipe validation](../recipe-validation.md) for oracle, mutation, failure-injection and terminal evidence.
 
 ## Runtime and distribution
 

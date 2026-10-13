@@ -10,6 +10,7 @@ import os
 import shutil
 import subprocess
 import sys
+import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -666,3 +667,86 @@ engine.apply(plan, fault)
     status = j.run("doctor")
     assert status["healthy"]
     assert status["receipt"] == receipt["receipt"]
+
+
+@pytest.mark.skipif(os.name != "posix", reason="This terminal-driver boundary uses POSIX PTYs")
+@pytest.mark.parametrize("scope", ["user", "project"])
+@pytest.mark.parametrize("no_color", [False, True])
+def test_installed_recipe_terminal_launch_help_resize_and_exit(installed_binary, tmp_path, scope, no_color):
+    """Actual terminal driver, built wheel and termios restoration; no autopilot event injection."""
+    import fcntl
+    import pty
+    import select
+    import signal
+    import struct
+    import termios
+
+    home, project = tmp_path / "home", tmp_path / "project"
+    home.mkdir()
+    project.mkdir()
+    master, slave = pty.openpty()
+    original_attributes = termios.tcgetattr(slave)
+    fcntl.ioctl(slave, termios.TIOCSWINSZ, struct.pack("HHHH", 32, 100, 0, 0))
+    env = {
+        **{key: os.environ[key] for key in ("PATH", "LANG", "TMPDIR") if key in os.environ},
+        "DASYNC_HOME": str(home),
+        "TERM": "xterm-256color",
+    }
+    if no_color:
+        env["NO_COLOR"] = "1"
+
+    def controlling_terminal():
+        os.setsid()
+        fcntl.ioctl(slave, termios.TIOCSCTTY, 0)
+
+    process = subprocess.Popen(
+        [
+            str(installed_binary),
+            "tui",
+            "--scope",
+            scope,
+            *(["--path", str(project)] if scope == "project" else []),
+        ],
+        stdin=slave,
+        stdout=slave,
+        stderr=slave,
+        cwd=tmp_path,
+        env=env,
+        preexec_fn=controlling_terminal,
+    )
+    output = bytearray()
+
+    def read_until(needle, timeout=8):
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            if select.select([master], [], [], 0.05)[0]:
+                try:
+                    output.extend(os.read(master, 65536))
+                except OSError:
+                    break
+                if needle in output:
+                    return True
+            if process.poll() is not None:
+                break
+        return needle in output
+
+    try:
+        assert read_until(b"Welcome."), "Installed workspace did not render"
+        os.write(master, b"\x1bOP")  # F1, through the terminal parser.
+        assert read_until(b"Make yourself at home"), "Help binding did not render"
+        os.write(master, b"\x1b")  # Escape, closing Help.
+        time.sleep(0.4)
+        fcntl.ioctl(master, termios.TIOCSWINSZ, struct.pack("HHHH", 22, 70, 0, 0))
+        os.kill(process.pid, signal.SIGWINCH)
+        os.write(master, b"\x1b[21~")  # F10 must close even when the search input has focus.
+        assert read_until(b"Closed."), "Terminal workspace did not close"
+        assert process.wait(timeout=5) == 0
+        assert termios.tcgetattr(slave) == original_attributes
+        assert b"Traceback" not in output
+        assert not list(home.rglob("*")) and not list(project.rglob("*"))
+    finally:
+        if process.poll() is None:
+            process.kill()
+            process.wait(timeout=5)
+        os.close(master)
+        os.close(slave)

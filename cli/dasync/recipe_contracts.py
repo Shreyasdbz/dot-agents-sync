@@ -128,10 +128,12 @@ CONFIGURE = obj(
     {
         "operation": {"const": "recipe.configure"},
         "registrations": {"type": "array", "items": REGISTRATION, "maxItems": 512},
+        "bind_sources": {"type": "array", "items": SOURCE_PIN, "maxItems": 512, "uniqueItems": True},
         "trust_source": {"type": "boolean"},
         "enable": STRS,
         "remove": STRS,
         "disable": STRS,
+        "undisable": STRS,
         "select_sources": STRS,
         "inherit_user": {"type": "boolean"},
         "conflict": {"enum": ["protect", "overwrite"]},
