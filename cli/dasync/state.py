@@ -47,6 +47,7 @@ class State:
                       id TEXT PRIMARY KEY, scope TEXT NOT NULL, payload TEXT NOT NULL);
                     CREATE TABLE IF NOT EXISTS heads (scope TEXT PRIMARY KEY, receipt TEXT NOT NULL);
                     CREATE TABLE IF NOT EXISTS journal (id TEXT PRIMARY KEY, payload TEXT NOT NULL);
+                    CREATE TABLE IF NOT EXISTS metadata (name TEXT PRIMARY KEY, payload TEXT NOT NULL);
                 """)
             try:
                 yield conn
@@ -89,6 +90,38 @@ class State:
                 else []
             )
 
+    def metadata(self, name, default):
+        with self.connect() as db:
+            if db is None or not db.execute("SELECT 1 FROM sqlite_master WHERE name='metadata'").fetchone():
+                return default
+            row = db.execute("SELECT payload FROM metadata WHERE name=?", (name,)).fetchone()
+            value = json.loads(row[0]) if row else default
+            if not isinstance(value, dict) or value.get("format") != 1:
+                raise DasyncError("STATE_UNSUPPORTED", "Unknown machine metadata format")
+            return value
+
+    def deny(self, identity):
+        """Urgent monotonic deny is the only mutation allowed during pending recovery."""
+        with self.lock():
+            authority = self.metadata("recipe-authority", {"format": 1, "generation": 0, "denied": []})
+            authority = {
+                "format": 1,
+                "generation": authority["generation"] + 1,
+                "denied": sorted(set(authority["denied"]) | {identity}),
+            }
+            with self.connect(write=True) as db:
+                db.execute(
+                    "INSERT OR REPLACE INTO metadata VALUES (?,?)",
+                    ("recipe-authority", canonical(authority).decode()),
+                )
+                db.commit()
+            return {
+                "denied": identity,
+                "generation": authority["generation"],
+                "effects": "authority-only",
+                "host_activation": "Existing copies and running hosts are not terminated",
+            }
+
     @staticmethod
     def _normalize_observed(value):
         return {
@@ -98,6 +131,12 @@ class State:
 
     @classmethod
     def _normalize_payload(cls, value):
+        if not isinstance(value, dict):
+            raise DasyncError("STATE_INVALID", "Invalid receipt or journal record")
+        if "recipe" in value and (
+            not isinstance(value["recipe"], dict) or value["recipe"].get("format") != 1
+        ):
+            raise DasyncError("STATE_UNSUPPORTED", "Unknown recipe receipt or journal format")
         for owner in value.get("owned", {}).values():
             owner.setdefault("type", "file")
         for item in value.get("backups", value.get("files", [])):
@@ -169,11 +208,23 @@ class State:
                             "RECOVERY_CONFLICT",
                             "A journal target was independently changed; preserve it before recovery",
                         )
+                self._authorize_restore(journal)
                 self._restore(journal)
                 with self.connect(write=True) as db:
                     db.execute("DELETE FROM journal WHERE id=?", (journal["id"],))
                     db.commit()
             return {"recovered": [j["id"] for j in pending]}
+
+    def _authorize_restore(self, journal):
+        denied = self.metadata("recipe-authority", {"format": 1, "generation": 0, "denied": []})["denied"]
+        for item in journal["files"]:
+            identities = journal.get("recipe", {}).get("managed_before", {}).get(item["path"], [])
+            if any(identity in denied or identity.split("/")[0] in denied for identity in identities):
+                if self._journal_observe(item, journal) != item["before"]:
+                    raise DasyncError(
+                        "RECOVERY_BLOCKED",
+                        "Restoring denied managed activation is blocked; journal and original backups retained",
+                    )
 
     @staticmethod
     def _journal_observe(item, journal):
@@ -223,7 +274,7 @@ class State:
                     remove_empty_tree(path)
                 atomic_write(path, base64.b64decode(item["data"]), item["before"]["mode"])
 
-    def commit(self, plan, outputs, rebuild, fault=None):
+    def commit(self, plan, outputs, rebuild, fault=None, metadata=None):
         with self.lock():
             if self.pending():
                 raise DasyncError("RECOVERY_REQUIRED", "An incomplete transaction requires repair --recover")
@@ -231,11 +282,30 @@ class State:
             if canonical(fresh) != canonical(plan):
                 raise DasyncError("PLAN_INVALIDATED", "Plan inputs changed; create and review a fresh plan")
             outputs = fresh_outputs
+            metadata_updates = metadata() if metadata else {}
             changes = [op for op in plan["operations"] if op["action"] != "keep"]
-            if not changes:
+            if not changes and not metadata_updates:
                 return {"changed": False, "receipt": plan["previous_receipt"], "operations": 0}
             txid = str(uuid.uuid4())
             journal = {"id": txid, "scope": plan["scope_key"], "files": []}
+            previous = self.head(plan["scope_key"])
+            if plan.get("protocol") == 1:
+                journal["recipe"] = {
+                    "format": 1,
+                    "managed_before": {
+                        path: sorted(
+                            {
+                                owner["package"],
+                                *[
+                                    contributor["source_id"] + "/" + contributor["item_id"]
+                                    for contributor in owner.get("contributors", [])
+                                ],
+                            }
+                        )
+                        for path, owner in (previous or {}).get("owned", {}).items()
+                        if owner["provider"] == "codex" and "/" in owner["package"]
+                    },
+                }
             ordered_changes = sorted(
                 changes,
                 key=lambda op: (
@@ -319,6 +389,7 @@ class State:
                         "type": op["target_type"],
                         "package": op["package"],
                         "provider": op["provider"],
+                        **({"contributors": op["contributors"]} if "contributors" in op else {}),
                     }
                     for op in plan["operations"]
                     if op["hash"] is not None
@@ -348,6 +419,8 @@ class State:
                     "plan_digest": digest(canonical(plan)),
                     "backups": journal["files"],
                 }
+                if plan.get("protocol") == 1:
+                    receipt["recipe"] = {"format": 1, "plan": plan}
                 transient = {
                     op["path"] for op in plan["operations"] if op["package"] in {"@restored", "@preserved"}
                 }
@@ -357,6 +430,10 @@ class State:
                 if fault:
                     fault("before_receipt", 0)
                 with self.connect(write=True) as db:
+                    for name, value in metadata_updates.items():
+                        db.execute(
+                            "INSERT OR REPLACE INTO metadata VALUES (?,?)", (name, canonical(value).decode())
+                        )
                     db.execute(
                         "INSERT INTO receipts VALUES (?,?,?)",
                         (txid, plan["scope_key"], canonical(receipt).decode()),

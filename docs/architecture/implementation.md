@@ -2,6 +2,8 @@
 
 The design snapshot in `design.md` preserves the agreed product direction. This file records concrete v1 implementation choices and verification limits.
 
+The [experimental recipe protocol](../recipe-protocol.md) implements the immediate local milestone of the October recipe-spine plan alongside the catalog runtime described below. It uses qualified identity, retained local snapshots, explicit roots, a project-only nonportable lock and Codex rendering through the existing Engine/State apply/recovery boundary. Its formats are separate from legacy v1; later Git/context/UI/stable-launch milestones and automatic migration remain unimplemented.
+
 ## Runtime and distribution
 
 Python 3.11+ provides SQLite, TOML parsing, cross-platform paths, subprocess control, file descriptors and mature testing. `uv tool install .` or `pipx install .` installs the CLI; the catalog is independently pinned from a Git source. `uv.lock` pins development dependencies; it is not a dasync environment lockfile.

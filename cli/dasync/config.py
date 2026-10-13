@@ -73,12 +73,12 @@ def load_config(path: Path, required=True):
             )
         return None
     value = parse(data)
-    validate("config", value)
+    validate("recipe-intent" if value.get("version") == 2 else "config", value)
     return value
 
 
 def encode_config(value: dict) -> bytes:
-    validate("config", value)
+    validate("recipe-intent" if value.get("version") == 2 else "config", value)
     # JSON is valid YAML; stable serialization avoids lossy YAML round trips.
     return canonical(value)
 

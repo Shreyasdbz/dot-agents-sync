@@ -10,11 +10,169 @@ import os
 import shutil
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+class RecipeJourney:
+    """The recipe machine journey uses only a wheel-installed executable."""
+
+    def __init__(self, binary, root):
+        self.binary, self.root = binary, root
+        self.home, self.project = root / "home", root / "project"
+        self.home.mkdir()
+        self.project.mkdir()
+        self.env = {**os.environ, "DASYNC_HOME": str(self.home)}
+        self.env.pop("PYTHONPATH", None)
+        self.candidates = []
+        for index in (1, 2):
+            author = root / f"source-{index}"
+            author.mkdir()
+            request = self.save(
+                f"author-{index}",
+                {
+                    "operation": "recipe.create",
+                    "source_id": f"{str(index) * 8}-{str(index) * 4}-4{str(index) * 3}-8{str(index) * 3}-{str(index) * 12}",
+                    "kind": "Skill",
+                    "id": "skill.review",
+                    "name": "Review",
+                    "description": "Synthetic review workflow.",
+                    "license": "LicenseRef-Synthetic",
+                },
+            )
+            self.call(
+                "recipe", "create", "--request", request, "--scope", "project", "--path", str(author), "--yes"
+            )
+            self.candidates.append(self.call("recipe", "prepare", "--source", str(author)))
+
+    def save(self, name, value):
+        path = self.root / (name + ".json")
+        path.write_text(json.dumps(value))
+        return str(path)
+
+    def call(self, *args, code=0):
+        result = execute(
+            [str(self.binary), *args, "--json", "--no-input"], cwd=self.root, env=self.env, expected=code
+        )
+        payload = json.loads(result.stdout)
+        assert payload["protocol"] == 1 and not result.stderr
+        return payload["result"] if payload["ok"] else payload["error"]
+
+    def scoped(self, *args, code=0):
+        return self.call("recipe", *args, "--scope", "project", "--path", str(self.project), code=code)
+
+    def install(self):
+        request = self.save(
+            "registration",
+            {
+                "operation": "recipe.configure",
+                "registrations": [
+                    {"candidate": row["candidate"], "alias": f"source-{index}"}
+                    for index, row in enumerate(self.candidates, 1)
+                ],
+                "enable": ["source-1/skill.review", "source-2/skill.review"],
+            },
+        )
+        assert self.scoped("plan", "--request", request, code=2)["code"] == "TRUST_REQUIRED"
+        plan = self.scoped("plan", "--request", request, "--trust-source")
+        assert self.call("recipe", "sources")["sources"] == []
+        assert not self.project.joinpath(".dasync.yaml").exists()
+        saved = self.save("install-plan", {"protocol": 1, "ok": True, "result": plan})
+        assert self.scoped("apply", "--plan", saved, code=2)["code"] == "CONFIRMATION_REQUIRED"
+        result = self.scoped("apply", "--plan", saved, "--yes")
+        return plan, result
+
+
+def test_installed_recipe_two_source_machine_journey(installed_binary, tmp_path):
+    j = RecipeJourney(installed_binary, tmp_path)
+    bootstrap = j.call("describe")
+    assert bootstrap["experimental"] and bootstrap["protocols"] == [1]
+    plan, result = j.install()
+    assert len(plan["mapping"]) == 2 and len(set(plan["mapping"].values())) == 2
+    assert len(list(j.project.glob(".agents/skills/*/SKILL.md"))) == 2
+    assert j.scoped("doctor")["healthy"]
+    assert j.scoped("sync", "--yes") == {"changed": False, "receipt": result["receipt"], "operations": 0}
+    listing = j.scoped("list", "--limit", "1")
+    assert len(listing["items"]) == 1 and listing["next_offset"] == 1
+    explanation = j.scoped("explain", "source-1/skill.review")
+    assert explanation["selected"][0]["reasons"] == [{"kind": "direct"}]
+    update = j.save("remove", {"operation": "recipe.configure", "remove": ["source-2/skill.review"]})
+    selected = j.scoped("plan", "--request", update)
+    j.scoped("apply", "--plan", j.save("remove-plan", selected), "--yes")
+    for index in (1, 2):
+        shutil.rmtree(tmp_path / f"source-{index}")
+    request = j.save("restore", {"operation": "recipe.restore", "receipt": result["receipt"]})
+    restore = j.scoped("plan", "--request", request)
+    j.scoped("apply", "--plan", j.save("restore-plan", restore), "--yes")
+    assert j.scoped("doctor")["healthy"] and len(list(j.project.glob(".agents/skills/*/SKILL.md"))) == 2
+    j.scoped("deny", j.candidates[1]["source_id"], "--yes")
+    assert j.scoped("plan", "--request", request, code=2)["code"] == "AUTHORITY_DENIED"
+
+
+@pytest.mark.parametrize("stage", ["before_write", "after_write", "before_receipt"])
+def test_installed_recipe_process_death_and_recovery(installed_binary, tmp_path, stage):
+    j = RecipeJourney(installed_binary, tmp_path)
+    _, installed = j.install()
+    request = j.save("remove", {"operation": "recipe.configure", "remove": ["source-2/skill.review"]})
+    plan = j.scoped("plan", "--request", request)
+    saved = j.save("crash-plan", plan)
+    python = installed_binary.parent / ("python.exe" if os.name == "nt" else "python")
+    script = """
+import json, os, sys
+from dasync.config import Environment, Scope
+from dasync.engine import Engine
+plan = json.load(open(sys.argv[1]))
+env = Environment.current()
+engine = Engine(env, Scope.get(env, plan['scope'], plan['root']))
+def fault(stage, index):
+    if stage == sys.argv[2]:
+        os._exit(91)
+engine.apply(plan, fault)
+"""
+    execute([str(python), "-I", "-c", script, saved, stage], cwd=tmp_path, env=j.env, expected=91)
+    assert j.scoped("doctor", code=1)["pending_recovery"]
+    assert j.scoped("recover", "--dry-run")["pending"]
+    j.scoped("recover", "--yes")
+    doctor = j.scoped("doctor")
+    assert doctor["healthy"] and doctor["receipt"] == installed["receipt"]
+    assert len(list(j.project.glob(".agents/skills/*/SKILL.md"))) == 2
+
+
+def test_installed_recipe_competing_applies(installed_binary, tmp_path):
+    j = RecipeJourney(installed_binary, tmp_path)
+    _, installed = j.install()
+    request = j.save("remove", {"operation": "recipe.configure", "remove": ["source-2/skill.review"]})
+    saved = j.save("concurrent-plan", j.scoped("plan", "--request", request))
+    argv = [
+        str(j.binary),
+        "recipe",
+        "apply",
+        "--plan",
+        saved,
+        "--scope",
+        "project",
+        "--path",
+        str(j.project),
+        "--json",
+        "--no-input",
+        "--yes",
+    ]
+
+    def attempt(_):
+        return subprocess.run(argv, cwd=j.root, env=j.env, text=True, capture_output=True, timeout=120)
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        results = list(pool.map(attempt, range(2)))
+    envelopes = [json.loads(result.stdout) for result in results]
+    assert sum(response["ok"] for response in envelopes) == 1
+    rejected = next(response["error"] for response in envelopes if not response["ok"])
+    assert rejected["code"] in ("LOCKED", "PLAN_INVALIDATED", "DRIFT")
+    doctor = j.scoped("doctor")
+    assert doctor["healthy"] and doctor["receipt"] != installed["receipt"]
 
 
 def execute(args, *, cwd, env=None, expected=0):

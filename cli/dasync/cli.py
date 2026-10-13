@@ -56,6 +56,8 @@ def parser():
             "ai",
             "context",
             "validate",
+            "describe",
+            "recipe",
         ],
     )
     p.add_argument("subject", nargs="?")
@@ -64,6 +66,11 @@ def parser():
     p.add_argument("--path")
     p.add_argument("--json", action="store_true")
     p.add_argument("--no-input", action="store_true")
+    p.add_argument("--protocol", type=int, default=1)
+    p.add_argument("--request", dest="request_file")
+    p.add_argument("--query", default="")
+    p.add_argument("--limit", type=int, default=50)
+    p.add_argument("--offset", type=int, default=0)
     p.add_argument("--yes", action="store_true")
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--source", help="HTTPS Git URL, local Git checkout, or local catalog directory")
@@ -116,9 +123,14 @@ def parser():
     return p
 
 
-def emit(result, machine=False):
+def emit(result, machine=False, protocol=None):
     if machine:
-        print(canonical({"version": 1, "ok": True, "result": result}).decode(), end="")
+        print(
+            canonical(
+                {"version": 1, "ok": True, "result": result, **({"protocol": protocol} if protocol else {})}
+            ).decode(),
+            end="",
+        )
     elif isinstance(result, str):
         print(result)
     else:
@@ -142,6 +154,16 @@ def configure_interactive(config, catalog):
 
 
 def run(args):
+    if args.protocol != 1:
+        raise DasyncError("PROTOCOL_UNSUPPORTED", "Unsupported machine protocol; use dasync describe --json")
+    if args.command == "describe":
+        from .recipe_cli import describe
+
+        return describe()
+    if args.command == "recipe":
+        from .recipe_cli import run as recipe_run
+
+        return recipe_run(args, confirm)
     operation = args.subject if args.command == "plan" else args.command
     selection_flags = any(
         (
@@ -415,14 +437,32 @@ def run(args):
 
 def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
-    machine = "--json" in argv
+    protocol = 1 if "recipe" in argv or "describe" in argv else None
+    machine = "--json" in argv or (protocol is not None and "--no-input" in argv)
     try:
         result = run(parser().parse_args(argv))
-        emit(result, machine)
+        emit(result, machine, protocol)
         return 1 if isinstance(result, dict) and result.get("healthy") is False else 0
     except DasyncError as exc:
         if machine:
-            print(canonical({"version": 1, "ok": False, "error": exc.as_dict()}).decode(), end="")
+            error = exc.as_dict()
+            if protocol:
+                from .recipe_cli import diagnostic
+
+                error = diagnostic(
+                    exc, argv[1] if argv and argv[0] == "recipe" and len(argv) > 1 else "bootstrap"
+                )
+            print(
+                canonical(
+                    {
+                        "version": 1,
+                        "ok": False,
+                        "error": error,
+                        **({"protocol": protocol} if protocol else {}),
+                    }
+                ).decode(),
+                end="",
+            )
         else:
             print(f"{exc.code}: {exc}", file=sys.stderr)
             if exc.hint:
@@ -432,7 +472,22 @@ def main(argv=None):
         # No raw exception text: it may contain a private value or path.
         error = DasyncError("OPERATION_FAILED", f"Operation could not complete ({type(exc).__name__})")
         if machine:
-            print(canonical({"version": 1, "ok": False, "error": error.as_dict()}).decode(), end="")
+            payload = error.as_dict()
+            if protocol:
+                from .recipe_cli import diagnostic
+
+                payload = diagnostic(error, "bootstrap")
+            print(
+                canonical(
+                    {
+                        "version": 1,
+                        "ok": False,
+                        "error": payload,
+                        **({"protocol": protocol} if protocol else {}),
+                    }
+                ).decode(),
+                end="",
+            )
         else:
             print(str(error), file=sys.stderr)
         return 2

@@ -3,26 +3,7 @@
 from jsonschema import Draft202012Validator
 
 from .errors import DasyncError
-
-ID = {"type": "string", "pattern": "^[a-z][a-z0-9-]*(\\.[a-z0-9-]+)*$", "maxLength": 120}
-STR = {"type": "string", "minLength": 1, "maxLength": 2048}
-IDS = {"type": "array", "items": ID, "uniqueItems": True}
-STRS = {"type": "array", "items": STR, "uniqueItems": True}
-PROVIDERS = {
-    "type": "array",
-    "items": {"enum": ["codex", "claude", "copilot", "cursor"]},
-    "uniqueItems": True,
-}
-
-
-def obj(properties, required=()):
-    return {
-        "type": "object",
-        "properties": properties,
-        "required": list(required),
-        "additionalProperties": False,
-    }
-
+from .schema_types import HASH, ID, IDS, OBSERVED, OPERATION, PROVIDERS, STR, STRS, obj
 
 SOURCE = obj(
     {"location": STR, "revision": STR, "kind": {"enum": ["git", "local"]}}, ("location", "revision", "kind")
@@ -193,30 +174,6 @@ PLAN_CONTEXT = obj(
 )
 SCHEMAS = {"config": CONFIG, "manifest": MANIFEST, "profile": PROFILE, "plan-context": PLAN_CONTEXT}
 
-HASH = {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"}
-OBSERVED = obj(
-    {
-        "hash": HASH,
-        "mode": {"type": ["integer", "null"]},
-        "type": {"enum": ["missing", "file", "symlink", "directory"]},
-    },
-    ("hash", "mode", "type"),
-)
-OPERATION = obj(
-    {
-        "path": STR,
-        "action": {"enum": ["keep", "write", "delete"]},
-        "before": OBSERVED,
-        "hash": HASH,
-        "mode": {"type": ["integer", "null"]},
-        "target_type": {"enum": ["missing", "file", "symlink"]},
-        "shadowed_by": STR,
-        "hidden_by": STR,
-        "provider": STR,
-        "package": STR,
-    },
-    ("path", "action", "before", "hash", "mode", "target_type", "provider", "package"),
-)
 SCHEMAS["plan"] = obj(
     {
         "version": {"const": 1},
@@ -275,7 +232,13 @@ SCHEMAS["error"] = obj(
         "version": {"const": 1},
         "ok": {"const": False},
         "error": obj(
-            {"code": STR, "message": STR, "hint": {"type": ["string", "null"]}}, ("code", "message", "hint")
+            {
+                "code": STR,
+                "message": STR,
+                "hint": {"type": ["string", "null"]},
+                "details": {"type": "object"},
+            },
+            ("code", "message", "hint"),
         ),
     },
     ("version", "ok", "error"),
@@ -291,6 +254,8 @@ def validate(name: str, value: dict):
             "SCHEMA_INVALID",
             f"Invalid {name}: {e.validator} constraint at {'/'.join(map(str, e.path)) or '/'}",
         )
+    if name in RECIPE_SCHEMAS:
+        recipe_semantic(name, value)
     if name == "plan-context":
         milestones = value["milestones"]
         ids = [m["id"] for m in milestones]
@@ -345,3 +310,10 @@ def validate(name: str, value: dict):
             if not ready:
                 raise DasyncError("SCHEMA_INVALID", "Phase/task dependencies contain a cycle")
             graph = {key: deps - ready for key, deps in graph.items() if key not in ready}
+
+
+# Kept in a focused module so the experimental protocol cannot accidentally accept legacy profiles.
+from .recipe_contracts import SCHEMAS as RECIPE_SCHEMAS  # noqa: E402
+from .recipe_contracts import semantic as recipe_semantic  # noqa: E402
+
+SCHEMAS.update(RECIPE_SCHEMAS)
