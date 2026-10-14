@@ -1,0 +1,30 @@
+{
+  "description": "Scope and authorization",
+  "entry": "POLICY.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "f08281f586490801f99e9252b43cee8af9866ae7df020c036d15ce106960c573",
+    "dasync.dev/catalog-path": "packages/policies/scope/manifest.yaml",
+    "dasync.dev/token-budget": 8000
+  },
+  "files": [
+    "POLICY.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "policy.scope",
+  "kind": "Policy",
+  "license": "MIT",
+  "name": "scope",
+  "optional_capabilities": [],
+  "policy": {
+    "globs": [],
+    "priority": 0
+  },
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.0.0"
+}

@@ -1,0 +1,40 @@
+{
+  "default_prompt": "turn this source material into an outcome-focused HTML presentation.",
+  "description": "Create visually composed, self-contained HTML presentations with explanatory diagrams, purposeful motion and source-grounded evidence.",
+  "entry": "SKILL.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "70e845442942be09769be3c6ca2986693481862aba42b4c395f826301375707a",
+    "dasync.dev/catalog-path": "packages/skills/pitch-deck/manifest.yaml",
+    "dasync.dev/optional-fallback": "Create and structurally inspect HTML; report visual and interaction checks as outstanding.",
+    "dasync.dev/outputs": "html",
+    "dasync.dev/token-budget": 1500
+  },
+  "files": [
+    "SKILL.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "skill.pitch-deck",
+  "kind": "Skill",
+  "license": "MIT",
+  "name": "Pitch Deck",
+  "optional_capabilities": [
+    "browser.render"
+  ],
+  "required_capabilities": [
+    "filesystem.read"
+  ],
+  "requires": {
+    "starter/context.artifact-routing": ">=1,<2",
+    "starter/policy.accessibility": ">=1,<2",
+    "starter/policy.communication": ">=1,<2",
+    "starter/skill.visual-artifacts": ">=1,<2",
+    "template.pitch-deck": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "short_description": "Create visual HTML decks with diagrams and motion",
+  "version": "1.5.0"
+}

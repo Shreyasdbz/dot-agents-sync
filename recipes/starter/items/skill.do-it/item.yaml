@@ -1,0 +1,43 @@
+{
+  "default_prompt": "implement and verify this authorized bounded change.",
+  "description": "Implement an authorized task or bounded change, verify observable behavior, and report remaining work without expanding scope.",
+  "entry": "SKILL.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "c4bf1f30d10b6a577879256bcc4ebe634652d8a7c9d121cb8d82b1dd2dfa6664",
+    "dasync.dev/catalog-path": "packages/skills/do-it/manifest.yaml",
+    "dasync.dev/optional-fallback": "Implement only within available authority; label checks that could not execute instead of claiming verification.",
+    "dasync.dev/outputs": "inline",
+    "dasync.dev/token-budget": 1600
+  },
+  "files": [
+    "SKILL.md",
+    "stateful-changes.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "skill.do-it",
+  "kind": "Skill",
+  "license": "MIT",
+  "name": "Do It",
+  "optional_capabilities": [
+    "tests.execute"
+  ],
+  "required_capabilities": [
+    "filesystem.read"
+  ],
+  "requires": {
+    "policy.coding": ">=1,<2",
+    "policy.communication": ">=1,<2",
+    "policy.engineering-effectiveness": ">=1,<2",
+    "policy.git": ">=1,<2",
+    "policy.repository-guidance": ">=1,<2",
+    "policy.scope": ">=1,<2",
+    "policy.verification": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "short_description": "Implement and verify an authorized bounded change",
+  "version": "1.5.0"
+}

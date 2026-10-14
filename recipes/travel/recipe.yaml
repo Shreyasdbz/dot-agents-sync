@@ -1,0 +1,24 @@
+{
+  "description": "Collected dasync travel workflows and references.",
+  "format": 1,
+  "imports": {
+    "starter": {
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    }
+  },
+  "items": [
+    "items/agent.travel-planner/item.yaml",
+    "items/agent.travel-researcher/item.yaml",
+    "items/skill.trip-plan/item.yaml",
+    "items/skill.trip-publish/item.yaml",
+    "items/template.trip-plan/item.yaml",
+    "items/template.trip-publish/item.yaml"
+  ],
+  "name": "travel",
+  "required_features": [
+    "imports",
+    "native-agents"
+  ],
+  "requires_engine": ">=0.1.1,<1",
+  "source_id": "4779775e-f7c0-5c97-afbe-908b9d73e761"
+}

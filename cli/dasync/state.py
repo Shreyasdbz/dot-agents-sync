@@ -225,6 +225,17 @@ class State:
                         "RECOVERY_BLOCKED",
                         "Restoring denied managed activation is blocked; journal and original backups retained",
                     )
+            if self._journal_observe(item, journal) != item["before"]:
+                from .recipe_approvals import EMPTY, approved_pairs
+
+                approved = approved_pairs(self.metadata("recipe-executables", EMPTY), journal["scope"])
+                for record in journal.get("recipe", {}).get("executable_before", []):
+                    key = (record["source_id"], record["item_id"])
+                    if key[0] + "/" + key[1] in identities and (key, record["digest"]) not in approved:
+                        raise DasyncError(
+                            "RECOVERY_BLOCKED",
+                            "Restoring executable activation requires current exact-digest approval; journal retained",
+                        )
 
     @staticmethod
     def _journal_observe(item, journal):
@@ -292,6 +303,11 @@ class State:
             if plan.get("protocol") == 1:
                 journal["recipe"] = {
                     "format": 1,
+                    "executable_before": [
+                        row
+                        for row in (previous or {}).get("graph", {}).get("items", [])
+                        if row.get("kind") == "Hook"
+                    ],
                     "managed_before": {
                         path: sorted(
                             {

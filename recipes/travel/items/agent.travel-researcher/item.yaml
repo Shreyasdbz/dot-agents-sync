@@ -1,0 +1,32 @@
+{
+  "agent": {
+    "access": "inherit"
+  },
+  "description": "Verify bounded travel questions against current primary sources, including feasibility, availability, total prices, and uncertainty.",
+  "entry": "AGENT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "1bfd4038797bdb76a247a7a08e375e086cc0b714cd798fa21e8c871f88795f9d",
+    "dasync.dev/catalog-path": "packages/agents/travel-researcher/manifest.yaml",
+    "dasync.dev/outputs": "findings,evidence,verification-limits",
+    "dasync.dev/token-budget": 650
+  },
+  "files": [
+    "AGENT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "agent.travel-researcher",
+  "kind": "Agent",
+  "license": "MIT",
+  "name": "travel-researcher",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {
+    "starter/policy.communication": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.2.0"
+}

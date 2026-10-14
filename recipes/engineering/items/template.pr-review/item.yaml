@@ -1,0 +1,29 @@
+{
+  "description": "Canonical review structures and an accessible HTML findings interface with local search.",
+  "entry": "report.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "5ddb475c3c89cf8b4d308a042931de9588eadc6932544c164014525be2ffcbc0",
+    "dasync.dev/catalog-path": "packages/templates/pr-review/manifest.yaml",
+    "dasync.dev/token-budget": 20000
+  },
+  "files": [
+    "components/finding.html",
+    "components.md",
+    "report.html",
+    "report.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "template.pr-review",
+  "kind": "Template",
+  "license": "MIT",
+  "name": "pr-review",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.6.2"
+}

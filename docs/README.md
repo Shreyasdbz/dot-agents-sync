@@ -10,6 +10,7 @@
 | [AI operator contract](AI-OPERATOR.md) | Required checks and authorization boundaries for agents operating the CLI |
 | [Repository guidance](repository-guidance.md) | Instruction scopes, context provenance, role discovery, and provider-specific loading |
 | [Recipe workspace and protocol](recipe-protocol.md) | Local recipes, interactive drafts, exact pins, reviewed apply, recovery and restore |
+| [Collected workflow recipes](../recipes/README.md) | All 70 existing items, starter closure, optional ownership, licenses and regeneration |
 | [Recipe validation](recipe-validation.md) | Exhaustive cases, deterministic generation, transaction faults and terminal journeys |
 
 ## Contribute and release

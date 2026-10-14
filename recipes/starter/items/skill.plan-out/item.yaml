@@ -1,0 +1,44 @@
+{
+  "default_prompt": "turn this approved design into a reviewable implementation plan.",
+  "description": "Break an approved design into reviewable work and a loadable Plan Context in the project's planning authority. Do not implement it.",
+  "entry": "SKILL.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "efd8b35dc666d98fc4ff4cd552e2719e9663033c1dc265d95e44808e7ce3167a",
+    "dasync.dev/catalog-path": "packages/skills/plan-out/manifest.yaml",
+    "dasync.dev/optional-fallback": "Produce a schema-valid offline draft; mark tracker state unrefreshed and leave publication pending.",
+    "dasync.dev/outputs": "plan-context,inline",
+    "dasync.dev/token-budget": 1800
+  },
+  "files": [
+    "SKILL.md",
+    "sizing.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "skill.plan-out",
+  "kind": "Skill",
+  "license": "MIT",
+  "name": "Plan Out",
+  "optional_capabilities": [
+    "planning.tracker"
+  ],
+  "required_capabilities": [
+    "filesystem.read"
+  ],
+  "requires": {
+    "context.artifact-routing": ">=1,<2",
+    "policy.communication": ">=1,<2",
+    "policy.engineering-effectiveness": ">=1,<2",
+    "policy.repository-guidance": ">=1,<2",
+    "policy.scope": ">=1,<2",
+    "policy.verification": ">=1,<2",
+    "skill.visual-artifacts": ">=1,<2",
+    "template.plan-context": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "short_description": "Turn approved designs into reviewable work plans",
+  "version": "1.7.0"
+}

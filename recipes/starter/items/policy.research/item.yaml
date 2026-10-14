@@ -1,0 +1,30 @@
+{
+  "description": "Research and source quality",
+  "entry": "POLICY.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "fdb0ff8742ffc0378f35dc691ec489f972a2445a770e9d67704b8ba42a57955a",
+    "dasync.dev/catalog-path": "packages/policies/research/manifest.yaml",
+    "dasync.dev/token-budget": 8000
+  },
+  "files": [
+    "POLICY.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "policy.research",
+  "kind": "Policy",
+  "license": "MIT",
+  "name": "research",
+  "optional_capabilities": [],
+  "policy": {
+    "globs": [],
+    "priority": 0
+  },
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.0.0"
+}

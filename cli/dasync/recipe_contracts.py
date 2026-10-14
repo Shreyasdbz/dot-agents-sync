@@ -17,7 +17,17 @@ PIN = {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
 TOKEN = {"type": "string", "pattern": "^[a-f0-9]{64}$"}
 KEY = obj({"source_id": UUID, "item_id": ID}, ("source_id", "item_id"))
 KEYS = {"type": "array", "items": KEY, "uniqueItems": True, "maxItems": 512}
-FEATURES = {"type": "array", "items": {"enum": []}, "maxItems": 0}
+FEATURES = {
+    "type": "array",
+    "items": {"enum": ["imports", "native-agents", "native-policies", "python-hooks", "context-contracts"]},
+    "uniqueItems": True,
+    "maxItems": 5,
+}
+DEPENDENCY = {
+    "type": "string",
+    "pattern": r"^[a-z][a-z0-9-]*(\.[a-z0-9-]+)*(/[a-z][a-z0-9-]*(\.[a-z0-9-]+)*)?$",
+    "maxLength": 241,
+}
 EXTENSIONS = {
     "type": "object",
     "maxProperties": 32,
@@ -53,7 +63,7 @@ ITEM_SPEC = obj(
         },
         "requires": {
             "type": "object",
-            "propertyNames": ID,
+            "propertyNames": DEPENDENCY,
             "additionalProperties": STR,
             "maxProperties": 128,
         },
@@ -61,7 +71,31 @@ ITEM_SPEC = obj(
         "optional_capabilities": STRS,
         "required_features": FEATURES,
         "default_prompt": STR,
-        "invocations": {"type": "array", "items": obj({"dependency": ID}, ("dependency",)), "maxItems": 128},
+        "short_description": {"type": "string", "minLength": 25, "maxLength": 64},
+        "invocations": {
+            "type": "array",
+            "items": obj({"dependency": DEPENDENCY}, ("dependency",)),
+            "maxItems": 128,
+        },
+        "policy": obj(
+            {"globs": {"type": "array", "maxItems": 0}, "priority": {"type": "integer"}},
+            ("globs", "priority"),
+        ),
+        "agent": obj({"access": {"enum": ["inherit", "read-only"]}}, ("access",)),
+        "executable": obj(
+            {
+                "runtime": {"const": "python"},
+                "events": {
+                    "type": "array",
+                    "items": {"enum": ["pre_tool", "session_start", "stop"]},
+                    "minItems": 1,
+                    "uniqueItems": True,
+                },
+                "permissions": {"type": "array", "items": {"const": "stdin.read"}, "uniqueItems": True},
+                "timeout": {"type": "integer", "minimum": 1, "maximum": 300},
+            },
+            ("runtime", "events", "permissions", "timeout"),
+        ),
         "slots": {"type": "object", "propertyNames": ID, "additionalProperties": SLOT, "maxProperties": 32},
         "context": obj(
             {
@@ -70,6 +104,8 @@ ITEM_SPEC = obj(
                 "contract_id": UUID,
                 "contract_version": STR,
                 "content_format": {"const": "markdown"},
+                "binding": ID,
+                "consumers": KEYS,
             },
             ("sensitivity", "access"),
         ),
@@ -80,6 +116,14 @@ ITEM_SPEC = obj(
 ITEM_SPEC["allOf"] = [
     {"if": {"properties": {"kind": {"const": "Context"}}}, "then": {"required": ["context"]}},
 ]
+ITEM_SPEC["allOf"] += [
+    {
+        "if": {"properties": {"kind": {"const": kind}}},
+        "then": {"required": [field]},
+        "else": {"not": {"required": [field]}},
+    }
+    for kind, field in (("Agent", "agent"), ("Policy", "policy"), ("Hook", "executable"))
+]
 RECIPE = obj(
     {
         "format": {"const": FORMAT},
@@ -89,7 +133,12 @@ RECIPE = obj(
         "requires_engine": STR,
         "required_features": FEATURES,
         "items": {"type": "array", "items": STR, "minItems": 1, "maxItems": 512, "uniqueItems": True},
-        "imports": {"type": "object", "maxProperties": 0},
+        "imports": {
+            "type": "object",
+            "propertyNames": ID,
+            "additionalProperties": obj({"source_id": UUID}, ("source_id",)),
+            "maxProperties": 128,
+        },
         "extensions": EXTENSIONS,
     },
     (
@@ -124,12 +173,19 @@ INTENT = obj(
     ("version", "protocol", "sources", "roots", "disabled", "providers", "inherit_user"),
 )
 REGISTRATION = obj({"candidate": TOKEN, "alias": ID}, ("candidate", "alias"))
+EXECUTABLE_APPROVAL = obj({**KEY["properties"], "digest": TOKEN}, ("source_id", "item_id", "digest"))
 CONFIGURE = obj(
     {
         "operation": {"const": "recipe.configure"},
         "registrations": {"type": "array", "items": REGISTRATION, "maxItems": 512},
         "bind_sources": {"type": "array", "items": SOURCE_PIN, "maxItems": 512, "uniqueItems": True},
         "trust_source": {"type": "boolean"},
+        "approve_executables": {
+            "type": "array",
+            "items": EXECUTABLE_APPROVAL,
+            "uniqueItems": True,
+            "maxItems": 512,
+        },
         "enable": STRS,
         "remove": STRS,
         "disable": STRS,
@@ -163,7 +219,7 @@ PLAN = obj(
         "version": {"const": 2},
         "protocol": {"const": PROTOCOL},
         "cli_version": STR,
-        "adapter_version": {"const": "recipe-codex/1"},
+        "adapter_version": {"const": "recipe-codex/2"},
         "mapping_version": {"const": 1},
         "platform": STR,
         "scope": {"enum": ["user", "project"]},
@@ -179,9 +235,10 @@ PLAN = obj(
                 "lock": OBSERVED,
                 "registry": TOKEN,
                 "authority": TOKEN,
+                "executables": TOKEN,
                 "snapshots": {"type": "object", "additionalProperties": PIN},
             },
-            ("config", "user_config", "lock", "registry", "authority", "snapshots"),
+            ("config", "user_config", "lock", "registry", "authority", "executables", "snapshots"),
         ),
         "graph": {"type": "object"},
         "project_lock": {"type": ["object", "null"]},
@@ -251,7 +308,12 @@ SCHEMAS = {
             "retryable": {"type": "boolean"},
             "details": {"type": "object"},
             "required_approval": obj(
-                {"kind": {"enum": ["ordinary-confirmation", "source-trust", "overwrite"]}}, ("kind",)
+                {
+                    "kind": {
+                        "enum": ["ordinary-confirmation", "source-trust", "overwrite", "executable-digest"]
+                    }
+                },
+                ("kind",),
             ),
         },
         ("code", "message", "hint", "origin", "effects", "retryable"),
@@ -270,6 +332,8 @@ def semantic(name, value):
                 raise DasyncError(
                     "ENGINE_UNSUPPORTED", "Recipe requires an unsupported experimental engine version"
                 )
+            if any(not uuid.UUID(record["source_id"]).int for record in value["imports"].values()):
+                raise ValueError
         if name == "local-item":
             semantic("item-spec", value["item"])
         if name == "item-spec":
@@ -277,6 +341,8 @@ def semantic(name, value):
             for constraint in value.get("requires", {}).values():
                 SpecifierSet(constraint)
             if value["entry"] not in value["files"]:
+                raise ValueError
+            if value["kind"] == "Hook" and not value["entry"].endswith(".py"):
                 raise ValueError
             for slot in value.get("slots", {}).values():
                 semantic("recipe-slot", slot)

@@ -1,0 +1,42 @@
+{
+  "default_prompt": "explain this visually with a focused, source-grounded view.",
+  "description": "Create visual explanations, diagrams and interactive HTML artifacts; improve composition and motion in requested decks, reports and interfaces. Keep simple answers inline.",
+  "entry": "SKILL.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "bb3916490c17eb939d0bbe72ee7fc909c7f660f296dbb086ba4a0c1d92cbd45f",
+    "dasync.dev/catalog-path": "packages/skills/visual-artifacts/manifest.yaml",
+    "dasync.dev/optional-fallback": "Create a readable static explanation; report unavailable rendering, interaction and motion verification.",
+    "dasync.dev/outputs": "inline,html",
+    "dasync.dev/suggestions": "08ddcb86-818f-54bb-b99f-6d494874973a/context.workspace-artifacts",
+    "dasync.dev/token-budget": 5200
+  },
+  "files": [
+    "SKILL.md",
+    "composition.md",
+    "diagrams.md",
+    "motion.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "skill.visual-artifacts",
+  "kind": "Skill",
+  "license": "MIT",
+  "name": "Visual Artifacts",
+  "optional_capabilities": [
+    "browser.render"
+  ],
+  "required_capabilities": [
+    "filesystem.read"
+  ],
+  "requires": {
+    "context.artifact-routing": ">=1,<2",
+    "policy.accessibility": ">=1,<2",
+    "policy.communication": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "short_description": "Compose visual explanations and interactive HTML",
+  "version": "1.2.0"
+}

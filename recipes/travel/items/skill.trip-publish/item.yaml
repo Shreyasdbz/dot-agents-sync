@@ -1,0 +1,42 @@
+{
+  "default_prompt": "turn this approved itinerary into a mobile-friendly HTML travel guide.",
+  "description": "Turn an approved itinerary into a mobile-friendly HTML travel guide. Creating the file is distinct from hosting or sharing it.",
+  "entry": "SKILL.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "bc5ed8e2332fc5da65e0bdfe8bc1f3c13d3a7bcac132cf0a75abb93b76364463",
+    "dasync.dev/catalog-path": "packages/skills/trip-publish/manifest.yaml",
+    "dasync.dev/optional-fallback": "Apply the Travel Planner role inline if delegation is unavailable; structurally inspect HTML and disclose unperformed visual checks.",
+    "dasync.dev/outputs": "html",
+    "dasync.dev/token-budget": 1500
+  },
+  "files": [
+    "SKILL.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "skill.trip-publish",
+  "kind": "Skill",
+  "license": "MIT",
+  "name": "Trip Publish",
+  "optional_capabilities": [
+    "browser.render",
+    "agents.parallel"
+  ],
+  "required_capabilities": [
+    "filesystem.read"
+  ],
+  "requires": {
+    "agent.travel-planner": ">=1,<2",
+    "starter/context.artifact-routing": ">=1,<2",
+    "starter/policy.accessibility": ">=1,<2",
+    "starter/policy.communication": ">=1,<2",
+    "starter/skill.visual-artifacts": ">=1,<2",
+    "template.trip-publish": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "short_description": "Publish approved itineraries as mobile HTML guides",
+  "version": "1.4.0"
+}

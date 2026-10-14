@@ -1,0 +1,39 @@
+{
+  "default_prompt": "curate an Apple Music playlist for this listening goal, verify exact versions and song IDs, and prepare a Music Transfer CSV.",
+  "description": "Curate Apple Music playlists, verify song versions and IDs, and prepare CSVs for Music Transfer when requested.",
+  "entry": "SKILL.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "ba36c79dbc4c07bcef4a6bde9f800f86d4f7c21238356863632eb55f593b8d14",
+    "dasync.dev/catalog-path": "packages/skills/curate-am-playlist/manifest.yaml",
+    "dasync.dev/optional-fallback": "Prepare a CSV with blank song IDs for unresolved rows and mark unverified versions for import review.",
+    "dasync.dev/outputs": "inline,playlist",
+    "dasync.dev/token-budget": 2300
+  },
+  "files": [
+    "SKILL.md",
+    "references/catalog-selection.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "skill.curate-am-playlist",
+  "kind": "Skill",
+  "license": "MIT",
+  "name": "Curate AM Playlist",
+  "optional_capabilities": [
+    "music.search"
+  ],
+  "required_capabilities": [
+    "filesystem.read"
+  ],
+  "requires": {
+    "starter/policy.communication": ">=1,<2",
+    "starter/policy.scope": ">=1,<2",
+    "template.playlist": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "short_description": "Curate and export Apple Music playlist CSVs",
+  "version": "1.4.0"
+}

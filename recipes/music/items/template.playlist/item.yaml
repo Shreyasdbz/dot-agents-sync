@@ -1,0 +1,26 @@
+{
+  "description": "Adaptable playlist previews and Music Transfer CSV format with release, version and song identity.",
+  "entry": "playlist.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "34eda7d1324406a78bccc15b64082eb22ececa159432c1f129e54f2e7c0f625b",
+    "dasync.dev/catalog-path": "packages/templates/playlist/manifest.yaml",
+    "dasync.dev/token-budget": 4000
+  },
+  "files": [
+    "playlist.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "template.playlist",
+  "kind": "Template",
+  "license": "MIT",
+  "name": "playlist",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.4.0"
+}

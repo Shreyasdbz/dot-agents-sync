@@ -164,7 +164,7 @@ def describe():
         "engine_version": ENGINE_VERSION,
         "plan_format": 2,
         "state_metadata_format": 1,
-        "adapter": "recipe-codex/1",
+        "adapter": "recipe-codex/2",
         "mapping_version": 1,
         "commands": commands,
         "schemas": {
@@ -196,11 +196,9 @@ def describe():
         },
         "unsupported": [
             "Git transport",
-            "imports",
             "private context activation",
             "context slot binding",
-            "hooks",
-            "Agent/Policy adapters",
+            "enforced standalone agent read-only sandbox",
             "broader terminal/platform qualification of the TUI",
             "stable publication",
         ],
@@ -230,6 +228,7 @@ def diagnostic(error, command):
         "TRUST_REQUIRED": "source-trust",
         "DRIFT": "overwrite",
         "UNMANAGED_COLLISION": "overwrite",
+        "EXECUTABLE_TRUST_REQUIRED": "executable-digest",
     }
     if error.code in approvals:
         result["required_approval"] = {"kind": approvals[error.code]}

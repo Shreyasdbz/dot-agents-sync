@@ -1,0 +1,34 @@
+{
+  "context": {
+    "access": "inherit",
+    "consumers": [],
+    "content_format": "markdown",
+    "contract_id": "2306d3f4-e4cb-53e4-b86f-0e84d7cda5b4",
+    "contract_version": "1.2.0",
+    "sensitivity": "public"
+  },
+  "description": "Optional coding conventions preset for small maintainable changes",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "3c9c8aa8b1c1f985b9e6595a9a7f28e47091b54b5447272abb985bd87f608ddb",
+    "dasync.dev/catalog-path": "packages/contexts/coding-maintainable/manifest.yaml",
+    "dasync.dev/token-budget": 700
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.coding-maintainable",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "coding-maintainable",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.2.0"
+}

@@ -1,0 +1,30 @@
+{
+  "description": "Testing and verification",
+  "entry": "POLICY.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "aaf8a0799fa443250b59b388d4f437dc6baa6b302fe91372aa3f780cea19e766",
+    "dasync.dev/catalog-path": "packages/policies/verification/manifest.yaml",
+    "dasync.dev/token-budget": 700
+  },
+  "files": [
+    "POLICY.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "policy.verification",
+  "kind": "Policy",
+  "license": "MIT",
+  "name": "verification",
+  "optional_capabilities": [],
+  "policy": {
+    "globs": [],
+    "priority": 0
+  },
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.1.0"
+}

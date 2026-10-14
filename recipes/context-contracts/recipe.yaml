@@ -1,0 +1,33 @@
+{
+  "description": "Collected dasync context-contracts workflows and references.",
+  "format": 1,
+  "imports": {},
+  "items": [
+    "items/context.ai-systems/item.yaml",
+    "items/context.cloud-infrastructure/item.yaml",
+    "items/context.coding-preferences/item.yaml",
+    "items/context.design-preferences/item.yaml",
+    "items/context.engineering-standards/item.yaml",
+    "items/context.music-preferences/item.yaml",
+    "items/context.planning-authority/item.yaml",
+    "items/context.product-audience/item.yaml",
+    "items/context.python-stack/item.yaml",
+    "items/context.repository-architecture/item.yaml",
+    "items/context.repository-conventions/item.yaml",
+    "items/context.security-posture/item.yaml",
+    "items/context.travel-preferences/item.yaml",
+    "items/context.typescript-stack/item.yaml",
+    "items/context.workspace-artifacts/item.yaml",
+    "items/context.workspace-do-it/item.yaml",
+    "items/context.workspace-explain-changes/item.yaml",
+    "items/context.workspace-overview/item.yaml",
+    "items/context.workspace-plan-out/item.yaml",
+    "items/context.workspace-pr-review/item.yaml"
+  ],
+  "name": "context-contracts",
+  "required_features": [
+    "context-contracts"
+  ],
+  "requires_engine": ">=0.1.1,<1",
+  "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+}

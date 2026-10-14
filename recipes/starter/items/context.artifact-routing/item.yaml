@@ -1,0 +1,34 @@
+{
+  "context": {
+    "access": "inherit",
+    "consumers": [],
+    "content_format": "markdown",
+    "contract_id": "e7907c79-8908-5e7f-878a-3db57e40691a",
+    "contract_version": "1.1.1",
+    "sensitivity": "public"
+  },
+  "description": "Generic workspace layout and destination rules for requested durable artifacts.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "21394aca5b33270b83c2a8dd8a71921e5e149688e33181a637017708a334e496",
+    "dasync.dev/catalog-path": "packages/contexts/artifact-routing/manifest.yaml",
+    "dasync.dev/token-budget": 900
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.artifact-routing",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "artifact-routing",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.1.1"
+}

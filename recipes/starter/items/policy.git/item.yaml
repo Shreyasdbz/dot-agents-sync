@@ -1,0 +1,30 @@
+{
+  "description": "Git hygiene",
+  "entry": "POLICY.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "85a7bceef0ac321d41da86a1afb8575d81781bfda6e83129a2a0dcd190e43c19",
+    "dasync.dev/catalog-path": "packages/policies/git/manifest.yaml",
+    "dasync.dev/token-budget": 8000
+  },
+  "files": [
+    "POLICY.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "policy.git",
+  "kind": "Policy",
+  "license": "MIT",
+  "name": "git",
+  "optional_capabilities": [],
+  "policy": {
+    "globs": [],
+    "priority": 0
+  },
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.0.0"
+}

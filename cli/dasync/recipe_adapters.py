@@ -1,19 +1,24 @@
 """Pure Codex rendering and finite typed Markdown destinations."""
 
 import json
+import os
 import posixpath
 import re
+import shlex
+import sys
+import tomllib
 from dataclasses import dataclass
-from urllib.parse import quote
+from urllib.parse import quote, urlsplit, urlunsplit
 
 import yaml
 
 from .errors import DasyncError
 from .io import canonical, digest
 from .recipe_contracts import key_record, key_text
+from .recipe_resolver import dependency_key
 from .recipe_sources import check_paths, relative_path
 
-ADAPTER_VERSION = "recipe-codex/1"
+ADAPTER_VERSION = "recipe-codex/2"
 MAPPING_VERSION = 1
 
 
@@ -39,14 +44,16 @@ def file_mapping(selected, mapping):
     paths = {}
     for key, item in sorted(selected.items()):
         spec = item.spec
-        if not spec["entry"].endswith((".md", ".markdown")):
-            raise DasyncError("CONTENT_INVALID", "This adapter requires canonical Markdown entrypoints")
-        if spec["kind"] not in ("Skill", "Template", "Context"):
+        if spec["kind"] == "Agent" and spec["agent"]["access"] == "read-only":
             raise DasyncError(
                 "CAPABILITY_UNSUPPORTED",
-                "The experimental Codex adapter supports Skill, Template and public Context only",
+                "Standalone Codex agents inherit the parent sandbox; enforced read-only access cannot be established by this adapter",
             )
-        missing = set(spec.get("required_capabilities", [])) - {"filesystem.read"}
+        if spec["kind"] not in ("Template", "Hook") and not spec["entry"].endswith((".md", ".markdown")):
+            raise DasyncError("CONTENT_INVALID", "This adapter requires canonical Markdown entrypoints")
+        missing = set(spec.get("required_capabilities", [])) - {"filesystem.read", "filesystem.write"}
+        if spec["kind"] == "Agent" and "filesystem.write" in spec.get("required_capabilities", []):
+            missing.add("filesystem.write")
         if missing:
             raise DasyncError(
                 "CAPABILITY_UNSUPPORTED", "Essential capabilities cannot be preserved by this adapter"
@@ -57,10 +64,20 @@ def file_mapping(selected, mapping):
                 "Required context slots need explicit binding in the later context milestone",
             )
         name = mapping[key_text(key)]
-        prefix = ".agents/skills" if spec["kind"] == "Skill" else ".codex/dasync-references"
+        prefix = (
+            ".agents/skills"
+            if spec["kind"] == "Skill"
+            else ".codex/hooks"
+            if spec["kind"] == "Hook"
+            else ".codex/dasync-references"
+        )
         for filename in item.files:
             native_file = "SKILL.md" if spec["kind"] == "Skill" and filename == spec["entry"] else filename
-            paths[(key, filename)] = f"{prefix}/{name}/{native_file}"
+            paths[(key, filename)] = (
+                f".codex/agents/{name}.toml"
+                if spec["kind"] == "Agent" and filename == spec["entry"]
+                else f"{prefix}/{name}/{native_file}"
+            )
     check_paths(paths.values())
     return paths
 
@@ -102,7 +119,7 @@ def _literal_mask(line):
     return mask
 
 
-def render_references(text, translate):
+def render_references(text, translate, scheme="dasync:"):
     """Only inline Markdown links and reference definitions carry typed destinations.
 
     Fences, inline code, comments, escaped links and ordinary prose are literal.
@@ -149,12 +166,15 @@ def render_references(text, translate):
         spans = []
         # Explicit destinations use no whitespace/parentheses; angle form is supported.
         for match in re.finditer(
-            r"\[([^\[\]\n]*(?:\\.[^\[\]\n]*)*)\]\(<?(dasync:[^\s()<>]+)>?(?:\s+\"[^\"\n]*\")?\)", line
+            r"\[([^\[\]\n]*(?:\\.[^\[\]\n]*)*)\]\(<?("
+            + re.escape(scheme)
+            + r"[^\s()<>]+)>?(?:\s+\"[^\"\n]*\")?\)",
+            line,
         ):
             start, end = match.span(2)
             if not _escaped(line, match.start()) and not any(mask[match.start() : match.end()]):
                 spans.append((start, end, translate(match[2])))
-        definition = re.match(r"^ {0,3}\[[^\]\n]+\]:\s*<?(dasync:[^\s<>]+)>?", line)
+        definition = re.match(r"^ {0,3}\[[^\]\n]+\]:\s*<?(" + re.escape(scheme) + r"[^\s<>]+)>?", line)
         if definition and not any(mask[: definition.end()]):
             spans.append((*definition.span(1), translate(definition[1])))
         for start, end, replacement in sorted(spans, reverse=True):
@@ -173,16 +193,17 @@ class Artifact:
     mode: int = 0o644
 
 
-def render(selected):
+def render(selected, scope=None, approved=(), hook_runtime=None):
     mapping = name_mapping(selected)
     paths = file_mapping(selected, mapping)
     artifacts, decisions = [], []
+    policies, hooks = [], {}
     for key, item in sorted(selected.items()):
         spec = item.spec
         references = set()
         for invocation in spec.get("invocations", []):
             dependency = invocation["dependency"]
-            target = (key[0], dependency)
+            target = dependency_key(item, dependency)
             if dependency not in spec.get("requires", {}) or target not in selected:
                 raise DasyncError(
                     "REFERENCE_INVALID", "Typed invocation must name a selected declared dependency"
@@ -205,13 +226,18 @@ def render(selected):
                     )
                 if not destination.startswith("dasync:dependency/"):
                     raise DasyncError("REFERENCE_INVALID", "Unknown typed destination kind")
-                local, _, resource = destination.removeprefix("dasync:dependency/").partition("/")
+                pieces = destination.removeprefix("dasync:dependency/").split("/")
+                imported = pieces[0] in item.imports
+                count = 2 if imported else 1
+                if len(pieces) < count:
+                    raise DasyncError("REFERENCE_INVALID", "Imported dependency needs an item ID")
+                local, resource = "/".join(pieces[:count]), "/".join(pieces[count:])
                 local, separator, local_fragment = local.partition("#")
                 resource, fragment_separator, fragment = resource.partition("#")
                 fragment = fragment if fragment_separator else local_fragment if separator else ""
-                if not re.fullmatch(r"[a-z][a-z0-9-]*(\.[a-z0-9-]+)*", local):
+                if not re.fullmatch(r"[a-z][a-z0-9.-]*(/[a-z][a-z0-9.-]*)?", local):
                     raise DasyncError("REFERENCE_INVALID", "Typed dependency identifier is malformed")
-                target = (key[0], local)
+                target = dependency_key(item, local)
                 if local not in spec.get("requires", {}) or target not in selected:
                     raise DasyncError(
                         "REFERENCE_INVALID", "Typed destination must name a selected declared dependency"
@@ -234,6 +260,25 @@ def render(selected):
                         "NATIVE_AUTHORSHIP", "Canonical entrypoints must not contain provider frontmatter"
                     )
                 text = render_references(text, translate)
+                if filename == spec["entry"] and spec["kind"] in ("Skill", "Agent", "Policy"):
+                    index = []
+                    for reference in sorted(spec.get("requires", {})):
+                        dependency = dependency_key(item, reference)
+                        if dependency not in selected:
+                            raise DasyncError("REFERENCE_INVALID", "Selected dependency index is incomplete")
+                        target = selected[dependency]
+                        target_path = paths[(dependency, target.spec["entry"])]
+                        link = quote(
+                            posixpath.relpath(target_path, posixpath.dirname(output_path)), safe="/.-_"
+                        )
+                        index.append(f"- {reference}: [{target.spec['entry']}]({link})")
+                        contributors.add(dependency)
+                    if index:
+                        text += (
+                            "\n\n## Selected dependencies\n\nLoad each reference only when its role is needed.\n\n"
+                            + "\n".join(index)
+                            + "\n"
+                        )
                 if spec["kind"] == "Skill" and filename == spec["entry"]:
                     text = (
                         f"---\nname: {json.dumps(mapping[key_text(key)])}\ndescription: {json.dumps(spec['description'])}\n---\n\n"
@@ -246,13 +291,44 @@ def render(selected):
                             + "\n"
                         )
                     contributors |= references
+                if spec["kind"] == "Agent" and filename == spec["entry"]:
+                    text = f"name = {json.dumps(mapping[key_text(key)], ensure_ascii=False)}\ndescription = {json.dumps(spec['description'], ensure_ascii=False)}\ndeveloper_instructions = {json.dumps(text, ensure_ascii=False)}\n"
+                    tomllib.loads(text)
+                if spec["kind"] == "Policy" and filename == spec["entry"]:
+                    policies.append((spec["policy"]["priority"], key, text, contributors))
                 data = text.encode()
             artifacts.append(Artifact(output_path, data, key, tuple(sorted(contributors))))
+        if spec["kind"] == "Hook":
+            if os.name != "posix" or scope is None:
+                raise DasyncError("CAPABILITY_UNSUPPORTED", "Python hooks require a supported POSIX scope")
+            if (key, item.digest) not in approved:
+                raise DasyncError(
+                    "EXECUTABLE_TRUST_REQUIRED",
+                    "Review and separately approve this exact hook digest",
+                    details={"item": key_record(key), "digest": item.digest},
+                )
+            script = scope.root / paths[(key, spec["entry"])]
+            command = shlex.join([hook_runtime or sys.executable, "-I", str(script)])
+            events = {"pre_tool": "PreToolUse", "session_start": "SessionStart", "stop": "Stop"}
+            for event in spec["executable"]["events"]:
+                entry = {
+                    "hooks": [
+                        {"type": "command", "command": command, "timeout": spec["executable"]["timeout"]}
+                    ]
+                }
+                if event == "pre_tool":
+                    entry["matcher"] = ".*"
+                hooks.setdefault(events[event], []).append(entry)
         if spec["kind"] == "Skill" and spec.get("default_prompt"):
             prefix = posixpath.dirname(paths[(key, spec["entry"])])
             interface = {
                 "interface": {
                     "display_name": spec["name"],
+                    **(
+                        {"short_description": spec["short_description"]}
+                        if "short_description" in spec
+                        else {}
+                    ),
                     "default_prompt": "Use $" + mapping[key_text(key)] + " to " + spec["default_prompt"],
                 }
             }
@@ -270,11 +346,61 @@ def render(selected):
                 "adapter": ADAPTER_VERSION,
                 "essential_semantics": "preserved-format-only",
                 "runtime_capabilities": "unverified",
+                **(
+                    {
+                        "agent_access": "inherits-parent",
+                        "sandbox_enforcement": "not established by a standalone role",
+                    }
+                    if spec["kind"] == "Agent"
+                    else {}
+                ),
+                **(
+                    {
+                        "executable_digest": item.digest,
+                        "execution_environment": "provider; no OS sandbox",
+                        "scope_approved": True,
+                    }
+                    if spec["kind"] == "Hook"
+                    else {}
+                ),
                 "optional_unverified": spec.get("optional_capabilities", []),
                 "absent_optional_slots": sorted(
                     name for name, slot in spec.get("slots", {}).items() if not slot["required"]
                 ),
             }
+        )
+    if policies:
+        relative = ".codex/AGENTS.md" if scope is not None and scope.kind == "user" else "AGENTS.md"
+        contributors = {contributor for _, _, _, owners in policies for contributor in owners}
+        text = "<!-- Managed by dasync. Edit canonical recipes, then sync. -->\n\n"
+        for _, key, body, _ in sorted(policies):
+            path = paths[(key, selected[key].spec["entry"])]
+
+            def rebase(destination):
+                parts = urlsplit(destination)
+                if parts.scheme or parts.netloc or not parts.path or parts.path.startswith("/"):
+                    return destination
+                target = posixpath.normpath(posixpath.join(posixpath.dirname(path), parts.path))
+                return urlunsplit(
+                    (
+                        "",
+                        "",
+                        posixpath.relpath(target, posixpath.dirname(relative) or "."),
+                        parts.query,
+                        parts.fragment,
+                    )
+                )
+
+            text += f"## {key_text(key)}\n\n" + render_references(body, rebase, scheme="") + "\n\n"
+        artifacts.append(
+            Artifact(
+                relative, text.encode(), min(key for _, key, _, _ in policies), tuple(sorted(contributors))
+            )
+        )
+    if hooks:
+        contributors = tuple(sorted(key for key, item in selected.items() if item.spec["kind"] == "Hook"))
+        artifacts.append(
+            Artifact(".codex/hooks.json", canonical({"hooks": hooks}), contributors[0], contributors)
         )
     check_paths([artifact.relative for artifact in artifacts])
     if sum(len(artifact.content) for artifact in artifacts) > 128 * 1024 * 1024:

@@ -6,6 +6,8 @@ The [experimental recipe protocol](../recipe-protocol.md) implements the immedia
 
 ## Runtime and distribution
 
+The collected catalog has a generated, audited projection into seven local recipes under `recipes/`, with one owner per item and explicit UUID imports. `packages/` and `template-system/` remain the editable content sources during this transition. The CLI wheel continues to exclude workflow payloads. Recipe adapter generation 2 adds aggregate policy provenance, inherited-permission native roles and scope-local exact Python Hook approvals stored atomically in private State metadata. Essential standalone agent read-only enforcement remains unsupported; current Codex role files inherit parent sandbox configuration. The legacy renderer also omits its ignored sandbox field (adapter generation 10).
+
 Python 3.11+ provides SQLite, TOML parsing, cross-platform paths, subprocess control, file descriptors and mature testing. `uv tool install .` or `pipx install .` installs the CLI; the catalog is independently pinned from a Git source. `uv.lock` pins development dependencies; it is not a dasync environment lockfile.
 
 ## Configuration footprint

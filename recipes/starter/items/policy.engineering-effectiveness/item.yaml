@@ -1,0 +1,30 @@
+{
+  "description": "Customer outcomes, proportionate engineering judgment, and measured organizational leverage.",
+  "entry": "POLICY.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "4306d24feebb2d552f98be2badbd98fdaa4b16f33d0a023628c30c73d7eba2be",
+    "dasync.dev/catalog-path": "packages/policies/engineering-effectiveness/manifest.yaml",
+    "dasync.dev/token-budget": 850
+  },
+  "files": [
+    "POLICY.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "policy.engineering-effectiveness",
+  "kind": "Policy",
+  "license": "MIT",
+  "name": "engineering-effectiveness",
+  "optional_capabilities": [],
+  "policy": {
+    "globs": [],
+    "priority": 0
+  },
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.0.0"
+}

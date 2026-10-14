@@ -1,0 +1,34 @@
+{
+  "agent": {
+    "access": "inherit"
+  },
+  "description": "Review user journeys, accessibility, interaction states, and visual hierarchy; distinguish source findings from rendered evidence.",
+  "entry": "AGENT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "3c265281d8f4ea4d755e25c3c2f563051e70d87ef0e2dabc79d80cd658947ad4",
+    "dasync.dev/catalog-path": "packages/agents/ux-reviewer/manifest.yaml",
+    "dasync.dev/outputs": "findings,evidence,verification-limits",
+    "dasync.dev/token-budget": 650
+  },
+  "files": [
+    "AGENT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "agent.ux-reviewer",
+  "kind": "Agent",
+  "license": "MIT",
+  "name": "ux-reviewer",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {
+    "starter/policy.communication": ">=1,<2",
+    "starter/policy.engineering-effectiveness": ">=1,<2",
+    "starter/policy.repository-guidance": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.4.0"
+}

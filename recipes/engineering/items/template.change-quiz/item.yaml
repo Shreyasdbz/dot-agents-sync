@@ -1,0 +1,28 @@
+{
+  "description": "Self-contained visual quiz with immediate option explanations and collapsed revision history.",
+  "entry": "components.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "18ba5d32b3618eb654c7d9fb659e73078b1898390a5937e6a6e1c405706f279e",
+    "dasync.dev/catalog-path": "packages/templates/change-quiz/manifest.yaml",
+    "dasync.dev/token-budget": 18000
+  },
+  "files": [
+    "components.md",
+    "quiz.html",
+    "components/question.html",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "template.change-quiz",
+  "kind": "Template",
+  "license": "MIT",
+  "name": "change-quiz",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.2.2"
+}

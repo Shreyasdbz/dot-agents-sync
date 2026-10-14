@@ -1,0 +1,35 @@
+{
+  "context": {
+    "access": "explicit",
+    "binding": "context.coding-preferences",
+    "consumers": [],
+    "content_format": "markdown",
+    "contract_id": "367b5db9-88f8-538a-a791-206e697d6e88",
+    "contract_version": "1.2.0",
+    "sensitivity": "private"
+  },
+  "description": "Coding preferences: Load when repository conventions leave a genuine choice.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "cd8dff0e84b74a175d632c79a01d825744897e198d86ce72fc0e3ffd68150239",
+    "dasync.dev/catalog-path": "packages/contexts/coding-preferences/manifest.yaml",
+    "dasync.dev/token-budget": 600
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.coding-preferences",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "coding-preferences",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.2.0"
+}

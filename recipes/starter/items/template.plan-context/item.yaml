@@ -1,0 +1,27 @@
+{
+  "description": "Schema-bound planning context with bug-fix, feature, migration and offline adaptation guidance.",
+  "entry": "plan-context.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "55b0929ecb2f7c1cc34e69bddd9bb6be9026037fe34c0a9254fa56a4527f3e62",
+    "dasync.dev/catalog-path": "packages/templates/plan-context/manifest.yaml",
+    "dasync.dev/token-budget": 4000
+  },
+  "files": [
+    "adaptation.md",
+    "plan-context.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "template.plan-context",
+  "kind": "Template",
+  "license": "MIT",
+  "name": "plan-context",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.2.0"
+}

@@ -1,0 +1,14 @@
+{
+  "description": "Collected dasync hooks workflows and references.",
+  "format": 1,
+  "imports": {},
+  "items": [
+    "items/hook.credential-path-guard/item.yaml"
+  ],
+  "name": "hooks",
+  "required_features": [
+    "python-hooks"
+  ],
+  "requires_engine": ">=0.1.1,<1",
+  "source_id": "d2e034c2-de29-5ead-8abd-7d102d14d18d"
+}

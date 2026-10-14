@@ -1,0 +1,30 @@
+{
+  "description": "Accessible artifact quality",
+  "entry": "POLICY.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "5859bf08432664201e3d7c53105e8c4ac6d983dd8aab11bea5eebbb962d52415",
+    "dasync.dev/catalog-path": "packages/policies/accessibility/manifest.yaml",
+    "dasync.dev/token-budget": 8000
+  },
+  "files": [
+    "POLICY.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "policy.accessibility",
+  "kind": "Policy",
+  "license": "MIT",
+  "name": "accessibility",
+  "optional_capabilities": [],
+  "policy": {
+    "globs": [],
+    "priority": 0
+  },
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.0.0"
+}

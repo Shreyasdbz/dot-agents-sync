@@ -1,0 +1,43 @@
+{
+  "default_prompt": "investigate this failure and return a traceable diagnosis.",
+  "description": "Explain a failure or answer a research question with traceable evidence, inline by default. Diagnosis does not authorize a fix.",
+  "entry": "SKILL.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "c63952c53c5409e34629ca2184acbf670b409558f6ed39dc58d27b21530c9977",
+    "dasync.dev/catalog-path": "packages/skills/investigate/manifest.yaml",
+    "dasync.dev/optional-fallback": "Analyze supplied evidence; disclose which current external facts could not be verified.",
+    "dasync.dev/outputs": "inline,markdown",
+    "dasync.dev/suggestions": "35fc4746-6bbb-5fce-8e1f-8116aa7e7afa/skill.pitch-deck",
+    "dasync.dev/token-budget": 1500
+  },
+  "files": [
+    "SKILL.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "skill.investigate",
+  "kind": "Skill",
+  "license": "MIT",
+  "name": "Investigate",
+  "optional_capabilities": [
+    "web.search"
+  ],
+  "required_capabilities": [
+    "filesystem.read"
+  ],
+  "requires": {
+    "context.artifact-routing": ">=1,<2",
+    "policy.communication": ">=1,<2",
+    "policy.engineering-effectiveness": ">=1,<2",
+    "policy.repository-guidance": ">=1,<2",
+    "policy.research": ">=1,<2",
+    "skill.visual-artifacts": ">=1,<2",
+    "template.investigation": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "short_description": "Investigate failures with traceable evidence",
+  "version": "1.6.0"
+}

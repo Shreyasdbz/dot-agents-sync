@@ -1,0 +1,30 @@
+{
+  "description": "Security and privacy",
+  "entry": "POLICY.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "03a5c1250a1bfaf93591dc6009a1e38275170f9c64cc3b90e8ae6b3438dd61ef",
+    "dasync.dev/catalog-path": "packages/policies/security/manifest.yaml",
+    "dasync.dev/token-budget": 8000
+  },
+  "files": [
+    "POLICY.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "policy.security",
+  "kind": "Policy",
+  "license": "MIT",
+  "name": "security",
+  "optional_capabilities": [],
+  "policy": {
+    "globs": [],
+    "priority": 0
+  },
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.0.0"
+}

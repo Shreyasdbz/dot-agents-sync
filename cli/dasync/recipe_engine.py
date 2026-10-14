@@ -11,6 +11,7 @@ from .contracts import validate
 from .errors import DasyncError
 from .io import MAX_FILE, canonical, digest, observe, parse
 from .recipe_adapters import ADAPTER_VERSION, MAPPING_VERSION, render
+from .recipe_approvals import approved_pairs, executable_state, propose
 from .recipe_contracts import key_record, key_text, key_tuple
 from .recipe_resolver import compose, project_lock, resolve, selector
 from .recipe_sources import Snapshots
@@ -74,7 +75,15 @@ def metadata_updates(engine, request):
     if request["operation"] != "recipe.configure":
         return {}
     desired = registrations(engine, request)
-    return {"recipe-registry": desired} if desired != registry(engine) else {}
+    result = {"recipe-registry": desired} if desired != registry(engine) else {}
+    if request.get("approve_executables"):
+        existing = load_config(engine.scope.config, required=False)
+        intent = _desired(engine, request, existing, desired)
+        personal = load_config(engine.env.config, required=False) if engine.scope.kind == "project" else None
+        approved = propose(engine, request, load_sources(engine, compose(intent, personal), desired))
+        if approved != executable_state(engine):
+            result["recipe-executables"] = approved
+    return result
 
 
 def load_sources(engine, pins, registered):
@@ -312,6 +321,13 @@ def _restore(engine, request, registered):
                 raise DasyncError(
                     "AUTHORITY_DENIED", "Receipt graph activation is denied by current authority"
                 )
+            if record.get("kind") == "Hook" and (key_tuple(record), record["digest"]) not in approved_pairs(
+                executable_state(engine), engine.scope.key
+            ):
+                raise DasyncError(
+                    "EXECUTABLE_TRUST_REQUIRED",
+                    "Receipt hook reactivation requires current exact-digest approval",
+                )
         if (
             previous_plan.get("adapter_version") != ADAPTER_VERSION
             or previous_plan.get("mapping_version") != MAPPING_VERSION
@@ -416,6 +432,13 @@ def build(engine, request):
         pins = compose(desired, personal)
         sources = load_sources(engine, pins, registered)
         selected, graph = resolve(sources, desired, engine.scope.kind, personal, grants["denied"])
+        approved = approved_pairs(propose(engine, request, sources), engine.scope.key)
+        for key, item in selected.items():
+            if item.spec["kind"] == "Hook" and key not in {key_tuple(row) for row in desired["roots"]}:
+                raise DasyncError(
+                    "EXECUTABLE_TRUST_REQUIRED",
+                    "Hooks require an explicit root in this scope; inheritance or dependency selection is insufficient",
+                )
         graph["sources"] = [
             {
                 "source_id": sid,
@@ -424,7 +447,11 @@ def build(engine, request):
             }
             for sid, pin in sorted(pins.items())
         ]
-        artifacts, decisions, mapping = render(selected)
+        if any(item.spec["kind"] == "Hook" for item in selected.values()):
+            import sys
+
+            graph["hook_runtime"] = (current or {}).get("graph", {}).get("hook_runtime", sys.executable)
+        artifacts, decisions, mapping = render(selected, engine.scope, approved, graph.get("hook_runtime"))
         for artifact in artifacts:
             path = str(engine.scope.root / artifact.relative)
             outputs[path] = artifact.content
@@ -470,6 +497,7 @@ def build(engine, request):
             "lock": observe(engine.scope.root / ".dasync.lock"),
             "registry": digest(canonical(registry(engine))),
             "authority": digest(canonical(grants)),
+            "executables": digest(canonical(executable_state(engine))),
             "snapshots": pins,
         },
         "graph": graph,

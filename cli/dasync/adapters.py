@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from .errors import DasyncError
 from .io import parse
 
-ADAPTER_VERSION = "9"
+ADAPTER_VERSION = "10"
 PROVIDERS = ("codex", "claude", "copilot", "cursor")
 BASE_CAPABILITIES = {"filesystem.read", "filesystem.write", "git.read"}
 
@@ -361,7 +361,7 @@ def render(selected, graph, bindings, config, scope, hook_executables=None):
                     if name != m["entry"]:
                         artifacts.append(Artifact(root + "/" + name, content, provider, pid))
             elif kind == "Agent" and provider == "codex":
-                value = f'name = {json.dumps(slug)}\ndescription = {json.dumps(m["description"])}\nsandbox_mode = "read-only"\ndeveloper_instructions = {json.dumps(body)}\n'
+                value = f"name = {json.dumps(slug, ensure_ascii=False)}\ndescription = {json.dumps(m['description'], ensure_ascii=False)}\ndeveloper_instructions = {json.dumps(body, ensure_ascii=False)}\n"
                 tomllib.loads(value)
                 artifacts.append(Artifact(f".codex/agents/{slug}.toml", value.encode(), provider, pid))
             elif kind == "Agent" and provider == "claude":

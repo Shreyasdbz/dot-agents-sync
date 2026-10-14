@@ -342,7 +342,9 @@ class RecipeLifecycle(RuleBasedStateMachine):
     def __init__(self):
         super().__init__()
         self.temp = tempfile.TemporaryDirectory(prefix="dasync-sequence-")
-        root = Path(self.temp.name)
+        # macOS commonly exposes TMPDIR through /var -> /private/var. The test
+        # owns this directory: use its canonical path without relaxing engine safety.
+        root = Path(self.temp.name).resolve()
         home, project = root / "home", root / "project"
         home.mkdir()
         project.mkdir()
@@ -420,3 +422,18 @@ TestRecipeLifecycle = RecipeLifecycle.TestCase
 TestRecipeLifecycle.settings = settings(
     max_examples=20, stateful_step_count=35, derandomize=True, database=None, deadline=None
 )
+
+
+def test_lifecycle_harness_canonicalizes_a_symlinked_system_temp_directory(tmp_path, monkeypatch):
+    actual = tmp_path / "actual"
+    actual.mkdir()
+    alias = tmp_path / "alias"
+    alias.symlink_to(actual, target_is_directory=True)
+    monkeypatch.setattr(tempfile, "tempdir", str(alias))
+    model = RecipeLifecycle()
+    try:
+        assert model.engine.scope.root.is_relative_to(actual)
+        model.select_or_remove(node=0, select=True)
+        model.receipt_matches_model_and_is_idempotent()
+    finally:
+        model.teardown()

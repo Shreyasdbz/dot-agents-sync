@@ -1,0 +1,30 @@
+{
+  "description": "Anti-slop and communication",
+  "entry": "POLICY.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "9191621a25f9c14921fa897ed0d124112a3ef472b51cd7e1b5c1bc7d4799bc89",
+    "dasync.dev/catalog-path": "packages/policies/communication/manifest.yaml",
+    "dasync.dev/token-budget": 8000
+  },
+  "files": [
+    "POLICY.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "policy.communication",
+  "kind": "Policy",
+  "license": "MIT",
+  "name": "communication",
+  "optional_capabilities": [],
+  "policy": {
+    "globs": [],
+    "priority": 0
+  },
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.2.0"
+}

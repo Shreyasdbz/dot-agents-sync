@@ -1,0 +1,38 @@
+{
+  "description": "Collected dasync engineering workflows and references.",
+  "format": 1,
+  "imports": {
+    "starter": {
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    }
+  },
+  "items": [
+    "items/agent.ai-systems-reviewer/item.yaml",
+    "items/agent.architecture-reviewer/item.yaml",
+    "items/agent.security-reviewer/item.yaml",
+    "items/agent.slop-auditor/item.yaml",
+    "items/agent.ux-reviewer/item.yaml",
+    "items/context.coding-maintainable/item.yaml",
+    "items/context.engineering-stack/item.yaml",
+    "items/context.github-planning/item.yaml",
+    "items/policy.engineering-platform/item.yaml",
+    "items/policy.github-planning/item.yaml",
+    "items/policy.monorepo/item.yaml",
+    "items/policy.security/item.yaml",
+    "items/skill.change-quiz/item.yaml",
+    "items/skill.explain-changes/item.yaml",
+    "items/skill.pr-review/item.yaml",
+    "items/template.change-quiz/item.yaml",
+    "items/template.explain-changes/item.yaml",
+    "items/template.pr-review/item.yaml"
+  ],
+  "name": "engineering",
+  "required_features": [
+    "context-contracts",
+    "imports",
+    "native-agents",
+    "native-policies"
+  ],
+  "requires_engine": ">=0.1.1,<1",
+  "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+}

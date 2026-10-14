@@ -1,0 +1,33 @@
+{
+  "description": "Use one GitHub Project as the monorepo planning authority, with native issue types and strict metadata.",
+  "entry": "POLICY.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "dbc0c9b96e4920759a83479576607215005993204d5788a32d073a5cfa3920fd",
+    "dasync.dev/catalog-path": "packages/policies/github-planning/manifest.yaml",
+    "dasync.dev/token-budget": 850
+  },
+  "files": [
+    "POLICY.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "policy.github-planning",
+  "kind": "Policy",
+  "license": "MIT",
+  "name": "github-planning",
+  "optional_capabilities": [],
+  "policy": {
+    "globs": [],
+    "priority": 0
+  },
+  "required_capabilities": [],
+  "requires": {
+    "context.github-planning": ">=1,<2",
+    "starter/policy.communication": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.1.0"
+}

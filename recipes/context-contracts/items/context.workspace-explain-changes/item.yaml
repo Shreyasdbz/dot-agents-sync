@@ -1,0 +1,39 @@
+{
+  "context": {
+    "access": "explicit",
+    "binding": "context.workspace-explain-changes",
+    "consumers": [
+      {
+        "item_id": "skill.explain-changes",
+        "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+      }
+    ],
+    "content_format": "markdown",
+    "contract_id": "47f79500-5512-579c-900b-328fb7b46133",
+    "contract_version": "1.0.0",
+    "sensitivity": "private"
+  },
+  "description": "Private workspace repository and connected-source index for visual change explanations.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "d8b878b7f372235f2ef21798229ebdde1d67e20d914c79544c4aba19c761a946",
+    "dasync.dev/catalog-path": "packages/contexts/workspace-explain-changes/manifest.yaml",
+    "dasync.dev/token-budget": 550
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.workspace-explain-changes",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "workspace-explain-changes",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "project"
+  ],
+  "version": "1.0.0"
+}

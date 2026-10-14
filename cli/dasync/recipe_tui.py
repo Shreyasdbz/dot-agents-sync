@@ -214,7 +214,7 @@ class Help(ModalScreen):
                 "/  Find items\nSpace / Enter  Toggle direct selection\nD  Toggle an explicit disable\n"
                 "A  Prepare a source\nB  Use a registered snapshot\nI  Toggle personal inheritance\n"
                 "R  Review draft\nCtrl+Enter  Confirm reviewed apply\nCtrl+S  Save reviewed plan\n"
-                "F3  Health and recovery\nF4  Inspect full identity\nCtrl+R  Discard draft\nCtrl+T  Cycle themes\nQ / F10  Close\n\n"
+                "F3  Health and recovery\nF4  Inspect full identity\nX  Approve exact Hook bytes\nCtrl+R  Discard draft\nCtrl+T  Cycle themes\nQ / F10  Close\n\n"
                 "Nothing is installed until you review and confirm Apply. Dependencies remain dependencies; "
                 "source trust, file replacements and ordinary confirmation are separate decisions."
             )
@@ -280,7 +280,7 @@ class RecipeApp(App[str]):
     #browse-layout { height: 1fr; }
     #sources { width: 24; padding: 1; border: round $primary; margin-right: 1; }
     #source-filter { width: 1fr; margin-bottom: 1; }
-    #source-info { height: 1fr; color: $text-muted; }
+    #source-info { height: 1fr; color: $text-muted; overflow-y: auto; }
     #catalog { width: 1fr; }
     #search { margin-bottom: 1; }
     #items { height: 1fr; }
@@ -332,6 +332,7 @@ class RecipeApp(App[str]):
         Binding("ctrl+s", "save", "Save", show=False),
         Binding("f3", "health", "Health", show=False),
         Binding("f4", "inspect", "Inspect", show=False),
+        Binding("x", "approve_hook", "Approve Hook", show=False),
         Binding("ctrl+t", "theme", "Theme", show=False),
         Binding("ctrl+c", "quit", "Close", show=False, priority=True),
     ]
@@ -510,7 +511,7 @@ class RecipeApp(App[str]):
         self.query_one("#source-info", Static).update(
             display_text(
                 "\n\n".join(
-                    f"{self.session.labels[sid]}\n{len(source.items)} items\n{source.pin[:23]}…"
+                    f"{self.session.labels[sid]}\n{len(source.items)} items\n{source.pin[:19]}…"
                     for sid, source in sorted(self.session.sources.items())
                 )
             )
@@ -684,6 +685,18 @@ class RecipeApp(App[str]):
         table = self.query_one("#effects", DataTable)
         notes = []
         for decision in plan["decisions"]:
+            if decision.get("agent_access"):
+                notes.append(
+                    decision["item"]["item_id"]
+                    + " · role inherits parent permissions; no standalone sandbox override"
+                )
+            if decision.get("executable_digest"):
+                notes.append(
+                    decision["item"]["item_id"]
+                    + " · separately approved Python hook · "
+                    + decision["executable_digest"][:16]
+                    + " · provider execution, no OS sandbox"
+                )
             if decision.get("optional_unverified"):
                 notes.append(
                     decision["item"]["item_id"]
@@ -866,6 +879,30 @@ class RecipeApp(App[str]):
     def action_inspect(self):
         if self.editable() and self.selected_key:
             self.push_screen(Inspect(self.session.detail(self.selected_key)[0]))
+
+    def action_approve_hook(self):
+        if not self.editable() or not self.selected_key:
+            return
+        key = self.selected_key
+        item = self.session.sources[key[0]].items.get(key[1])
+        if item is None or item.spec["kind"] != "Hook":
+            self.say("Select a Hook and inspect its code before approving execution.")
+            return
+
+        def approved(result):
+            if result:
+                self.session.approve_hook(key, confirmed=True)
+                self.refresh_catalog()
+                self.say("Exact executable approval staged for this scope. Review and Apply to commit it.")
+
+        self.push_screen(
+            Confirm(
+                "Approve these exact Python Hook bytes?",
+                f"{key_text(key)}\nDigest: {item.digest}\nEvents: {', '.join(item.spec['executable']['events'])}\nPermissions: {', '.join(item.spec['executable']['permissions'])}\nThe hook runs in the provider's execution environment; this is not an OS sandbox. Approval is separate from source trust and final Apply.",
+                "Approve",
+            ),
+            approved,
+        )
 
     def action_quit(self):
         if self.busy:

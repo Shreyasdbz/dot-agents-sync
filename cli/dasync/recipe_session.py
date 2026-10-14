@@ -41,6 +41,7 @@ class RecipeSession:
         self.disabled = {key_tuple(key) for key in self.base["disabled"]}
         self.inherit = self.base["inherit_user"]
         self.pending, self.bindings = {}, {}
+        self.approvals = {}
         self.revision, self.reviewed_revision, self.plan = 0, None, None
         self.sources, self.labels, self.load_error = {}, {}, None
         self.graph, self.graph_error = {}, None
@@ -53,6 +54,7 @@ class RecipeSession:
     def dirty(self):
         return bool(
             self.pending
+            or self.approvals
             or self.bindings
             or self.roots != {key_tuple(k) for k in self.base["roots"]}
             or self.disabled != {key_tuple(k) for k in self.base["disabled"]}
@@ -149,6 +151,9 @@ class RecipeSession:
         validate("recipe-request", request)
         registrations(self.engine, request)
         self.pending = pending
+        self.approvals = {
+            key: value for key, value in self.approvals.items() if key[0] != record["source_id"]
+        }
         self.bindings.pop(record["source_id"], None)
         self.touch()
         self.refresh_sources()
@@ -159,6 +164,7 @@ class RecipeSession:
             raise DasyncError("AUTHORITY_DENIED", "This source is denied")
         load_sources(self.engine, {sid: pin}, registered)
         self.pending.pop(sid, None)
+        self.approvals = {key: value for key, value in self.approvals.items() if key[0] != sid}
         self.bindings[sid] = pin
         self.touch()
         self.refresh_sources()
@@ -204,9 +210,27 @@ class RecipeSession:
             request["bind_sources"] = [
                 {"source_id": sid, "pin": pin} for sid, pin in sorted(self.bindings.items())
             ]
+        if self.approvals:
+            request["approve_executables"] = [
+                {**key_record(key), "digest": value} for key, value in sorted(self.approvals.items())
+            ]
         if overwrite:
             request["conflict"] = "overwrite"
         return request
+
+    def approve_hook(self, key, confirmed=False):
+        if not confirmed:
+            raise DasyncError(
+                "EXECUTABLE_TRUST_REQUIRED", "Hook execution needs separate exact-digest approval"
+            )
+        source = self.sources.get(key[0])
+        item = source.items.get(key[1]) if source else None
+        if item is None or item.spec["kind"] != "Hook":
+            raise DasyncError(
+                "EXECUTABLE_APPROVAL_INVALID", "Select a Hook before approving executable bytes"
+            )
+        self.approvals[key] = item.digest
+        self.touch()
 
     def review(self, overwrite=False, request=None):
         self.plan, self.reviewed_revision = None, None
@@ -295,6 +319,19 @@ class RecipeSession:
                 "Requires: " + (", ".join(spec.get("requires", {})) or "none"),
                 "F4 for full identity and snapshot",
             ]
+        if spec["kind"] == "Hook":
+            lines.extend(
+                [
+                    "Executable digest: " + selected.digest,
+                    "Events: " + ", ".join(spec["executable"]["events"]),
+                    "Permissions: " + ", ".join(spec["executable"]["permissions"]),
+                    "X: separately approve these exact bytes. Source trust and Apply do not approve execution.",
+                ]
+            )
+        if spec["kind"] == "Agent":
+            lines.append(
+                "Role permissions inherit the parent session. This file cannot establish a read-only sandbox."
+            )
         row = next((r for r in self.graph.get("items", []) if key_tuple(r) == key), None)
         if row:
             reasons = []

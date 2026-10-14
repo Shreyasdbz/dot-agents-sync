@@ -4,7 +4,7 @@ import base64
 import os
 import re
 import unicodedata
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path, PurePosixPath
 
 from .contracts import validate
@@ -66,6 +66,7 @@ class Item:
     spec: dict
     files: dict[str, bytes]
     digest: str
+    imports: dict = field(default_factory=dict)
 
     @property
     def key(self):
@@ -102,6 +103,12 @@ class RecipeSnapshot:
             content = {}
             for name in spec["files"]:
                 relative_path(name)
+                if name.endswith((".sh", ".ps1", ".bat", ".cmd", ".exe")) or (
+                    name.endswith(".py") and spec["kind"] != "Hook"
+                ):
+                    raise DasyncError(
+                        "EXECUTABLE_UNSUPPORTED", "Only declared Python Hook content is supported"
+                    )
                 full = (folder / name).as_posix()
                 if full == manifest or full in declared:
                     raise DasyncError("SOURCE_INVALID", "Declared file ownership must be disjoint")
@@ -116,7 +123,11 @@ class RecipeSnapshot:
             item_digest = digest(
                 canonical(spec) + canonical({n: digest(b) for n, b in sorted(content.items())})
             )
-            self.items[spec["id"]] = Item(self.source_id, spec, content, item_digest)
+            self.items[spec["id"]] = Item(
+                self.source_id, spec, content, item_digest, metadata.get("imports", {})
+            )
+        if set(self.items) & set(metadata.get("imports", {})):
+            raise DasyncError("SOURCE_INVALID", "An import key cannot shadow a recipe-local item ID")
         if set(files) != declared:
             raise DasyncError("SOURCE_INVALID", "Retained snapshot contains undeclared files")
         self.files = files
@@ -166,7 +177,10 @@ def read_source(root):
             data, mode = snapshot(path)
             if data is None:
                 raise DasyncError("SOURCE_UNAVAILABLE", "Declared item file is unavailable")
-            if mode & 0o111 or filename.endswith((".py", ".sh", ".ps1", ".bat", ".cmd", ".exe")):
+            allowed_python = spec["kind"] == "Hook" and filename.endswith(".py")
+            if mode & 0o111 or (
+                filename.endswith((".py", ".sh", ".ps1", ".bat", ".cmd", ".exe")) and not allowed_python
+            ):
                 raise DasyncError(
                     "EXECUTABLE_UNSUPPORTED",
                     "Executable source content is not supported in the local milestone",
@@ -191,8 +205,9 @@ def read_source(root):
                     stack.append(Path(child.path))
                 elif not child.is_file(follow_symlinks=False):
                     raise DasyncError("UNSAFE_PATH", "Source tree contains a special file")
-                elif child.stat(follow_symlinks=False).st_mode & 0o111 or child.name.endswith(
-                    (".py", ".sh", ".ps1", ".bat", ".cmd", ".exe")
+                elif child.stat(follow_symlinks=False).st_mode & 0o111 or (
+                    child.name.endswith((".py", ".sh", ".ps1", ".bat", ".cmd", ".exe"))
+                    and str(Path(child.path).relative_to(root)) not in files
                 ):
                     raise DasyncError("EXECUTABLE_UNSUPPORTED", "Source tree contains executable content")
     return RecipeSnapshot(files)

@@ -43,7 +43,7 @@ def test_provider_conformance(workspace, provider, prefix):
             }
         }
         agent = tomllib.loads(outputs[".codex/agents/dasync-agent-architecture-reviewer.toml"].decode())
-        assert agent["sandbox_mode"] == "read-only"
+        assert "sandbox_mode" not in agent
         assert "model" not in agent
         assert "AGENTS.md" in outputs
     else:

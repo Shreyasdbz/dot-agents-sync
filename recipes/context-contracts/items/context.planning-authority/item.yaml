@@ -1,0 +1,35 @@
+{
+  "context": {
+    "access": "explicit",
+    "binding": "context.planning-authority",
+    "consumers": [],
+    "content_format": "markdown",
+    "contract_id": "19994457-0a77-574f-9c05-143b380cd8af",
+    "contract_version": "1.3.0",
+    "sensitivity": "private"
+  },
+  "description": "Planning authority: Load before planning or updating work items.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "052b37b9f129616350102c936baf17bd148c568efd2c443ba4254d7fc8032a05",
+    "dasync.dev/catalog-path": "packages/contexts/planning-authority/manifest.yaml",
+    "dasync.dev/token-budget": 600
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.planning-authority",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "planning-authority",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.3.0"
+}

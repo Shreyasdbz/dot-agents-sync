@@ -1,0 +1,27 @@
+{
+  "description": "Composable day-trip, single-base, multi-city and group itinerary structures with cost and leg modules.",
+  "entry": "itinerary.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "2e513e12acbf03b9355cfd9995fae3a896cc4edc0bbce4e9e79a3fd9f04321e3",
+    "dasync.dev/catalog-path": "packages/templates/trip-plan/manifest.yaml",
+    "dasync.dev/token-budget": 4000
+  },
+  "files": [
+    "itinerary.md",
+    "modules.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "template.trip-plan",
+  "kind": "Template",
+  "license": "MIT",
+  "name": "trip-plan",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.2.0"
+}

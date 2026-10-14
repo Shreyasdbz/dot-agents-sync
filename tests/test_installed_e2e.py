@@ -240,6 +240,70 @@ print(json.dumps({
     assert metadata["entrypoints"] == ["dasync.cli:main"]
 
 
+def test_installed_wheel_operates_the_collected_recipes_outside_the_checkout(installed_binary, tmp_path):
+    home, project = tmp_path / "home", tmp_path / "real collection project"
+    home.mkdir()
+    project.mkdir()
+    env = {
+        **{key: os.environ[key] for key in ("PATH", "LANG", "TMPDIR") if key in os.environ},
+        "DASYNC_HOME": str(home),
+    }
+
+    def call(*args, scoped=True, expected=0):
+        target = ["--scope", "project", "--path", str(project)] if scoped else []
+        result = execute(
+            [str(installed_binary), "recipe", *args, *target, "--json", "--no-input"],
+            cwd=tmp_path,
+            env=env,
+            expected=expected,
+        )
+        envelope = json.loads(result.stdout)
+        assert envelope["protocol"] == 1
+        return envelope.get("result", envelope.get("error"))
+
+    registrations = []
+    for directory in sorted((ROOT / "recipes").iterdir()):
+        if (directory / "recipe.yaml").exists():
+            candidate = call("prepare", "--source", str(directory), scoped=False)
+            registrations.append({"candidate": candidate["candidate"], "alias": directory.name})
+    assert len(registrations) == 7
+    request = {
+        "operation": "recipe.configure",
+        "registrations": registrations,
+        "trust_source": True,
+        "enable": [
+            "starter/skill.propose",
+            "starter/skill.plan-out",
+            "starter/skill.do-it",
+            "starter/skill.investigate",
+            "engineering/agent.architecture-reviewer",
+            "design/skill.ui-design",
+            "travel/agent.travel-planner",
+            "travel/skill.trip-publish",
+            "music/skill.curate-am-playlist",
+        ],
+    }
+    request_file = tmp_path / "configure.json"
+    request_file.write_text(json.dumps(request))
+    plan = call("plan", "--request", str(request_file))
+    assert plan["adapter_version"] == "recipe-codex/2"
+    assert len(plan["graph"]["items"]) > 18
+    reviewed = tmp_path / "reviewed.json"
+    reviewed.write_text(json.dumps(plan))
+    result = call("apply", "--plan", str(reviewed), "--yes")
+    assert result["changed"] and call("doctor")["healthy"]
+    assert not call("sync", "--yes")["changed"]
+    assert (project / "AGENTS.md").is_file()
+    assert len(list((project / ".codex/agents").glob("*.toml"))) == 2
+    assert any(p.name == "trip.html" for p in project.rglob("*"))
+    request_file.write_text(
+        json.dumps({"operation": "recipe.configure", "enable": ["hooks/hook.credential-path-guard"]})
+    )
+    refusal = call("plan", "--request", str(request_file), expected=2)
+    assert refusal["code"] == "EXECUTABLE_TRUST_REQUIRED"
+    assert refusal["required_approval"]["kind"] == "executable-digest"
+
+
 class Journey:
     def __init__(self, binary, root):
         self.binary, self.root = binary, root

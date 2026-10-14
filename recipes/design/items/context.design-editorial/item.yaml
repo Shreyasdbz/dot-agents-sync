@@ -1,0 +1,34 @@
+{
+  "context": {
+    "access": "inherit",
+    "consumers": [],
+    "content_format": "markdown",
+    "contract_id": "67adc754-5b80-558f-a4a3-1f15e0e672c8",
+    "contract_version": "1.5.0",
+    "sensitivity": "public"
+  },
+  "description": "Optional editorial design preset for outcome-focused documents",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "c96e48afc3bd0fc7ecde63a88fc2ccc199c84db454d2a482e0f8e19e174c0a9f",
+    "dasync.dev/catalog-path": "packages/contexts/design-editorial/manifest.yaml",
+    "dasync.dev/token-budget": 1500
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.design-editorial",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "design-editorial",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.5.0"
+}

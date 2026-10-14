@@ -1,0 +1,32 @@
+{
+  "description": "Collected dasync starter workflows and references.",
+  "format": 1,
+  "imports": {},
+  "items": [
+    "items/context.artifact-routing/item.yaml",
+    "items/policy.accessibility/item.yaml",
+    "items/policy.coding/item.yaml",
+    "items/policy.communication/item.yaml",
+    "items/policy.engineering-effectiveness/item.yaml",
+    "items/policy.git/item.yaml",
+    "items/policy.repository-guidance/item.yaml",
+    "items/policy.research/item.yaml",
+    "items/policy.scope/item.yaml",
+    "items/policy.verification/item.yaml",
+    "items/skill.do-it/item.yaml",
+    "items/skill.investigate/item.yaml",
+    "items/skill.plan-out/item.yaml",
+    "items/skill.propose/item.yaml",
+    "items/skill.visual-artifacts/item.yaml",
+    "items/template.design-proposal/item.yaml",
+    "items/template.investigation/item.yaml",
+    "items/template.plan-context/item.yaml"
+  ],
+  "name": "starter",
+  "required_features": [
+    "context-contracts",
+    "native-policies"
+  ],
+  "requires_engine": ">=0.1.1,<1",
+  "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+}

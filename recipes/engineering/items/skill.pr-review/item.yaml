@@ -1,0 +1,51 @@
+{
+  "default_prompt": "walk through this PR and its affected contracts, validate findings with bounded reviewers, and report the evidence.",
+  "description": "Review pinned PRs through surrounding code, isolated baseline comparisons and bounded reviewers; return actionable findings inline with optional reports or posting.",
+  "entry": "SKILL.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "87f89a1abc8cf0003677f2d989936c83461c7fac8be5eb6c891f5e0b7cb91984",
+    "dasync.dev/catalog-path": "packages/skills/pr-review/manifest.yaml",
+    "dasync.dev/optional-fallback": "Review pinned evidence inline; name unavailable freshness, independent review, execution or posting without claiming success.",
+    "dasync.dev/outputs": "inline,markdown,html,pr-review",
+    "dasync.dev/token-budget": 5200
+  },
+  "files": [
+    "SKILL.md",
+    "references/revisions.md",
+    "references/walkthrough.md",
+    "references/reviewers.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "skill.pr-review",
+  "kind": "Skill",
+  "license": "MIT",
+  "name": "PR Review",
+  "optional_capabilities": [
+    "github.review",
+    "agents.parallel",
+    "tests.execute"
+  ],
+  "required_capabilities": [
+    "filesystem.read"
+  ],
+  "requires": {
+    "policy.security": ">=1,<2",
+    "starter/context.artifact-routing": ">=1,<2",
+    "starter/policy.coding": ">=1,<2",
+    "starter/policy.communication": ">=1,<2",
+    "starter/policy.engineering-effectiveness": ">=1,<2",
+    "starter/policy.git": ">=1,<2",
+    "starter/policy.repository-guidance": ">=1,<2",
+    "starter/policy.scope": ">=1,<2",
+    "starter/policy.verification": ">=1,<2",
+    "starter/skill.visual-artifacts": ">=1,<2",
+    "template.pr-review": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "short_description": "Trace PR behavior and validate actionable findings",
+  "version": "1.8.0"
+}

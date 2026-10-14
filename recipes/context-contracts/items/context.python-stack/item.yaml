@@ -1,0 +1,35 @@
+{
+  "context": {
+    "access": "explicit",
+    "binding": "context.python-stack",
+    "consumers": [],
+    "content_format": "markdown",
+    "contract_id": "e3237817-6b50-5e7a-a705-91760720ecac",
+    "contract_version": "1.2.0",
+    "sensitivity": "private"
+  },
+  "description": "Python stack: Load for Python implementation or review.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "c8935740c587f58ff3723fbc6ea2f2f599741bf7b099301758c850b2abb95b75",
+    "dasync.dev/catalog-path": "packages/contexts/python-stack/manifest.yaml",
+    "dasync.dev/token-budget": 600
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.python-stack",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "python-stack",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.2.0"
+}

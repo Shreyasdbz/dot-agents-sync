@@ -1,0 +1,31 @@
+# Plan Out
+
+For a requested visual plan companion, apply [Visual Artifacts](dasync:dependency/skill.visual-artifacts/SKILL.md). Keep dates, dependencies and status sourced from the planning authority; the visualization does not become a competing writable plan.
+
+Translate an approved design into executable work without reopening settled product decisions. Read relevant repository state, completed work, and selected planning-authority context first. Use existing domain terms and work-item IDs.
+
+Sequence usable outcomes and decision-changing feedback early. For substantial work, carry the approved delivery and organizational-leverage measures into milestone acceptance checks with their evidence source and owner. Use policy.engineering-effectiveness; do not invent targets, add reporting bureaucracy or turn an adjacent opportunity into approved scope.
+
+For repository work, apply policy.repository-guidance to establish applicable instructions, context provenance and role boundaries before decomposition. A planning-context template is not actual tracker state; a child agent does not inherit missing grants merely because the parent can read a source.
+
+If the active project selects `context.workspace-plan-out`, locate it as consumer `skill.plan-out` and read only planning-relevant sections. Continue with the base workflow when absent; do not search for a private substitute.
+
+When policy.github-planning is selected, load its github-planning reference and the relevant issue-body recipe before mapping or publishing work. Obtain the actual Project identity; do not infer native capabilities, labels or status fields. Other providers retain their own selected authority and mapping.
+
+## Decompose
+
+Use Plan → Milestone → Phase → Task. A milestone delivers a major outcome; a phase is an independently mergeable PR; a task is an independently verifiable commit-sized change. Prefer phases that exercise a thin usable path through the affected system, with tests alongside behavior. For migrations or wide refactors, sequence compatible expansion, migration and removal; document any intermediate state that cannot stand alone.
+
+For large efforts, elaborate only the next milestone. Each later milestone retains outcome, boundaries, dependencies, risks and exit criteria, plus exactly one task: “Plan Out <milestone>.” Re-plan that milestone from current evidence when it becomes immediate. Small changes need no artificial multi-milestone hierarchy; use one immediate milestone in the portable context.
+
+Load [sizing.md](sizing.md) for decomposition thresholds and PR/commit guardrails. Scope follows coherent behavior, not filling a line-count quota.
+
+## Reconcile and deliver
+
+Load [plan-context.md](dasync:dependency/template.plan-context/plan-context.md) to produce the machine-loadable Plan Context and any requested human view. For requested Markdown or HTML views, load context.artifact-routing; preserve the selected planning authority for Plan Context JSON. Preserve one writable authority; projections do not become competing trackers. Map the logical hierarchy to verified native types and relationships, not assumed product terminology.
+
+When a tracker is unavailable, produce an explicitly unrefreshed draft with portable IDs and unresolved external references. Preserve known work such as an in-progress task; do not invent tracker IDs, claim refreshed status, or block useful offline decomposition merely because publication is unavailable.
+
+Before authorized publication, refresh existing items, match by stable identity, and preview creates/updates/relationships. If a write times out, inspect the tracker before retrying to avoid duplicates. Record returned IDs and partial completion; do not claim an atomic tracker transaction.
+
+Finish with a validated loadable context, dependencies that actually gate work, acceptance and verification for immediate tasks, and a concise summary of proposed or confirmed tracker changes. Do not implement the work or publish without authority.
