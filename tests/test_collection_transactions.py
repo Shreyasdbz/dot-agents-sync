@@ -190,3 +190,29 @@ def test_recovery_cannot_recreate_lost_executable_approval(tmp_path, collected):
     with pytest.raises(DasyncError) as rejected:
         engine.state.recover(engine.scope.key, engine._validate_target)
     assert rejected.value.code == "RECOVERY_BLOCKED" and engine.state.pending()
+
+
+def test_project_import_cannot_silently_take_its_pin_from_personal_configuration(tmp_path, collected):
+    engine, request = environment(tmp_path, collected, groups=("engineering",))
+    user = Engine(engine.env, Scope.get(engine.env, "user", None))
+    apply(
+        user,
+        {
+            "operation": "recipe.configure",
+            "registrations": [{"candidate": collected[2]["starter"]["candidate"], "alias": "starter"}],
+            "trust_source": True,
+            "enable": ["starter/skill.do-it"],
+        },
+    )
+    request["enable"] = ["engineering/skill.pr-review"]
+    before = snapshot_installation(engine)
+    with pytest.raises(DasyncError) as rejected:
+        engine.build(request)
+    assert rejected.value.code == "SOURCE_UNBOUND" and snapshot_installation(engine) == before
+    request["bind_sources"] = [{"source_id": SOURCE_IDS["starter"], "pin": collected[2]["starter"]["pin"]}]
+    plan, _ = apply(engine, request)
+    assert {source["source_id"] for source in plan["project_lock"]["sources"]} == {
+        SOURCE_IDS["starter"],
+        SOURCE_IDS["engineering"],
+    }
+    assert engine.status()["pending_changes"] == 0

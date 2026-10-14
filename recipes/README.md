@@ -16,6 +16,8 @@ The plan records a four-workflow closure of 17 items; the current dependency aud
 
 Optional recipes declare imports by UUID. For example, engineering's `starter/policy.communication` refers to the starter's declared identity, regardless of the operator's registration alias. Imports do not fetch, choose a pin, register a source or grant trust. Prepare and explicitly register/bind the required local recipes before selecting a workflow that uses them.
 
+Project workflows must bind their imported sources in the project configuration, even when the same pin is already selected personally. This keeps the shared lockfile complete and independent of personal additions; use `bind_sources` with the exact accepted pin or the workspace's saved-source binding action.
+
 ## Try the collection
 
 Use an existing disposable project and home for a trial. From a checkout of this PR, run `dasync tui --scope project --path /absolute/trial-project` with DASYNC_HOME pointing to the trial home. In **+ Source**, prepare `/absolute/checkout/recipes/starter`, inspect it, give it an alias and explicitly trust the source before staging. Select the four workflows or individual supporting items, review every effect, then Apply. The starter is optional; browsing and staging do not install anything. Native policies appear in the reviewed AGENTS.md output, which remains protected if it already exists.

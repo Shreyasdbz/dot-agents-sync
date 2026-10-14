@@ -203,7 +203,12 @@ def sources_items(sources):
 
 def project_lock(sources, intent):
     # Resolve ONLY project-owned intent; no local origins, aliases, grants or native assignments.
-    _, graph = resolve(sources, {**intent, "inherit_user": False}, "project")
+    owned = {source["source_id"] for source in intent["sources"]}
+    _, graph = resolve(
+        {sid: source for sid, source in sources.items() if sid in owned},
+        {**intent, "inherit_user": False},
+        "project",
+    )
     return {
         "format": 1,
         "portable": False,
