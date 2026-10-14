@@ -1,0 +1,52 @@
+{
+  "default_prompt": "explain these changes in one visual HTML file using ASD-STE100 writing guidance.",
+  "description": "Explain a PR, diff or current-session effort as one scrollable, self-contained visual HTML document, with source-backed before/after behavior and relevant engineering and product perspectives.",
+  "entry": "SKILL.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "06e731a029f285cf33b7a8226857bf1345822d72ccb5a3f0bdb7b91742780d97",
+    "dasync.dev/catalog-path": "packages/skills/explain-changes/manifest.yaml",
+    "dasync.dev/optional-fallback": "Use supplied evidence and inline static visuals; identify unavailable repositories, documents, connectors, revisions and browser checks without claiming full context.",
+    "dasync.dev/outputs": "html",
+    "dasync.dev/suggestions": "08ddcb86-818f-54bb-b99f-6d494874973a/context.workspace-explain-changes,08ddcb86-818f-54bb-b99f-6d494874973a/context.workspace-artifacts,08ddcb86-818f-54bb-b99f-6d494874973a/context.workspace-overview",
+    "dasync.dev/token-budget": 5500
+  },
+  "files": [
+    "SKILL.md",
+    "evidence.md",
+    "perspectives.md",
+    "language.md",
+    "workspace.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "skill.explain-changes",
+  "kind": "Skill",
+  "license": "MIT",
+  "name": "Explain Changes",
+  "optional_capabilities": [
+    "git.read",
+    "web.search",
+    "browser.render"
+  ],
+  "required_capabilities": [
+    "filesystem.read",
+    "filesystem.write"
+  ],
+  "requires": {
+    "policy.security": ">=1,<2",
+    "starter/context.artifact-routing": ">=1,<2",
+    "starter/policy.communication": ">=1,<2",
+    "starter/policy.repository-guidance": ">=1,<2",
+    "starter/policy.research": ">=1,<2",
+    "starter/policy.scope": ">=1,<2",
+    "starter/policy.verification": ">=1,<2",
+    "starter/skill.visual-artifacts": ">=1,<2",
+    "template.explain-changes": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "short_description": "Understand changes with a detailed visual walkthrough",
+  "version": "1.0.0"
+}

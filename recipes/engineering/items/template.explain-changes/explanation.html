@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en" data-artifact-kind="explanation">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stored zero lookup — fictional change explanation</title><style>
+/* Canonical foundation. Generated pages inline this file; no runtime dependency. */
+select{max-width:100%;min-width:0}
+:root{color-scheme:light;--bg:#fafbfc;--surface:#fff;--ink:#182230;--muted:#526172;--line:#dce2e8;--accent:#175cd3;--tint:#edf4ff;--good:#146343;--warn:#874600;--danger:#b42318;--radius:6px;--shadow:none;font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+:root[data-theme=dark]{color-scheme:dark;--bg:#10151d;--surface:#19212c;--ink:#eef2f6;--muted:#b4c0cf;--line:#394756;--accent:#a7c8ff;--tint:#21324a;--good:#90dfb4;--warn:#ffcf8a;--danger:#ffa69e;--shadow:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){color-scheme:dark;--bg:#10151d;--surface:#19212c;--ink:#eef2f6;--muted:#b4c0cf;--line:#394756;--accent:#a7c8ff;--tint:#21324a;--good:#90dfb4;--warn:#ffcf8a;--danger:#ffa69e;--shadow:none}}
+*{box-sizing:border-box}html{scroll-padding-top:6rem}body{margin:0;background:var(--bg);color:var(--ink)}[hidden]{display:none!important}a{color:var(--accent);text-underline-offset:.22em}button,input,select{font:inherit}button,select{min-height:44px;border:1px solid var(--line);border-radius:5px;padding:.45rem .7rem;background:var(--surface);color:var(--ink)}button{cursor:pointer}button:hover{background:var(--tint)}button:disabled{opacity:.5;cursor:default}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}::selection{background:var(--tint)}.skip{position:fixed;top:-100px;left:1rem;z-index:9;padding:.7rem;background:var(--surface)}.skip:focus{top:1rem}
+.topbar{border-bottom:1px solid var(--line);background:var(--surface)}.topbar-inner{max-width:1280px;margin:auto;min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.5rem 1.25rem}.brand{font-weight:600;letter-spacing:0;font-size:.95rem}.brand span{font-weight:400;color:var(--muted);margin-left:.6rem;letter-spacing:0;font-size:.875rem}.tools{display:flex;gap:.5rem;flex-wrap:wrap}.layout{display:grid;grid-template-columns:150px minmax(0,1fr);gap:2rem;max-width:1280px;margin:auto;padding:1.5rem 1.25rem 3rem}.sidebar{align-self:start;position:sticky;top:2rem}.sidebar p,.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:.72rem;font-weight:750;color:var(--muted)}.sidebar a{display:block;text-decoration:none;color:var(--muted);padding:.6rem .8rem;min-height:44px;border-left:2px solid transparent}.sidebar a:hover,.sidebar a[aria-current]{background:var(--tint);border-color:var(--accent);color:var(--accent)}main{min-width:0}h1,h2,h3{overflow-wrap:anywhere;line-height:1.2;letter-spacing:-.015em;text-wrap:balance}h1{font-size:clamp(1.6rem,3vw,2.1rem);margin:.8rem 0 1rem;max-width:42ch;font-weight:650}h2{font-size:1.2rem;margin:0}h3{font-size:1.05rem;margin:0 0 .5rem}.lede{color:var(--muted);font-size:1rem;max-width:62ch}.hero{padding-bottom:.6rem}.meta{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;color:var(--muted);font-size:.85rem}.badge{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--line);border-radius:4px;padding:.15rem .45rem;font-size:.75rem;font-weight:650;white-space:nowrap}.badge.good{color:var(--good)}.badge.warn{color:var(--warn)}.badge.danger{color:var(--danger)}.section{margin-top:1.6rem;scroll-margin-top:2rem}.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin-bottom:1rem}.section-head p{margin:0;color:var(--muted);font-size:.85rem}.panel,.disclosure{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.panel{padding:1rem}.panel>:last-child{margin-bottom:0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--line);margin:1.6rem 0}.metric{padding:1.3rem 1.5rem;background:var(--surface)}.metric dt{font-size:.8rem;color:var(--muted)}.metric dd{margin:.3rem 0 0;font-size:1.8rem;font-weight:650;letter-spacing:-.04em}.metric small{font-size:.75rem;color:var(--muted);display:block;letter-spacing:0;font-weight:400}.callout{border-left:3px solid var(--accent);padding:.8rem 1.2rem;background:var(--tint);border-radius:0 10px 10px 0}.callout p{margin:.3rem 0}.muted{color:var(--muted)}.small{font-size:.85rem}.stack{display:grid;gap:.8rem}
+.disclosure summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:1rem;padding:.7rem 1rem;min-height:56px;border-radius:var(--radius)}.disclosure summary::-webkit-details-marker{display:none}.disclosure summary::after{content:"+";font-size:1.5rem;color:var(--muted);margin-left:auto;flex-shrink:0}.disclosure[open]>summary::after{content:"−"}.disclosure[open]>summary{border-bottom:1px solid var(--line);border-radius:var(--radius) var(--radius) 0 0}.summary-title{font-weight:650;display:block}.summary-meta{display:block;font-size:.8rem;color:var(--muted);font-weight:400}.day-number{color:var(--accent);font-size:.8rem;font-weight:750;min-width:2rem}.detail-body{padding:1rem}.timeline{list-style:none;margin:0;padding:0}.timeline li{display:grid;grid-template-columns:5rem minmax(0,1fr);gap:1rem;position:relative;padding:0 0 1.6rem}.timeline li:last-child{padding-bottom:0}.timeline time{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.85rem}.timeline li>div{border-left:2px solid var(--line);padding-left:1.2rem}.timeline p{margin:.3rem 0;color:var(--muted);font-size:.9rem}.table-wrap{overflow-x:auto;max-width:100%;border:1px solid var(--line);border-radius:12px;background:var(--surface)}table{width:100%;border-collapse:collapse;font-size:.9rem}caption{text-align:left;font-weight:600;padding:1rem}th,td{text-align:left;vertical-align:top;padding:.65rem .8rem;border-top:1px solid var(--line)}thead th{background:var(--bg);font-size:.75rem;color:var(--muted)}th{font-weight:650}.number{text-align:right;font-variant-numeric:tabular-nums}tfoot{font-weight:750}.route-map{width:100%;height:auto;display:block;color:var(--accent);background:var(--bg);border-radius:10px}.route-map text{fill:var(--ink);font:14px system-ui,sans-serif}.route-map .gridline{stroke:var(--line);stroke-width:1}.route-map .route{fill:none;stroke:currentColor;stroke-width:2.5;stroke-dasharray:6 5}.route-map .point{fill:var(--surface);stroke:currentColor;stroke-width:3}figure{margin:0}figcaption{font-size:.8rem;color:var(--muted);margin-top:.7rem}.route-labels{display:flex;justify-content:space-between;gap:1rem;margin-top:1rem}.route-labels strong{font-size:1.7rem;display:block;letter-spacing:-.03em}.route-labels small{color:var(--muted)}.flow{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;list-style:none;padding:0}.flow li{border:1px solid var(--line);border-radius:8px;padding:.7rem 1rem;background:var(--surface)}pre{overflow:auto;max-width:100%;background:var(--bg);padding:1rem;border-radius:9px;font-size:.85rem}code{overflow-wrap:anywhere}p,li,td{overflow-wrap:anywhere}.source-list{padding-left:1.2rem;font-size:.85rem;color:var(--muted)}footer{border-top:1px solid var(--line);padding-top:1.5rem;margin-top:3rem;color:var(--muted);font-size:.8rem}.empty{border:1px dashed var(--line);padding:2rem;text-align:center;border-radius:var(--radius);color:var(--muted)}.filter-bar{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin:1rem 0}.filter-bar input{min-height:44px;min-width:0;flex:1;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:.6rem .8rem;border-radius:9px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.deck main{max-width:1100px;margin:auto;padding:2rem}.slide{min-height:75vh;padding:3rem 0;border-bottom:1px solid var(--line);scroll-margin-top:1rem}.slide h2{font-size:clamp(1.6rem,3vw,2.6rem);max-width:40ch}.deck-controls{position:sticky;bottom:0;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.7rem;padding:.8rem 1rem;border-top:1px solid var(--line);background:var(--surface)}progress{accent-color:var(--accent);width:6rem}.bars{display:grid;gap:1.4rem;margin:2rem 0}.bar{height:12px;background:var(--line);border-radius:99px;overflow:hidden}.bar span{display:block;height:100%;background:var(--accent)}.bars p{display:flex;justify-content:space-between;gap:1rem;margin:.4rem 0}
+@media(max-width:800px){.layout{grid-template-columns:1fr;gap:1.5rem;padding:1.5rem 1rem 3rem}.sidebar{position:static;border-bottom:1px solid var(--line);padding-bottom:.6rem}.sidebar p{display:none}.sidebar nav{display:flex;flex-wrap:wrap}.sidebar a{padding:.5rem .65rem;border-left:0;border-bottom:2px solid transparent}.topbar-inner{padding:1rem}.brand span{display:none}.grid{grid-template-columns:1fr}.metric{padding:1rem}.metric dd{font-size:1.4rem}.section-head{align-items:start;flex-direction:column;gap:.3rem}.deck main{padding:1rem}.slide{min-height:0;padding:2rem 0}.deck-controls{position:static}}
+@media(max-width:400px){.metrics{grid-template-columns:1fr}.metric{display:flex;justify-content:space-between;gap:1rem;align-items:baseline}.metric dd{margin:0}.disclosure summary{padding:1rem;gap:.5rem}.detail-body{padding:1rem}.timeline li{grid-template-columns:3.6rem 1fr;gap:.4rem}.tools button{padding:.5rem}}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}button,a,summary{transition:background-color .15s ease,border-color .15s ease}}
+@media(forced-colors:active){.badge,.panel,.disclosure,button{border:1px solid CanvasText}.route-map{forced-color-adjust:auto}}
+@media print{:root{color-scheme:light;--bg:#fff;--surface:#fff;--ink:#000;--muted:#333;--line:#aaa;--accent:#000;--tint:#fff;--shadow:none}.tools,.sidebar,.skip,.filter-bar,.deck-controls,.screen-only,[data-empty]{display:none!important}.layout{display:block;padding:0}.topbar-inner{padding:0;min-height:0}.topbar{padding-bottom:1rem}.panel,.disclosure{box-shadow:none;break-inside:avoid}.disclosure::details-content{content-visibility:visible!important}.disclosure>.detail-body{display:block!important}.section{margin-top:1.5rem}.slide{min-height:0;break-after:page;padding:1rem 0}.slide:last-child{break-after:auto}.deck main{padding:0}h2,h3{break-after:avoid}.table-wrap{overflow:visible}body{background:white;color:black}a{color:inherit}}
+
+/* Technical content: density changes grouping, not legibility. */
+body[data-deck-mode=document] .slide{min-height:0;padding:1.5rem 0;border-bottom:1px solid var(--line)}
+.deck main{padding:1.2rem 1.5rem}.slide{min-height:calc(100dvh - 150px);padding:1rem 0 2rem;border:0}.slide h1,.slide h2{margin:.3rem 0 1.2rem}.slide.dense{font-size:.93rem}.slide.dense h2{font-size:1.65rem}.dense-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem}.dense-grid>:last-child{grid-column:1/-1}.dense-grid h3{margin:.8rem 0 .4rem}.dense-grid p,.dense-grid ul{margin:.4rem 0}.deck-controls{position:sticky;bottom:0;min-height:60px;gap:.5rem;padding:.45rem}.deck-controls select{max-width:24rem}.deck-controls progress{display:none}.chart{padding:1rem 0}.chart figcaption,.data-flow figcaption,.entity-model figcaption{font-size:.95rem;color:var(--ink);margin:0 0 1rem}.chart-row{display:grid;grid-template-columns:7rem minmax(0,1fr) 3rem;align-items:center;gap:.7rem;margin:.9rem 0}.bar.target span{background:transparent;border:2px dashed var(--accent)}.flow-nodes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));list-style:none;padding:0;gap:1rem}.flow-nodes li{border:1px solid var(--line);padding:.8rem;min-width:0;border-radius:4px}.flow-nodes code,.edge-label{display:block;font-size:.78rem;margin-top:.4rem}.edge-label{color:var(--muted)}.entity-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.entity{border:1px solid var(--line);border-radius:4px;min-width:0}.entity h3{background:var(--tint);padding:.6rem;margin:0}.entity dl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.5rem;font-size:.78rem;padding:.7rem;margin:0}.entity dt{font-family:ui-monospace,monospace;overflow-wrap:anywhere}.entity dd{margin:0;overflow-wrap:anywhere}.relations{font-size:.85rem;padding-left:1.2rem}.diagram-scroll{overflow:auto}.technical-svg{width:100%;min-width:450px;display:block}.technical-svg text{fill:var(--ink);font:14px system-ui}.technical-svg .axis{stroke:var(--line);fill:none}.technical-svg .series{stroke:var(--accent);stroke-width:3;fill:none}.sequence ol{list-style:none;display:grid;gap:.6rem;padding:0}.sequence li{display:grid;grid-template-columns:7rem 1fr;gap:1rem;padding:.65rem .8rem;border-left:3px solid var(--line);background:var(--surface)}.sequence li[data-active=true]{border-color:var(--accent);background:var(--tint)}.sequence-controls{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}.sequence-controls [role=status]{font-size:.8rem;color:var(--muted)}
+/* Travel: chronological rows, with details available per item. */
+.travel .layout{display:block;max-width:960px;padding:1rem 1rem 3rem}.travel .hero h1{font-size:1.6rem;margin:.4rem 0}.travel .hero p{margin:.25rem 0}.travel-nav{display:flex;gap:1rem;border-bottom:1px solid var(--line);margin:.8rem 0}.travel-nav a{display:flex;align-items:center;min-height:44px;text-decoration:none;font-size:.88rem}.travel-filters{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;background:var(--bg);padding:.6rem 0;position:sticky;top:0;z-index:2;border-bottom:1px solid var(--line)}.travel-filters label{font-size:.8rem}.travel-filters select{max-width:11rem}.travel-filters [role=status]{font-size:.78rem;color:var(--muted)}.day-heading{font-size:1rem;padding:.7rem 0 .45rem;margin:0}.travel-day{margin-bottom:.9rem}.event{border:0;border-bottom:1px solid var(--line);border-radius:0;box-shadow:none;background:var(--surface)}.event summary{display:grid;grid-template-columns:4.2rem minmax(0,1fr) 1rem;gap:.6rem;padding:.7rem .5rem;min-height:66px;border-radius:0}.event summary::after{font-size:1.15rem}.event .event-time{font-size:.8rem;font-variant-numeric:tabular-nums;align-self:start}.event .event-time small{display:block;color:var(--muted)}.event .summary-title{font-size:.9rem;font-weight:600}.event .summary-meta{font-size:.77rem;margin-top:.15rem}.event .detail-body{padding:.8rem .8rem 1rem 5.3rem}.facts{display:grid;grid-template-columns:8rem 1fr;gap:.4rem .8rem;font-size:.85rem;margin:.4rem 0}.facts dt{color:var(--muted)}.facts dd{margin:0}.allocation{list-style:none;padding:0;font-size:.85rem}.allocation li{display:flex;justify-content:space-between;gap:1rem;border-top:1px solid var(--line);padding:.5rem 0}.travel .section-head{margin-bottom:.5rem}.travel .section{margin-top:1.2rem}.travel .tools{gap:.3rem}.travel .tools button{font-size:.85rem}.travel .group-list{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0}.travel .group-list span{font-size:.8rem;padding:.25rem .5rem;background:var(--tint);border-radius:4px}.travel .stay-list{display:grid;gap:.5rem}.travel footer{margin-top:1.5rem;padding-top:.7rem}.travel .cost-strip{display:flex;justify-content:space-between;gap:1rem;padding:.7rem 0;border-block:1px solid var(--line);font-size:.85rem}
+@media(max-width:800px){.slide{min-height:calc(100dvh - 180px)}.dense-grid,.entity-grid{grid-template-columns:1fr}.dense-grid>:last-child{grid-column:auto}.flow-nodes{grid-template-columns:1fr 1fr}.deck-controls{position:sticky}.deck-controls select{max-width:calc(100vw - 165px);font-size:.8rem}.deck-controls button{font-size:.85rem}.sequence li{grid-template-columns:1fr;gap:.2rem}.travel .topbar-inner{padding:.35rem .8rem}.travel .layout{padding:.65rem .8rem 2rem}.travel .section-head{flex-direction:row;align-items:center;gap:.5rem}.travel-nav{gap:.8rem;flex-wrap:wrap}.travel-filters select{max-width:9rem;font-size:.85rem}.travel .table-wrap th,.travel .table-wrap td{padding:.5rem;font-size:.8rem}.travel .event .detail-body{padding:.7rem}.facts{grid-template-columns:6rem 1fr}.chart-row{grid-template-columns:5rem minmax(0,1fr) 2.6rem}.travel .event .summary-meta{line-height:1.45}}
+@media(prefers-reduced-motion:no-preference){.sequence li{transition:background-color .18s,border-color .18s}}
+@media print{.slide[hidden]{display:block!important}.travel-filters,.sequence-controls,[data-travel-empty]{display:none!important}.travel .event .detail-body{padding:.5rem}.travel-day{break-inside:avoid}.sequence li{background:white;border-color:#999}.travel .layout{padding:0}.slide{min-height:0}.dense-grid{display:block}}
+/* Document and presentation shell. Travel retains its own layout and palette. */
+:root{--bg:#f4f6fc;--surface:#fff;--ink:#17213b;--muted:#4c5870;--line:#b8c3d8;--accent:#4936b5;--tint:#edeafb;--radius:10px;--store:#07665e;--store-tint:#def5ef;--external:#8d3c11;--external-tint:#fff0df;--uncertain:#8b361c;--uncertain-tint:#fff0e8}
+:root[data-theme=dark]{--bg:#10172a;--surface:#1b2540;--ink:#f3f5ff;--muted:#c0cae0;--line:#647493;--accent:#c4b5ff;--tint:#302650;--store:#7ce2c8;--store-tint:#163c3a;--external:#ffc98b;--external-tint:#423022;--uncertain:#ffb898;--uncertain-tint:#442a27}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#10172a;--surface:#1b2540;--ink:#f3f5ff;--muted:#c0cae0;--line:#647493;--accent:#c4b5ff;--tint:#302650;--store:#7ce2c8;--store-tint:#163c3a;--external:#ffc98b;--external-tint:#423022;--uncertain:#ffb898;--uncertain-tint:#442a27}}
+.icon{width:20px;height:20px;flex:none;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.icon-button{display:inline-grid;place-items:center;width:44px;height:44px;padding:0;border-color:transparent;background:transparent;border-radius:8px}.icon-button span{display:flex}.tools{gap:.15rem;flex-wrap:nowrap}.topbar{position:sticky;top:0;z-index:5;background:var(--bg)}
+@supports(backdrop-filter:blur(16px)){.topbar{background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(16px)}}
+.topbar-inner{max-width:1280px;gap:1.2rem;padding:.35rem 1.5rem;flex-wrap:wrap}.brand{white-space:nowrap}.page-nav{display:flex;gap:.25rem;min-width:0;margin-left:auto}.page-nav a{display:flex;align-items:center;gap:.4rem;min-height:44px;padding:.45rem .65rem;text-decoration:none;color:var(--muted);font-size:.85rem;border-radius:6px;white-space:nowrap}.page-nav a:hover{background:var(--tint);color:var(--ink)}.page-nav .icon{width:17px;height:17px}.layout{display:block;max-width:1200px;padding:2.5rem 1.5rem 3rem}.hero{padding-bottom:1.3rem}.hero h1{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:600;letter-spacing:-.035em;margin:.4rem 0 .6rem}.lede{max-width:72ch;line-height:1.65;margin:.5rem 0 1rem}.eyebrow{text-transform:none;letter-spacing:0;font-weight:500;font-size:.85rem}.section{margin-top:2.2rem;scroll-margin-top:1rem}.section-head{margin-bottom:.8rem}.section-head h2{display:flex;align-items:center;gap:.55rem;font-weight:600}.section-head .icon{color:var(--muted)}.callout{border-radius:0 7px 7px 0;background:transparent;padding:.5rem 1rem}.callout p{max-width:85ch}.grid{gap:.8rem}.panel{padding:1.1rem}.panel p{max-width:75ch}.summary-title{font-weight:600}.summary-meta{margin-top:.2rem}.disclosure summary>.icon{color:var(--muted)}.disclosure summary{gap:.75rem}.detail-body>p:first-child{margin-top:0}.facts{grid-template-columns:9rem minmax(0,1fr);gap:.6rem 1rem}.meta code{font-size:.85rem}.section .facts{margin:0}.review-scope{margin-top:1.5rem}.finding-location{font-family:ui-monospace,monospace}.table-wrap{border-radius:8px}footer{padding-top:1rem;margin-top:2rem}.deck main{max-width:1200px;padding:1.6rem 2rem}.slide{padding:1.3rem 0 2rem}.slide h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:600;letter-spacing:-.035em}.slide h2{font-weight:600;letter-spacing:-.03em}.slide .facts{margin-top:1.6rem;font-size:1rem;grid-template-columns:11rem minmax(0,1fr);gap:1rem}.slide.dense .facts{font-size:.9rem}.deck-controls{z-index:6;background:var(--bg);gap:.6rem}.deck-controls select{border-color:transparent;background:transparent}.deck-controls [role=status]{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}.deck-controls .icon-button{flex:none}.dense-grid{gap:1rem 2rem}.flow-nodes li{background:var(--surface);border-radius:8px}.entity{border-radius:8px;overflow:hidden}.entity h3{background:var(--bg)}
+@media(max-width:900px){.topbar-inner{gap:.2rem .5rem;padding:.35rem 1rem}.topbar .tools{margin-left:auto}.page-nav{order:3;width:100%;overflow-x:auto;margin:0;flex-wrap:nowrap}.page-nav a{padding:.4rem .6rem}.layout{padding:1.5rem 1rem 2rem}html{scroll-padding-top:8rem}.deck main{padding:1rem}.deck .topbar-inner{flex-wrap:nowrap}.deck .brand{white-space:normal}.slide .facts{grid-template-columns:1fr;gap:.3rem}.slide .facts dd{margin-bottom:.7rem}}
+@media(max-width:600px){.filter-bar{display:grid;grid-template-columns:1fr}.filter-bar input{width:100%}.filter-bar [role=status]{font-size:.8rem}}
+@media(max-width:400px){.facts{grid-template-columns:1fr;gap:.25rem}.facts dd{margin-bottom:.6rem}.deck-controls select{max-width:calc(100vw - 160px)}.disclosure summary{padding:.8rem}.detail-body{padding:.8rem}}
+@media print{:root,:root[data-theme=dark],:root:not([data-theme=light]){color-scheme:light;--bg:#fff;--surface:#fff;--ink:#000;--muted:#333;--line:#aaa;--accent:#222;--tint:#fff;--store:#07665e;--store-tint:#def5ef;--external:#8d3c11;--external-tint:#fff0df;--uncertain:#8b361c;--uncertain-tint:#fff0e8}.topbar{position:static;background:white;backdrop-filter:none}.page-nav{display:none}.topbar-inner{padding:0}.layout,.deck main{padding:0}.hero{padding-bottom:.5rem}.slide{min-height:0}.callout{background:none}}
+/* Scrollable explanation views reuse the shared theme, tools and disclosure behavior. */
+[data-artifact-kind=explanation] .layout{max-width:1160px}
+.change-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem;margin:1.5rem 0}
+.change-path{border-top:3px solid var(--accent);padding:1rem;background:var(--surface);min-width:0}
+.change-path h3{margin-top:0}
+.change-path ol{padding-left:1.4rem}
+.change-path li{padding:.5rem 0}
+.change-path .result{border-top:1px solid var(--line);padding-top:.8rem;font-weight:600}
+.change-path .condition{display:block;color:var(--muted);font-size:.88rem}
+.evidence-ref{font-size:.85rem;white-space:nowrap}
+.explanation-note{max-width:78ch;border-left:3px solid var(--accent);padding:.2rem 1rem;margin:1.5rem 0}
+.lens-rows{margin:1rem 0}
+.lens-rows>div{display:grid;grid-template-columns:12rem minmax(0,1fr);gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line)}
+.lens-rows dt{font-weight:600}.lens-rows dd{margin:0;max-width:75ch}
+.evidence-appendix li{margin:1rem 0;scroll-margin-top:8rem}
+.evidence-appendix pre{color:var(--ink)}
+.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+[data-artifact-kind=explanation] .table-wrap table{min-width:560px}
+@media(max-width:700px){.change-map{grid-template-columns:1fr;gap:1rem}.lens-rows>div{grid-template-columns:1fr;gap:.3rem}}
+@media print{.change-map{gap:.5rem}.change-path{background:white;break-inside:avoid}.lens-rows>div{break-inside:avoid}.evidence-appendix pre{white-space:pre-wrap}.page-nav{display:none}}
+/* Optional workspace brand. Inline authorized private overrides after all template styles. */
+.artifact-cover,.artifact-cover-copy{display:contents}.artifact-cover-visual{display:none}
+:root[data-workspace-brand]{font-family:var(--brand-font,system-ui,sans-serif);font-size:var(--brand-body-size,16px)}
+[data-workspace-brand] .brand{display:flex;align-items:center;gap:12px;min-width:0;white-space:normal;line-height:1.25;letter-spacing:0}
+[data-workspace-brand] .brand-logo{display:block;flex:none;width:28px;height:28px;object-fit:contain}
+[data-workspace-brand] .brand .brand-name{font-size:20px;font-weight:600;color:var(--ink);margin:0;padding:0;border:0;border-radius:0;background:none;letter-spacing:-.025em}
+[data-workspace-brand] .brand .brand-label{font-size:13px;font-weight:400;color:var(--muted);margin:0;padding-left:12px;border-left:1px solid var(--line);border-radius:0;background:none;letter-spacing:0;overflow-wrap:anywhere}
+@media(max-width:600px){[data-workspace-brand] .brand .brand-label{display:none}[data-workspace-brand] .brand-logo{width:24px;height:24px}[data-workspace-brand] .brand .brand-name{font-size:18px}}
+@media print{[data-workspace-brand] .brand{break-inside:avoid}[data-workspace-brand] .brand .brand-name{color:#000}}
+/* The selected workspace supplies color and type; these compositions preserve readable HTML labels. */
+[data-workspace-brand] .artifact-cover{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(32px,5vw,80px);align-items:center;padding:32px 0 56px}
+[data-workspace-brand] .artifact-cover-copy{display:block;min-width:0}
+[data-workspace-brand] .artifact-cover-visual{display:block;min-width:0;margin:0;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+[data-workspace-brand] .artifact-cover-visual figcaption{font-size:13px;line-height:1.6;max-width:56ch;margin-top:24px;color:var(--muted)}
+[data-workspace-brand] .scene-label{font:400 12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted)}
+[data-workspace-brand] .identity-orbits{position:relative;height:240px;display:grid;place-items:center;margin:16px 0}
+[data-workspace-brand] .identity-orbits svg{position:absolute;width:100%;height:100%;fill:none;stroke:var(--accent);stroke-width:1;opacity:.55}
+[data-workspace-brand] .identity-orbits circle{fill:var(--accent);stroke:none}
+[data-workspace-brand] .identity-key{position:relative;text-align:center;background:var(--bg);padding:12px 20px}
+[data-workspace-brand] .identity-key span{display:block;font-size:13px;color:var(--muted)}
+[data-workspace-brand] .identity-key strong{display:block;font-size:clamp(30px,3vw,46px);font-weight:450;letter-spacing:-.05em}
+[data-workspace-brand] .identity-states{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;border-top:1px solid var(--line);padding-top:16px;font-size:15px}
+[data-workspace-brand] .identity-states small{display:block;color:var(--muted);font:400 12px/1.8 ui-monospace,monospace}
+[data-workspace-brand] .cache-value{display:flex;flex-direction:column;align-items:center;padding:12px 0 24px;color:var(--muted);font-size:13px}
+[data-workspace-brand] .cache-value strong{font-size:124px;line-height:1.2;font-weight:350;color:var(--ink);letter-spacing:-.07em}
+[data-workspace-brand] .cache-branches{display:grid;gap:12px}
+[data-workspace-brand] .cache-branches>div{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;align-items:center;padding-top:12px;border-top:1px solid var(--line);font-size:14px}
+[data-workspace-brand] .ownership-input,[data-workspace-brand] .ownership-record{display:flex;flex-direction:column;gap:8px;padding:24px 0;font-size:14px}
+[data-workspace-brand] .ownership-input strong{font-weight:450;font-size:40px;letter-spacing:-.04em}
+[data-workspace-brand] .ownership-route{display:flex;align-items:center;gap:16px;color:var(--accent);font-size:14px;border-block:1px solid var(--line);padding:16px 0}
+[data-workspace-brand] .ownership-route>span:first-child{font-size:32px;line-height:1}
+[data-workspace-brand] .ownership-record code{font-size:20px;line-height:1.5}
+[data-workspace-brand] .journey-stops{list-style:none;margin:24px 0;padding:0}
+[data-workspace-brand] .journey-stops li{display:grid;grid-template-columns:90px 1fr;align-items:baseline;gap:20px;padding:12px 0;border-bottom:1px solid var(--line)}
+[data-workspace-brand] .journey-stops span,[data-workspace-brand] .journey-split span{font:400 13px/1.6 ui-monospace,monospace;color:var(--muted)}
+[data-workspace-brand] .journey-stops strong{font-size:40px;line-height:1.2;font-weight:400;letter-spacing:-.045em}
+[data-workspace-brand] .journey-split{display:flex;flex-direction:column;gap:6px}
+[data-workspace-brand] .journey-split strong{font-size:22px;font-weight:450}
+@media(max-width:800px){[data-workspace-brand] .artifact-cover{grid-template-columns:1fr;gap:24px;padding:16px 0 32px}[data-workspace-brand] .identity-orbits{height:200px}[data-workspace-brand] .artifact-cover-visual{padding:20px 0}}
+@media print{[data-workspace-brand] .artifact-cover{grid-template-columns:1fr 1fr;gap:24px;padding:16px 0}[data-workspace-brand] .artifact-cover-visual{break-inside:avoid}[data-workspace-brand] .identity-orbits{height:160px}}
+</style></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar"><div class="topbar-inner"><div class="brand">Explain changes<span>Fictional example</span></div><nav class="page-nav" aria-label="On this page"><a href="#overview">Overview</a><a href="#mechanism">Mechanism</a><a href="#effects">Effects</a><a href="#checks">Checks</a><a href="#sources">Sources</a></nav><div class="tools"><button class="icon-button" data-theme-toggle aria-label="Dark theme" aria-pressed="false" title="Change theme" hidden><span data-theme-icon="light"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx='12' cy='12' r='4'/><path d='M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5'/></svg></span><span data-theme-icon="dark" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M20 14a8 8 0 0 1-10-10 8 8 0 1 0 10 10Z'/></svg></span></button><button class="icon-button" data-print aria-label="Print" title="Print" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M6 9V3h12v6M6 17H3V9h18v8h-3M6 14h12v7H6Z'/><path d='M17 11h1'/></svg></button>
+</div></div></header>
+<div class="layout"><main id="main" tabindex="-1">
+<section class="hero" id="overview">
+<h1>A stored zero returns without another loader call</h1>
+<p class="lede">The new branch checks whether the cache contains the key. The old branch checks whether the stored value is true.</p>
+<div class="meta"><span class="badge">Fictional source example</span><span>Comparison: two functions below</span></div>
+<dl class="facts"><dt>Purpose</dt><dd>Keep zero as a valid stored count.</dd><dt>Scope</dt><dd>One lookup function. No real PR or repository was inspected.</dd><dt>Snapshot</dt><dd>The complete old and new functions in <a href="#source-code">S1</a>. No Git revision exists for this fixture.</dd><dt>Verification</dt><dd>Source reasoning only. No application tests or benchmarks were run.</dd></dl>
+<p class="explanation-note">This example uses a local cache of integer counts. It does not establish behavior for a remote or concurrent cache.</p>
+</section>
+<section class="section" id="mechanism">
+<div class="section-head"><h2>One input takes a different path</h2></div>
+<p>Input: key <code>company-count</code>. Stored value: <code>0</code>. The loader reads the count when the lookup needs a new value. <a class="evidence-ref" href="#source-code">Source S1</a></p>
+<figure aria-labelledby="paths-caption">
+<div class="change-map">
+<div class="change-path"><h3>Before: check the value</h3><ol><li>Read <code>0</code> from the cache.</li><li>Evaluate <code>if value</code>.<span class="condition">Zero makes this condition false.</span></li><li>Call <code>load(key)</code>.<span class="condition">The stored value does not return.</span></li></ol><p class="result">Result: one loader call.</p></div>
+<div class="change-path"><h3>After: check the key</h3><ol><li>Evaluate <code>if key in cache</code>.</li><li>Find <code>company-count</code>.<span class="condition">The key exists, even when its value is zero.</span></li><li>Return <code>cache[key]</code>.<span class="condition">The function returns the stored zero.</span></li></ol><p class="result">Result: no loader call.</p></div>
+</div>
+<figcaption id="paths-caption">The same key and stored value take different branches. The new branch uses key membership instead of value truth.</figcaption>
+</figure>
+<div class="table-wrap" role="region" aria-label="Lookup cases" tabindex="0"><table><caption>Three cases separate presence from value</caption><thead><tr><th scope="col">Cache state</th><th scope="col">Old path</th><th scope="col">New path</th><th scope="col">Change</th></tr></thead><tbody><tr><th scope="row">Key stores <code>0</code></th><td>Call loader</td><td>Return <code>0</code></td><td>Stored zero is used</td></tr><tr><th scope="row">Key stores <code>7</code></th><td>Return <code>7</code></td><td>Return <code>7</code></td><td>No change</td></tr><tr><th scope="row">Key is absent</th><td>Call loader</td><td>Call loader</td><td>No change</td></tr></tbody></table></div>
+<p>The table follows the functions in <a href="#source-code">S1</a>. It describes branches, not measured request latency.</p>
+<details class="disclosure" id="code-detail"><summary><span class="summary-title">Inspect the changed condition</span></summary><div class="detail-body"><div class="grid"><div><h3>Old condition</h3><pre><code>value = cache.get(key)
+if value:
+    return value</code></pre></div><div><h3>New condition</h3><pre><code>if key in cache:
+    return cache[key]</code></pre></div></div><p>Both versions call the loader when the key is absent. Neither version writes to the cache.</p></div></details>
+</section>
+<section class="section" id="effects">
+<div class="section-head"><h2>Consequences of this branch change</h2></div>
+<dl class="lens-rows"><div><dt>Correctness and product</dt><dd>A stored count of zero becomes a usable result. The application must still decide how to show that count. No product requirement or UI was supplied.</dd></div><div><dt>Performance and scaling</dt><dd>The stored-zero case removes one loader call per lookup. Request latency and system throughput were not measured. No workload or paid-call cost was supplied.</dd></div><div><dt>Reliability and operations</dt><dd>A stored-zero lookup avoids failures from that loader call. A missing-key lookup can still fail in the loader. Cache freshness and invalidation remain unspecified.</dd></div><div><dt>Security and privacy</dt><dd>The change does not alter key construction or access control. Tenant isolation cannot be assessed from this function. Shared tenant caches need evidence from their key owner.</dd></div><div><dt>Observability</dt><dd>The functions emit no hit, miss or error signal. Operators cannot identify this branch from a new signal in the supplied code.</dd></div><div><dt>Maintainability</dt><dd>The new condition states the presence contract directly. A regression test should distinguish a stored zero from an absent key.</dd></div></dl>
+<p>These conclusions follow <a href="#source-code">S1</a>. The security, UI and runtime limits identify missing evidence. They are not claims about a real application.</p>
+</section>
+<section class="section" id="failure">
+<div class="section-head"><h2>The loader failure path still exists</h2></div>
+<ol class="flow" aria-label="Missing-key path"><li>Key is absent</li><li>Call loader</li><li>Loader returns or raises</li></ol>
+<p>Both functions return the loader result. Both let a loader exception reach the caller. No retry or recovery owner appears here. <a class="evidence-ref" href="#source-code">Source S1</a></p>
+<p class="explanation-note">A membership check followed by a read is not an atomic operation across all cache implementations. Concurrent removal requires a separate contract.</p>
+</section>
+<section class="section" id="checks">
+<div class="section-head"><h2>Coverage and verification limits</h2></div>
+<div class="table-wrap" role="region" aria-label="Perspective coverage" tabindex="0"><table><caption>Perspectives applied inline to the fictional functions</caption><thead><tr><th scope="col">Area</th><th scope="col">Evidence and limit</th></tr></thead><tbody><tr><th scope="row">Architecture, performance, reliability, coding</th><td>Branch and caller contract examined. Storage, workload and runtime integration are unavailable.</td></tr><tr><th scope="row">Security, privacy, observability</th><td>Function examined. Tenant keys, data policy and operator signals are unavailable.</td></tr><tr><th scope="row">Product and UI/UX</th><td>No requirements or rendered UI supplied. No user outcome or accessibility change is established.</td></tr><tr><th scope="row">AI/LLM systems</th><td>Not applicable to the supplied functions. No prompt, retrieval, model or tool path appears.</td></tr><tr><th scope="row">Independent review</th><td>No independent reviewer ran for this fictional example.</td></tr></tbody></table></div>
+<p>No application checks were executed for this example. The following cases are proposed verification, not passing test results.</p>
+<ul><li>Store zero. Check that lookup returns zero and the loader is not called.</li><li>Store seven. Check that lookup returns seven and the loader is not called.</li><li>Use an absent key. Check that the loader is called once and its result returns.</li><li>Make the loader raise for an absent key. Check that the same error reaches the caller.</li></ul>
+<p class="small">This text uses ASD-STE100 writing guidance. The official dictionary was not checked.</p>
+</section>
+<section class="section" id="sources">
+<div class="section-head"><h2>Sources and terms</h2></div>
+<ol class="evidence-appendix"><li id="source-code"><strong>S1 · Complete fictional source comparison</strong><p>Evidence class: illustrative source. These functions define the whole example. They are not excerpts from a real repository.</p><details class="disclosure"><summary><span class="summary-title">Read both complete functions</span></summary><div class="detail-body"><h3>Before</h3><pre><code>def lookup(cache, key, load):
+    value = cache.get(key)
+    if value:
+        return value
+    return load(key)</code></pre><h3>After</h3><pre><code>def lookup(cache, key, load):
+    if key in cache:
+        return cache[key]
+    return load(key)</code></pre></div></details></li></ol>
+<dl class="facts"><dt>Cache</dt><dd>A store that holds a value under a key for later use.</dd><dt>Key membership</dt><dd>The check that a key exists in the store.</dd><dt>Loader</dt><dd>The function called when lookup needs a new value.</dd><dt>Regression test</dt><dd>A test that detects the return of a corrected failure.</dd></dl>
+</section>
+<footer>Fictional worked example. Replace its evidence and claims before delivery.</footer>
+</main></div><script>/* Progressive enhancement only: semantic HTML remains useful without JavaScript. */
+(() => {
+  'use strict';
+  const all = (selector) => [...document.querySelectorAll(selector)];
+  const theme = document.querySelector('[data-theme-toggle]');
+  if (theme) {
+    theme.hidden = false;
+    const systemTheme = matchMedia('(prefers-color-scheme: dark)');
+    const refreshTheme = () => {
+      const dark = document.documentElement.dataset.theme
+        ? document.documentElement.dataset.theme === 'dark' : systemTheme.matches;
+      theme.setAttribute('aria-pressed', String(dark));
+      theme.querySelectorAll('[data-theme-icon]').forEach(icon => {
+        icon.hidden = icon.dataset.themeIcon !== (dark ? 'dark' : 'light');
+        icon.toggleAttribute('hidden', icon.hidden);
+      });
+      theme.title = dark ? 'Dark theme · switch to light' : 'Light theme · switch to dark';
+    };
+    theme.addEventListener('click', () => {
+      const dark = document.documentElement.dataset.theme
+        ? document.documentElement.dataset.theme === 'dark'
+        : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = dark ? 'light' : 'dark';
+      theme.setAttribute('aria-pressed', String(!dark));
+      refreshTheme();
+    });
+    refreshTheme();
+    systemTheme.addEventListener('change', refreshTheme);
+  }
+  all('[data-print]').forEach(button => {button.hidden = false; button.onclick = () => window.print();});
+  const disclosures = all('details.disclosure');
+  all('[data-expand]').forEach(button => {
+    button.hidden = false;
+    button.onclick = () => {disclosures.forEach(item => {item.open = button.dataset.expand === 'all';});};
+  });
+  const revealHash = () => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const target = document.getElementById(id);
+    if (!target) return;
+    let node = target;
+    while (node) {if (node.tagName === 'DETAILS') node.open = true; node = node.parentElement;}
+  };
+  try {revealHash();} catch {}
+  window.addEventListener('hashchange', () => {try {revealHash();} catch {}});
+  let printState;
+  window.addEventListener('beforeprint', () => {
+    if (!printState) printState = disclosures.map(item => item.open);
+    disclosures.forEach(item => {item.open = true;});
+  });
+  window.addEventListener('afterprint', () => {
+    if (printState) disclosures.forEach((item, index) => {item.open = printState[index];});
+    printState = undefined;
+  });
+  const filter = document.querySelector('[data-filter]');
+  if (filter) {
+    filter.closest('.filter-bar').hidden = false;
+    const items = all('[data-finding]');
+    const status = document.querySelector('[data-filter-status]');
+    filter.addEventListener('input', () => {
+      const query = filter.value.trim().toLocaleLowerCase();
+      let count = 0;
+      items.forEach(item => {
+        item.hidden = !item.textContent.toLocaleLowerCase().includes(query);
+        if (!item.hidden) count++;
+      });
+      status.textContent = count + ' of ' + items.length + ' findings shown';
+      const empty = document.querySelector('[data-empty]');
+      if (empty) empty.hidden = count !== 0;
+    });
+    // Printing must not silently omit filtered-out findings.
+    let hiddenState;
+    window.addEventListener('beforeprint', () => {
+      if (!hiddenState) hiddenState = items.map(item => item.hidden);
+      items.forEach(item => {item.hidden = false;});
+    });
+    window.addEventListener('afterprint', () => {
+      if (hiddenState) items.forEach((item, index) => {item.hidden = hiddenState[index];});
+      hiddenState = undefined;
+    });
+  }
+})();</script></body></html>

@@ -1,0 +1,40 @@
+{
+  "context": {
+    "access": "explicit",
+    "binding": "context.engineering-standards",
+    "consumers": [
+      {
+        "item_id": "policy.engineering-effectiveness",
+        "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+      }
+    ],
+    "content_format": "markdown",
+    "contract_id": "ce1a65b9-0669-5280-91a4-50eb94877390",
+    "contract_version": "1.0.0",
+    "sensitivity": "private"
+  },
+  "description": "Private organization engineering rubric, impact targets, and operating preferences.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "e8c98c899f380e35ae5da91d3893e93a3a6d04a0eddff21d93a53c88e44360cc",
+    "dasync.dev/catalog-path": "packages/contexts/engineering-standards/manifest.yaml",
+    "dasync.dev/token-budget": 400
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.engineering-standards",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "engineering-standards",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.0.0"
+}

@@ -1,0 +1,35 @@
+{
+  "context": {
+    "access": "explicit",
+    "binding": "context.travel-preferences",
+    "consumers": [],
+    "content_format": "markdown",
+    "contract_id": "109b8bda-66f0-5d23-b65e-1f858ead6b12",
+    "contract_version": "1.2.0",
+    "sensitivity": "private"
+  },
+  "description": "Travel preferences: Load for itinerary research or revision.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "cedc3da08f75b015ddef464086903061ac202492d4d079f94d0bbe795dfb4127",
+    "dasync.dev/catalog-path": "packages/contexts/travel-preferences/manifest.yaml",
+    "dasync.dev/token-budget": 600
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.travel-preferences",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "travel-preferences",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.2.0"
+}

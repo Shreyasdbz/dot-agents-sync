@@ -1,0 +1,35 @@
+{
+  "context": {
+    "access": "explicit",
+    "binding": "context.design-preferences",
+    "consumers": [],
+    "content_format": "markdown",
+    "contract_id": "e79b8115-029e-5484-8087-9c055c8f4b7b",
+    "contract_version": "1.3.0",
+    "sensitivity": "private"
+  },
+  "description": "Design preferences: Load for visual or interaction design.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "c565ab954465274f0d55a1cbc78fb215ea1d63940e5b42a202274ef09ece17d1",
+    "dasync.dev/catalog-path": "packages/contexts/design-preferences/manifest.yaml",
+    "dasync.dev/token-budget": 600
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.design-preferences",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "design-preferences",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.3.0"
+}

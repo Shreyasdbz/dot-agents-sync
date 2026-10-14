@@ -1,0 +1,49 @@
+{
+  "default_prompt": "create or update a visual quiz for these changes.",
+  "description": "Create or update a visual, four-option HTML quiz that teaches how local changes or a PR work and what they affect, with evidence-backed explanations and revision history.",
+  "entry": "SKILL.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "69c1e4891c12396b9edee13241db796b0b39746c5eefe130515527cb23e22a37",
+    "dasync.dev/catalog-path": "packages/skills/change-quiz/manifest.yaml",
+    "dasync.dev/optional-fallback": "Use supplied change evidence; disclose unknown revisions, external contracts and unavailable browser verification.",
+    "dasync.dev/outputs": "html",
+    "dasync.dev/token-budget": 5000
+  },
+  "files": [
+    "SKILL.md",
+    "analysis.md",
+    "questions.md",
+    "research.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "skill.change-quiz",
+  "kind": "Skill",
+  "license": "MIT",
+  "name": "Change Quiz",
+  "optional_capabilities": [
+    "git.read",
+    "web.search",
+    "browser.render"
+  ],
+  "required_capabilities": [
+    "filesystem.read",
+    "filesystem.write"
+  ],
+  "requires": {
+    "policy.security": ">=1,<2",
+    "starter/context.artifact-routing": ">=1,<2",
+    "starter/policy.communication": ">=1,<2",
+    "starter/policy.repository-guidance": ">=1,<2",
+    "starter/policy.research": ">=1,<2",
+    "starter/policy.scope": ">=1,<2",
+    "starter/skill.visual-artifacts": ">=1,<2",
+    "template.change-quiz": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "short_description": "Understand changes through visual questions",
+  "version": "1.0.0"
+}

@@ -1,0 +1,34 @@
+{
+  "agent": {
+    "access": "inherit"
+  },
+  "description": "Review agent systems for instruction boundaries, context handling, evaluation leakage, and unsupported quality or efficiency claims.",
+  "entry": "AGENT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "cd7bf8dfa63bcef434e0cadbfec85d4035fa588770f18aab8ba72852b67b766f",
+    "dasync.dev/catalog-path": "packages/agents/ai-systems-reviewer/manifest.yaml",
+    "dasync.dev/outputs": "findings,evidence,verification-limits",
+    "dasync.dev/token-budget": 650
+  },
+  "files": [
+    "AGENT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "agent.ai-systems-reviewer",
+  "kind": "Agent",
+  "license": "MIT",
+  "name": "ai-systems-reviewer",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {
+    "starter/policy.communication": ">=1,<2",
+    "starter/policy.engineering-effectiveness": ">=1,<2",
+    "starter/policy.repository-guidance": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.4.0"
+}

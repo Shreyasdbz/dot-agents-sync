@@ -43,6 +43,7 @@ Before submitting code, run the existing CI gates:
 uv run ruff check cli tests packages/hooks evals scripts/build_templates.py
 uv run ruff format --check cli tests packages/hooks evals scripts/build_templates.py
 uv run pytest -q
+uv run python scripts/build_recipes.py --check
 uv build
 ```
 

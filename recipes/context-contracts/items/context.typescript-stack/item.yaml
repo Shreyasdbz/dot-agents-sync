@@ -1,0 +1,35 @@
+{
+  "context": {
+    "access": "explicit",
+    "binding": "context.typescript-stack",
+    "consumers": [],
+    "content_format": "markdown",
+    "contract_id": "dd133c28-a67e-5335-a7a4-3bc207651fa1",
+    "contract_version": "1.2.0",
+    "sensitivity": "private"
+  },
+  "description": "TypeScript and web stack: Load for TypeScript/web implementation or review.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "50c49aaf6c9f18c94bd5ee2687f0c03ace13294ace90f72f07cf19ad7a2819d8",
+    "dasync.dev/catalog-path": "packages/contexts/typescript-stack/manifest.yaml",
+    "dasync.dev/token-budget": 600
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.typescript-stack",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "typescript-stack",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.2.0"
+}

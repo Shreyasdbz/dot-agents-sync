@@ -1,0 +1,38 @@
+{
+  "agent": {
+    "access": "inherit"
+  },
+  "description": "Plan feasible points-aware travel or review itinerary content for Trip Publish using authorized traveler context.",
+  "entry": "AGENT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "9eed1269fcc108512b26d3f6cb5e94d5df59605ee743d1366e268e10e0bc1897",
+    "dasync.dev/catalog-path": "packages/agents/travel-planner/manifest.yaml",
+    "dasync.dev/optional-fallback": "Return a provisional itinerary or publishing review from supplied facts; live availability remains unverified.",
+    "dasync.dev/outputs": "itinerary,findings,verification-limits",
+    "dasync.dev/suggestions": "08ddcb86-818f-54bb-b99f-6d494874973a/context.travel-preferences,4779775e-f7c0-5c97-afbe-908b9d73e761/agent.travel-researcher",
+    "dasync.dev/token-budget": 1000
+  },
+  "files": [
+    "AGENT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "agent.travel-planner",
+  "kind": "Agent",
+  "license": "MIT",
+  "name": "travel-planner",
+  "optional_capabilities": [
+    "web.search"
+  ],
+  "required_capabilities": [],
+  "requires": {
+    "starter/policy.communication": ">=1,<2",
+    "starter/policy.research": ">=1,<2",
+    "template.trip-plan": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.0.0"
+}

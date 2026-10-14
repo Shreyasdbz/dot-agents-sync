@@ -1,0 +1,39 @@
+{
+  "default_prompt": "plan this itinerary through the Travel Planner workflow.",
+  "description": "Compatibility entrypoint for Travel Planner. Use the travel-planner agent for itinerary planning; this alias preserves existing selections.",
+  "entry": "SKILL.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "688054ebbd1a092ebfaada391b07b966bd9dacf3e59479391d8bd47b859b1894",
+    "dasync.dev/catalog-path": "packages/skills/trip-plan/manifest.yaml",
+    "dasync.dev/optional-fallback": "Return a provisional itinerary from supplied facts; prices, schedules and availability remain unverified.",
+    "dasync.dev/outputs": "markdown",
+    "dasync.dev/token-budget": 1500
+  },
+  "files": [
+    "SKILL.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "skill.trip-plan",
+  "kind": "Skill",
+  "license": "MIT",
+  "name": "Trip Plan",
+  "optional_capabilities": [
+    "web.search"
+  ],
+  "required_capabilities": [
+    "filesystem.read"
+  ],
+  "requires": {
+    "agent.travel-planner": ">=1,<2",
+    "starter/policy.communication": ">=1,<2",
+    "starter/policy.research": ">=1,<2",
+    "template.trip-plan": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "short_description": "Route itinerary planning to the Travel Planner",
+  "version": "1.2.0"
+}

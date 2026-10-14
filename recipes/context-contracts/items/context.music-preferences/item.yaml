@@ -1,0 +1,35 @@
+{
+  "context": {
+    "access": "explicit",
+    "binding": "context.music-preferences",
+    "consumers": [],
+    "content_format": "markdown",
+    "contract_id": "9b376fb6-9bb7-5ba5-a937-47e9d2b91365",
+    "contract_version": "1.1.0",
+    "sensitivity": "private"
+  },
+  "description": "Music preferences: Load for music curation.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "af9b830a16addd641a3095a336acc8d0aee3015eb6edf6876957bd151feba78d",
+    "dasync.dev/catalog-path": "packages/contexts/music-preferences/manifest.yaml",
+    "dasync.dev/token-budget": 600
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.music-preferences",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "music-preferences",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.1.0"
+}

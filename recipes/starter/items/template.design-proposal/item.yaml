@@ -1,0 +1,40 @@
+{
+  "description": "Adaptive bug-fix, feature, migration and decision recipes with a self-contained proposal UI.",
+  "entry": "proposal.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "010114ff41a41f124b19f862a8249db1d4fe22610c7f46f05ee184daaa412e39",
+    "dasync.dev/catalog-path": "packages/templates/design-proposal/manifest.yaml",
+    "dasync.dev/token-budget": 24000
+  },
+  "files": [
+    "components/chart.html",
+    "components/comparison.html",
+    "components/data-flow.html",
+    "components/dense-context.html",
+    "components/entity-relationship.html",
+    "components/line-chart.html",
+    "components/sequence.html",
+    "components.md",
+    "proposal.html",
+    "proposal.md",
+    "sections/bug-fix.md",
+    "sections/cross-cutting.md",
+    "sections/decision.md",
+    "sections/feature.md",
+    "sections/migration.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "template.design-proposal",
+  "kind": "Template",
+  "license": "MIT",
+  "name": "design-proposal",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.7.2"
+}

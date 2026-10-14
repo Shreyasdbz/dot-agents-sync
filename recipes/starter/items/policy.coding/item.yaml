@@ -1,0 +1,30 @@
+{
+  "description": "Coding quality",
+  "entry": "POLICY.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "83159d1b649f6fd63b41e67dc06e8cc87060e27607559fa6cf820fb85c2bd1da",
+    "dasync.dev/catalog-path": "packages/policies/coding/manifest.yaml",
+    "dasync.dev/token-budget": 1200
+  },
+  "files": [
+    "POLICY.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "policy.coding",
+  "kind": "Policy",
+  "license": "MIT",
+  "name": "coding",
+  "optional_capabilities": [],
+  "policy": {
+    "globs": [],
+    "priority": 0
+  },
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.2.0"
+}

@@ -1,0 +1,44 @@
+{
+  "default_prompt": "compare viable approaches and write a supported proposal for this change.",
+  "description": "Design a change: clarify consequential requirements, compare viable approaches, and write a proposal. Not implementation planning.",
+  "entry": "SKILL.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "7b91315f7d2954e38a54e4b4e0905017d4de3940ed22a044e7a5f8e9e59b512d",
+    "dasync.dev/catalog-path": "packages/skills/propose/manifest.yaml",
+    "dasync.dev/optional-fallback": "Use available evidence and a self-check; identify unverified external guarantees and unavailable independent review.",
+    "dasync.dev/outputs": "markdown,html",
+    "dasync.dev/token-budget": 1500
+  },
+  "files": [
+    "SKILL.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "skill.propose",
+  "kind": "Skill",
+  "license": "MIT",
+  "name": "Propose",
+  "optional_capabilities": [
+    "agents.parallel",
+    "web.search"
+  ],
+  "required_capabilities": [
+    "filesystem.read"
+  ],
+  "requires": {
+    "context.artifact-routing": ">=1,<2",
+    "policy.communication": ">=1,<2",
+    "policy.engineering-effectiveness": ">=1,<2",
+    "policy.repository-guidance": ">=1,<2",
+    "policy.research": ">=1,<2",
+    "policy.scope": ">=1,<2",
+    "skill.visual-artifacts": ">=1,<2",
+    "template.design-proposal": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "short_description": "Compare approaches and write a supported proposal",
+  "version": "1.6.0"
+}

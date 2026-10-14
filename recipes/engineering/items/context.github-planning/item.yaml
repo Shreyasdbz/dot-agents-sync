@@ -1,0 +1,35 @@
+{
+  "context": {
+    "access": "inherit",
+    "consumers": [],
+    "content_format": "markdown",
+    "contract_id": "c1bf7764-f8c4-5b97-a5bf-3dc6cf42ca7b",
+    "contract_version": "1.1.0",
+    "sensitivity": "public"
+  },
+  "description": "Load GitHub-specific hierarchy, description and metadata conventions; not actual board identity.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "50746ec91c00f621367da1187dad144d717cc49351583b9e978e746720f4c977",
+    "dasync.dev/catalog-path": "packages/contexts/github-planning/manifest.yaml",
+    "dasync.dev/token-budget": 3000
+  },
+  "files": [
+    "CONTEXT.md",
+    "issue-bodies.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.github-planning",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "github-planning",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.1.0"
+}

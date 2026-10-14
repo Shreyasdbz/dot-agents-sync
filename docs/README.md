@@ -9,6 +9,9 @@
 | [Catalog](catalog.md) | Profiles, package kinds, private context, and hooks |
 | [AI operator contract](AI-OPERATOR.md) | Required checks and authorization boundaries for agents operating the CLI |
 | [Repository guidance](repository-guidance.md) | Instruction scopes, context provenance, role discovery, and provider-specific loading |
+| [Recipe workspace and protocol](recipe-protocol.md) | Local recipes, interactive drafts, exact pins, reviewed apply, recovery and restore |
+| [Collected workflow recipes](../recipes/README.md) | All 70 existing items, starter closure, optional ownership, licenses and regeneration |
+| [Recipe validation](recipe-validation.md) | Exhaustive cases, deterministic generation, transaction faults and terminal journeys |
 
 ## Contribute and release
 
@@ -28,6 +31,8 @@
 [Implementation decisions](architecture/implementation.md) describe the current runtime, source pins, transaction engine, provider behavior, and known limitations. The [original design](architecture/design.md) is a historical design snapshot, not the current implementation contract.
 
 The [recipe architecture and development plan](plans/2026-10-06-dasync-recipe-spine-plan.html), reviewed on 6 October 2026, proposes an engine-only spine, independent recipe repositories, local items, and a CLI/TUI shared by people and agents. It includes the agreed decisions, failure and recovery contracts, validation limits, and a six-milestone roadmap with detailed work for the next milestone. The embedded Plan Context is an unpublished GitHub planning projection; implementation and live tracker reconciliation remain pending. Open the standalone HTML in a browser to use its navigation and interactive illustration.
+
+The immediate local runtime is now available through the [experimental recipe protocol](recipe-protocol.md): independent local sources, qualified items, project-owned locks and reviewed recoverable Codex output. `dasync describe --json` exports its machine contracts; `dasync tui` opens the human workspace over the same engine. This implementation does not update the historical planning projection or claim completion of later launch milestones.
 
 Optional conventions have their own guides: [engineering profile](engineering-profile.md), [GitHub planning and travel context](planning-and-travel-context.md), and the dated [observability comparison](observability-options.md).
 

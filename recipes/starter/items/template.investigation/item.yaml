@@ -1,0 +1,27 @@
+{
+  "description": "Evidence-first investigation structures for incidents, correctness, performance and research.",
+  "entry": "report.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "b0984bf0fa05d6f87130a22e8284fcb5aaf57a488b731b949feb1f0ac5c5457c",
+    "dasync.dev/catalog-path": "packages/templates/investigation/manifest.yaml",
+    "dasync.dev/token-budget": 4000
+  },
+  "files": [
+    "report.md",
+    "variants.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "template.investigation",
+  "kind": "Template",
+  "license": "MIT",
+  "name": "investigation",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.2.0"
+}

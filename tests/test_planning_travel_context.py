@@ -86,7 +86,7 @@ def test_travel_profile_and_agent_reference_links(workspace, provider):
     body = by_path[native].decode()
     if provider == "codex":
         role = tomllib.loads(body)
-        assert role["sandbox_mode"] == "read-only"
+        assert "sandbox_mode" not in role
         body = role["developer_instructions"]
     links = re.findall(r"\]\(([^)]+)\)", body)
     assert links

@@ -1,0 +1,36 @@
+{
+  "description": "Block explicit credential-path access before supported tool calls. This is a conservative guard, not complete shell enforcement.",
+  "entry": "guard.py",
+  "executable": {
+    "events": [
+      "pre_tool"
+    ],
+    "permissions": [
+      "stdin.read"
+    ],
+    "runtime": "python",
+    "timeout": 5
+  },
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "a32f2e17056cc9ad5dc08d4d7a93844e119443f999df5f39630460dda73a6464",
+    "dasync.dev/catalog-path": "packages/hooks/credential-path-guard/manifest.yaml",
+    "dasync.dev/token-budget": 1500
+  },
+  "files": [
+    "guard.py",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "hook.credential-path-guard",
+  "kind": "Hook",
+  "license": "MIT",
+  "name": "credential-path-guard",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.0.0"
+}

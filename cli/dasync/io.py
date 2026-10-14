@@ -225,7 +225,7 @@ def parent_fd(path: Path, create=False):
         os.close(fd)
 
 
-def snapshot(path: Path):
+def snapshot(path: Path, max_bytes=MAX_FILE):
     assert_safe(path)
     if not path.exists():
         return None, None
@@ -237,11 +237,11 @@ def snapshot(path: Path):
             fd = os.open(path, os.O_RDONLY | os.O_BINARY)
         with os.fdopen(fd, "rb") as stream:
             info = os.fstat(stream.fileno())
-            if not stat.S_ISREG(info.st_mode) or info.st_size > MAX_FILE:
-                raise DasyncError("UNSAFE_PATH", "Expected a regular file under 4 MiB")
-            data = stream.read(MAX_FILE + 1)
-            if len(data) > MAX_FILE:
-                raise DasyncError("UNSAFE_PATH", "File exceeds 4 MiB")
+            if not stat.S_ISREG(info.st_mode) or info.st_size > max_bytes:
+                raise DasyncError("UNSAFE_PATH", "Expected a bounded regular file")
+            data = stream.read(max_bytes + 1)
+            if len(data) > max_bytes:
+                raise DasyncError("UNSAFE_PATH", "File exceeds size limit")
             return data, stat.S_IMODE(info.st_mode)
     except FileNotFoundError:
         return None, None

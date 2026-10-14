@@ -1,0 +1,30 @@
+{
+  "description": "Optional TanStack and CLI-first shadcn UI standards",
+  "entry": "POLICY.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "46a5aa57558c30e8543781d2dbedd4d178cc0a5cdf44e31fb96e9198fafc6b0b",
+    "dasync.dev/catalog-path": "packages/policies/ui-shadcn/manifest.yaml",
+    "dasync.dev/token-budget": 1100
+  },
+  "files": [
+    "POLICY.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "policy.ui-shadcn",
+  "kind": "Policy",
+  "license": "MIT",
+  "name": "ui-shadcn",
+  "optional_capabilities": [],
+  "policy": {
+    "globs": [],
+    "priority": 0
+  },
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.2.0"
+}

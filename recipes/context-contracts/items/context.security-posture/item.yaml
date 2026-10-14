@@ -1,0 +1,35 @@
+{
+  "context": {
+    "access": "explicit",
+    "binding": "context.security-posture",
+    "consumers": [],
+    "content_format": "markdown",
+    "contract_id": "0764502f-ddc2-5fd4-813b-dcc401fb2beb",
+    "contract_version": "1.3.0",
+    "sensitivity": "private"
+  },
+  "description": "Security posture: Load when a task crosses an identity, data or execution boundary.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "04921da75f13c596c1e30ed206a6771f15d89743119d5b58721ee4927f6cc27d",
+    "dasync.dev/catalog-path": "packages/contexts/security-posture/manifest.yaml",
+    "dasync.dev/token-budget": 600
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.security-posture",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "security-posture",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.3.0"
+}

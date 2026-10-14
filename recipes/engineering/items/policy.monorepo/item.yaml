@@ -1,0 +1,30 @@
+{
+  "description": "Optional deployable-app and shared-package boundaries",
+  "entry": "POLICY.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "adb7c279612a7441a152d089aff24815796309b7eeeb962a01514c5d57b9ddc4",
+    "dasync.dev/catalog-path": "packages/policies/monorepo/manifest.yaml",
+    "dasync.dev/token-budget": 900
+  },
+  "files": [
+    "POLICY.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "policy.monorepo",
+  "kind": "Policy",
+  "license": "MIT",
+  "name": "monorepo",
+  "optional_capabilities": [],
+  "policy": {
+    "globs": [],
+    "priority": 0
+  },
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.0.0"
+}

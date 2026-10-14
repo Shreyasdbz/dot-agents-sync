@@ -23,6 +23,21 @@ class Engine:
         self.env, self.scope, self.state = env, scope, State(env.state)
 
     def build(self, request: dict):
+        if request.get("operation", "").startswith("recipe."):
+            from .recipe_engine import build
+
+            return build(self, request)
+        configured = load_config(self.scope.config, required=False)
+        if request.get("operation") == "rollback" and request.get("receipt"):
+            receipt = self.state.receipt(request["receipt"], self.scope.key)
+            if "recipe" in receipt:
+                return self.build({**request, "operation": "recipe.restore"})
+        if configured and configured["version"] == 2:
+            if request.get("operation") in ("sync", "repair"):
+                return self.build({"operation": "recipe.sync"})
+            if request.get("operation") == "rollback":
+                return self.build({**request, "operation": "recipe.restore"})
+            raise DasyncError("PROTOCOL_REQUIRED", "Use the recipe protocol for this scope")
         scope = self.scope
         operation = request["operation"]
         if operation not in ("setup", "configure", "sync", "update", "repair", "rollback"):
@@ -486,6 +501,10 @@ class Engine:
                 ".claude/settings.local.json",
                 ".claude/CLAUDE.md",
                 ".cursor/hooks.json",
+                ".dasync.lock",
+                "item.yaml",
+                "SKILL.md",
+                "CONTEXT.md",
             )
             and relative not in allowed_directories
             and not relative.startswith(allowed)
@@ -501,13 +520,21 @@ class Engine:
                 raise DasyncError("UNSAFE_PATH", "A path ancestor is not a directory")
 
     def apply(self, plan, fault=None):
-        validate("plan", plan)
-        if plan.get("scope_key") != self.scope.key or plan.get("version") != 1:
+        recipe = plan.get("version") == 2
+        validate("recipe-plan" if recipe else "plan", plan)
+        if plan.get("scope_key") != self.scope.key or plan.get("version") not in (1, 2):
             raise DasyncError("PLAN_INVALID", "Plan scope or schema does not match")
         fresh, outputs = self.build(plan["request"])
         if canonical(fresh) != canonical(plan):
             raise DasyncError("PLAN_INVALIDATED", "Plan inputs changed; regenerate and review the plan")
-        return self.state.commit(plan, outputs, lambda: self.build(plan["request"]), fault)
+        metadata = None
+        if recipe:
+            from .recipe_engine import metadata_updates
+
+            def metadata():
+                return metadata_updates(self, plan["request"])
+
+        return self.state.commit(plan, outputs, lambda: self.build(plan["request"]), fault, metadata=metadata)
 
     def status(self):
         receipt = self.state.head(self.scope.key)

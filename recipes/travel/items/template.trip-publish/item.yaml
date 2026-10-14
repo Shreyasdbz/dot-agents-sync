@@ -1,0 +1,42 @@
+{
+  "description": "Traveler-friendly trip page with day summaries, reservations, transport timelines, to-dos and optional currency estimates.",
+  "entry": "trip.html",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "9dc12ff72c48f08c819cc368114c6bdee595a9ce2bf0eba02479055a5b4bde58",
+    "dasync.dev/catalog-path": "packages/templates/trip-publish/manifest.yaml",
+    "dasync.dev/token-budget": 28000
+  },
+  "files": [
+    "components/expenses.html",
+    "components/copy-details.html",
+    "components/activity.html",
+    "components/cost-summary.html",
+    "components/disruption.html",
+    "components/family-stay.html",
+    "components/flight.html",
+    "components/rail.html",
+    "components/rental-stay.html",
+    "components/route-map.html",
+    "components/stay.html",
+    "components/timeline.html",
+    "components/transfer.html",
+    "components/travelers.html",
+    "components/vehicle.html",
+    "components.md",
+    "trip.html",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "template.trip-publish",
+  "kind": "Template",
+  "license": "MIT",
+  "name": "trip-publish",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.11.1"
+}

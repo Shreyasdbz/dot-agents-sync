@@ -1,0 +1,34 @@
+{
+  "agent": {
+    "access": "inherit"
+  },
+  "description": "Trace reachable security failures across trust boundaries, permissions, private data, dependencies, and executable content.",
+  "entry": "AGENT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "7bfcbd4e708be5a36806df51a7aebaf65d14b4278493a4aa21bd204647ba192f",
+    "dasync.dev/catalog-path": "packages/agents/security-reviewer/manifest.yaml",
+    "dasync.dev/outputs": "findings,evidence,verification-limits",
+    "dasync.dev/token-budget": 650
+  },
+  "files": [
+    "AGENT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "agent.security-reviewer",
+  "kind": "Agent",
+  "license": "MIT",
+  "name": "security-reviewer",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {
+    "starter/policy.communication": ">=1,<2",
+    "starter/policy.engineering-effectiveness": ">=1,<2",
+    "starter/policy.repository-guidance": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.4.0"
+}

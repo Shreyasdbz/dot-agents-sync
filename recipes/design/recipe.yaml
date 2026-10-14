@@ -1,0 +1,24 @@
+{
+  "description": "Collected dasync design workflows and references.",
+  "format": 1,
+  "imports": {
+    "starter": {
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    }
+  },
+  "items": [
+    "items/context.design-editorial/item.yaml",
+    "items/policy.ui-shadcn/item.yaml",
+    "items/skill.pitch-deck/item.yaml",
+    "items/skill.ui-design/item.yaml",
+    "items/template.pitch-deck/item.yaml"
+  ],
+  "name": "design",
+  "required_features": [
+    "context-contracts",
+    "imports",
+    "native-policies"
+  ],
+  "requires_engine": ">=0.1.1,<1",
+  "source_id": "35fc4746-6bbb-5fce-8e1f-8116aa7e7afa"
+}

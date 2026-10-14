@@ -1,0 +1,33 @@
+{
+  "description": "Self-contained accessible briefing components with responsive layouts and progressive navigation.",
+  "entry": "deck.html",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "8a3a7aeedc2f51a6e14601c4402cebc8bc729ddde791488b9efff8272a1947a2",
+    "dasync.dev/catalog-path": "packages/templates/pitch-deck/manifest.yaml",
+    "dasync.dev/token-budget": 22500
+  },
+  "files": [
+    "components/chart.html",
+    "components/data-flow.html",
+    "components/dense-context.html",
+    "components/entity-relationship.html",
+    "components/line-chart.html",
+    "components/sequence.html",
+    "components.md",
+    "deck.html",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "template.pitch-deck",
+  "kind": "Template",
+  "license": "MIT",
+  "name": "pitch-deck",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.7.2"
+}

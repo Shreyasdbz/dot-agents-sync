@@ -1,5 +1,9 @@
 # dasync
 
+The [experimental recipe protocol](docs/recipe-protocol.md) supports independent local sources, same-named canonical items, project-owned locks and reviewed recoverable Codex output. Open the searchable recipe workspace with `dasync tui --scope project --path /absolute/project`, or start automation with `dasync describe --json`. The workspace includes previews, dependency reasons, draft selections, explicit trust, plan review and export, health, recovery and receipt restoration. See the [validation matrix](docs/recipe-validation.md) for repeatable evidence and remaining limits. Git transport and context loading remain later milestones. Existing catalog workflows below retain their own v1 contracts.
+
+The [collected workflow recipes](recipes/README.md) preserve all 70 existing items in seven sources: an 18-item development starter, engineering, design, travel, music, private context contracts and separately approved hooks. Add their local directories through the workspace; imports use explicit trusted pins. The recipe adapter now supports native Codex roles and policies alongside Skills, public Contexts and Markdown/HTML Templates. Existing installed scopes and private grants are not migrated automatically.
+
 dasync is a CLI and optional workflow catalog for Codex, Claude Code, GitHub Copilot CLI, and Cursor. Select skills, agents, policies, context, and templates once; dasync resolves their dependencies and writes each provider's configuration with drift protection and recoverable backups.
 
 [Documentation](docs/README.md) | [Catalog](docs/catalog.md) | [Project](https://github.com/users/Shreyasdbz/projects/8) | [Releases](https://github.com/Shreyasdbz/dot-agents-sync/releases) | [Contributing](CONTRIBUTING.md)

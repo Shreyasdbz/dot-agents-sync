@@ -1,0 +1,32 @@
+{
+  "description": "Optional Cloudflare-first platform and runtime selection",
+  "entry": "POLICY.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "78c65bafd31c962d61b951baab317c26d159aedd3cd32f5bb26c893102ec7521",
+    "dasync.dev/catalog-path": "packages/policies/engineering-platform/manifest.yaml",
+    "dasync.dev/token-budget": 900
+  },
+  "files": [
+    "POLICY.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "policy.engineering-platform",
+  "kind": "Policy",
+  "license": "MIT",
+  "name": "engineering-platform",
+  "optional_capabilities": [],
+  "policy": {
+    "globs": [],
+    "priority": 0
+  },
+  "required_capabilities": [],
+  "requires": {
+    "context.engineering-stack": ">=1,<2"
+  },
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.1.0"
+}

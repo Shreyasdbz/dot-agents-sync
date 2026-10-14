@@ -1,0 +1,35 @@
+{
+  "context": {
+    "access": "explicit",
+    "binding": "context.cloud-infrastructure",
+    "consumers": [],
+    "content_format": "markdown",
+    "contract_id": "ab9ddf10-83be-517e-8dd6-0653714767d4",
+    "contract_version": "1.2.0",
+    "sensitivity": "private"
+  },
+  "description": "Cloud infrastructure: Load for deployment, reliability or infrastructure changes.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "0de40e735f6fc96572dc67f83cef1a11efcf4a2a0fed5aa63be5ca7bf9e5144a",
+    "dasync.dev/catalog-path": "packages/contexts/cloud-infrastructure/manifest.yaml",
+    "dasync.dev/token-budget": 600
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.cloud-infrastructure",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "cloud-infrastructure",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.2.0"
+}

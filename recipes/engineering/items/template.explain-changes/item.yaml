@@ -1,0 +1,30 @@
+{
+  "description": "One scrollable visual change explanation with before/after mechanisms, evidence and offline reading.",
+  "entry": "components.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "f7487cb409a6d6d7f96f940d19753c4443e2365eb477299a312fe0251c6751c3",
+    "dasync.dev/catalog-path": "packages/templates/explain-changes/manifest.yaml",
+    "dasync.dev/outputs": "html",
+    "dasync.dev/token-budget": 18000
+  },
+  "files": [
+    "components.md",
+    "explanation.html",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "template.explain-changes",
+  "kind": "Template",
+  "license": "MIT",
+  "name": "explain-changes",
+  "optional_capabilities": [],
+  "required_capabilities": [
+    "filesystem.read"
+  ],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.0.0"
+}

@@ -1,0 +1,35 @@
+{
+  "context": {
+    "access": "explicit",
+    "binding": "context.product-audience",
+    "consumers": [],
+    "content_format": "markdown",
+    "contract_id": "9b93982a-2212-50f7-9baa-62595b520963",
+    "contract_version": "1.2.0",
+    "sensitivity": "private"
+  },
+  "description": "Product and audience: Load for requirements, prioritization or communication.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "4dc5f57b940af87cc5039015878497873bbd64660d9ca7b28b8fc007c0338e74",
+    "dasync.dev/catalog-path": "packages/contexts/product-audience/manifest.yaml",
+    "dasync.dev/token-budget": 600
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.product-audience",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "product-audience",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.2.0"
+}

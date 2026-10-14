@@ -1,0 +1,71 @@
+{
+  "context": {
+    "access": "explicit",
+    "binding": "context.workspace-artifacts",
+    "consumers": [
+      {
+        "item_id": "skill.visual-artifacts",
+        "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+      },
+      {
+        "item_id": "skill.pitch-deck",
+        "source_id": "35fc4746-6bbb-5fce-8e1f-8116aa7e7afa"
+      },
+      {
+        "item_id": "skill.propose",
+        "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+      },
+      {
+        "item_id": "skill.pr-review",
+        "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+      },
+      {
+        "item_id": "skill.change-quiz",
+        "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+      },
+      {
+        "item_id": "skill.plan-out",
+        "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+      },
+      {
+        "item_id": "skill.investigate",
+        "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+      },
+      {
+        "item_id": "skill.trip-publish",
+        "source_id": "4779775e-f7c0-5c97-afbe-908b9d73e761"
+      },
+      {
+        "item_id": "skill.ui-design",
+        "source_id": "35fc4746-6bbb-5fce-8e1f-8116aa7e7afa"
+      }
+    ],
+    "content_format": "markdown",
+    "contract_id": "42380581-0b1c-5ee0-8966-0ec73dacb46f",
+    "contract_version": "1.1.1",
+    "sensitivity": "private"
+  },
+  "description": "Private workspace branding, offline assets and visual verification for HTML artifacts.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "5d325318240c6464cf3ebf19c0dfe1bc0608dce0895daa2f4954e7d0f5ca9150",
+    "dasync.dev/catalog-path": "packages/contexts/workspace-artifacts/manifest.yaml",
+    "dasync.dev/token-budget": 650
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.workspace-artifacts",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "workspace-artifacts",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "project"
+  ],
+  "version": "1.1.1"
+}

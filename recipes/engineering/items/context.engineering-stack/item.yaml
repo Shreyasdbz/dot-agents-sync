@@ -1,0 +1,37 @@
+{
+  "context": {
+    "access": "inherit",
+    "consumers": [],
+    "content_format": "markdown",
+    "contract_id": "995dd874-8202-5c47-bffc-a0dd44b2ea51",
+    "contract_version": "1.6.0",
+    "sensitivity": "public"
+  },
+  "description": "Load for Cloudflare/GCP workload fit, runtime choices and monorepo design; public guidance, not project facts.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "c1fe58dd5e5ee047d67f34f7e86af0c924fe92f4def847614a6e0974c59710b4",
+    "dasync.dev/catalog-path": "packages/contexts/engineering-stack/manifest.yaml",
+    "dasync.dev/token-budget": 5400
+  },
+  "files": [
+    "CONTEXT.md",
+    "operations.md",
+    "security-and-local-data.md",
+    "ai-development.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.engineering-stack",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "engineering-stack",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.6.0"
+}

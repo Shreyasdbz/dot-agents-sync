@@ -1,0 +1,30 @@
+{
+  "description": "Discover applicable repository instructions, load context selectively, and preserve authority across agent handoffs.",
+  "entry": "POLICY.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "e685b174d6516cc7c3db212128d87f0cf46ed1179bc537c036d1697044e78727",
+    "dasync.dev/catalog-path": "packages/policies/repository-guidance/manifest.yaml",
+    "dasync.dev/token-budget": 1400
+  },
+  "files": [
+    "POLICY.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "policy.repository-guidance",
+  "kind": "Policy",
+  "license": "MIT",
+  "name": "repository-guidance",
+  "optional_capabilities": [],
+  "policy": {
+    "globs": [],
+    "priority": 0
+  },
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "user",
+    "project"
+  ],
+  "version": "1.1.0"
+}

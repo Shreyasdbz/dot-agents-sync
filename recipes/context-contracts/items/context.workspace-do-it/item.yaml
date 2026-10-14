@@ -1,0 +1,39 @@
+{
+  "context": {
+    "access": "explicit",
+    "binding": "context.workspace-do-it",
+    "consumers": [
+      {
+        "item_id": "skill.do-it",
+        "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+      }
+    ],
+    "content_format": "markdown",
+    "contract_id": "bcb7bd97-ae91-5c72-aa5e-9fe71327874e",
+    "contract_version": "1.0.0",
+    "sensitivity": "private"
+  },
+  "description": "Private workspace implementation context for related repositories and environments.",
+  "entry": "CONTEXT.md",
+  "extensions": {
+    "dasync.dev/catalog-manifest-digest": "ef17434e17ebea8a05cca9aef92bf4447a71563617d8851a76e0f03d735a9935",
+    "dasync.dev/catalog-path": "packages/contexts/workspace-do-it/manifest.yaml",
+    "dasync.dev/token-budget": 500
+  },
+  "files": [
+    "CONTEXT.md",
+    "LICENSE.dasync.txt"
+  ],
+  "format": 1,
+  "id": "context.workspace-do-it",
+  "kind": "Context",
+  "license": "MIT",
+  "name": "workspace-do-it",
+  "optional_capabilities": [],
+  "required_capabilities": [],
+  "requires": {},
+  "scopes": [
+    "project"
+  ],
+  "version": "1.0.0"
+}

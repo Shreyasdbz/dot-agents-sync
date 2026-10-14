@@ -1,0 +1,1489 @@
+{
+  "format": 1,
+  "items": [
+    {
+      "files": [
+        {
+          "canonical": "48daeb29cd76268eba960335362359d5b50606287a360be48e924c3778fc39ac",
+          "original": "48daeb29cd76268eba960335362359d5b50606287a360be48e924c3778fc39ac",
+          "path": "AGENT.md",
+          "transformed": false
+        }
+      ],
+      "id": "agent.ai-systems-reviewer",
+      "kind": "Agent",
+      "original_manifest": "packages/agents/ai-systems-reviewer/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "891219ea89136d4485577fe7445160b1365f6fa207a5715838e151949d324576",
+          "original": "891219ea89136d4485577fe7445160b1365f6fa207a5715838e151949d324576",
+          "path": "AGENT.md",
+          "transformed": false
+        }
+      ],
+      "id": "agent.architecture-reviewer",
+      "kind": "Agent",
+      "original_manifest": "packages/agents/architecture-reviewer/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "3febe7e086ea1db1463b4d2b259267b222738f9dfd3b4d71b45a28bfceb057aa",
+          "original": "3febe7e086ea1db1463b4d2b259267b222738f9dfd3b4d71b45a28bfceb057aa",
+          "path": "AGENT.md",
+          "transformed": false
+        }
+      ],
+      "id": "agent.security-reviewer",
+      "kind": "Agent",
+      "original_manifest": "packages/agents/security-reviewer/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "9bf1560e24077a2b8c197dc3f841dc3926fbdd12a7da2f4d635dd7e24851869b",
+          "original": "9bf1560e24077a2b8c197dc3f841dc3926fbdd12a7da2f4d635dd7e24851869b",
+          "path": "AGENT.md",
+          "transformed": false
+        }
+      ],
+      "id": "agent.slop-auditor",
+      "kind": "Agent",
+      "original_manifest": "packages/agents/slop-auditor/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "e79825e3942d906d267333016e0c86deab1662b8a8a4d17dd4d4f167e399968d",
+          "original": "e79825e3942d906d267333016e0c86deab1662b8a8a4d17dd4d4f167e399968d",
+          "path": "AGENT.md",
+          "transformed": false
+        }
+      ],
+      "id": "agent.travel-planner",
+      "kind": "Agent",
+      "original_manifest": "packages/agents/travel-planner/manifest.yaml",
+      "recipe": "travel",
+      "source_id": "4779775e-f7c0-5c97-afbe-908b9d73e761"
+    },
+    {
+      "files": [
+        {
+          "canonical": "02e84289f85f32cfb3d6afd4422370fbb139214d25682267b92fec4d68851c85",
+          "original": "02e84289f85f32cfb3d6afd4422370fbb139214d25682267b92fec4d68851c85",
+          "path": "AGENT.md",
+          "transformed": false
+        }
+      ],
+      "id": "agent.travel-researcher",
+      "kind": "Agent",
+      "original_manifest": "packages/agents/travel-researcher/manifest.yaml",
+      "recipe": "travel",
+      "source_id": "4779775e-f7c0-5c97-afbe-908b9d73e761"
+    },
+    {
+      "files": [
+        {
+          "canonical": "e77f13ce3e979766eb94ce8c182d28eec63c959a54715673e6a89d3cbfe672e5",
+          "original": "e77f13ce3e979766eb94ce8c182d28eec63c959a54715673e6a89d3cbfe672e5",
+          "path": "AGENT.md",
+          "transformed": false
+        }
+      ],
+      "id": "agent.ux-reviewer",
+      "kind": "Agent",
+      "original_manifest": "packages/agents/ux-reviewer/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "8450b0ff54b1d264110bc838978eb37afa6afc8e9eee193854f15236d597591c",
+          "original": "8450b0ff54b1d264110bc838978eb37afa6afc8e9eee193854f15236d597591c",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.ai-systems",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/ai-systems/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "1f965a7de39c0e47b5e122b9acf38bac410b9d40992b2186a76b5d02077ddb57",
+          "original": "1f965a7de39c0e47b5e122b9acf38bac410b9d40992b2186a76b5d02077ddb57",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.artifact-routing",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/artifact-routing/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "f59d346fe207e57bfc7991d0ff1f99d9eeb1d8a541770ebba3d2c9e8d8faa07d",
+          "original": "f59d346fe207e57bfc7991d0ff1f99d9eeb1d8a541770ebba3d2c9e8d8faa07d",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.cloud-infrastructure",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/cloud-infrastructure/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "3f38e26380562df6199c6167f6c6e6f07f431572e7aa58a81c0dd889b573ef8d",
+          "original": "3f38e26380562df6199c6167f6c6e6f07f431572e7aa58a81c0dd889b573ef8d",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.coding-maintainable",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/coding-maintainable/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "6a9cbc8403e80e413f4497f9d16a9a1ee0d0d357bc92650e504fb0a0821973b5",
+          "original": "6a9cbc8403e80e413f4497f9d16a9a1ee0d0d357bc92650e504fb0a0821973b5",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.coding-preferences",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/coding-preferences/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "302dfe8f95eaaf79e6ffef18e4f7b53b3c8d60aa7bd0facc3299aa2569dd7185",
+          "original": "302dfe8f95eaaf79e6ffef18e4f7b53b3c8d60aa7bd0facc3299aa2569dd7185",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.design-editorial",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/design-editorial/manifest.yaml",
+      "recipe": "design",
+      "source_id": "35fc4746-6bbb-5fce-8e1f-8116aa7e7afa"
+    },
+    {
+      "files": [
+        {
+          "canonical": "60bdbf9637ad14d1dcf54f92dc4c6a85326e0a8c36fe52cffb920e1d279c6af8",
+          "original": "60bdbf9637ad14d1dcf54f92dc4c6a85326e0a8c36fe52cffb920e1d279c6af8",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.design-preferences",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/design-preferences/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "ca931c41d89ad34fa332703091f2a13f125561e52d3b8827ab7cafef984cbdb0",
+          "original": "ca931c41d89ad34fa332703091f2a13f125561e52d3b8827ab7cafef984cbdb0",
+          "path": "CONTEXT.md",
+          "transformed": false
+        },
+        {
+          "canonical": "87c6ba30312240d8ddfad58d7d6aad4d0b3f92c022fc9d4becff082c148ffcca",
+          "original": "87c6ba30312240d8ddfad58d7d6aad4d0b3f92c022fc9d4becff082c148ffcca",
+          "path": "operations.md",
+          "transformed": false
+        },
+        {
+          "canonical": "03148bd7668c638d9efe38000ed59c651765cc5c505d0c71809a12270fa4bc13",
+          "original": "03148bd7668c638d9efe38000ed59c651765cc5c505d0c71809a12270fa4bc13",
+          "path": "security-and-local-data.md",
+          "transformed": false
+        },
+        {
+          "canonical": "04b6661b3bf24320d17a4fb6f0f67fee3ec8891d9fefa40528ef1217fbf6483d",
+          "original": "04b6661b3bf24320d17a4fb6f0f67fee3ec8891d9fefa40528ef1217fbf6483d",
+          "path": "ai-development.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.engineering-stack",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/engineering-stack/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "b1179368eba1c00f4df24d4d5a64e5497b9e9d59f23fb4d3b7dd367e6c192200",
+          "original": "b1179368eba1c00f4df24d4d5a64e5497b9e9d59f23fb4d3b7dd367e6c192200",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.engineering-standards",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/engineering-standards/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "406828a2eff567dfa099079953030bda1f3d19c4afbcb691c5c04fcc836c7d69",
+          "original": "406828a2eff567dfa099079953030bda1f3d19c4afbcb691c5c04fcc836c7d69",
+          "path": "CONTEXT.md",
+          "transformed": false
+        },
+        {
+          "canonical": "35068116d41ada0842a13cb03ad621dcaa5c5affb2490ea82677103d59fbd232",
+          "original": "35068116d41ada0842a13cb03ad621dcaa5c5affb2490ea82677103d59fbd232",
+          "path": "issue-bodies.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.github-planning",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/github-planning/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "d0234310ce9e267b1dd045d39db749f17df8734b1b310927efbd45c10ade2f8a",
+          "original": "d0234310ce9e267b1dd045d39db749f17df8734b1b310927efbd45c10ade2f8a",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.music-preferences",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/music-preferences/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "12250a00d6660bfa86b7411b4f543d8beeb95150edc9ded558d14aa6f7fcda13",
+          "original": "12250a00d6660bfa86b7411b4f543d8beeb95150edc9ded558d14aa6f7fcda13",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.planning-authority",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/planning-authority/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "e47c203e90d82bc1d9621effeaa6068d9d34bdc9095d3cc4bda0ee8a52a5a490",
+          "original": "e47c203e90d82bc1d9621effeaa6068d9d34bdc9095d3cc4bda0ee8a52a5a490",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.product-audience",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/product-audience/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "7322dc40902f9f72482384cdb4a2d1947a0bd8fb57623ee84fdd5abd3bce2f07",
+          "original": "7322dc40902f9f72482384cdb4a2d1947a0bd8fb57623ee84fdd5abd3bce2f07",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.python-stack",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/python-stack/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "14ce73d582c0bb68541b5e1ecb0263778721aa99f6c45ee7839456dd178894ad",
+          "original": "14ce73d582c0bb68541b5e1ecb0263778721aa99f6c45ee7839456dd178894ad",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.repository-architecture",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/repository-architecture/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "8f7ebd28b76138c02709b4363a74b1fa8c3be7a519f02b17b718145086274068",
+          "original": "8f7ebd28b76138c02709b4363a74b1fa8c3be7a519f02b17b718145086274068",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.repository-conventions",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/repository-conventions/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "a895b46e2e859627309c0b40d1ca4da57664af2ab88ea37834b675b367ef7cec",
+          "original": "a895b46e2e859627309c0b40d1ca4da57664af2ab88ea37834b675b367ef7cec",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.security-posture",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/security-posture/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "d7af1765df740ec2f91b84e57bda176670dc2be09e862beed07631bfa6988f34",
+          "original": "d7af1765df740ec2f91b84e57bda176670dc2be09e862beed07631bfa6988f34",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.travel-preferences",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/travel-preferences/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "1f37a291d30e04f7404a1b424d7d4396fdf0272ec77f9f9f909f84cefad31d6c",
+          "original": "1f37a291d30e04f7404a1b424d7d4396fdf0272ec77f9f9f909f84cefad31d6c",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.typescript-stack",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/typescript-stack/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "74edddf003b03080032abfa0b4bec8e715101a21884c13f4d4b1579ef9c34ca7",
+          "original": "74edddf003b03080032abfa0b4bec8e715101a21884c13f4d4b1579ef9c34ca7",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.workspace-artifacts",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/workspace-artifacts/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "169f2fc68c3cde8478f19e55e0ba6806020fd08dcf8b910a95f6e8aaa2c48ede",
+          "original": "169f2fc68c3cde8478f19e55e0ba6806020fd08dcf8b910a95f6e8aaa2c48ede",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.workspace-do-it",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/workspace-do-it/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "fdc0903e18ca3cc03f5dd86604bc881bb5178f8eec47a637a0ab3a4f580de225",
+          "original": "fdc0903e18ca3cc03f5dd86604bc881bb5178f8eec47a637a0ab3a4f580de225",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.workspace-explain-changes",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/workspace-explain-changes/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "634285c17bf358458361c193d940152dd33696453abf5098f1e0929ac459df7b",
+          "original": "634285c17bf358458361c193d940152dd33696453abf5098f1e0929ac459df7b",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.workspace-overview",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/workspace-overview/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "d90a4f74da192e7ac57c3eaf3eac2a6efa50e23e8cfc7d217cf2ba5e5ccb014c",
+          "original": "d90a4f74da192e7ac57c3eaf3eac2a6efa50e23e8cfc7d217cf2ba5e5ccb014c",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.workspace-plan-out",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/workspace-plan-out/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "7c3366e7ad1039c34077648eff67e49354df9b2fcff3fa6abdf5843cbe5ad27e",
+          "original": "7c3366e7ad1039c34077648eff67e49354df9b2fcff3fa6abdf5843cbe5ad27e",
+          "path": "CONTEXT.md",
+          "transformed": false
+        }
+      ],
+      "id": "context.workspace-pr-review",
+      "kind": "Context",
+      "original_manifest": "packages/contexts/workspace-pr-review/manifest.yaml",
+      "recipe": "context-contracts",
+      "source_id": "08ddcb86-818f-54bb-b99f-6d494874973a"
+    },
+    {
+      "files": [
+        {
+          "canonical": "0f1bc73327cc22aefaf588c743ee2a158a48a96a29150589c4257c731b3ea3ba",
+          "original": "0f1bc73327cc22aefaf588c743ee2a158a48a96a29150589c4257c731b3ea3ba",
+          "path": "guard.py",
+          "transformed": false
+        }
+      ],
+      "id": "hook.credential-path-guard",
+      "kind": "Hook",
+      "original_manifest": "packages/hooks/credential-path-guard/manifest.yaml",
+      "recipe": "hooks",
+      "source_id": "d2e034c2-de29-5ead-8abd-7d102d14d18d"
+    },
+    {
+      "files": [
+        {
+          "canonical": "4e919e36aba56c592b0d03287fdc703124277fc83454fa7434c2ecb0064ce81e",
+          "original": "4e919e36aba56c592b0d03287fdc703124277fc83454fa7434c2ecb0064ce81e",
+          "path": "POLICY.md",
+          "transformed": false
+        }
+      ],
+      "id": "policy.accessibility",
+      "kind": "Policy",
+      "original_manifest": "packages/policies/accessibility/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "a2c143a1a5822514c229a92219a43303646552bc3b3dd5aa8f0fca363e43625c",
+          "original": "a2c143a1a5822514c229a92219a43303646552bc3b3dd5aa8f0fca363e43625c",
+          "path": "POLICY.md",
+          "transformed": false
+        }
+      ],
+      "id": "policy.coding",
+      "kind": "Policy",
+      "original_manifest": "packages/policies/coding/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "578fc70320b25389516efb45820359fc658892a9145b3e6d1f751d5666ad33a0",
+          "original": "578fc70320b25389516efb45820359fc658892a9145b3e6d1f751d5666ad33a0",
+          "path": "POLICY.md",
+          "transformed": false
+        }
+      ],
+      "id": "policy.communication",
+      "kind": "Policy",
+      "original_manifest": "packages/policies/communication/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "f756d88c2cb883b7bd5669cf4a51d5deab79a8ae1f7d9a49b4659fd2bf8c2e78",
+          "original": "f756d88c2cb883b7bd5669cf4a51d5deab79a8ae1f7d9a49b4659fd2bf8c2e78",
+          "path": "POLICY.md",
+          "transformed": false
+        }
+      ],
+      "id": "policy.engineering-effectiveness",
+      "kind": "Policy",
+      "original_manifest": "packages/policies/engineering-effectiveness/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "b0e9b9f60dee1e7ac0c1abf8f2da450e5b91cda368284f5d527942150f4d6278",
+          "original": "b0e9b9f60dee1e7ac0c1abf8f2da450e5b91cda368284f5d527942150f4d6278",
+          "path": "POLICY.md",
+          "transformed": false
+        }
+      ],
+      "id": "policy.engineering-platform",
+      "kind": "Policy",
+      "original_manifest": "packages/policies/engineering-platform/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "84d06a340e1177af0335d344f84cc5ac091ce2b5a767b9f12e99b6800413468b",
+          "original": "84d06a340e1177af0335d344f84cc5ac091ce2b5a767b9f12e99b6800413468b",
+          "path": "POLICY.md",
+          "transformed": false
+        }
+      ],
+      "id": "policy.git",
+      "kind": "Policy",
+      "original_manifest": "packages/policies/git/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "b0b201e24385035a880e7faf5149150e9f3c47ca68c755bf6007874a3119a99c",
+          "original": "b0b201e24385035a880e7faf5149150e9f3c47ca68c755bf6007874a3119a99c",
+          "path": "POLICY.md",
+          "transformed": false
+        }
+      ],
+      "id": "policy.github-planning",
+      "kind": "Policy",
+      "original_manifest": "packages/policies/github-planning/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "d585e36fbbb3593b691ba76594dfd9a9850baf23a8b1d3d101c39bd1bead7b5e",
+          "original": "d585e36fbbb3593b691ba76594dfd9a9850baf23a8b1d3d101c39bd1bead7b5e",
+          "path": "POLICY.md",
+          "transformed": false
+        }
+      ],
+      "id": "policy.monorepo",
+      "kind": "Policy",
+      "original_manifest": "packages/policies/monorepo/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "e87560ae0874eb9fcbadd552e7c04ceb0d3c01b222e62cbf87866fceb7ad9b98",
+          "original": "e87560ae0874eb9fcbadd552e7c04ceb0d3c01b222e62cbf87866fceb7ad9b98",
+          "path": "POLICY.md",
+          "transformed": false
+        }
+      ],
+      "id": "policy.repository-guidance",
+      "kind": "Policy",
+      "original_manifest": "packages/policies/repository-guidance/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "a0c87ae728344cef67c08c14c9c36613eae4304295815517d810f85abb1692b8",
+          "original": "a0c87ae728344cef67c08c14c9c36613eae4304295815517d810f85abb1692b8",
+          "path": "POLICY.md",
+          "transformed": false
+        }
+      ],
+      "id": "policy.research",
+      "kind": "Policy",
+      "original_manifest": "packages/policies/research/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "0a2afe8cc8218ee9f758f69b1e19e606f1c8d6a1298ae3749d158b99fd462036",
+          "original": "0a2afe8cc8218ee9f758f69b1e19e606f1c8d6a1298ae3749d158b99fd462036",
+          "path": "POLICY.md",
+          "transformed": false
+        }
+      ],
+      "id": "policy.scope",
+      "kind": "Policy",
+      "original_manifest": "packages/policies/scope/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "9aa1f5ee1e5dfd8600aebbb5fcb06a6c0cad783210b36f26a26855bd32057b06",
+          "original": "9aa1f5ee1e5dfd8600aebbb5fcb06a6c0cad783210b36f26a26855bd32057b06",
+          "path": "POLICY.md",
+          "transformed": false
+        }
+      ],
+      "id": "policy.security",
+      "kind": "Policy",
+      "original_manifest": "packages/policies/security/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "839c67d57c101341d0233fd4c0b1a0129ac165beb02558e2797279760ec6be51",
+          "original": "839c67d57c101341d0233fd4c0b1a0129ac165beb02558e2797279760ec6be51",
+          "path": "POLICY.md",
+          "transformed": false
+        }
+      ],
+      "id": "policy.ui-shadcn",
+      "kind": "Policy",
+      "original_manifest": "packages/policies/ui-shadcn/manifest.yaml",
+      "recipe": "design",
+      "source_id": "35fc4746-6bbb-5fce-8e1f-8116aa7e7afa"
+    },
+    {
+      "files": [
+        {
+          "canonical": "3e6f4723c49772ee61b1670a917bfbd665292b5849e85a8dd2808473fe436639",
+          "original": "3e6f4723c49772ee61b1670a917bfbd665292b5849e85a8dd2808473fe436639",
+          "path": "POLICY.md",
+          "transformed": false
+        }
+      ],
+      "id": "policy.verification",
+      "kind": "Policy",
+      "original_manifest": "packages/policies/verification/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "1640e3250694d527685fcbe70094e194ab0a49dce03e7555499026d92e8cbb58",
+          "original": "3b271f4f4f3cc273102e20897d87c76f0ade0a917b02fc742f882a772f9117ac",
+          "path": "SKILL.md",
+          "transformed": true
+        },
+        {
+          "canonical": "e52c698212a43807700119e142a75c5025fa367d7fb8ff64c1aaf85ee79253b2",
+          "original": "e52c698212a43807700119e142a75c5025fa367d7fb8ff64c1aaf85ee79253b2",
+          "path": "analysis.md",
+          "transformed": false
+        },
+        {
+          "canonical": "c0603933f3e92458d050a673186e39d2a5f5037b1f56b43419853707dc3fe181",
+          "original": "c0603933f3e92458d050a673186e39d2a5f5037b1f56b43419853707dc3fe181",
+          "path": "questions.md",
+          "transformed": false
+        },
+        {
+          "canonical": "e21b1d2e23558980ec6cf222359b12f7c88887504104c1e5afb276c9ae64ec23",
+          "original": "e21b1d2e23558980ec6cf222359b12f7c88887504104c1e5afb276c9ae64ec23",
+          "path": "research.md",
+          "transformed": false
+        }
+      ],
+      "id": "skill.change-quiz",
+      "kind": "Skill",
+      "original_manifest": "packages/skills/change-quiz/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "2691441111ad297acfdf16379571b659a076046dd8b899f56615d96543774a4c",
+          "original": "5bab9e44cff404b157cc675a800813e79693374bc3cfb69f0c74e659b359c3b6",
+          "path": "SKILL.md",
+          "transformed": true
+        },
+        {
+          "canonical": "9158db0047882d0c63ee88e1fefc62f56c42f0711dc33c0cbd058b12f0ad8fe4",
+          "original": "9158db0047882d0c63ee88e1fefc62f56c42f0711dc33c0cbd058b12f0ad8fe4",
+          "path": "references/catalog-selection.md",
+          "transformed": false
+        }
+      ],
+      "id": "skill.curate-am-playlist",
+      "kind": "Skill",
+      "original_manifest": "packages/skills/curate-am-playlist/manifest.yaml",
+      "recipe": "music",
+      "source_id": "8c19e18f-ed5d-5f0a-bd40-3ee606609ef4"
+    },
+    {
+      "files": [
+        {
+          "canonical": "d61608c597bcf22658bc9ebad550a74af0829f987ab230ea413b01d3a1823681",
+          "original": "f77ad1413ed02ed8e9b879aecc0f9eb0e33657fd2f289eec2a4c5201a8917fba",
+          "path": "SKILL.md",
+          "transformed": true
+        },
+        {
+          "canonical": "c4395c314115188353a3c7c17ac1cc2dd1b8f8af4f3f38ba938c87a2864df6a9",
+          "original": "c4395c314115188353a3c7c17ac1cc2dd1b8f8af4f3f38ba938c87a2864df6a9",
+          "path": "stateful-changes.md",
+          "transformed": false
+        }
+      ],
+      "id": "skill.do-it",
+      "kind": "Skill",
+      "original_manifest": "packages/skills/do-it/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "ea6d79cfcd63ea7423a0741a80813419f50871cf74cf3f098d29470924ed578e",
+          "original": "63b362ee418c458c3bb14ee29ef13840ba53602ae28e79dd7f004da9a7a2b171",
+          "path": "SKILL.md",
+          "transformed": true
+        },
+        {
+          "canonical": "14d754f9f4bec4d58080e3a38f3e0cca75a2954106cbd22b8729db6914e46c37",
+          "original": "14d754f9f4bec4d58080e3a38f3e0cca75a2954106cbd22b8729db6914e46c37",
+          "path": "evidence.md",
+          "transformed": false
+        },
+        {
+          "canonical": "afc5854a94172b8572ce596df521f0688c316ec8753607f96b6df73bb750b434",
+          "original": "afc5854a94172b8572ce596df521f0688c316ec8753607f96b6df73bb750b434",
+          "path": "perspectives.md",
+          "transformed": false
+        },
+        {
+          "canonical": "3904e3fe3504c8138e9d85c34a392d833af6aefa2ddccb3385ee2d7138866c68",
+          "original": "3904e3fe3504c8138e9d85c34a392d833af6aefa2ddccb3385ee2d7138866c68",
+          "path": "language.md",
+          "transformed": false
+        },
+        {
+          "canonical": "892d0fd782231e5bdb2b4a3e79d4bd7290f5cf9434eb56013f1ebb4fe0edf34c",
+          "original": "892d0fd782231e5bdb2b4a3e79d4bd7290f5cf9434eb56013f1ebb4fe0edf34c",
+          "path": "workspace.md",
+          "transformed": false
+        }
+      ],
+      "id": "skill.explain-changes",
+      "kind": "Skill",
+      "original_manifest": "packages/skills/explain-changes/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "79206ca5ead719e14a52fb3ed0378e847bef044a890be6440ea51dd602cadab0",
+          "original": "27b92645f00c7a1b18a6185e63839e8008d0074443681ab439b34dc16ebdb581",
+          "path": "SKILL.md",
+          "transformed": true
+        }
+      ],
+      "id": "skill.investigate",
+      "kind": "Skill",
+      "original_manifest": "packages/skills/investigate/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "78b20b8680f862d12fc7129c43ad9747f5001ae53c29828d1d994b7f1bf9192f",
+          "original": "056ea3770d0ccece55058491cff90f7e8a7a9c576ed8493fcb82868c311c0c9f",
+          "path": "SKILL.md",
+          "transformed": true
+        }
+      ],
+      "id": "skill.pitch-deck",
+      "kind": "Skill",
+      "original_manifest": "packages/skills/pitch-deck/manifest.yaml",
+      "recipe": "design",
+      "source_id": "35fc4746-6bbb-5fce-8e1f-8116aa7e7afa"
+    },
+    {
+      "files": [
+        {
+          "canonical": "fa1e20ec530c3e23812b31dd3ac613dc183db27c297af8a44567b05f0a490a97",
+          "original": "8c116c04b26aa617774712157fd18b874faa1f121ac70824823f9f1844c3e847",
+          "path": "SKILL.md",
+          "transformed": true
+        },
+        {
+          "canonical": "87f2e9e4fdf7852082ce146402cc8ea91437284933fd96ec3cf9aae7980eae2d",
+          "original": "87f2e9e4fdf7852082ce146402cc8ea91437284933fd96ec3cf9aae7980eae2d",
+          "path": "sizing.md",
+          "transformed": false
+        }
+      ],
+      "id": "skill.plan-out",
+      "kind": "Skill",
+      "original_manifest": "packages/skills/plan-out/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "41e7edcd1a7d4802fa8eec71411d297792ee441ab6d362b2d2551f6be0c74816",
+          "original": "939a14e74b8d2dfd6571d7c7f084964ee219a7e5de3c5ecdc392ff26c0e06a05",
+          "path": "SKILL.md",
+          "transformed": true
+        },
+        {
+          "canonical": "b046a5b1fa09706abb5ca90fb32eb7efe17815f7aaedbedeae719581d0cf62d3",
+          "original": "b046a5b1fa09706abb5ca90fb32eb7efe17815f7aaedbedeae719581d0cf62d3",
+          "path": "references/revisions.md",
+          "transformed": false
+        },
+        {
+          "canonical": "0d6d7ea1b5e153b9032b5884ad09ff660aebce2be5811daf8f3635c4aa152bd5",
+          "original": "0d6d7ea1b5e153b9032b5884ad09ff660aebce2be5811daf8f3635c4aa152bd5",
+          "path": "references/walkthrough.md",
+          "transformed": false
+        },
+        {
+          "canonical": "ac85166ee5f106e8dc4f5ebe48fa1231ba1c6871c71c1084e9867d8d2969d3ad",
+          "original": "ac85166ee5f106e8dc4f5ebe48fa1231ba1c6871c71c1084e9867d8d2969d3ad",
+          "path": "references/reviewers.md",
+          "transformed": false
+        }
+      ],
+      "id": "skill.pr-review",
+      "kind": "Skill",
+      "original_manifest": "packages/skills/pr-review/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "a8d4766e1fff4e8ab36c850587a0a6b204832ea4d0e3b8db92f6623b0f13d230",
+          "original": "39dc79ee824c9d036c5fe96b3b48b453bbf70a28b0bc6c57df5fec50a5d78a7b",
+          "path": "SKILL.md",
+          "transformed": true
+        }
+      ],
+      "id": "skill.propose",
+      "kind": "Skill",
+      "original_manifest": "packages/skills/propose/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "389965056a331a90d1a19e98159d73db69438f2b418de7175b841ce200e5b36d",
+          "original": "80ab04f9ec37ecfa1dae427fd2889959ac2846de617a797afde4b15d88fe55d9",
+          "path": "SKILL.md",
+          "transformed": true
+        }
+      ],
+      "id": "skill.trip-plan",
+      "kind": "Skill",
+      "original_manifest": "packages/skills/trip-plan/manifest.yaml",
+      "recipe": "travel",
+      "source_id": "4779775e-f7c0-5c97-afbe-908b9d73e761"
+    },
+    {
+      "files": [
+        {
+          "canonical": "8b858f020954055611cdbfb34f6852118182e621fdcacf0e6dca1b828544780c",
+          "original": "29c850eac06898087ebaf6a5385b2543c92bded7fdb3e251f8d3385f138e9369",
+          "path": "SKILL.md",
+          "transformed": true
+        }
+      ],
+      "id": "skill.trip-publish",
+      "kind": "Skill",
+      "original_manifest": "packages/skills/trip-publish/manifest.yaml",
+      "recipe": "travel",
+      "source_id": "4779775e-f7c0-5c97-afbe-908b9d73e761"
+    },
+    {
+      "files": [
+        {
+          "canonical": "49aa3b91629d5755fedf6690bfedfdb3c6baab6da94b2b7654df162935b453c3",
+          "original": "2660d3accf71a1aa218e964ba58643cfdca821cfe6131ee47f4909bc8a3e1120",
+          "path": "SKILL.md",
+          "transformed": true
+        },
+        {
+          "canonical": "777ca82f895cbfd5dc3b33f79b72e4232b474b9e5500d8f9e585bb6450e97749",
+          "original": "777ca82f895cbfd5dc3b33f79b72e4232b474b9e5500d8f9e585bb6450e97749",
+          "path": "swiftui.md",
+          "transformed": false
+        },
+        {
+          "canonical": "8e9a399801eb1b940c906fb37ddc0df449463044f1fa43a848cb0eb32e49b283",
+          "original": "8e9a399801eb1b940c906fb37ddc0df449463044f1fa43a848cb0eb32e49b283",
+          "path": "LICENSE.fwc-swiftui-skills.txt",
+          "transformed": false
+        }
+      ],
+      "id": "skill.ui-design",
+      "kind": "Skill",
+      "original_manifest": "packages/skills/ui-design/manifest.yaml",
+      "recipe": "design",
+      "source_id": "35fc4746-6bbb-5fce-8e1f-8116aa7e7afa"
+    },
+    {
+      "files": [
+        {
+          "canonical": "9d8f593022f56184966b53040d46c8469ac0fb7f58c58d7b5fe11d119a7e777f",
+          "original": "14c317718636dd64a0f94b708ca8a079b6ecd902b47c663e399ae80788c38099",
+          "path": "SKILL.md",
+          "transformed": true
+        },
+        {
+          "canonical": "2a9fb30b2e8854d7cfef10ac0b240250e04714dca967b7373b10a58cfb8a2e3a",
+          "original": "2a9fb30b2e8854d7cfef10ac0b240250e04714dca967b7373b10a58cfb8a2e3a",
+          "path": "composition.md",
+          "transformed": false
+        },
+        {
+          "canonical": "3e712634cdbe67f55f8996671002f3e3e3adb53e642c1dd4b3bdebbee37169cf",
+          "original": "3e712634cdbe67f55f8996671002f3e3e3adb53e642c1dd4b3bdebbee37169cf",
+          "path": "diagrams.md",
+          "transformed": false
+        },
+        {
+          "canonical": "e18093df609826c65ad522927b3841147798f181b63969f4c936ebc8bade29d8",
+          "original": "e18093df609826c65ad522927b3841147798f181b63969f4c936ebc8bade29d8",
+          "path": "motion.md",
+          "transformed": false
+        }
+      ],
+      "id": "skill.visual-artifacts",
+      "kind": "Skill",
+      "original_manifest": "packages/skills/visual-artifacts/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "f2b0b877b63da5eda20e8cf5c84fff36aa5ad987cf1cdc812320b6e8a64b7ce7",
+          "original": "f2b0b877b63da5eda20e8cf5c84fff36aa5ad987cf1cdc812320b6e8a64b7ce7",
+          "path": "components.md",
+          "transformed": false
+        },
+        {
+          "canonical": "60e9ef50f507dfe4228f24dd2f77c920cd8d3f67c5dd8d55b14229c7f1dd2e9c",
+          "original": "60e9ef50f507dfe4228f24dd2f77c920cd8d3f67c5dd8d55b14229c7f1dd2e9c",
+          "path": "quiz.html",
+          "transformed": false
+        },
+        {
+          "canonical": "0b9294e99f01a67a62464b0f3a2045d20ac36dc40d060500aa469d0e9ae7f226",
+          "original": "0b9294e99f01a67a62464b0f3a2045d20ac36dc40d060500aa469d0e9ae7f226",
+          "path": "components/question.html",
+          "transformed": false
+        }
+      ],
+      "id": "template.change-quiz",
+      "kind": "Template",
+      "original_manifest": "packages/templates/change-quiz/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "2cfc4d8f84ca4184ff04198da290ad817a569542edaa121ef6e155bcd0240a1b",
+          "original": "2cfc4d8f84ca4184ff04198da290ad817a569542edaa121ef6e155bcd0240a1b",
+          "path": "components/chart.html",
+          "transformed": false
+        },
+        {
+          "canonical": "e5dc9bf1d2cbecd3cfe7fdd146c7990f5d355ee8e9562daf03c0ecc765b25042",
+          "original": "e5dc9bf1d2cbecd3cfe7fdd146c7990f5d355ee8e9562daf03c0ecc765b25042",
+          "path": "components/comparison.html",
+          "transformed": false
+        },
+        {
+          "canonical": "01c1e17e16435b46f665f386bdeb37ae4b02bb6ed1e9d34e954a114dae56d879",
+          "original": "01c1e17e16435b46f665f386bdeb37ae4b02bb6ed1e9d34e954a114dae56d879",
+          "path": "components/data-flow.html",
+          "transformed": false
+        },
+        {
+          "canonical": "791ea25c8ceb9c8df88b56694fc36b503d5c62a7ac4675c82649c6641c1e5b1e",
+          "original": "791ea25c8ceb9c8df88b56694fc36b503d5c62a7ac4675c82649c6641c1e5b1e",
+          "path": "components/dense-context.html",
+          "transformed": false
+        },
+        {
+          "canonical": "d66fbe9a5c748bf281e9228522bc657515407a45744303de082f5040a46686cd",
+          "original": "d66fbe9a5c748bf281e9228522bc657515407a45744303de082f5040a46686cd",
+          "path": "components/entity-relationship.html",
+          "transformed": false
+        },
+        {
+          "canonical": "536d4a0959e10301d79d3e13f6ace8abcb8a6fb94004bb932d1b400e2f335916",
+          "original": "536d4a0959e10301d79d3e13f6ace8abcb8a6fb94004bb932d1b400e2f335916",
+          "path": "components/line-chart.html",
+          "transformed": false
+        },
+        {
+          "canonical": "0d725ad19eb0b3eee7a0286008133d05d9e84cebbaef0755c844f18bf2f6bc2d",
+          "original": "0d725ad19eb0b3eee7a0286008133d05d9e84cebbaef0755c844f18bf2f6bc2d",
+          "path": "components/sequence.html",
+          "transformed": false
+        },
+        {
+          "canonical": "94e3d04d981c5dda9faeed2f3ba254dd05dae153aeed5d9de6c73d42b137fe36",
+          "original": "94e3d04d981c5dda9faeed2f3ba254dd05dae153aeed5d9de6c73d42b137fe36",
+          "path": "components.md",
+          "transformed": false
+        },
+        {
+          "canonical": "dea4f99ba43348a7a3d5b9708dbc185495b5d4b176066a72d0399a88e58b2e40",
+          "original": "dea4f99ba43348a7a3d5b9708dbc185495b5d4b176066a72d0399a88e58b2e40",
+          "path": "proposal.html",
+          "transformed": false
+        },
+        {
+          "canonical": "c5178e6fcfdb4172b79ce82760d679ac538b6bdcf718ef9a382e32adc10b392c",
+          "original": "c5178e6fcfdb4172b79ce82760d679ac538b6bdcf718ef9a382e32adc10b392c",
+          "path": "proposal.md",
+          "transformed": false
+        },
+        {
+          "canonical": "28e57eae873fbcf832cb9f0e97441976d572e699c1663ac10b7443310c2d27f4",
+          "original": "28e57eae873fbcf832cb9f0e97441976d572e699c1663ac10b7443310c2d27f4",
+          "path": "sections/bug-fix.md",
+          "transformed": false
+        },
+        {
+          "canonical": "4bb4699338e8b31419155fe15c81e582fbb539247b283ea7b5ca08dd70a7375e",
+          "original": "4bb4699338e8b31419155fe15c81e582fbb539247b283ea7b5ca08dd70a7375e",
+          "path": "sections/cross-cutting.md",
+          "transformed": false
+        },
+        {
+          "canonical": "1b877a92ccd1f48489e42f2a0042b7583fb05d82b0bbaa0e189fdd76165f745d",
+          "original": "1b877a92ccd1f48489e42f2a0042b7583fb05d82b0bbaa0e189fdd76165f745d",
+          "path": "sections/decision.md",
+          "transformed": false
+        },
+        {
+          "canonical": "8b05b0cf05c4518cc1b7daa6bf1b98fc8e53c31eddcec6e6da0c4a161aa2597f",
+          "original": "8b05b0cf05c4518cc1b7daa6bf1b98fc8e53c31eddcec6e6da0c4a161aa2597f",
+          "path": "sections/feature.md",
+          "transformed": false
+        },
+        {
+          "canonical": "5903a20acaad79b30fa86ebe6472292cf7b2bb441d32d9028425c27f0076f257",
+          "original": "5903a20acaad79b30fa86ebe6472292cf7b2bb441d32d9028425c27f0076f257",
+          "path": "sections/migration.md",
+          "transformed": false
+        }
+      ],
+      "id": "template.design-proposal",
+      "kind": "Template",
+      "original_manifest": "packages/templates/design-proposal/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "8457c9751c1113b7960f99b64fba2b75faaa250cd2f772b3e702630f76b58dbd",
+          "original": "8457c9751c1113b7960f99b64fba2b75faaa250cd2f772b3e702630f76b58dbd",
+          "path": "components.md",
+          "transformed": false
+        },
+        {
+          "canonical": "f9566e699ccb9185e35779ee91b4e7a72e4522036a052637fb6c36234563da25",
+          "original": "f9566e699ccb9185e35779ee91b4e7a72e4522036a052637fb6c36234563da25",
+          "path": "explanation.html",
+          "transformed": false
+        }
+      ],
+      "id": "template.explain-changes",
+      "kind": "Template",
+      "original_manifest": "packages/templates/explain-changes/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "58c4c20f945c771d49ec500a1f822ff52f83b386691332a19ab08e302b32cb9f",
+          "original": "58c4c20f945c771d49ec500a1f822ff52f83b386691332a19ab08e302b32cb9f",
+          "path": "report.md",
+          "transformed": false
+        },
+        {
+          "canonical": "ea8bf8b583f3475215767112a4ec481367c28eac9fb95a9722b3e2ae3df12744",
+          "original": "ea8bf8b583f3475215767112a4ec481367c28eac9fb95a9722b3e2ae3df12744",
+          "path": "variants.md",
+          "transformed": false
+        }
+      ],
+      "id": "template.investigation",
+      "kind": "Template",
+      "original_manifest": "packages/templates/investigation/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "2cfc4d8f84ca4184ff04198da290ad817a569542edaa121ef6e155bcd0240a1b",
+          "original": "2cfc4d8f84ca4184ff04198da290ad817a569542edaa121ef6e155bcd0240a1b",
+          "path": "components/chart.html",
+          "transformed": false
+        },
+        {
+          "canonical": "01c1e17e16435b46f665f386bdeb37ae4b02bb6ed1e9d34e954a114dae56d879",
+          "original": "01c1e17e16435b46f665f386bdeb37ae4b02bb6ed1e9d34e954a114dae56d879",
+          "path": "components/data-flow.html",
+          "transformed": false
+        },
+        {
+          "canonical": "791ea25c8ceb9c8df88b56694fc36b503d5c62a7ac4675c82649c6641c1e5b1e",
+          "original": "791ea25c8ceb9c8df88b56694fc36b503d5c62a7ac4675c82649c6641c1e5b1e",
+          "path": "components/dense-context.html",
+          "transformed": false
+        },
+        {
+          "canonical": "d66fbe9a5c748bf281e9228522bc657515407a45744303de082f5040a46686cd",
+          "original": "d66fbe9a5c748bf281e9228522bc657515407a45744303de082f5040a46686cd",
+          "path": "components/entity-relationship.html",
+          "transformed": false
+        },
+        {
+          "canonical": "536d4a0959e10301d79d3e13f6ace8abcb8a6fb94004bb932d1b400e2f335916",
+          "original": "536d4a0959e10301d79d3e13f6ace8abcb8a6fb94004bb932d1b400e2f335916",
+          "path": "components/line-chart.html",
+          "transformed": false
+        },
+        {
+          "canonical": "0d725ad19eb0b3eee7a0286008133d05d9e84cebbaef0755c844f18bf2f6bc2d",
+          "original": "0d725ad19eb0b3eee7a0286008133d05d9e84cebbaef0755c844f18bf2f6bc2d",
+          "path": "components/sequence.html",
+          "transformed": false
+        },
+        {
+          "canonical": "71be8d780a5a1a5ed6f3c50a7f880fa869f4fa4bafe112ace62cd811b5085117",
+          "original": "71be8d780a5a1a5ed6f3c50a7f880fa869f4fa4bafe112ace62cd811b5085117",
+          "path": "components.md",
+          "transformed": false
+        },
+        {
+          "canonical": "f7ff68b96eb21042af4880e593b99719f641a3800af04cd03188148cb8435098",
+          "original": "f7ff68b96eb21042af4880e593b99719f641a3800af04cd03188148cb8435098",
+          "path": "deck.html",
+          "transformed": false
+        }
+      ],
+      "id": "template.pitch-deck",
+      "kind": "Template",
+      "original_manifest": "packages/templates/pitch-deck/manifest.yaml",
+      "recipe": "design",
+      "source_id": "35fc4746-6bbb-5fce-8e1f-8116aa7e7afa"
+    },
+    {
+      "files": [
+        {
+          "canonical": "153a78f76edb591a5dd082263e300cc56a8a7d7555114a0abbe0bb4f0ba84203",
+          "original": "153a78f76edb591a5dd082263e300cc56a8a7d7555114a0abbe0bb4f0ba84203",
+          "path": "adaptation.md",
+          "transformed": false
+        },
+        {
+          "canonical": "f67e382ef6e3c91b2142e6c134023a39b344c47478cb1549d266fcc3e6ba6128",
+          "original": "f67e382ef6e3c91b2142e6c134023a39b344c47478cb1549d266fcc3e6ba6128",
+          "path": "plan-context.md",
+          "transformed": false
+        }
+      ],
+      "id": "template.plan-context",
+      "kind": "Template",
+      "original_manifest": "packages/templates/plan-context/manifest.yaml",
+      "recipe": "starter",
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    },
+    {
+      "files": [
+        {
+          "canonical": "7082071ea85ca6bb92cd15df648f8bf3a4716860305c84ade2d4cd218fa4980b",
+          "original": "7082071ea85ca6bb92cd15df648f8bf3a4716860305c84ade2d4cd218fa4980b",
+          "path": "playlist.md",
+          "transformed": false
+        }
+      ],
+      "id": "template.playlist",
+      "kind": "Template",
+      "original_manifest": "packages/templates/playlist/manifest.yaml",
+      "recipe": "music",
+      "source_id": "8c19e18f-ed5d-5f0a-bd40-3ee606609ef4"
+    },
+    {
+      "files": [
+        {
+          "canonical": "1257ba862abc5087bcacf1933559e6f5852413b8da465f11c1c2c133dec124d5",
+          "original": "1257ba862abc5087bcacf1933559e6f5852413b8da465f11c1c2c133dec124d5",
+          "path": "components/finding.html",
+          "transformed": false
+        },
+        {
+          "canonical": "1d2cb8bfeb7d2de9e1637c5c1094dd6b7ecb71e30bdc1647d444254d6d0659ca",
+          "original": "1d2cb8bfeb7d2de9e1637c5c1094dd6b7ecb71e30bdc1647d444254d6d0659ca",
+          "path": "components.md",
+          "transformed": false
+        },
+        {
+          "canonical": "3621fe5ecef0a2c57191d1b7ebca6c9deeef7d17bffb13159061b4dcde80c9d5",
+          "original": "3621fe5ecef0a2c57191d1b7ebca6c9deeef7d17bffb13159061b4dcde80c9d5",
+          "path": "report.html",
+          "transformed": false
+        },
+        {
+          "canonical": "256aa4be73600d49878a8df9c0ba4141261d25217c04d3a48488a67f34b64b42",
+          "original": "256aa4be73600d49878a8df9c0ba4141261d25217c04d3a48488a67f34b64b42",
+          "path": "report.md",
+          "transformed": false
+        }
+      ],
+      "id": "template.pr-review",
+      "kind": "Template",
+      "original_manifest": "packages/templates/pr-review/manifest.yaml",
+      "recipe": "engineering",
+      "source_id": "0c593375-44a3-5761-849f-434030f5763f"
+    },
+    {
+      "files": [
+        {
+          "canonical": "17d417aa0246ffbd1abf5000e4b12567c48acb5448a9f6f6d058eb6197096545",
+          "original": "17d417aa0246ffbd1abf5000e4b12567c48acb5448a9f6f6d058eb6197096545",
+          "path": "itinerary.md",
+          "transformed": false
+        },
+        {
+          "canonical": "495eadef0e3699a622465a937794bd57106636bfd12e545c139e9251f70611bf",
+          "original": "495eadef0e3699a622465a937794bd57106636bfd12e545c139e9251f70611bf",
+          "path": "modules.md",
+          "transformed": false
+        }
+      ],
+      "id": "template.trip-plan",
+      "kind": "Template",
+      "original_manifest": "packages/templates/trip-plan/manifest.yaml",
+      "recipe": "travel",
+      "source_id": "4779775e-f7c0-5c97-afbe-908b9d73e761"
+    },
+    {
+      "files": [
+        {
+          "canonical": "39446b538217e97855ed6a270fd00d9a22108ef1b42e5b69c1cd824a6f109902",
+          "original": "39446b538217e97855ed6a270fd00d9a22108ef1b42e5b69c1cd824a6f109902",
+          "path": "components/expenses.html",
+          "transformed": false
+        },
+        {
+          "canonical": "568625dec47a113bed3998929e372140b43028a1b6c41cd2ae74286cf0b08638",
+          "original": "568625dec47a113bed3998929e372140b43028a1b6c41cd2ae74286cf0b08638",
+          "path": "components/copy-details.html",
+          "transformed": false
+        },
+        {
+          "canonical": "0fbf9504fb0c9baf06576b7d959560cdc7eeb03b45ca6e9cae78e685d4eddbb6",
+          "original": "0fbf9504fb0c9baf06576b7d959560cdc7eeb03b45ca6e9cae78e685d4eddbb6",
+          "path": "components/activity.html",
+          "transformed": false
+        },
+        {
+          "canonical": "744de5e21435a526a724ee15cf5febce8877fb0f1cc5f9d8f68039b41c08e6f0",
+          "original": "744de5e21435a526a724ee15cf5febce8877fb0f1cc5f9d8f68039b41c08e6f0",
+          "path": "components/cost-summary.html",
+          "transformed": false
+        },
+        {
+          "canonical": "9bc454cb46d3b853da90a2d719abb7254e09362373d92eced10eeb00242ffdb6",
+          "original": "9bc454cb46d3b853da90a2d719abb7254e09362373d92eced10eeb00242ffdb6",
+          "path": "components/disruption.html",
+          "transformed": false
+        },
+        {
+          "canonical": "e5ac4e74eb17308fe762da62f7341b2ccd72c5bdc41c0472e8a07efaf43fa906",
+          "original": "e5ac4e74eb17308fe762da62f7341b2ccd72c5bdc41c0472e8a07efaf43fa906",
+          "path": "components/family-stay.html",
+          "transformed": false
+        },
+        {
+          "canonical": "1b4bc5ee34f32b2011ebcc65cd0afb0ee59ade82d2df853f794cc80a94a733c8",
+          "original": "1b4bc5ee34f32b2011ebcc65cd0afb0ee59ade82d2df853f794cc80a94a733c8",
+          "path": "components/flight.html",
+          "transformed": false
+        },
+        {
+          "canonical": "1a30a2a209d5647e072d926d3100c1fbcb8bca9e9567cbc95be73c43a5230209",
+          "original": "1a30a2a209d5647e072d926d3100c1fbcb8bca9e9567cbc95be73c43a5230209",
+          "path": "components/rail.html",
+          "transformed": false
+        },
+        {
+          "canonical": "2c80efafa92fdc9ec4154504c35e4ce484ab6098b7c1edf164242619c860a3b4",
+          "original": "2c80efafa92fdc9ec4154504c35e4ce484ab6098b7c1edf164242619c860a3b4",
+          "path": "components/rental-stay.html",
+          "transformed": false
+        },
+        {
+          "canonical": "f68deeb24b0f232203424eb9484daf3cadbf465b7314c617624d12d9e9f700b0",
+          "original": "f68deeb24b0f232203424eb9484daf3cadbf465b7314c617624d12d9e9f700b0",
+          "path": "components/route-map.html",
+          "transformed": false
+        },
+        {
+          "canonical": "189265b842aa1e6d3767c7114b905e0a879618f8243ee0e9724b6dd9a87df569",
+          "original": "189265b842aa1e6d3767c7114b905e0a879618f8243ee0e9724b6dd9a87df569",
+          "path": "components/stay.html",
+          "transformed": false
+        },
+        {
+          "canonical": "4c1c012c321d592d3e27fa6e6e2b66e176df4f7f39189572110008b02e598c67",
+          "original": "4c1c012c321d592d3e27fa6e6e2b66e176df4f7f39189572110008b02e598c67",
+          "path": "components/timeline.html",
+          "transformed": false
+        },
+        {
+          "canonical": "3c1306b108790f0343990bcb9028f1be37e42301b01cf4949be0654a9e8e79e0",
+          "original": "3c1306b108790f0343990bcb9028f1be37e42301b01cf4949be0654a9e8e79e0",
+          "path": "components/transfer.html",
+          "transformed": false
+        },
+        {
+          "canonical": "9b9c94207408f28db3a3b299c061e192fa9a886c4a64060a6748f22def817aeb",
+          "original": "9b9c94207408f28db3a3b299c061e192fa9a886c4a64060a6748f22def817aeb",
+          "path": "components/travelers.html",
+          "transformed": false
+        },
+        {
+          "canonical": "ad5950a9bbd5966e4042717438e02c340860e5b59786b437396a31a784fe3550",
+          "original": "ad5950a9bbd5966e4042717438e02c340860e5b59786b437396a31a784fe3550",
+          "path": "components/vehicle.html",
+          "transformed": false
+        },
+        {
+          "canonical": "0ac82010e1e830b1cb624a7dc0f2cf3d844ff0aecd8f6dde450c16b654a67fe8",
+          "original": "0ac82010e1e830b1cb624a7dc0f2cf3d844ff0aecd8f6dde450c16b654a67fe8",
+          "path": "components.md",
+          "transformed": false
+        },
+        {
+          "canonical": "557a9184423d3a24a969d43cd3907cf581d5938b63156464c77fb09beed0f4b3",
+          "original": "557a9184423d3a24a969d43cd3907cf581d5938b63156464c77fb09beed0f4b3",
+          "path": "trip.html",
+          "transformed": false
+        }
+      ],
+      "id": "template.trip-publish",
+      "kind": "Template",
+      "original_manifest": "packages/templates/trip-publish/manifest.yaml",
+      "recipe": "travel",
+      "source_id": "4779775e-f7c0-5c97-afbe-908b9d73e761"
+    }
+  ],
+  "starter_items": [
+    "context.artifact-routing",
+    "policy.accessibility",
+    "policy.coding",
+    "policy.communication",
+    "policy.engineering-effectiveness",
+    "policy.git",
+    "policy.repository-guidance",
+    "policy.research",
+    "policy.scope",
+    "policy.verification",
+    "skill.do-it",
+    "skill.investigate",
+    "skill.plan-out",
+    "skill.propose",
+    "skill.visual-artifacts",
+    "template.design-proposal",
+    "template.investigation",
+    "template.plan-context"
+  ],
+  "starter_roots": [
+    "skill.propose",
+    "skill.plan-out",
+    "skill.do-it",
+    "skill.investigate"
+  ]
+}

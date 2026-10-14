@@ -1,0 +1,19 @@
+{
+  "description": "Collected dasync music workflows and references.",
+  "format": 1,
+  "imports": {
+    "starter": {
+      "source_id": "045f03de-1165-51e2-990c-d5fe150341df"
+    }
+  },
+  "items": [
+    "items/skill.curate-am-playlist/item.yaml",
+    "items/template.playlist/item.yaml"
+  ],
+  "name": "music",
+  "required_features": [
+    "imports"
+  ],
+  "requires_engine": ">=0.1.1,<1",
+  "source_id": "8c19e18f-ed5d-5f0a-bd40-3ee606609ef4"
+}

@@ -2,7 +2,11 @@
 
 The design snapshot in `design.md` preserves the agreed product direction. This file records concrete v1 implementation choices and verification limits.
 
+The [experimental recipe protocol](../recipe-protocol.md) implements the immediate local milestone of the October recipe-spine plan alongside the catalog runtime described below. It uses qualified identity, retained local snapshots, explicit roots, a project-only nonportable lock and Codex rendering through the existing Engine/State apply/recovery boundary. A Textual workspace keeps a disposable RecipeSession draft and submits ordinary recipe requests to that same engine; it has no independent renderer, persistence or authority path. Jobs run in a dedicated executor; started transactions finish even if the UI is cancelled. Selection or approval changes invalidate the reviewed plan; apply still rebuilds under the State lock. Its formats are separate from legacy v1; later Git/context/stable-launch milestones and automatic migration remain unimplemented. See [recipe validation](../recipe-validation.md) for oracle, mutation, failure-injection and terminal evidence.
+
 ## Runtime and distribution
+
+The collected catalog has a generated, audited projection into seven local recipes under `recipes/`, with one owner per item and explicit UUID imports. `packages/` and `template-system/` remain the editable content sources during this transition. The CLI wheel continues to exclude workflow payloads. Recipe adapter generation 2 adds aggregate policy provenance, inherited-permission native roles and scope-local exact Python Hook approvals stored atomically in private State metadata. Essential standalone agent read-only enforcement remains unsupported; current Codex role files inherit parent sandbox configuration. The legacy renderer also omits its ignored sandbox field (adapter generation 10).
 
 Python 3.11+ provides SQLite, TOML parsing, cross-platform paths, subprocess control, file descriptors and mature testing. `uv tool install .` or `pipx install .` installs the CLI; the catalog is independently pinned from a Git source. `uv.lock` pins development dependencies; it is not a dasync environment lockfile.
 

@@ -18,8 +18,9 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - run: uv sync --locked
-      - run: uv run ruff check cli tests packages/hooks evals scripts/build_templates.py
-      - run: uv run ruff format --check cli tests packages/hooks evals scripts/build_templates.py
+      - run: uv run ruff check cli tests packages/hooks evals scripts/build_templates.py scripts/build_recipes.py
+      - run: uv run ruff format --check cli tests packages/hooks evals scripts/build_templates.py scripts/build_recipes.py
+      - run: uv run python scripts/build_recipes.py --check
       - run: uv run pytest -q
       - run: uv build
       - run: uvx --from dist/*.whl dasync --version

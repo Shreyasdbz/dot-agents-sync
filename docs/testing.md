@@ -43,7 +43,7 @@ These remain distinct work, not implied by the checks above:
 
 1. Native Codex/Claude/Cursor discovery and skill invocation in isolated authenticated provider sessions, with expected behavior and evidence per catalog item.
 2. Real skill outputs across representative bugs, features, large milestone plans, reviews and travel tasks. Evaluate correctness and capability use, not just headings or keyword presence.
-3. Interactive TUI acceptance through a real terminal, Git/HTTPS source fetch/update workflows and additional malformed-input/long-running stress cases.
+3. Broader interactive terminal qualification, Git/HTTPS source fetch/update workflows and long-running stress cases. The experimental recipe workspace now has headless widget journeys and wheel-installed POSIX PTY checks; see [recipe validation](recipe-validation.md) for their exact boundaries.
 4. Safari/Firefox, screen readers and native OS clipboard behavior. Windows requires its own lifecycle and path/locking gates; native Windows hooks remain unsupported.
 5. External connectors, PR posting, trackers and publishing only against explicit disposable targets with the required authority. No production-account writes belong in default CI.
 
