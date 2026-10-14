@@ -34,7 +34,7 @@ Existing recipe and installed-wheel tests additionally cover two-home lock owner
 
 `tests/test_collection_transactions.py` checks every actual Hook write boundary and the receipt boundary with ordinary/interruption failures. Neither registration nor executable approval can commit early. It also checks changed-digest refusal, interpreter retention, approval separation across scopes, offline restore, lost approval blocking receipt/journal reactivation, contributor denial and rollback of an overwritten native policy aggregate to original human instructions. Native-role serialization cases cover non-BMP Unicode, quotes, backslashes, newlines and attempted configuration injection. Essential standalone read-only requests are refused in accordance with the current Codex role contract; a role file does not establish sandbox enforcement.
 
-The stateful harness now canonicalizes its own temporary directory. A symlinked ambient temp directory, common on macOS through /var, previously caused UNSAFE_PATH before any generated action. A permanent Linux reproduction verifies the harness fix without relaxing the engine's rejection of symlinked operator paths. The earlier macOS CI run failed at pytest; detailed job logs were inaccessible through the available artifact endpoint, so a new hosted run remains the confirmation of the complete macOS suite.
+The stateful harness canonicalizes its own temporary directory. A symlinked ambient temp directory, common on macOS through /var, caused UNSAFE_PATH before any generated action in a local reproduction. A permanent regression verifies the harness fix without relaxing the engine's rejection of symlinked operator paths. Later hosted macOS logs identified four PTY harness failures after the CLI had exited successfully: the controlling session had ended before the restoration assertion, making slave ioctls unavailable. The terminal harness now retains its session leader through the assertion, then releases it through a private pipe; the real CLI, keys, resize, exit status and restored attributes are still checked on both platforms. Hosted results are recorded in the PR.
 
 `tests/test_recipe_tui.py` uses Textual's real widgets with headless keyboard/pointer events at 140×42, 100×32, 80×24 and 64×20, plus resize transitions. It checks search/filter neutrality, direct/dependency selection, Enter event handling, full identity inspection, help, themes, NO_COLOR, dirty exit cancellation, explicit trust and cache-only source staging, atomic alias rejection, choosing an older accepted snapshot, plan invalidation/export, protected drift and separate replacement review, receipt restoration, recovery cancellation/confirmation and busy mutation shutdown. Machine and UI drafts produce byte-equivalent plans. Private sentinel content and terminal control/bidi text have separate redaction checks. Launch-option tests reject hidden/ignored choices before environment access.
 
@@ -46,7 +46,7 @@ The [collected-workflow view](screenshots/collected-recipes.png) uses the actual
 
 ## Reproduce and remaining limits
 
-The collection transition passed a **902-test full-suite checkpoint** on Linux/Python 3.12, with all deterministic generator examples and stateful sequences successful. The additional installed-wheel collection journey passed separately after its addition. Final collection, UI and approval checks are rerun after metadata/presentation refinements; hosted platform results are recorded in the PR. This is structural and transaction evidence, not an authenticated model or provider-discovery run.
+The collection transition passed a **903-test full-suite checkpoint** on Linux/Python 3.12, with all deterministic generator examples, stateful sequences and the installed-wheel collection journey successful. The final project-owned import-pin regression and related engine/transaction checks passed together (**55 tests**). The four terminal journeys are rerun after the session-lifetime harness fix; hosted platform results are recorded in the PR. This is structural and transaction evidence, not an authenticated model or provider-discovery run.
 
 Local acceptance on 13 October 2026 used Python 3.12 on Linux: **682 tests passed** in the full suite, with Hypothesis reporting 400 successful graph examples, 400 successful name examples and 20 successful stateful sequences. After the final workspace and selector refinements, all **34 TUI checks**, **91 recipe/transaction checks** and **four wheel-installed PTY cases** were rerun successfully. Ruff lint/formatting and clean wheel/sdist builds are the separate submission gates. Timing is recorded as a run observation, not a performance guarantee.
 
@@ -57,8 +57,8 @@ uv run pytest tests/test_recipe_transactions.py tests/test_recipe_tui.py -q
 uv run pytest tests/test_installed_e2e.py -k recipe -q
 uv run python scripts/build_recipes.py --check
 uv run pytest -q
-uv run ruff check cli tests packages/hooks evals scripts/build_templates.py
-uv run ruff format --check cli tests packages/hooks evals scripts/build_templates.py
+uv run ruff check cli tests packages/hooks evals scripts/build_templates.py scripts/build_recipes.py
+uv run ruff format --check cli tests packages/hooks evals scripts/build_templates.py scripts/build_recipes.py
 uv build
 ```
 

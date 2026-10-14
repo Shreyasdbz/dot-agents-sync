@@ -763,8 +763,24 @@ def test_installed_recipe_terminal_launch_help_resize_and_exit(installed_binary,
         os.setsid()
         fcntl.ioctl(slave, termios.TIOCSCTTY, 0)
 
+    # Darwin invalidates slave ioctls when its controlling session leader exits.
+    # Keep that session alive until the real CLI has exited and we checked its
+    # restored attributes. A private pipe releases the wrapper afterward.
+    release_read, release_write = os.pipe()
+    wrapper = """
+import os, subprocess, sys
+code = subprocess.call(sys.argv[2:])
+os.write(1, ("\\nPTY_CHILD_EXIT=" + str(code) + "\\n").encode())
+os.read(int(sys.argv[1]), 1)
+raise SystemExit(code)
+"""
     process = subprocess.Popen(
         [
+            str(installed_binary.parent / "python"),
+            "-I",
+            "-c",
+            wrapper,
+            str(release_read),
             str(installed_binary),
             "tui",
             "--scope",
@@ -777,7 +793,9 @@ def test_installed_recipe_terminal_launch_help_resize_and_exit(installed_binary,
         cwd=tmp_path,
         env=env,
         preexec_fn=controlling_terminal,
+        pass_fds=(release_read,),
     )
+    os.close(release_read)
     output = bytearray()
 
     def read_until(needle, timeout=8):
@@ -801,16 +819,19 @@ def test_installed_recipe_terminal_launch_help_resize_and_exit(installed_binary,
         os.write(master, b"\x1b")  # Escape, closing Help.
         time.sleep(0.4)
         fcntl.ioctl(master, termios.TIOCSWINSZ, struct.pack("HHHH", 22, 70, 0, 0))
-        os.kill(process.pid, signal.SIGWINCH)
+        os.killpg(process.pid, signal.SIGWINCH)
         os.write(master, b"\x1b[21~")  # F10 must close even when the search input has focus.
         assert read_until(b"Closed."), "Terminal workspace did not close"
-        assert process.wait(timeout=5) == 0
+        assert read_until(b"PTY_CHILD_EXIT=0"), "Installed CLI did not exit successfully"
         assert termios.tcgetattr(slave) == original_attributes
+        os.write(release_write, b"x")
+        assert process.wait(timeout=5) == 0
         assert b"Traceback" not in output
         assert not list(home.rglob("*")) and not list(project.rglob("*"))
     finally:
         if process.poll() is None:
-            process.kill()
+            os.killpg(process.pid, signal.SIGKILL)
             process.wait(timeout=5)
+        os.close(release_write)
         os.close(master)
         os.close(slave)
